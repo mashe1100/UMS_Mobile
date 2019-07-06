@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.aseyel.tgbl.tristangaryleyesa.DisconnectionActivity">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+            <include
+                android:id="@+id/formtoolbar"
+                layout="@layout/view_formtoolbar" />
+        </android.support.design.widget.AppBarLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="48dp"
+            android:id="@+id/form_scroller"
+            android:scrollbars="none"
+            app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+                <android.support.v7.widget.CardView
+                    android:id="@+id/CardConsumerInfortion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/colorAccent"
+                    android:layout_marginTop="10dp"
+
+                    app:cardElevation="10dp"
+
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:orientation="vertical"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            >
+                            <TextView
+                                android:id="@+id/txtHeader"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:textSize="20dp"
+                                android:textColor="@color/colorPrimary"
+                                android:text="Consumer Information"
+                                android:fontFamily="@string/main_font"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            >
+                            <TextView
+                                android:id="@+id/txtDetails"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="18dp"
+                                android:textColor="@color/colorPrimary"
+                                android:text="Details"
+                                android:fontFamily="@string/main_font"
+                                />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/CardDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:cardElevation="10dp"
+
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:orientation="vertical"
+                        >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        >
+                        <Switch
+                            android:id="@+id/switchtcdeDisconCollect"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:checked="false"
+                            android:text="Check, If you will fo is for collection."
+                            android:fontFamily="@string/main_font"
+                            ></Switch>
+                    </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:orientation="vertical"
+                            >
+                            <EditText
+                                android:id="@+id/etxtReading"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:textColor="@color/colorAccent"
+                                android:textColorHint="@color/colorAccent"
+                                android:hint="Reading"
+                                android:fontFamily="@string/main_font"
+                                android:inputType="numberDecimal|numberSigned" />
+                            <EditText
+                                android:id="@+id/txtOR"
+                                android:layout_width="match_parent"
+
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:textColor="@color/colorAccent"
+                                android:textColorHint="@color/colorAccent"
+                                android:hint="OR No."
+                                android:fontFamily="@string/main_font"
+                                 />
+                            <EditText
+                                android:id="@+id/txtCollection"
+                                android:layout_width="match_parent"
+
+                                android:layout_height="wrap_content"
+                                android:ems="10"
+                                android:textColor="@color/colorAccent"
+                                android:textColorHint="@color/colorAccent"
+                                android:hint="Collection"
+                                android:fontFamily="@string/main_font"
+                                android:inputType="numberDecimal|numberSigned" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            >
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="10dp"
+                            android:paddingRight="10dp"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Remarks" />
+
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            >
+                            <Spinner
+                                android:id="@+id/spinnerRemarks"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"></Spinner>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            >
+                            <EditText
+                                android:id="@+id/etxtComment"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Comment"
+                                android:inputType="textMultiLine"
+                                android:maxLines="10"
+                                android:scrollbars="vertical" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+
+
+
+
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            android:layout_marginBottom="48dp"
+            >
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btnGallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                app:borderWidth="0dp"
+                app:elevation="12dp"
+                android:layout_margin="@dimen/fab_margin"
+                app:srcCompat="@drawable/ic_action_image_white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|bottom"
+            android:orientation="vertical"
+            >
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="10dp">
+
+                <ImageButton
+                    android:id="@+id/btnCamera"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:src="@drawable/ic_action_camera" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingLeft="50dp"
+                    android:gravity="center">
+                    <TextSwitcher
+                        android:id="@+id/tsImageCounter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/colorAccent" />
+                    </TextSwitcher>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

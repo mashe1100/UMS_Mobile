@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mAll"
+        android:icon="@drawable/ic_action_all"
+        android:title="All"/>
+
+    <item
+        android:id="@+id/mRead"
+        android:icon="@drawable/ic_action_accomplishment"
+        android:title="Read"/>
+
+    <item
+        android:id="@+id/mUnread"
+        android:icon="@drawable/ic_action_unaccomplish"
+        android:title="Unread"/>
+    <item
+        android:id="@+id/mPrint"
+        android:icon="@drawable/ic_action_printed"
+        android:title="Printed"/>
+    <item
+        android:id="@+id/mUnprint"
+        android:icon="@drawable/ic_action_unprinted"
+        android:title="Unprinted"/>
+
+</menu>

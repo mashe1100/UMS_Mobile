@@ -1,0 +1,173 @@
+<resources>
+
+    <string name="app_name">Aseyel</string>
+    <string name="title_activity_main">Aseyel</string>
+    <string name="action_settings">Settings</string>
+    <string name="app_version">Version 1.0.6.8</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_base_drawer">BaseDrawerActivity</string>
+    <string name="button_trip"><b>TRIP TICKET</b></string>
+    <string name="button_search"><b>Search</b></string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_bottom_test">BottomTestActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <string name="permission_alert_dialog_title">Requesting SMS permission</string>
+    <string name="permission_dialog_message">The app will now request your permission to send and read SMS related services.</string>
+    <string name="action_ok">OK</string>
+
+    <string name="set_as_default">Set this app as default</string>
+    <string name="restore_default">Resotre previous app as default</string>
+
+    <string-array name="tracking_sovi_location">
+        <item>Select Location</item>
+        <item>Shelves</item>
+        <item>Exhibits</item>
+        <item>Common Cold Vault</item>
+        <item>Company-Owned Coolers</item>
+    </string-array>
+    <string-array name="tracking_activation">
+        <item>Select Activation</item>
+        <item>Mass Display Unit</item>
+        <item>Stack Pallet</item>
+        <item>End Cap</item>
+        <item>Rack: Cross-Category</item>
+        <item>Rack: Wilkins 6L</item>
+        <item>Sidewall Shelf Display</item>
+        <item>Special Displays</item>
+        <item>POI 1X1</item>
+        <item>Others</item>
+    </string-array>
+    <string-array name="joborder_title">
+        <item>Select Title</item>
+        <item>TRACKING</item>
+        <item>AUDIT</item>
+        <item>DELIVERY</item>
+        <item>METER READING</item>
+    </string-array>
+    <string-array name="tracking_activation_category">
+        <item>Select Category</item>
+        <item>Sparkling</item>
+        <item>Water</item>
+        <item>RTD Juice</item>
+        <item>RTD Tea</item>
+        <item>Sports</item>
+        <item>Powdered Juice</item>
+        <item>Powdered Tea</item>
+    </string-array>
+    <string-array name="tracking_cde_area">
+        <item>Select Area</item>
+        <item>Selling Area</item>
+        <item>Checkout Area</item>
+    </string-array>
+
+    <string-array name="vehicle">
+        <item>Select Vehicle</item>
+        <item>None</item>
+        <item>Single Motor</item>
+        <item>Bike</item>
+        <item>Pedicub</item>
+        <item>Horse</item>
+        <item>Boat</item>
+        <item>Tricycle</item>
+        <item>Van</item>
+        <item>Jeep</item>
+        <item>Bus</item>
+    </string-array>
+
+    <string-array name="delivery_remarks">
+        <item>No Field Findings</item>
+        <item>Signed by Relative</item>
+        <item>Signed by Neighbors</item>
+        <item>Customer Refused to Sign</item>
+        <item>Slip Under the Door</item>
+        <item>Clip On Gate</item>
+        <item>Drop To Mailbox</item>
+        <item>Drop To Gate</item>
+        <item>Refused to Accept</item>
+        <item>House Vacant</item>
+        <item>House Demolished</item>
+        <item>Not Attended(WHY)</item>
+        <item>Flooded</item>
+        <item>Messenger involved in accident</item>
+        <item>House Burned</item>
+        <item>Hostile</item>
+        <item>No care of billing address</item>
+        <item>Always Out</item>
+        <item>Wrong Address</item>
+        <item>Cannot Locate</item>
+        <item>Out of Route</item>
+        <item>Lack of Time</item>
+        <item>OTHERS</item>
+
+
+    </string-array>
+
+    <string-array name="meter_type">
+        <item></item>
+        <item>Electromechanical Meter</item>
+        <item>Digital Meter</item>
+        <item>Analog Meter</item>
+        <item>Cyclometer/Taxi Meter</item>
+        <item>Electronic/ID Demand</item>
+        <item>OTHERS</item>
+
+    </string-array>
+
+    <string-array name="structure">
+        <item></item>
+        <item>Bungalow</item>
+        <item>Building</item>
+        <item>Warehouse</item>
+        <item>House</item>
+        <item>Street Lights</item>
+    </string-array>
+
+    <string name="title_activity_sample">SampleActivity</string>
+
+    <string name="main_font">sans-serif-light</string>
+    <!--ERROR MESSAGE-->
+    <string name="error_incomplete_info">Incomplete Information</string>
+    <string name="selected_place">Last Selected Place:</string>
+
+
+    <string name="place_details">
+    <![CDATA[
+        <b>%1$s</b>
+        <br/>
+        <i>Place Id: %2$s</i>
+        <br/>
+        Address: %3$s
+        <br/>
+        Phone: %4$s
+        <br/>
+        Website: %5$s
+    ]]>
+    </string>
+
+
+    <string name="place_details_2">
+    <![CDATA[
+        <b>%1$s</b>
+        <br/>
+        <i>%2$s</i>
+        <br/>
+        Address: %3$s
+        <br/>
+        Phone: %4$s
+        <br/>
+        Website: %5$s
+    ]]>
+    </string>
+
+
+    <!--Athena -->
+
+    <string name="loading">
+       <i>Analyzing the data...</i>
+    </string>
+</resources>

@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.aseyel.tgbl.tristangaryleyesa.fragment.TabMenuFragment">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/tab_tracking_shelfplanogram_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatBtnComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:borderWidth="0dp"
+            app:elevation="12dp"
+            app:srcCompat="@drawable/ic_action_comment_white" />
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeReload"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvTrackingShelfPlanogramList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
+</RelativeLayout>

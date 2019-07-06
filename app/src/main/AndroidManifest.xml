@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.aseyel.tgbl.tristangaryleyesa">
+
+    <uses-feature
+        android:name="android.hardware.telephony.gsm"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.hardware.camera" />
+    <uses-permission android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.WRITE_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_MMS" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH"
+        android:required="true" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".ChangePasswordActivity"></activity>
+        <activity
+            android:name=".SplashActivity"
+            android:label="@string/title_activity_main"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--
+        <activity
+            android:name=".GPSActivity"
+            android:label="@string/title_activity_main"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        -->
+        <activity
+            android:name=".ReceiverActivity"
+            android:label="@string/title_activity_main"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SENDTO" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+            </intent-filter>
+        </activity>
+
+        <!-- BroadcastReceiver that listens for incoming SMS messages -->
+        <receiver
+            android:name=".services.SmsReceiver"
+            android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_DELIVER" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".services.MmsReceiver"
+            android:permission="android.permission.BROADCAST_WAP_PUSH">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.WAP_PUSH_DELIVER" />
+
+                <data android:mimeType="application/vnd.wap.mms-message" />
+            </intent-filter>
+        </receiver>
+        <!-- Service that delivers messages from the phone "quick response" -->
+        <service
+            android:name=".services.HeadlessSmsSendService"
+            android:exported="true"
+            android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE">
+            <intent-filter>
+                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+                <data android:scheme="mms" />
+                <data android:scheme="mmsto" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".services.SmsBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="1000">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".DeliveryActivity"
+            android:screenOrientation="portrait" />
+        <!--
+                <activity
+                    android:name=".PWPersonIdentifierQRodeActivity"
+                    android:screenOrientation="portrait"
+                    android:label="@string/title_activity_main"
+                    android:theme="@style/AppTheme.NoActionBar">
+                    <intent-filter>
+                        <action android:name="android.intent.action.MAIN" />
+                        <category android:name="android.intent.category.LAUNCHER" />
+                    </intent-filter>
+                </activity>
+        -->
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".JobOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TrackingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TrackingAvailabilityActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TrackingSoviActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TrackingActivationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TrackingCDEActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TrackingCoolerPlanogramActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TrackingShelfPlanogramActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TrackingSoviLocationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TrackingSignatureActivity"
+            android:screenOrientation="portrait" />
+        <!-- <activity android:name=".QRCodeActivity" /> -->
+        <activity
+            android:name=".QRCodeScannerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BaseDrawerActivity"
+            android:label="@string/title_activity_base_drawer"
+            android:theme="@style/AppTheme" />
+
+        <!-- MAP API -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBw2XxIBk23SunFMWB4nWOpasoJw7uTJfo" />
+        <!-- MAP API -->
+
+        <activity
+            android:name=".TrackingFullScreenImageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TrackingCommentActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- <activity android:name=".CreateJobOrderActivity" /> -->
+        <activity
+            android:name=".NewJobOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NewJobOrderDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AuditTravelActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AuditTravelRideActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- <activity android:name=".PWPersonIdentifierQRodeActivity"></activity> -->
+
+        <activity
+            android:name=".GalleryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ReadingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LogisticsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NewTripActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MenuActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AthenaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DisconnectionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MeterNotInListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NewMeterNotInListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ReadingV2Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ReadingRemarksActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ReadingGalleryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ReadingSummaryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SurveyActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".DeliveryMainActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".DeliveryReceived"
+            android:screenOrientation="portrait" />
+        <activity android:name=".DeliveryActivityV2"
+            android:screenOrientation="portrait" />
+        <activity android:name=".TypeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".SignatureActivity"
+            android:screenOrientation="portrait" />
+    </application>
+
+</manifest>

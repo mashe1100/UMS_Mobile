@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?><!-- item_feed.xml -->
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp">
+            <ImageView
+                android:id="@+id/ivTrackingSoviLocationProfile"
+                android:layout_width="76dp"
+                android:layout_height="73dp"
+                android:src="@drawable/img_toolbar_logo"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Product Category"
+                    android:textColor="@color/text_like_counter"
+                    android:id="@+id/tvTrackingSoviLocationTitle"
+                    android:textSize="@dimen/feed_title"
+                    android:paddingTop="8dp"
+                    android:paddingLeft="8dp"
+                    android:fontFamily="@string/main_font"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvTrackingSoviLocationAging"
+                    android:text="Sovi Location"
+                    android:textColor="@color/fab_color_shadow"
+                    android:textSize="10sp"
+                    android:paddingLeft="8dp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
+            <TextSwitcher
+                android:id="@+id/tsTrackingSoviLocationDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvTrackingSoviLocationDetails"
+                    android:text="Details"
+                    android:fontFamily="@string/main_font"
+                    android:textColor="@color/feed_details" />
+
+            </TextSwitcher>
+        </LinearLayout>
+
+        <com.aseyel.tgbl.tristangaryleyesa.view.SquaredFrameLayout
+            android:id="@+id/vTrackingSoviLocationImageRoot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ivTrackingSoviLocationCenter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
+            <View
+                android:id="@+id/vTrackingSoviLocationSelected"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/ivTrackingSoviLocationImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                android:visibility="invisible" />
+
+        </com.aseyel.tgbl.tristangaryleyesa.view.SquaredFrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp">
+
+            <ImageButton
+                android:id="@+id/btnToDo"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_action_todo" />
+
+            <ImageButton
+                android:id="@+id/btnDelete"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_action_delete"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>
