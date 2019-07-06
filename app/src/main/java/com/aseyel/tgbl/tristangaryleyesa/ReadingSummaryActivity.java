@@ -64,14 +64,14 @@ public class ReadingSummaryActivity extends BaseFormActivity {
             @Override
             public void onClick(View v) {
                 //QuenedForSave();
-                if(Liquid.r_latitude.equals("0") || Liquid.r_latitude.equals("0.0")){
-                    getDeviceLocation();
-                    Liquid.r_latitude = Latitude;
-                    Liquid.r_longitude = Longitude;
-                    Liquid.ShowMessage(ReadingSummaryActivity.this,"There is no coordinates detected!");
-                }else{
+//                if(Liquid.r_latitude.equals("0") || Liquid.r_latitude.equals("0.0")){
+//                    getDeviceLocation();
+//                    Liquid.r_latitude = Latitude;
+//                    Liquid.r_longitude = Longitude;
+//                    Liquid.ShowMessage(ReadingSummaryActivity.this,"There is no coordinates detected!");
+//                }else{
                     finalSave(Liquid.Client);
-                }
+//                }
 
             }
         });
@@ -129,6 +129,9 @@ public class ReadingSummaryActivity extends BaseFormActivity {
             @Override
             public void run() {
                 pDialog.dismiss();
+
+                Liquid.r_latitude = Latitude;
+                Liquid.r_longitude = Longitude;
 
                 switch (client){
                     case "more_power":
