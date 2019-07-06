@@ -117,6 +117,9 @@ public class MainMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             case "007":
                 ((TabMenuFragment) fragment).ChangePassword();
                 break;
+            case "008":
+                ((TabMenuFragment) fragment).DoQRScan();
+                break;
         }
     }
     public void updateItems(boolean animated,ArrayList<HashMap<String, String>> Data) {
