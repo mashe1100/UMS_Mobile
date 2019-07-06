@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import com.aseyel.tgbl.tristangaryleyesa.ChangePasswordActivity;
 import com.aseyel.tgbl.tristangaryleyesa.LoginActivity;
+import com.aseyel.tgbl.tristangaryleyesa.QRCodeActivity;
+import com.aseyel.tgbl.tristangaryleyesa.QRCodeScannerActivity;
 import com.aseyel.tgbl.tristangaryleyesa.R;
 import com.aseyel.tgbl.tristangaryleyesa.SettingsActivity;
 import com.aseyel.tgbl.tristangaryleyesa.SplashActivity;
@@ -61,6 +63,17 @@ public class TabMenuFragment extends Fragment {
         return mView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if( Liquid.QRCode != ""){
+//            PostQRCode(Liquid.QRCode);
+            Log.i(TAG,Liquid.QRCode);
+        }
+
+    }
+
     private void setup(View view){
         try{
             List = new ArrayList<>();
@@ -86,6 +99,7 @@ public class TabMenuFragment extends Fragment {
         HashMap<String,String> ClearData = new HashMap<>();
         HashMap<String,String> Settings = new HashMap<>();
         HashMap<String,String> ChangePassword = new HashMap<>();
+        HashMap<String,String> OfficialBusiness = new HashMap<>();
 
         Backup.put("Id","001");
         Backup.put("Description","Data Back Up");
@@ -103,14 +117,19 @@ public class TabMenuFragment extends Fragment {
         About.put("Description","About");
         About.put("FilePath","About");
 
-        ChangePassword.put("Id","007");
-        ChangePassword.put("Description","Change Password");
-        ChangePassword.put("FilePath","Change Password");
-
         Settings.put("Id","006");
         Settings.put("Description","Settings");
         Settings.put("FilePath","Settings");
+
+        ChangePassword.put("Id","007");
+        ChangePassword.put("Description","Change Password");
+        ChangePassword.put("FilePath","Change Password");
         final_response.add(ChangePassword);
+
+        OfficialBusiness.put("Id","008");
+        OfficialBusiness.put("Description","Official Business");
+        OfficialBusiness.put("FilePath","Official Business");
+        final_response.add(OfficialBusiness);
 
         if(Liquid.User.equals("000")){
             ClearData.put("Id","005");
@@ -127,6 +146,17 @@ public class TabMenuFragment extends Fragment {
 
         Adapter.updateItems(true,final_response);
 
+    }
+
+    public void DoQRScan(){
+        try{
+            //go to change password activity
+            Liquid.QRCode = "";
+            Intent i = new Intent(getActivity(), QRCodeScannerActivity.class);
+            getActivity().startActivity(i);
+        }catch(Exception e){
+            Log.e(TAG,"Error ",e);
+        }
     }
 
     public void ChangePassword(){
