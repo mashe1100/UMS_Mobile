@@ -35,15 +35,14 @@ public class LiquidGPS  {
     public  Location location;
     public FusedLocationProviderClient mFusedLocationProviderClient;
     private Boolean mLocationPermissionsGranted = false;
+
     public LiquidGPS(Context context) {
 
         mContext = context;
         mLocationPermissionsGranted = true;
         getDeviceLocation();
     }
-    public double getLatitude(){
-        return Latitude;
-    }
+    public double getLatitude(){ return Latitude; }
     public double getLongitude(){
         return Longitude;
     }
