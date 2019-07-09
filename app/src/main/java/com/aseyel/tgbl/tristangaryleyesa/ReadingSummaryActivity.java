@@ -1,5 +1,6 @@
 package com.aseyel.tgbl.tristangaryleyesa;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
@@ -43,6 +44,7 @@ public class ReadingSummaryActivity extends BaseFormActivity {
     private String Longitude = "0";
     private ProgressDialog pDialog;
     private boolean isRequestingCoordinates = false;
+    private Activity activity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -345,98 +347,6 @@ public class ReadingSummaryActivity extends BaseFormActivity {
     }
 
 
-
-    public class GPSPosting extends AsyncTask<Void,Void,Void> {
-
-        String Client = "";
-        String Details = "";
-        boolean result = false;
-        String return_data = "";
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            //865,iselco2,0,17.1415353166667,121.882277033333,,,,, (Structure)
-            Client  = Liquid.Client;
-            //Details = Build.SERIAL + "," + Liquid.Client + "," + "0" + "," + Latitude + ","+ Longitude + ",,,,,";
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try{
-                String type = "0";
-                String latitude = "";
-                String longitude = "";
-                String remark = "";
-                String comment = "";
-                String accountnumber = "";
-                String tag_desciption = "";
-                String details = "";
-                String Message = "";
-                String job_id = "";
-                SmsManager mSmsManager = SmsManager.getDefault();
-                Cursor result = ReadingModel.GetUntransferdData();
-                mLiquidGPS = new LiquidGPS(ReadingSummaryActivity.this);
-
-                if(result.getCount() == 0){
-                    Message =
-                            Liquid.User+","+
-                                    Liquid.Client+","+
-                                    type+","+
-                                    Latitude +","+
-                                    Longitude +","+
-                                    remark+","+
-                                    comment+","+
-                                    accountnumber+","+
-                                    tag_desciption+","+
-                                    details;
-                    mSmsManager.sendTextMessage("+639064783858",null,Message,null,null);
-                }
-                else{
-                    while (result.moveToNext()) {
-                        type = "1";
-                        latitude = result.getString(2);
-                        longitude = result.getString(3);
-                        remark = result.getString(4);
-                        accountnumber = result.getString(1);
-                        details = result.getString(5);
-                        job_id = result.getString(0);
-                        Message =
-                                Liquid.User + "," +
-                                        Liquid.Client + "," +
-                                        type + "," +
-                                        latitude + "," +
-                                        longitude + "," +
-                                        remark + "," +
-                                        comment + "," +
-                                        accountnumber + "," +
-                                        tag_desciption + "," +
-                                        details;
-                        mSmsManager.sendTextMessage("+639064783858", null, Message, null, null);
-                        ReadingModel.UpdateTransferStatus(job_id, accountnumber);
-                    }
-                }
-                //"user,client,type,latitude,longitude,remark,comment,accountnumber,tag_desciption,details"
-                Log.i(TAG,Message);
-            }catch(Exception e){
-                Log.e(TAG,"Tristan Gary Leyesa : ",e);
-                result = false;
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            if(result){
-                Log.i(TAG,return_data + "TRUE");
-                //Liquid.showDialogInfo(GPSActivity.this,"Test",return_data);
-            }else{
-                Log.i(TAG,return_data + "FALSE");
-                //Liquid.showDialogInfo(GPSActivity.this,"Test",return_data);
-            }
-        }
-    }
-
     private void getDeviceLocation(){
         try{
             Log.d(TAG, "getDeviceLocation: getting the devices current location");
@@ -458,12 +368,12 @@ public class ReadingSummaryActivity extends BaseFormActivity {
                                     Location currentLocation = (Location) task.getResult();
                                     Latitude = String.valueOf(currentLocation.getLatitude());
                                     Longitude = String.valueOf(currentLocation.getLongitude());
-                                    new GPSPosting().execute();
+
+                                    LiquidGPS liquidGPS = new LiquidGPS(activity);
+                                    liquidGPS.PostRealtimeData(Latitude,Longitude);
                                 }catch (Exception e){
                                     Log.e(TAG,"Error",e);
                                 }
-
-
                             }else{
                                 Log.d(TAG, "onComplete: current location is null");
                             }
