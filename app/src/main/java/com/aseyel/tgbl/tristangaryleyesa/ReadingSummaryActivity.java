@@ -135,7 +135,8 @@ public class ReadingSummaryActivity extends BaseFormActivity {
 
                 switch (client){
                     case "more_power":
-                        SaveSurveyData();
+                        //SaveSurveyData();
+                        QuenedForSave();
                         break;
                     default:
                         QuenedForSave();
