@@ -1471,8 +1471,8 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 data.put("Filename", listFile[e].getName());
 
                                 if(Liquid.Client == "more_power"){
-                                    data.put("service_type", "Audit");
-//                                    data.put("service_type", "MeterReading");
+                                    //data.put("service_type", "Audit");
+                                   data.put("service_type", "MeterReading");
                                 }
                                 else{
                                     data.put("service_type", "MeterReading");
