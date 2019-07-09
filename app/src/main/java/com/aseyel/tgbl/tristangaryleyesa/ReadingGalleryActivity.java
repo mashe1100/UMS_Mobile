@@ -175,9 +175,9 @@ public class ReadingGalleryActivity extends BaseActivity {
                     if(Liquid.Client == "more_power"){
                         //for Survey
 //                        AccountNumber = Liquid.MeterNumber;
-                        ImageType = "audit";
+                        //ImageType = "audit";
                         AccountNumber = Liquid.AccountNumber;
-//                        ImageType = "reading";
+                        ImageType = "reading";
                     }
                     else{
                         AccountNumber = Liquid.AccountNumber;

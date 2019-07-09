@@ -1,21 +1,15 @@
 package com.aseyel.tgbl.tristangaryleyesa;
 
-import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.Location;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.telephony.SmsManager;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +17,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.aseyel.tgbl.tristangaryleyesa.data.Liquid;
-import com.aseyel.tgbl.tristangaryleyesa.http.HttpHandler;
 import com.aseyel.tgbl.tristangaryleyesa.model.MeterNotInListModel;
 import com.aseyel.tgbl.tristangaryleyesa.model.ReadingModel;
 import com.aseyel.tgbl.tristangaryleyesa.model.SurveyModel;
@@ -34,13 +27,6 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class ReadingSummaryActivity extends BaseFormActivity {
     private final String TAG = ReadingSummaryActivity.class.getSimpleName();
@@ -56,7 +42,6 @@ public class ReadingSummaryActivity extends BaseFormActivity {
     private String Latitude = "0";
     private String Longitude = "0";
     private ProgressDialog pDialog;
-    private Liquid.POSTApiData mPOSTApiData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,7 +135,8 @@ public class ReadingSummaryActivity extends BaseFormActivity {
 
                 switch (client){
                     case "more_power":
-                        SaveSurveyData();
+                        //SaveSurveyData();
+                        QuenedForSave();
                         break;
                     default:
                         QuenedForSave();
@@ -349,8 +335,6 @@ public class ReadingSummaryActivity extends BaseFormActivity {
         String Details = "";
         boolean result = false;
         String return_data = "";
-        JSONArray untransfered_data = new JSONArray();
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -392,8 +376,6 @@ public class ReadingSummaryActivity extends BaseFormActivity {
                 }
                 else{
                     while (result.moveToNext()) {
-                        this.result = true;
-
                         type = "1";
                         latitude = result.getString(2);
                         longitude = result.getString(3);
@@ -412,15 +394,8 @@ public class ReadingSummaryActivity extends BaseFormActivity {
                                         accountnumber + "," +
                                         tag_desciption + "," +
                                         details;
-
-                        JSONObject jsonObject = new JSONObject();
-                        jsonObject.put("message",Message);
-                        jsonObject.put("job_id",job_id);
-                        jsonObject.put("accountnumber",accountnumber);
-                        untransfered_data.put(jsonObject);
-
-//                        mSmsManager.sendTextMessage("+639064783858", null, Message, null, null);
-//                        ReadingModel.UpdateTransferStatus(job_id, accountnumber);
+                        mSmsManager.sendTextMessage("+639064783858", null, Message, null, null);
+                        ReadingModel.UpdateTransferStatus(job_id, accountnumber);
                     }
                 }
                 //"user,client,type,latitude,longitude,remark,comment,accountnumber,tag_desciption,details"
@@ -438,101 +413,10 @@ public class ReadingSummaryActivity extends BaseFormActivity {
             if(result){
                 Log.i(TAG,return_data + "TRUE");
                 //Liquid.showDialogInfo(GPSActivity.this,"Test",return_data);
-
-                //if there are un uploaded readings found, try posting directly to server one by one
-                for (int i=0; i<untransfered_data.length(); i++){
-                    try {
-                        JSONObject jsonObject = untransfered_data.getJSONObject(i);
-
-                        String message = jsonObject.getString("message");
-                        String jo_id = jsonObject.getString("jo_id");
-                        String accountnumber = jsonObject.getString("accountnumber");
-
-                        new GPSCloudPosting().execute(jo_id,accountnumber,message);
-                    }catch (Exception e){}
-                }
-
             }else{
                 Log.i(TAG,return_data + "FALSE");
                 //Liquid.showDialogInfo(GPSActivity.this,"Test",return_data);
             }
-        }
-    }
-
-    public class GPSCloudPosting extends AsyncTask<String,Void,Void> {
-
-        String Client = "";
-        String Details = "";
-        boolean result = false;
-        String return_data = "";
-
-        String job_id = "";
-        String accountnumber = "";
-        String Message = "";
-        SmsManager mSmsManager = SmsManager.getDefault();
-        String today = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss").format(new Date());
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            //865,iselco2,0,17.1415353166667,121.882277033333,,,,, (Structure)
-            Client  = Liquid.Client;
-            //Details = Build.SERIAL + "," + Liquid.Client + "," + "0" + "," + Latitude + ","+ Longitude + ",,,,,";
-        }
-
-        protected Void doInBackground(String... params) {
-            try{
-
-                HttpHandler sh = new HttpHandler();
-                mPOSTApiData = new Liquid.POSTApiData("fmts/php/api/Realtime.php");
-
-                job_id = params[0];
-                accountnumber = params[1];
-                Message = params[2];
-
-                JSONObject dataObject = new JSONObject();
-
-                dataObject.put("receiver_group","1");
-                dataObject.put("senttime", today);
-                dataObject.put("contact", Build.SERIAL); // serial muna -> dapat phone number
-                dataObject.put("details", Message);
-                dataObject.put("username",Liquid.Username);
-                dataObject.put("password",Liquid.Password);
-                dataObject.put("deviceserial", Build.SERIAL);
-                dataObject.put("sysid",Liquid.User);
-                Log.i(TAG, String.valueOf(dataObject));
-                String jsonStr = sh.makeServicePostCall(mPOSTApiData.API_Link,dataObject);
-                Log.i(TAG, String.valueOf(jsonStr));
-                return_data = jsonStr;
-                JSONObject response = Liquid.StringToJsonObject(jsonStr);
-                if (response.getString("result").equals("false")) {
-                    result = false;
-
-                } else {
-                    result = true;
-                }
-
-            }catch(Exception e){
-                Log.e(TAG,"Tristan Gary Leyesa : ",e);
-                result = false;
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            if(result){
-                Log.i(TAG,return_data + "TRUE");
-                //Liquid.showDialogInfo(GPSActivity.this,"Test",return_data);
-            }else{
-                Log.i(TAG,return_data + "FALSE");
-                //Liquid.showDialogInfo(GPSActivity.this,"Test",return_data);
-
-                mSmsManager.sendTextMessage("+639064783858",null,Message,null,null);
-            }
-
-            ReadingModel.UpdateTransferStatus(job_id, accountnumber);
         }
     }
 
