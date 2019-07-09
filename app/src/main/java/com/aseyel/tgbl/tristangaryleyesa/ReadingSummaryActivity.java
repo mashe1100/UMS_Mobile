@@ -42,6 +42,7 @@ public class ReadingSummaryActivity extends BaseFormActivity {
     private String Latitude = "0";
     private String Longitude = "0";
     private ProgressDialog pDialog;
+    private boolean isRequestingCoordinates = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +71,7 @@ public class ReadingSummaryActivity extends BaseFormActivity {
 //                    Liquid.r_longitude = Longitude;
 //                    Liquid.ShowMessage(ReadingSummaryActivity.this,"There is no coordinates detected!");
 //                }else{
-                    finalSave(Liquid.Client);
+                    finalSave();
 //                }
 
             }
@@ -105,7 +106,7 @@ public class ReadingSummaryActivity extends BaseFormActivity {
                 return true;
             case R.id.action_form_submit:
                  //QuenedForSave();
-                 finalSave(Liquid.Client);
+                 finalSave();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -113,11 +114,12 @@ public class ReadingSummaryActivity extends BaseFormActivity {
 
     }
 
-    public void finalSave(final String client){
+    public void finalSave(){
         int delay = 0;
         if(Double.parseDouble(Latitude) == 0.0) {
+            Handler.postDelayed(CoodinatesChecker,500);
             getDeviceLocation();
-            delay = 3000;
+            delay = 10000;
 
             pDialog = new ProgressDialog(ReadingSummaryActivity.this);
             pDialog.setMessage("Loading...");
@@ -125,26 +127,41 @@ public class ReadingSummaryActivity extends BaseFormActivity {
             pDialog.show();
         }
 
-        new Handler().postDelayed(new Runnable(){
-            @Override
-            public void run() {
-                pDialog.dismiss();
-
-                Liquid.r_latitude = Latitude;
-                Liquid.r_longitude = Longitude;
-
-                switch (client){
-                    case "more_power":
-                        //SaveSurveyData();
-                        QuenedForSave();
-                        break;
-                    default:
-                        QuenedForSave();
-                        break;
-                }
-            }
-        }, delay);
+        isRequestingCoordinates = true;
+        Handler.postDelayed(DisplaySaveDialog,delay);
     }
+
+    public static final Handler Handler = new Handler();
+    private final Runnable DisplaySaveDialog = new Runnable() {
+        public void run() {
+            isRequestingCoordinates = false;
+            pDialog.dismiss();
+
+            Liquid.r_latitude = Latitude;
+            Liquid.r_longitude = Longitude;
+
+            switch (Liquid.Client){
+                case "more_power":
+                    //SaveSurveyData();
+                    QuenedForSave();
+                    break;
+                default:
+                    QuenedForSave();
+                    break;
+            }
+
+        }
+    };
+    private final Runnable CoodinatesChecker = new Runnable() {
+        public void run() {
+            if(Double.parseDouble(Latitude) != 0.0){
+                Handler.removeCallbacks(DisplaySaveDialog);
+                Handler.post(DisplaySaveDialog);
+            }else
+                if(isRequestingCoordinates)
+                    Handler.postDelayed(CoodinatesChecker,500);
+        }
+    };
 
     public void QuenedForSave() {
 
@@ -174,7 +191,7 @@ public class ReadingSummaryActivity extends BaseFormActivity {
                             break;
 
                         case DialogInterface.BUTTON_NEUTRAL:
-                            finalSave(Liquid.Client);
+                            finalSave();
                             dialog.cancel();
                             break;
 
@@ -221,7 +238,7 @@ public class ReadingSummaryActivity extends BaseFormActivity {
                             break;
 
                         case DialogInterface.BUTTON_NEUTRAL:
-                            finalSave(Liquid.Client);
+                            finalSave();
                             dialog.cancel();
                             break;
 
@@ -276,7 +293,7 @@ public class ReadingSummaryActivity extends BaseFormActivity {
                         break;
 
                     case DialogInterface.BUTTON_NEUTRAL:
-                        finalSave(Liquid.Client);
+                        finalSave();
                         dialog.cancel();
                         break;
 
