@@ -3,6 +3,7 @@ package com.aseyel.tgbl.tristangaryleyesa;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
@@ -197,6 +198,24 @@ public class ReadingGalleryActivity extends BaseActivity {
                     );
 
                     if (result == true) {
+                        Liquid.imageOrientation = "";
+                        ExifInterface exif = new ExifInterface(mFile.getAbsolutePath());
+                        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+                        switch (orientation) {
+                            case ExifInterface.ORIENTATION_ROTATE_270:
+                                Liquid.imageOrientation = "Portrait";
+                                break;
+                            case ExifInterface.ORIENTATION_ROTATE_180:
+                                Liquid.imageOrientation = "Landscape";
+
+                                break;
+                            case ExifInterface.ORIENTATION_ROTATE_90:
+                                Liquid.imageOrientation = "Portrait";
+                                break;
+                            default:
+                                Liquid.imageOrientation = "Landscape";
+                        }
 
                         Liquid.resizeImage(mFile.getAbsolutePath(), 0.80, 0.80);
                         Liquid.ShowMessage(getApplicationContext(), "Save Image Success");
