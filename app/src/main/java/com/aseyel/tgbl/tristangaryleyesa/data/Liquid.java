@@ -117,6 +117,7 @@ public class Liquid extends AppCompatActivity {
     public static Bitmap UserSignature ;
     public static boolean UploadResult = false;
     public static String imageFormat = ".jpg";
+    public static String imageOrientation = "";
     public static String QRCode = "";
     public static String Username = "tgbleyesa";
     public static String Password = "C0mpl3x17y";
@@ -2692,17 +2693,26 @@ public class Liquid extends AppCompatActivity {
         //return new File(file,"/DCIM");
     }
     public static void resizeImage(String mFile,double heightPercent,double widthPercent) {
+        //resizes image file to smaller size so it is more efficient for uploading.
+        //resize varies to image capture orientation. default is portrait ( height > width )
         Bitmap mBitmap = BitmapFactory.decodeFile(mFile);
-        //double height = mBitmap.getHeight()  * heightPercent;
-        //double width = mBitmap.getWidth()  * widthPercent;
+//        double height = mBitmap.getHeight()  * heightPercent;
+//        double width = mBitmap.getWidth()  * widthPercent;
         //HD
-        double height = 1280;
-        double width = 960;
+//        double height = 1280;
+//        double width = 960;
+        //Normal Resolution
+        double height = 800;
+        double width = 480;
 
+        if(Liquid.imageOrientation.matches("Landscape")){
+            height = 480;
+            width = 800;
+        }
 
         Bitmap bMapScaled = Bitmap.createScaledBitmap(mBitmap,  (int)width, (int)height, true);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bMapScaled.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bMapScaled.compress(Bitmap.CompressFormat.JPEG, 70, baos);
 
         try {
                 File f = new File(mFile);
