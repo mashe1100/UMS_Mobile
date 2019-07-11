@@ -204,18 +204,20 @@ public class ReadingGalleryActivity extends BaseActivity {
 
                         switch (orientation) {
                             case ExifInterface.ORIENTATION_ROTATE_270:
-                                Liquid.imageOrientation = "Portrait";
+                                Liquid.imageOrientation = "Landscape";
                                 break;
                             case ExifInterface.ORIENTATION_ROTATE_180:
-                                Liquid.imageOrientation = "Landscape";
+                                Liquid.imageOrientation = "Portrait";
 
                                 break;
                             case ExifInterface.ORIENTATION_ROTATE_90:
-                                Liquid.imageOrientation = "Portrait";
+                                Liquid.imageOrientation = "Landscape";
                                 break;
                             default:
-                                Liquid.imageOrientation = "Landscape";
+                                Liquid.imageOrientation = "Portrait";
                         }
+
+                        Log.e("Image Orientation: ",Liquid.imageOrientation +" ("+orientation+")");
 
                         Liquid.resizeImage(mFile.getAbsolutePath(), 0.80, 0.80);
                         Liquid.ShowMessage(getApplicationContext(), "Save Image Success");
