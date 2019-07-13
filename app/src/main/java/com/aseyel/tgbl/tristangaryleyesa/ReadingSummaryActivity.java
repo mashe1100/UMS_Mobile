@@ -2,7 +2,9 @@ package com.aseyel.tgbl.tristangaryleyesa;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -214,6 +216,18 @@ public class ReadingSummaryActivity extends BaseFormActivity {
 
           builder.show();
         }else{
+
+          BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+          if(!bluetoothAdapter.isEnabled()){
+              Intent intentOpenBluetoothSettings = new Intent();
+              intentOpenBluetoothSettings.setAction(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
+              startActivity(intentOpenBluetoothSettings);
+//              Intent enableBT = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+//              startActivityForResult(enableBT,0);
+//              loading.dismiss();
+              return;
+          }
+
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -415,6 +429,7 @@ public class ReadingSummaryActivity extends BaseFormActivity {
                 Liquid.printlongitude = Longitude;
                 Liquid.Print_TimeStamp = Liquid.currentDateTime();
                 Liquid.Print_Attempt = String.valueOf(Integer.parseInt(Liquid.Print_Attempt) + 1);
+                Liquid.PrintResponse = false;
                 LiquidPrintBill mLiquidPrintBill = new LiquidPrintBill();
                 result = mLiquidPrintBill.pairPrinter();
                 Thread.sleep(3000);
@@ -428,26 +443,27 @@ public class ReadingSummaryActivity extends BaseFormActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            try {
-
-
-
-                if (result) {
-                    result = false;
-                    boolean result_logs = false;
-                    result = Liquid.SaveReading();
-                    result_logs = Liquid.SaveReadingLogs();
-                    Liquid.showReadingDialogNext(ReadingSummaryActivity.this, "Valid", "Successfully Print!");
-                    //ShowReprint();
-                } else {
-                    Liquid.showDialogError(ReadingSummaryActivity.this, "Invalid", result2);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        if (Liquid.PrintResponse) {
+                            result = false;
+                            boolean result_logs = false;
+                            result = Liquid.SaveReading();
+                            result_logs = Liquid.SaveReadingLogs();
+                            Liquid.showReadingDialogNext(ReadingSummaryActivity.this, "Valid", "Successfully Print!");
+                            //ShowReprint();
+                        } else {
+                            Liquid.showDialogError(ReadingSummaryActivity.this, "Invalid", result2);
+                        }
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    if (pDialog.isShowing())
+                        pDialog.dismiss();
                 }
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-            if (pDialog.isShowing())
-                pDialog.dismiss();
-
+            },1000);
         }
     }
 
