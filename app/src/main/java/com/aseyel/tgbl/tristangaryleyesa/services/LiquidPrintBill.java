@@ -154,10 +154,10 @@ public class LiquidPrintBill {
 
                         }
 
+                        Liquid.PrintResponse = true;
                         Thread.sleep(5000);
                         outputStream.close();
                         BA.cancelDiscovery();
-
                     } catch (IOException e) {
                         Log.e(TAG,"IOException");
                         e.printStackTrace();
