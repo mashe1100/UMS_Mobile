@@ -155,12 +155,12 @@ public class Liquid extends AppCompatActivity {
 
     //READ AND BILL
 //    public static String Client = "batelec2";
-    public static String Client = "more_power";
+//    public static String Client = "more_power";
     // EDIT INIT LINE 99 AUDIT to READING (READING GALLERY ACTIVITY)
     // EDIT GetImages Line 180 AUDIT to READING (READING GALLERY ACTIVITY)
     // EDIT GetImages Line 1475 AUDIT to READING (TAB LOCAL FRAGMENT)
     // Please edit remarks reference // MeterReadingRemarksData
-//    public static String Client = "ileco2"; //Please edit remarks reference // MeterReadingIleco2RemarksData
+    public static String Client = "ileco2"; //Please edit remarks reference // MeterReadingIleco2RemarksData
 //    public static String Client = "pelco2"; //Please edit remarks reference // MeterReadingPelco2RemarksData
     public static String ServiceType = "READ AND BILL";
 //    public static String ImageType = "audit";
@@ -390,6 +390,7 @@ public class Liquid extends AppCompatActivity {
     public static String ModifiedBy= "";
     public static String delivery_remarks= "";
     public static boolean reprint = false;
+    public static boolean PrintResponse = false;
 
     public static String ContactNumber = "";
     public static String EmailAdd = "";
