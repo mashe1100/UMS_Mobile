@@ -137,6 +137,7 @@ public class LiquidBilling {
             trate_sup_charge= 0,
             trate_met_charge= 0,
             arrears = 0,
+            arrears_penalty = 0,
             arrears_additional = 0,
             eda = 0,
             surcharge = 0,
@@ -343,6 +344,46 @@ public class LiquidBilling {
         total_amount_due= 0;
         total_rental_others= 0;
         total_energy_charges =0;
+    }
+
+    public double RatesPenaltyComputation(double arrears, String AccountType){
+        // created an array with a length of 5 to get the value of penalty with the given arrears amount range
+        // rate range is 100 > 250 > 500 > 2000 > 999999
+        double penaltyamount = 0;
+        double[] penalty = new double[5];
+        double[] penaltyrange = {100.00,250.00,500.00,2000.00,999999999999.00};
+        double[] CLVpenaltyrates = {40,40,40,60,80};
+        double[] LVpenaltyrates = {40,40,40,60,80};
+        double[] PLVpenaltyrates = {20,30,40,50,50};
+        double[] SLVpenaltyrates = {20,30,40,50,50};
+        double[] Rpenaltyrates = {20,30,40,50,50};
+
+        // penalty amount varies to account type
+        switch (AccountType){
+            case "CLV":
+                penalty = CLVpenaltyrates;
+                break;
+            case "LV":
+                penalty = LVpenaltyrates;
+                break;
+            case "PLV":
+                penalty = PLVpenaltyrates;
+                break;
+            case "SLV":
+                penalty = SLVpenaltyrates;
+                break;
+            case "R":
+                penalty = Rpenaltyrates;
+                break;
+        }
+
+        for (int i=0; i<penaltyrange.length; i++)
+            if(arrears <= penaltyrange[i]){
+                penaltyamount =  penalty[i];
+                break;
+            }
+
+        return penaltyamount;
     }
 
     public double RatesKWHComputation(String KWH, String Rates){
@@ -784,10 +825,17 @@ public class LiquidBilling {
 
         //Arrears
         arrears = Double.parseDouble(Arrears);
-        if(arrears > 0)
+        if(arrears > 0) {
+            //service fee
             arrears_additional = 50;
-        else
+            arrears_penalty = RatesPenaltyComputation(arrears,Liquid.AccountType);
+        } else {
+            //service fee
             arrears_additional = 0;
+            arrears_penalty = 0;
+        }
+
+
 
         //SubTotal
         total_gen_trans = Double.parseDouble(Liquid.StringRoundUp2D(total_gen_trans));
@@ -812,7 +860,7 @@ public class LiquidBilling {
 
 //        total_current_bill = Liquid.RoundUp(total_gen_trans + total_distribution_revenue + total_universal + total_others + total_rfsc + total_prompt_payment_disc_adj);
         total_current_bill = Liquid.RoundUp(total_energy_charges + total_senior + surcharge + overdue );
-        total_amount_due = Liquid.RoundUp(total_energy_charges + total_senior +arrears + arrears_additional+arrears_additional+ surcharge + overdue );
+        total_amount_due = Liquid.RoundUp(total_energy_charges + total_senior +arrears + arrears_penalty+arrears_additional+ surcharge + overdue );
 
         rentalfee =  Double.parseDouble(Liquid.rentalfee) > total_amount_due ? Double.parseDouble(Liquid.rentalfee) : total_amount_due;
         Liquid.rentalfee = String.valueOf(rentalfee); //gov subsidy
