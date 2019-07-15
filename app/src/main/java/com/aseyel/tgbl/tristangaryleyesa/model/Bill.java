@@ -198,7 +198,7 @@ public class Bill {
                     new BillItem(                                                                                                           ItemStyle.Separator),
                     new BillItem("Amount Due before Due",                        String.valueOf(LiquidBilling.total_current_bill), ItemStyle.Total),
                     new BillItem("Previous unpaid balance",                     String.valueOf(LiquidBilling.arrears), ItemStyle.OptionalFooterAdditional),
-                    new BillItem("Penalty Fee",                     String.valueOf(LiquidBilling.arrears_additional), ItemStyle.OptionalFooterAdditional),
+                    new BillItem("Penalty Fee",                     String.valueOf(LiquidBilling.arrears_penalty), ItemStyle.OptionalFooterAdditional),
                     new BillItem("Service Fee",                     String.valueOf(LiquidBilling.arrears_additional), ItemStyle.OptionalFooterAdditional),
                     new BillItem("ARREARS (Due immediately)",                         String.valueOf(LiquidBilling.arrears+(LiquidBilling.arrears_additional*2)), ItemStyle.OptionalFooterAdditional),
                     new BillItem("TOTAL AMOUNT DUE",                        String.valueOf(LiquidBilling.total_amount_due), ItemStyle.Total),
