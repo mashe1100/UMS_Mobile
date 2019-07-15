@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         setup();
 
 
-        //AutoLogin("ums_job");
+        AutoLogin("ums_job");
     }
 
     private void UpdateUser(){
