@@ -117,7 +117,7 @@ public class LiquidPrintBill {
                                 WriteTitleIleco2(0); //ok
                                 WriteHeaderIleco2(1); //ok
                                 WriteDetailsIleco2(mBill.BillItemsIleco2);
-                                if(LiquidBilling.arrears != 0)
+                                if(LiquidBilling.arrears > 0)
                                     WriteOptionalNoticeIleco2();
                                 WriteNoticeIleco2();
                                 break;
