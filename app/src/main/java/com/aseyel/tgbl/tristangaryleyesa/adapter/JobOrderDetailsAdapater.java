@@ -330,7 +330,7 @@ public class JobOrderDetailsAdapater extends RecyclerView.Adapter<RecyclerView.V
                     tvJobOrderDetailsTitle.setTextColor(view.getResources().getColor(R.color.colorAccent));
                     tvJobOrderDetailsDetails.setTextColor(view.getResources().getColor(R.color.colorAccent));
 
-                    if(JobOrdersDetailsItems.Status.equals("DISCD") || JobOrdersDetailsItems.Status.equals("WOFF") ){
+                    if(JobOrdersDetailsItems.Status.equals("DISCONNECTED") || JobOrdersDetailsItems.Status.equals("DISCD") || JobOrdersDetailsItems.Status.equals("WOFF") ){
                         llJobDetails.setBackgroundColor(Color.RED);
                         tvJobOrderDetailsTitle.setTextColor(view.getResources().getColor(R.color.colorPrimary));
                         tvJobOrderDetailsDetails.setTextColor(view.getResources().getColor(R.color.colorPrimary));
