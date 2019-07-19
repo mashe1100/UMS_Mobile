@@ -1055,8 +1055,14 @@ public class ReadingV2Activity extends BaseActivity {
                 }
             };
 
-            if(!Liquid.DateChangeMeter.equals("") && Liquid.ConsumerStatus.equals("CHANGE METER")
-                    && (Liquid.coreloss.equals("0") || Liquid.coreloss.equals(""))){
+
+
+
+            if(!Liquid.DateChangeMeter.equals("") &&
+                    Liquid.ConsumerStatus.equals("CHANGE METER") &&
+                    (Liquid.coreloss.equals("0") ||
+                     Liquid.coreloss.equals("") ||
+                            Double.parseDouble(Liquid.coreloss) <= 0)){
 
                 Liquid.Present_Consumption = String.valueOf(ChangeMeterKWH(
                         Liquid.ConvertStringToDate(Liquid.DateChangeMeter),
