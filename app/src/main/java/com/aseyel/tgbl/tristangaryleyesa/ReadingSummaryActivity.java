@@ -216,18 +216,6 @@ public class ReadingSummaryActivity extends BaseFormActivity {
 
           builder.show();
         }else{
-
-          BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-          if(!bluetoothAdapter.isEnabled()){
-              Intent intentOpenBluetoothSettings = new Intent();
-              intentOpenBluetoothSettings.setAction(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
-              startActivity(intentOpenBluetoothSettings);
-//              Intent enableBT = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//              startActivityForResult(enableBT,0);
-//              loading.dismiss();
-              return;
-          }
-
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -248,6 +236,13 @@ public class ReadingSummaryActivity extends BaseFormActivity {
                             break;
 
                         case DialogInterface.BUTTON_NEGATIVE:
+                            BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                            if(!bluetoothAdapter.isEnabled()){
+                                Intent intentOpenBluetoothSettings = new Intent();
+                                intentOpenBluetoothSettings.setAction(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
+                                startActivity(intentOpenBluetoothSettings);
+                                return;
+                            }
                             new PrintBill().execute();
                             getDeviceLocation();
                             dialog.cancel();
