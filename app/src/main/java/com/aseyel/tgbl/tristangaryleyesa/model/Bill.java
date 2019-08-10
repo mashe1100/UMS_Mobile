@@ -200,7 +200,7 @@ public class Bill {
                     new BillItem("Previous unpaid balance",                     String.valueOf(LiquidBilling.arrears), ItemStyle.OptionalFooterAdditional),
                     new BillItem("Penalty Fee",                     String.valueOf(LiquidBilling.arrears_penalty), ItemStyle.OptionalFooterAdditional),
                     new BillItem("Service Fee",                     String.valueOf(LiquidBilling.arrears_additional), ItemStyle.OptionalFooterAdditional),
-                    new BillItem("ARREARS (Due immediately)",                         String.valueOf(LiquidBilling.arrears+(LiquidBilling.arrears_additional*2)), ItemStyle.OptionalFooterAdditional),
+                    new BillItem("ARREARS (Due immediately)",                         String.valueOf(LiquidBilling.arrears+(LiquidBilling.arrears_additional+LiquidBilling.arrears_penalty)), ItemStyle.OptionalFooterAdditional),
                     new BillItem("TOTAL AMOUNT DUE",                        String.valueOf(LiquidBilling.total_amount_due), ItemStyle.Total),
                     new BillItem("Due Date for "+Liquid.dateChangeFormat(Liquid.BillMonth,"MM","MMM") +" "+Liquid.BillYear ,      Liquid.dateChangeFormat(Liquid.duedate,"yyyy-MM-dd","MM/dd/yyyy"), ItemStyle.Aftertotal),
                     new BillItem(                                           ItemStyle.Separator),
@@ -375,8 +375,12 @@ public class Bill {
                 if ((style == ItemStyle.OptionalDetail || style == ItemStyle.OptionalFooter ||
                         style == ItemStyle.OptionalSeparator || style == ItemStyle.Notice1 ||
                         style == ItemStyle.Notice2 || style == ItemStyle.Notice3 ||
-                        style == ItemStyle.OptionalFooter2 || style == ItemStyle.OptionalFooterAdditional) &&
-                        amount == 0)
+                        style == ItemStyle.OptionalFooter2 ) && amount == 0)
+                    continue;
+
+                // An optional line is not printed if the amount LESS THAN or EQUAL 0.00
+                if ((style == ItemStyle.OptionalFooterAdditional) &&
+                        amount <= 0)
                     continue;
 
                 count++;
