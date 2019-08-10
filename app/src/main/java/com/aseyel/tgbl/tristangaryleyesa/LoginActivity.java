@@ -1,17 +1,24 @@
 package com.aseyel.tgbl.tristangaryleyesa;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.aseyel.tgbl.tristangaryleyesa.data.Liquid;
 import com.aseyel.tgbl.tristangaryleyesa.http.HttpHandler;
@@ -46,6 +53,56 @@ public class LoginActivity extends AppCompatActivity {
 
 
         AutoLogin("ums_job");
+//        AutoLogin("ums_delivery");
+
+    }
+
+    private void BarcodeLogin(String barcode){
+        try{
+            Username = barcode;
+            Password = barcode;
+            new GetUserListDetails().execute();
+
+            new UMSAuth().execute(Username,Password,"ums_job");
+        }catch (Exception e){}
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getCharacters() != null && !event.getCharacters().isEmpty()){
+
+            try{
+
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                    builder.setMessage(event.getCharacters())
+                            .setTitle(event.getCharacters())
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+
+
+
+
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    final AlertDialog alert = builder.create();
+                    alert.setOnShowListener( new DialogInterface.OnShowListener() {
+                        @Override
+                        public void onShow(DialogInterface arg0) {
+                            alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
+                            alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
+                        }
+                    });
+                    alert.show();
+
+            }catch (Exception e){}
+        }
+
+        return super.dispatchKeyEvent(event);
     }
 
     private void UpdateUser(){
@@ -80,10 +137,59 @@ public class LoginActivity extends AppCompatActivity {
         try{
 
             etUsername  = (EditText) findViewById(R.id.etUsername);
+            etUsername.addTextChangedListener(new TextWatcher() {
+                int charcount = 0;
+                String character = "";
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    charcount = etUsername.getText().toString().length();
+                    character = etUsername.getText().toString();
+                }
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if(etUsername.getText().toString().length() != 0)
+                        if(etUsername.getText().toString().length() - charcount > 2){
+
+                            if(charcount !=0)
+                                etUsername.setText(etUsername.getText().toString().substring(charcount,etUsername.getText().toString().length()));
+
+                            BarcodeLogin(etUsername.getText().toString());
+                            etUsername.setText("");
+                        }
+                }
+            });
             etPassword = (EditText) findViewById(R.id.etPassword);
+            etPassword.addTextChangedListener(new TextWatcher() {
+                int charcount = 0;
+                String character = "";
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    charcount = etPassword.getText().toString().length();
+                    character = etPassword.getText().toString();
+                }
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if(etPassword.getText().toString().length() != 0)
+                        if(etPassword.getText().toString().length() - charcount > 2){
+
+                            if(charcount !=0)
+                                etPassword.setText(etPassword.getText().toString().substring(charcount,etPassword.getText().toString().length()));
+
+                            BarcodeLogin(etPassword.getText().toString());
+                            etPassword.setText("");
+                        }
+                }
+            });
             btnLogin = (Button) findViewById(R.id.btnLogin);
             final_result_user = new JSONArray();
-
 
             btnLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -96,7 +202,7 @@ public class LoginActivity extends AppCompatActivity {
                         new GetUserListDetails().execute();
 
                         new UMSAuth().execute(Username,Password,"ums_job");
-                        //new UMSAuth().execute(Username,Password,"ums_delivery");
+//                        new UMSAuth().execute(Username,Password,"ums_delivery");
 
 
 
