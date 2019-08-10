@@ -80,12 +80,14 @@ import java.util.concurrent.TimeUnit;
 
 public class Liquid extends AppCompatActivity {
     public static final String DATABASE_NAME = "ums_mobile.db";
-    //public static String pathEnvironment = "USI_TEST";
+//    public static String pathEnvironment = "USI_TEST";
     public static String pathEnvironment = "USI_BETA";
+    //MORE POWER path
+//    public static String pathEnvironment = "USI";
     //UMS server
     private static final String umsUrl = "usi.3utilities.com:14147";
     //MORE POWER server
-    //private static final String umsUrl = "125.5.181.225:8080";
+//    private static final String umsUrl = "125.5.181.225:8080";
 
     private static final String TAG = "Liquid";
     public static String DefaultErrorMessage = "An error has occured!";
@@ -168,10 +170,10 @@ public class Liquid extends AppCompatActivity {
 
     //public static String Client = "ngc_express";
     //public static String ServiceType = "LOGISTICS";
-    //public static String Client = "meralco_batangas";
-    //public static String Client = "meralco_lucena";
-    //public static String Client = "philpost";
-    //public static String ServiceType = "MESSENGER";
+//    public static String Client = "meralco_batangas";
+//    public static String Client = "meralco_lucena";
+//    public static String Client = "philpost";
+//    public static String ServiceType = "MESSENGER";
 
     //public static String Client = "athena";
     //public static String ServiceType = "ADMIN";
@@ -386,6 +388,7 @@ public class Liquid extends AppCompatActivity {
     public static String cc_rstc_refund2= "";
     public static String moa= "";
     public static String eda= "";
+    public static String sysgenpenalty= "";
     public static String ModifiedDate= "";
     public static String ModifiedBy= "";
     public static String delivery_remarks= "";
@@ -2700,15 +2703,19 @@ public class Liquid extends AppCompatActivity {
 //        double height = mBitmap.getHeight()  * heightPercent;
 //        double width = mBitmap.getWidth()  * widthPercent;
         //HD
-//        double height = 1280;
-//        double width = 960;
+        double height = 1280;
+        double width = 960;
         //Normal Resolution
-        double height = 800;
-        double width = 480;
+//        double height = 800;
+//        double width = 480;
 
+//        if(Liquid.imageOrientation.matches("Landscape")){
+//            height = 480;
+//            width = 800;
+//        }
         if(Liquid.imageOrientation.matches("Landscape")){
-            height = 480;
-            width = 800;
+            height = 960;
+            width = 1280;
         }
 
         Bitmap bMapScaled = Bitmap.createScaledBitmap(mBitmap,  (int)width, (int)height, true);
