@@ -828,7 +828,10 @@ public class LiquidBilling {
         if(arrears > 0) {
             //service fee
             arrears_additional = 50;
-            arrears_penalty = RatesPenaltyComputation(arrears,Liquid.AccountType);
+//            arrears_penalty = RatesPenaltyComputation(arrears,Liquid.AccountType);
+
+            // computed penalty (system generated) depends on amount and months .
+            arrears_penalty = Double.parseDouble(Liquid.interest);
         } else {
             //service fee
             arrears_additional = 0;
