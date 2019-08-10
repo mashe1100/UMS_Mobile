@@ -40,7 +40,9 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChangePasswordActivity"></activity>
+        <activity android:name=".OCRActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".ChangePasswordActivity" />
         <activity
             android:name=".SplashActivity"
             android:label="@string/title_activity_main"
@@ -52,7 +54,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <!--
         <activity
             android:name=".GPSActivity"
@@ -81,9 +82,7 @@
                 <data android:scheme="sms" />
                 <data android:scheme="smsto" />
             </intent-filter>
-        </activity>
-
-        <!-- BroadcastReceiver that listens for incoming SMS messages -->
+        </activity> <!-- BroadcastReceiver that listens for incoming SMS messages -->
         <receiver
             android:name=".services.SmsReceiver"
             android:permission="android.permission.BROADCAST_SMS">
@@ -99,8 +98,7 @@
 
                 <data android:mimeType="application/vnd.wap.mms-message" />
             </intent-filter>
-        </receiver>
-        <!-- Service that delivers messages from the phone "quick response" -->
+        </receiver> <!-- Service that delivers messages from the phone "quick response" -->
         <service
             android:name=".services.HeadlessSmsSendService"
             android:exported="true"
@@ -176,30 +174,23 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".TrackingSignatureActivity"
-            android:screenOrientation="portrait" />
-        <!-- <activity android:name=".QRCodeActivity" /> -->
+            android:screenOrientation="portrait" /> <!-- <activity android:name=".QRCodeActivity" /> -->
         <activity
             android:name=".QRCodeScannerActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".BaseDrawerActivity"
             android:label="@string/title_activity_base_drawer"
-            android:theme="@style/AppTheme" />
-
-        <!-- MAP API -->
+            android:theme="@style/AppTheme" /> <!-- MAP API -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBw2XxIBk23SunFMWB4nWOpasoJw7uTJfo" />
-        <!-- MAP API -->
-
+            android:value="AIzaSyBw2XxIBk23SunFMWB4nWOpasoJw7uTJfo" /> <!-- MAP API -->
         <activity
             android:name=".TrackingFullScreenImageActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".TrackingCommentActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- <activity android:name=".CreateJobOrderActivity" /> -->
+            android:screenOrientation="portrait" /> <!-- <activity android:name=".CreateJobOrderActivity" /> -->
         <activity
             android:name=".NewJobOrderActivity"
             android:screenOrientation="portrait" />
@@ -211,10 +202,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".AuditTravelRideActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- <activity android:name=".PWPersonIdentifierQRodeActivity"></activity> -->
-
+            android:screenOrientation="portrait" /> <!-- <activity android:name=".PWPersonIdentifierQRodeActivity"></activity> -->
         <activity
             android:name=".GalleryActivity"
             android:screenOrientation="portrait" />
@@ -266,15 +254,20 @@
         <activity
             android:name=".SurveyActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".DeliveryMainActivity"
+        <activity
+            android:name=".DeliveryMainActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".DeliveryReceived"
+        <activity
+            android:name=".DeliveryReceived"
             android:screenOrientation="portrait" />
-        <activity android:name=".DeliveryActivityV2"
+        <activity
+            android:name=".DeliveryActivityV2"
             android:screenOrientation="portrait" />
-        <activity android:name=".TypeActivity"
+        <activity
+            android:name=".TypeActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".SignatureActivity"
+        <activity
+            android:name=".SignatureActivity"
             android:screenOrientation="portrait" />
     </application>
 

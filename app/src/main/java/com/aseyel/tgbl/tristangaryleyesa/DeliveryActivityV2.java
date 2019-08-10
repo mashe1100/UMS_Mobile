@@ -1,7 +1,10 @@
 package com.aseyel.tgbl.tristangaryleyesa;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -130,9 +133,41 @@ public class DeliveryActivityV2 extends BaseActivity {
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Liquid.TrackingNumber = "";
-                Intent i = new Intent(getApplicationContext(), QRCodeScannerActivity.class);
-                startActivity(i);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(DeliveryActivityV2.this);
+                builder.setMessage("Choose type of scanner")
+                        .setTitle("SCAN")
+                        .setPositiveButton("BARCODE", new DialogInterface.OnClickListener() {
+                            public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+
+                                Liquid.TrackingNumber = "";
+                                Intent i = new Intent(getApplicationContext(), QRCodeScannerActivity.class);
+                                startActivity(i);
+
+
+                            }
+                        })
+                        .setNegativeButton("OCR", new DialogInterface.OnClickListener() {
+                            public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+
+                                Intent intent = new Intent(DeliveryActivityV2.this,OCRActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+
+                                dialog.dismiss();
+                            }
+                        });
+                final AlertDialog alert = builder.create();
+                alert.setOnShowListener( new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface arg0) {
+                        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
+                        alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
+                    }
+                });
+                alert.show();
             }
         });
         btnNext.setOnClickListener(new View.OnClickListener() {
@@ -152,5 +187,7 @@ public class DeliveryActivityV2 extends BaseActivity {
             }
         });
 
+        Intent intent = new Intent(DeliveryActivityV2.this,OCRActivity.class);
+        startActivity(intent);
     }
 }
