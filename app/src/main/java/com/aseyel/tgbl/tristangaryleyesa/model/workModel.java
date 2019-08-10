@@ -331,9 +331,9 @@ public class workModel {
         String orderby = "";
         //i add this paramater/switch just because of the needs of more powerr project
         switch(Liquid.Client){
-            case "more_power":
-                orderby = " ORDER BY c.Complete_Address,CAST(c.CED_Sequence as INTEGER) ASC";
-                break;
+//            case "more_power":
+//                orderby = " ORDER BY c.Complete_Address,CAST(c.CED_Sequence as INTEGER) ASC";
+//                break;
             default:
                 orderby = " ORDER BY CAST(c.CED_Sequence as INTEGER) ASC";
         }
