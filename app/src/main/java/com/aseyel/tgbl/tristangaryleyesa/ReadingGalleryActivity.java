@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -92,6 +94,8 @@ public class ReadingGalleryActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 try {
+                    permissionCamera();
+
                     Filename = Liquid.AccountNumber + "_"+"reading"+"_"+ Liquid.RemoveSpecialCharacter(Liquid.ReadingDate) + "_" + String.valueOf(mUri.size() + 1) + Liquid.imageFormat;
 
                     if (Liquid.Client == "more_power"){
@@ -135,6 +139,11 @@ public class ReadingGalleryActivity extends BaseActivity {
             }
         });
 
+    }
+
+    private void permissionCamera(){
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
     }
 
     public class GetImages extends AsyncTask<Void,Void,Void>{
@@ -226,9 +235,9 @@ public class ReadingGalleryActivity extends BaseActivity {
                         ImageCount = mUri.size();
 
                     }
+
                     animation = false;
                     new GetImages().execute();
-
                 }
             }
 
