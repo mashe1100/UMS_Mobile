@@ -211,7 +211,8 @@ public class workModel {
         return SplashActivity.mDatabaseHelper.SqliteSelectQuery(
                 "SELECT "+
                         "remarks_id,"+ //0
-                        "remarks_description "+ //1
+                        "remarks_description, "+ //1
+                        "remarks_abbreviation "+ //2
                         "FROM ref_remarks " +
                         "WHERE remarks_id like '%"+Remarks+"%' OR " +
                         "remarks_description like '%"+Remarks+"%' " +
