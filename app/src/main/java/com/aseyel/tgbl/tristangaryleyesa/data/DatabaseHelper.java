@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.media.MediaScannerConnection;
 import android.util.Log;
+import android.widget.Switch;
 
 import com.aseyel.tgbl.tristangaryleyesa.services.LiquidFileUtils;
 
@@ -167,12 +168,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.execSQL(LiquidReference.IndexMeterReadingMOA);
             db.execSQL(LiquidReference.CreateViewJobOrderDetails);
 
-            //MORE POWER
-            for(int a = 0; a < LiquidReference.MeterReadingMorePowerRemarksData.length; a++) {
-                db.execSQL(LiquidReference.MeterReadingMorePowerRemarksData[a]);
+            switch (Liquid.Client){
+                case "more_power":
+                    for(int a = 0; a < LiquidReference.MeterReadingMorePowerRemarksData.length; a++) {
+                        db.execSQL(LiquidReference.MeterReadingMorePowerRemarksData[a]);
+                    }
+                    break;
+                case "baliwag_wd":
+                    for(int a = 0; a < LiquidReference.MeterReadingBaliwagWDRemarksData.length; a++) {
+                        db.execSQL(LiquidReference.MeterReadingBaliwagWDRemarksData[a]);
+                    }
+                    break;
+                default:
+                    for(int a = 0; a < LiquidReference.MeterReadingIleco2RemarksData.length; a++) {
+                        db.execSQL(LiquidReference.MeterReadingIleco2RemarksData[a]);
+                    }
             }
+            //MORE POWER
+//            for(int a = 0; a < LiquidReference.MeterReadingMorePowerRemarksData.length; a++) {
+//                db.execSQL(LiquidReference.MeterReadingMorePowerRemarksData[a]);
+//            }
 //            //ILECO II REMARKS
-//
 //            for(int a = 0; a < LiquidReference.MeterReadingIleco2RemarksData.length; a++) {
 //                        db.execSQL(LiquidReference.MeterReadingIleco2RemarksData[a]);
 //            }
@@ -186,9 +202,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //            for(int a = 0; a < LiquidReference.MeterReadingRemarksData.length; a++) {
 //                        db.execSQL(LiquidReference.MeterReadingRemarksData[a]);
 //            }
-
-
-
 
 
             for(int a = 0; a < LiquidReference.MeterReadingDeliveryRemarksData.length; a++) {
