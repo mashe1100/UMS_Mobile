@@ -1172,6 +1172,68 @@ public class LiquidBilling {
         Liquid.rentalfee = String.valueOf(rentalfee); //gov subsidy
     }
 
+    public void BaliwagWDBillingComputaion(String Consumption,
+                                                String Demand,
+                                                String RateCode,
+                                                String Classification,
+                                                String BillingCycle,
+                                                String Arrears,
+                                                String EDATag,
+                                                String SeniorTag) {
+
+        Consumption = Consumption != "" ? Consumption : "0";
+        Demand = Demand != "" ? Demand : "0";
+
+        String RateKey = "";
+        Double rate = 0.0;
+        Double penalty = 0.10;
+        Double CubicMeter = Double.parseDouble(Consumption);
+        boolean multiply = true;
+        if(CubicMeter <= 10){
+            RateKey = "MINIMUM";
+            multiply = false;
+        }else if(CubicMeter <= 20){
+            RateKey = "BLOCK 1";
+        }else if(CubicMeter <= 30){
+            RateKey = "BLOCK 2";
+        }else if(CubicMeter <= 40){
+            RateKey = "BLOCK 3";
+        }else if(CubicMeter <= 50){
+            RateKey = "BLOCK 4";
+        }else{
+            RateKey = "BLOCK 5";
+        }
+
+        Cursor result = BillingModel.GetRates(RateCode, Classification, BillingCycle);
+
+        if (result.getCount() == 0) {
+            return;
+        }
+        while (result.moveToNext()) {
+
+            rate_description = result.getString(result.getColumnIndex("rate_description"));
+
+            if(rate_description.matches(RateKey)){
+                rate = Double.parseDouble(result.getString(result.getColumnIndex("Rates_Price")));
+            }
+        }
+
+
+        total_current_bill = rate;
+        if(multiply){
+            total_current_bill = CubicMeter * rate;
+        }
+        total_current_bill = Double.parseDouble(Liquid.StringRoundDown2D(total_current_bill));
+        arrears = Double.parseDouble(Liquid.arrears);
+        surcharge = total_current_bill * penalty;
+        surcharge = Double.parseDouble(Liquid.StringRoundDown2D(surcharge));
+        total_other_charges = 10.00;
+        total_amount_due = total_current_bill + arrears +/*maintenance fee*/total_other_charges;
+        total_amount_due = Double.parseDouble(Liquid.StringRoundDown2D(total_amount_due));
+        total_amount_due2 = total_amount_due + surcharge;
+        total_amount_due2 = Double.parseDouble(Liquid.StringRoundDown2D(total_amount_due2));
+    }
+
     public float GetDistributionVat(double DisRev,double DivLifeline){
         float final_response = 0;
         final_response = (float) (((DisRev - 5) * DivLifeline) * 0.12);
