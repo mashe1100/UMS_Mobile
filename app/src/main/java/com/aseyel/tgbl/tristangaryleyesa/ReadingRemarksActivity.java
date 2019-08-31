@@ -164,6 +164,7 @@ public class ReadingRemarksActivity extends BaseActivity implements SwipeRefresh
                 String Id = result.getString(0);
                 String Title = result.getString(1);
                 String Details = result.getString(1);
+                String Abbreviation = result.getString(2);
                 String Date = Liquid.currentDateTime();
                 if(Liquid.Reading.equals("")){
                     switch (Id){
@@ -175,7 +176,7 @@ public class ReadingRemarksActivity extends BaseActivity implements SwipeRefresh
                                 data.put("Title", Title);
                                 data.put("Details", Id+"-"+Details);
                                 data.put("Date", Date);
-                                data.put("Filepath", "");
+                                data.put("Filepath", Abbreviation);
                                 final_result.add(data);
                     }
                 }else{
@@ -183,7 +184,7 @@ public class ReadingRemarksActivity extends BaseActivity implements SwipeRefresh
                     data.put("Title", Title);
                     data.put("Details", Id+"-"+Details);
                     data.put("Date", Date);
-                    data.put("Filepath", "");
+                    data.put("Filepath", Abbreviation);
                     final_result.add(data);
                 }
 
