@@ -683,6 +683,7 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                 data.put("Title",AccountName);
                 Details = "Account No.: " + AccountNumber + "\n"+
                         "Meter Number.: " + MeterNumber + "\n"+
+                        "Serial : " + result.getString(63) + "\n"+
                         "Sequence : " + Sequence +"\n"+
                         "Address : " + Complete_Address + "\n"+
                         "Type : " + AccountType + "\n" +
@@ -890,7 +891,8 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                 data.put("MeterNumber",MeterNumber );
                 data.put("Title",AccountName);
                 Details = "Account No.: " + AccountNumber + "\n"+
-                        "Meter Number.: " + MeterNumber + "\n"+
+                        "Meter Number.: " + MeterNumber +"\n"+
+                        "Serial : " + result.getString(63) + "\n"+
                         "Sequence : " + Sequence +"\n"+
                         "Address : " + Complete_Address + "\n"+
                         "Type : " + AccountType + "\n" +
