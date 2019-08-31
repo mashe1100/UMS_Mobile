@@ -136,6 +136,8 @@ public class ReadingV2Activity extends BaseActivity {
                         Intent i = new Intent(ReadingV2Activity.this, ReadingRemarksActivity.class);
                         Liquid.Reading = "";
                         Liquid.Present_Consumption = "0";
+                        Liquid.ReadingInputTemporaryHolder = Liquid.Reading;
+                        Liquid.PresentConsumptionTemporaryHolder = Liquid.Present_Consumption;
                         startActivity(i);
                         dialog.cancel();
 
@@ -159,6 +161,9 @@ public class ReadingV2Activity extends BaseActivity {
                 return;
             }
 
+            //Temporary hold reading input for baliwag since there are remarks that changes reading variable to average
+            Liquid.ReadingInputTemporaryHolder = Liquid.Reading;
+            Liquid.PresentConsumptionTemporaryHolder = Liquid.Present_Consumption;
             //This is the section where the status of the reading where will it go.
             switch (Liquid.reading_remarks) {
                 case "LOW CONSUMPTION":
@@ -167,7 +172,12 @@ public class ReadingV2Activity extends BaseActivity {
                         ConsumptionFindingsNotification(Liquid.reading_remarks);
                     } else {
                         Computation();
-                        Liquid.save_only = true;
+                        switch (Liquid.Client){
+                            case "baliwag_wd":
+                                break;
+                            default:
+                                Liquid.save_only = true;
+                        }
                         startActivity(i);
                     }
                     break;
@@ -436,6 +446,7 @@ public class ReadingV2Activity extends BaseActivity {
                 //Customer Data
 
                 HashMap<String, String> data = new HashMap<>();
+                Liquid.C_ID = result.getString(1);
                 Liquid.Reading  = result.getString(10);
                 etxtReading.setText(Liquid.Reading );
                 Liquid.Demand = result.getString(24).equals(null) || result.getString(24).equals("") ? "" : result.getString(24);
@@ -950,7 +961,12 @@ public class ReadingV2Activity extends BaseActivity {
             switch(Liquid.reading_remarks){
                 case "LOW CONSUMPTION":
                     Liquid.showDialogError(this,"Invalid","Low Consumption cannot print!");
-                    Liquid.save_only = true;
+                    switch (Liquid.Client){
+                        case "baliwag_wd":
+                            break;
+                        default:
+                            Liquid.save_only = true;
+                    }
                     return;
                 case "HIGH CONSUMPTION":
                     break;
@@ -1107,7 +1123,7 @@ public class ReadingV2Activity extends BaseActivity {
         return Liquid.RoundUp(totalKWH);
     }
 
-    public void Computation(){
+    public static void Computation(){
 
         LiquidBilling mLiquidBilling = new LiquidBilling();
 
@@ -1162,6 +1178,18 @@ public class ReadingV2Activity extends BaseActivity {
                 break;
             case "pelco2":
                 mLiquidBilling.Pelco2ElectricBillingComputaion(
+                        Liquid.Present_Consumption,
+                        Liquid.Demand,
+                        Liquid.AccountType,
+                        Liquid.classification,
+                        Liquid.BillingCycle,
+                        Liquid.arrears,
+                        Liquid.eda_tagging,
+                        Liquid.senior_tagging
+                );
+                break;
+            case "baliwag_wd":
+                mLiquidBilling.BaliwagWDBillingComputaion(
                         Liquid.Present_Consumption,
                         Liquid.Demand,
                         Liquid.AccountType,
