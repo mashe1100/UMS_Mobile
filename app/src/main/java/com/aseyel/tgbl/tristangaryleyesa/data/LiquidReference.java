@@ -926,7 +926,8 @@ public class LiquidReference {
     public static String DropMeterReadingRemarks = "DROP TABLE IF  EXISTS ref_remarks";
     public static String MeterReadingRemarks = "CREATE TABLE IF NOT EXISTS  [ref_remarks] (\n" +
             "[remarks_id] TEXT  PRIMARY KEY NULL,\n" +
-            "[remarks_description] TEXT  NULL\n" +
+            "[remarks_description] TEXT  NULL,\n" +
+            "[remarks_abbreviation] TEXT  NULL\n" +
             ")";
 
     public static String DropMeterReadingRoute = "DROP TABLE IF  EXISTS route";
@@ -1150,6 +1151,48 @@ public class LiquidReference {
 
     };
     public static String DeleteRemarks = "DELETE FROM ref_remarks";
+    public static String[] MeterReadingBaliwagWDRemarksData = {
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('0','NO FIELD FINDINGS','');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('11','NORMAL READING','AA');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('12','REALIGNMENT OF METER','AB');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('13','BROKEN GLASS METER','BGR');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('14','LEAK BEFORE METER','LBM');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('15','BLURRED METER GLASS','BMR');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('16','BALL VALVE LEAK','BVL');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('17','CLOSED','CTD');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('18','DIRTY WATER','DW');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('19','HIGH CONSUMPTION','HC');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('20','BELOW AVERAGE','IBA');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('21','ILLEGAL CONNECTION','ICI');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('22','INVERTED METER','IM');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('23','INSTALLATION OF METER STAND','IMS');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('24','MAINLINE LEAK','ML');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('25','METER STAND LEAK','MSK');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('26','NEW METER','NM');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('27','NO TENANT','NT');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('28','NOT IN USE','NU');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('29','NO WATER','NW');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('30','OPEN','OTD');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('31','LOW PRESSURE','PI');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('32','FOR RECLASSIFICATION','RI');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('33','*FOR RELOCATION','RMN');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('34','REPLACEMENT OF METER STAND','RMS');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('35','*REVERSE READING','RR');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('36','SERVICE LINE LEAK','SL');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('37','STOP METER','SM');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('38','TAIL PIECE LEAK','TP');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('39','*BROKEN GLASS','BG');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('40','*BLURRED METER GLASS','BMG');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('41','*CONCRETE CAGE','CC');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('42','*FLOODED AREA','FA');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('43','*METER INSIDE PROPERTY','MIP');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('44','*METER NOT LOCATED','MNL');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('45','*STOLEN METER','ST');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('46','*TALL GRASS','TG');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('47','*TRANSFER OF SERVICE CONNECTION','TS');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('48','*WITH DUMP','WD');"
+
+    };
     public static String[] MeterReadingMorePowerRemarksData = {
             "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES ('0','NO FIELD FINDINGS');",
             "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES ('11','*W/ WATER INSIDE');",
