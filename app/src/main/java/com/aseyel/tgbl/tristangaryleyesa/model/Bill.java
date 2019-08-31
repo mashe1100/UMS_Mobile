@@ -337,6 +337,23 @@ public class Bill {
                     new BillItem("Total Bill Deposit",                   String.valueOf(LiquidBilling.total_moa), ItemStyle.Footer),
                     new BillItem(                                                                                          ItemStyle.Separator),
             };
+    public  BillItem[] BillItemsBaliwagWD =
+            {
+                    new BillItem(                                                                                                                                                              ItemStyle.Separator),
+                    new BillItem("BILL DESCRIPTION",                                 "AMOUNT", ItemStyle.SummaryHeader),
+                    new BillItem(                                                                                                                                                              ItemStyle.Separator),
+                    new BillItem("Current Bill",              String.valueOf(LiquidBilling.total_current_bill), ItemStyle.Aftertotal),
+                    new BillItem(                                                                                                                                                              ItemStyle.Separator),
+                    new BillItem("Arrears",              String.valueOf(LiquidBilling.arrears), ItemStyle.Aftertotal),
+                    new BillItem("Meter Maintenance Fee",              String.valueOf(LiquidBilling.total_other_charges), ItemStyle.Aftertotal),
+                    new BillItem(                                                                                                                                                                      ItemStyle.Separator),
+                    new BillItem("AMOUNT BEFORE DUE",                    String.valueOf(LiquidBilling.total_amount_due), ItemStyle.Total),
+                    new BillItem(                                                                                          ItemStyle.Separator),
+                    new BillItem("Penalty",              String.valueOf(LiquidBilling.surcharge), ItemStyle.Aftertotal),
+                    new BillItem("AMOUNT AFTER DUE",                     String.valueOf(LiquidBilling.total_amount_due2), ItemStyle.Total),
+                    new BillItem("Due Date for "+Liquid.dateChangeFormat(Liquid.BillMonth,"MM","MMM") +" "+Liquid.BillYear ,      Liquid.dateChangeFormat(Liquid.duedate,"yyyy-MM-dd","MM/dd/yyyy"), ItemStyle.Aftertotal),
+                    new BillItem(                                           ItemStyle.Separator),
+            };
 
 
     public static int CountDetails(ItemStyle style)
@@ -351,6 +368,10 @@ public class Bill {
                 return CountDetails(mBill.BillItemsIleco2, style);
             case "more_power":
                 return CountDetails(mBill.BillItemsMorePower, style);
+            case "pelco2":
+                return CountDetails(mBill.BillItemsPelco2, style);
+            case "baliwag_wd":
+                return CountDetails(mBill.BillItemsBaliwagWD, style);
             default:
                 return CountDetails(mBill.BillItemsBatelec2, style);
         }
