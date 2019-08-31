@@ -168,7 +168,7 @@ public class SignatureActivity extends BaseFormActivity {
                                     accountnumber+","+
                                     tag_desciption+","+
                                     details;
-                    mSmsManager.sendTextMessage(Liquid.SeverNumber,null,Message,null,null);
+                    mSmsManager.sendTextMessage(Liquid.ServerNumber,null,Message,null,null);
                 }
                 else{
                     while (result.moveToNext()) {
@@ -190,7 +190,7 @@ public class SignatureActivity extends BaseFormActivity {
                                         accountnumber + "," +
                                         tag_desciption + "," +
                                         details;
-                        mSmsManager.sendTextMessage(Liquid.SeverNumber, null, Message, null, null);
+                        mSmsManager.sendTextMessage(Liquid.ServerNumber, null, Message, null, null);
                         ReadingModel.UpdateTransferStatus(job_id, accountnumber);
                     }
                 }
