@@ -145,7 +145,7 @@ public class Liquid extends AppCompatActivity {
     public static String SurveyType = "";
     public static String SurveyAmpirCapacity = "";
     //Phone Server
-    public static String SeverNumber = "+639989626300";
+    public static String ServerNumber = "+639291332538";
     //Coke
     //public static String Client = "coke";
     //public static String ServiceType = "TRACKING";
@@ -157,12 +157,13 @@ public class Liquid extends AppCompatActivity {
 
     //READ AND BILL
 //    public static String Client = "batelec2";
+    public static String Client = "baliwag_wd";
 //    public static String Client = "more_power";
     // EDIT INIT LINE 99 AUDIT to READING (READING GALLERY ACTIVITY)
     // EDIT GetImages Line 180 AUDIT to READING (READING GALLERY ACTIVITY)
     // EDIT GetImages Line 1475 AUDIT to READING (TAB LOCAL FRAGMENT)
     // Please edit remarks reference // MeterReadingRemarksData
-    public static String Client = "ileco2"; //Please edit remarks reference // MeterReadingIleco2RemarksData
+//    public static String Client = "ileco2"; //Please edit remarks reference // MeterReadingIleco2RemarksData
 //    public static String Client = "pelco2"; //Please edit remarks reference // MeterReadingPelco2RemarksData
     public static String ServiceType = "READ AND BILL";
 //    public static String ImageType = "audit";
@@ -220,6 +221,8 @@ public class Liquid extends AppCompatActivity {
     public static String ConsumerStatus;
     public static String AccountType;
     public static String Reading = "";
+    public static String ReadingInputTemporaryHolder = "";
+    public static String PresentConsumptionTemporaryHolder = "";
 
     public static String classification = "";
     public static String arrears = "";
@@ -243,6 +246,7 @@ public class Liquid extends AppCompatActivity {
     public static String rentalfee= "";
     public static String Remarks = "";
     public static String RemarksCode = "";
+    public static String RemarksAbbreviation = "";
     public static String Details;
     public static String Date;
     public static String JobId = "";
@@ -2100,6 +2104,21 @@ public class Liquid extends AppCompatActivity {
 
     };
 
+    public static String BaliwagAverageRemarksAbbreviation[] = {
+            "RMN",
+            "RR",
+            "BG",
+            "BMG",
+            "CC",
+            "FA",
+            "MIP",
+            "MNL",
+            "ST",
+            "TG",
+            "TS",
+            "WD"
+    };
+
     public static String RemoveSpecialCharacter(String Filename){
         Filename = Filename.replaceAll(":","");
         Filename = Filename.replace("|","");
@@ -2994,6 +3013,15 @@ public class Liquid extends AppCompatActivity {
         return false;
     }
 
+    public static boolean isDouble(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
     public static class ApiData {
         public  String Url = "http://"+umsUrl+"/"+pathEnvironment+"/wms/php/";
         public  String Route = "work-route.php";
@@ -3010,13 +3038,13 @@ public class Liquid extends AppCompatActivity {
             this.Call_Class = Call_Class;
             this.Call_Method = Call_Method;
             this.Parameters = Parameters;
-            this.API_Link = this.Url +
+            this.API_Link = (this.Url +
                             this.Route +
                             "?class=" + this.Call_Class +
                             "&method="+ this.Call_Method +
                             "&"+ this.Parameters +
                             "&"+ this.Username +
-                            "&"+ this.Password;
+                            "&"+ this.Password).replaceAll(" ", "%20");;
 
         }
     }
