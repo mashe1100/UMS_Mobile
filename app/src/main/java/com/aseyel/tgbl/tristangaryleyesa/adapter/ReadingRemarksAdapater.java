@@ -21,6 +21,7 @@ import com.aseyel.tgbl.tristangaryleyesa.R;
 import com.aseyel.tgbl.tristangaryleyesa.ReadingGalleryActivity;
 import com.aseyel.tgbl.tristangaryleyesa.ReadingRemarksActivity;
 import com.aseyel.tgbl.tristangaryleyesa.ReadingSummaryActivity;
+import com.aseyel.tgbl.tristangaryleyesa.ReadingV2Activity;
 import com.aseyel.tgbl.tristangaryleyesa.SignatureActivity;
 import com.aseyel.tgbl.tristangaryleyesa.data.Liquid;
 import com.aseyel.tgbl.tristangaryleyesa.model.ListModel;
@@ -77,6 +78,26 @@ public class ReadingRemarksAdapater extends RecyclerView.Adapter<RecyclerView.Vi
                             Liquid.RemarksCode = ListItems.get(adapterPosition).getId();
                             Liquid.Remarks = ListItems.get(adapterPosition).getTitle();
                             Liquid.ReaderComment = ((ReadingRemarksActivity) context).txtComment.getText().toString();
+                            Liquid.RemarksAbbreviation = ListItems.get(adapterPosition).getFilepath();
+                            switch (Liquid.Client){
+                                case "baliwag_wd":
+                                    boolean hit = false;
+                                    for (int x=0; x<Liquid.BaliwagAverageRemarksAbbreviation.length; x++){
+                                        if(Liquid.RemarksAbbreviation.matches(Liquid.BaliwagAverageRemarksAbbreviation[x])){
+                                            Liquid.Reading = Integer.toString((int)(Integer.parseInt(Liquid.previous_reading)+Integer.parseInt(Liquid.Averange_Consumption)));
+                                            Liquid.Present_Consumption = Liquid.Averange_Consumption;
+                                            ReadingV2Activity.Computation();
+                                            hit = true;
+                                        }
+                                    }
+
+                                    if(!hit && !Liquid.Reading.matches("") && (!Liquid.reading_remarks.matches("NEGATIVE CONSUMPTION") && !Liquid.reading_remarks.matches("ZERO CONSUMPTION"))){
+                                        Liquid.Reading = Liquid.ReadingInputTemporaryHolder;
+                                        Liquid.Present_Consumption = Liquid.PresentConsumptionTemporaryHolder;
+                                        ReadingV2Activity.Computation();
+                                    }
+                                    break;
+                            }
                              i = new Intent(view.getContext(), ReadingSummaryActivity.class);
                             view.getContext().startActivity(i);
                             break;
