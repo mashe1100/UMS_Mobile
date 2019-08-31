@@ -144,6 +144,13 @@ public class LiquidPrintBill {
                                 WriteNoticePelco2(); //created
                                 WriteFootnotePelco2(1); // created
                                 break;
+                            case "baliwag_wd":
+                                SetPageParams(); //ok
+                                WriteTitleBaliwagWD(0); //ok
+                                WriteHeaderBaliwagWD(1); //ok
+                                WriteDetailsBaliwagWD(mBill.BillItemsBaliwagWD);
+                                WriteNoticeBaliwagWD();
+                                break;
                             default:
                                 SetPageParams(); //ok
                                 WriteTitleMorePower(0); //ok
@@ -253,6 +260,31 @@ public class LiquidPrintBill {
                     +PrintCenter(Columns[2] + Margin)
                     +"PCX 0 0 !<MORE_POW.PCX\r\n"
                     +PrintText("4", 0, LogoHeight + LogoMargin + LineHeight - 25, Ileco2BillTitle)
+                    +"PRINT\r\n";
+
+            outputStream.write(data.getBytes());
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void WriteTitleBaliwagWD(int section) {
+        try {
+            int LogoHeight = 142;
+            int LogoMargin = 16;
+            int BillTitleHeight = 10;
+            int BillTitleMargin = 0;
+            int BillNoHeight = LineHeight-20;
+            int TotalSize = LogoHeight + LogoMargin + BillTitleHeight + BillTitleMargin + BillNoHeight * 8 + 2 * mm + 6;
+
+            String data = "! "+Margin+" 200 200 "+ TotalSize +" 1\r\n"
+                    +PrintCenter(Columns[2] + Margin)
+                    +"PCX 0 0 !<BALIWAG.PCX\r\n"
+                    +PrintText("4", 0, LogoHeight + LogoMargin + LineHeight - 25, "BILLING NOTICE")
+                    +PrintText("5", 0, LogoHeight + LogoMargin + LineHeight *2, "SIN: "+Liquid.C_ID)
+                    +PrintText("5", 0, LogoHeight + LogoMargin + LineHeight *3, "Bill Period: "+Liquid.BillingCycle)
                     +"PRINT\r\n";
 
             outputStream.write(data.getBytes());
@@ -441,6 +473,28 @@ public class LiquidPrintBill {
                         + CountDetails(items, ItemStyle.FooterTitle) * LineHeight
                         + CountDetails(items, ItemStyle.SummaryHeader) * LineHeight
                         + CountDetails(items, ItemStyle.Aftertotal) * (LineHeight - 10 + Padding);
+    }
+    private static int ComputeDetailHeightBaliwagWD(BillItem[] items)
+    {
+        return
+                CountDetails(items, ItemStyle.Header) * TitleHeight
+                        + CountDetails(items, ItemStyle.Subtitle) * LineHeight
+                        + CountDetails(items, ItemStyle.Detail) * LineHeight
+                        + CountDetails(items, ItemStyle.OptionalDetail) * LineHeight
+                        + CountDetails(items, ItemStyle.Separator) * SeparatorHeight
+                        + CountDetails(items, ItemStyle.OptionalSeparator) * SeparatorHeight
+                        + CountDetails(items, ItemStyle.Subtotal) * DetailSubtotalHeight
+                        + CountDetails(items, ItemStyle.Footer) * LineHeight
+                        + CountDetails(items, ItemStyle.OptionalFooter) * LineHeight
+                        //+ CountDetails(items, ItemStyle.OptionalFooter2) * LineHeight
+                        + CountDetails(items, ItemStyle.OptionalFooterAdditional) * LineHeight
+                        + CountDetails(items, ItemStyle.Notice1) * Notice1Height
+                        + CountDetails(items, ItemStyle.Notice2) * Notice2Height
+                        + CountDetails(items, ItemStyle.Notice3) * Notice3Height
+                        + CountDetails(items, ItemStyle.Total) * TotalHeight
+                        + CountDetails(items, ItemStyle.Footnote) * LineHeight
+                        + CountDetails(items, ItemStyle.SummaryHeader) * LineHeight
+                        + CountDetails(items, ItemStyle.Aftertotal) * (LineHeight - 5 + Padding);
     }
     private static int ComputeDetailHeight(BillItem[] items)
     {
@@ -1486,6 +1540,149 @@ public class LiquidPrintBill {
         }
     }
 
+    private static void WriteDetailsBaliwagWD(BillItem[] items) {
+        Ypos = 0;
+        SummaryPos = 0;
+        TotalPos = 0;
+        HeaderTop = LineGap + 2;
+
+
+        DetailHeight = ComputeDetailHeightBaliwagWD(items);
+
+        DetailHeight = DetailHeight;
+        int total_height =  DetailHeight;
+        String data = "! "+Margin+" 200 200 "+total_height+" 1\r\n";
+
+        for (BillItem item : items)
+        {
+            switch (item.Style)
+            {
+                case Header:
+
+                    data+=WriteTableHeader(item.Label, item.RateVar, item.AmountVar);
+                    break;
+
+                case Detail:
+
+                    if (item.AmountVar.equals(""))
+                    {
+                        data+=WriteDetail("Lifeline Rate Discount" , item.Rate(), item.Amount());
+                        break;
+                    }
+//                    if (item.Label.equals("Lifeline Rate Subsidy") && Double.parseDouble(item.Amount()) < 0)
+//                    {
+//                        data+=WriteDetail("Lifeline Rate Discount" , item.Rate(), item.Amount());
+//                        break;
+//                    }
+//                    if (item.Label.equals("Senior Citizen Subsidy") && Double.parseDouble(item.Amount()) < 0)
+//                    {
+//                        data+=WriteDetail("Senior Citizen Discount", item.Rate(), item.Amount());
+//                        break;
+//                    }
+
+                    data+=WriteDetail(item.Label, item.Rate(), item.Amount());
+                    break;
+
+                case OptionalDetail:
+
+                    if (Double.parseDouble(item.Amount()) == 0) break;
+                    data+=WriteDetail(item.Label, item.Rate(), item.Amount());
+                    break;
+
+                case Subtitle:
+                    data+=WriteSubtitle(item.Label);
+                    break;
+
+                case Separator:
+                    data+=WriteSeparator();
+                    break;
+
+                case OptionalSeparator:
+                    if (Double.parseDouble(item.Amount()) == 0) break;
+                    data+=WriteSeparator();
+                    break;
+
+                case OptionalFooter:
+                    if (Double.parseDouble(item.Amount()) == 0 || Double.parseDouble(item.Amount()) < 0) break;
+                    data+=WriteSummaryFooter(item.Label, Double.parseDouble(item.Amount()));
+                    break;
+
+                case Footer:
+
+                    data+=WriteSummaryFooter(item.Label, Double.parseDouble(item.Amount()));
+                    break;
+                case OptionalFooterAdditional:
+                    if (Double.parseDouble(item.Amount()) == 0 || Double.parseDouble(item.Amount()) < 0) break;
+                    data+=WriteOptionalFooterAdditional(item.Label, Double.parseDouble(item.Amount()));
+                    break;
+
+                case Notice1:
+                case Notice2:
+                case Notice3:
+                    try{
+                        if (Double.parseDouble(item.Amount()) == 0) break;
+                    }catch (Exception e){
+
+                    }
+                    data+=WriteNotice(item.Label);
+                    break;
+
+                case Subtotal:
+                    data+=WriteSubtotal(item.Label, Double.parseDouble(item.Amount()));
+                    break;
+
+                case Total:
+                    data+=WriteTotal(item.Label, Double.parseDouble(item.Amount()));
+                    break;
+
+                case Footnote:
+                    data+=WriteFootnote(item.Label, String.valueOf(item.Amount()));
+                    break;
+
+                case Aftertotal:
+                    String value = String.valueOf(item.Amount());
+                    if(Liquid.isDouble(value)){
+                        data += WriteAfterTotal(item.Label, Liquid.NumberFormat(value));
+                        break;
+                    }
+
+                    data += WriteAfterTotal(item.Label, value);
+                    break;
+                case SummaryHeader:
+                    data+=WriteSummaryHeader(item.Label, String.valueOf(item.Amount()));
+                    break;
+            }
+        }
+
+        if (!PrintToFile)
+        {
+            data+=PrintLine(0, LineGap + 2, 0, DetailHeight - LineGap - LinePad);
+            if (LiquidBilling.total_amount_due < 100000)
+            {
+
+                if (TotalPos > HeaderTop)
+                    data+=PrintLine(Columns[0], HeaderTop, Columns[0], TotalPos);
+                else if (Ypos > HeaderTop)
+                    data+=PrintLine(Columns[0], HeaderTop, Columns[0], Ypos - LinePad);
+
+//                if (SummaryPos > HeaderTop)
+//                    data+=PrintLine(Columns[1], HeaderTop, Columns[1], SummaryPos);
+//                else if (Ypos > HeaderTop)
+//                    data+=PrintLine(Columns[1], HeaderTop, Columns[1], Ypos - LinePad);
+            }
+            data+=PrintLine(Columns[2], LineGap + 2, Columns[2], DetailHeight - LineGap - LinePad);
+            data+="PRINT\r\n";
+        }
+
+        try {
+
+            outputStream.write(data.getBytes());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     private static void WriteDetailsPelco2(BillItem[] items) {
         Ypos = 0;
@@ -2154,6 +2351,48 @@ public class LiquidPrintBill {
         }
     }
 
+    private static void WriteNoticeBaliwagWD()
+    {
+        int total_height =115 + LineHeight * 12 + mm * 3;
+        String data = "! "+Margin+" 200 200 "+total_height+" 1\r\n";
+        data+=PrintCenter(Columns[2] + Margin);
+        Ypos = mm;
+        data+=PrintText("5", 0, Ypos, "Reconnection Fee of P100.00 will be charged if");
+        Ypos += LineHeight;
+        data+=PrintText("5", 0, Ypos, "Service has been disconnected.");
+        Ypos += LineHeight;
+        Ypos += LineHeight;
+        data+=PrintText("5", 0, Ypos, "ALL BILLING COMPLAINTS WILL BE");
+        Ypos += LineHeight;
+        data+=PrintText("5", 0, Ypos, "ACKNOWLEDGED WITHIN 7 WORKING DAYS");
+        Ypos += LineHeight;
+        data+=PrintText("5", 0, Ypos, "ONLY AFTER READING DATE.");
+        Ypos += LineHeight+3;
+        data+=PrintText("5", 0, Ypos, "NO FIELD COLLECTOR");
+        Ypos += LineHeight;
+        Ypos += LineHeight;
+        data+=PrintText("5", 0, Ypos, "Notice: This is NOT valid as Official Receipt.");
+        Ypos += LineHeight;
+        data+=PrintCenter(Columns[2] + Margin);
+        data+="BARCODE 128 1 1 "+50+" "+0+" "+Ypos+" "+Liquid.AccountNumber+"\r\n";
+        Ypos += LineHeight + mm + 20;
+        data+=PrintText("5", 0, Ypos,Liquid.AccountNumber);
+        Ypos += LineHeight + mm;
+        data+=PrintText("7", 0, Ypos,Liquid.User + "-" + Liquid.UserFullname+" "+ Liquid.currentDateTime() +" "+ Liquid.Status);
+        Ypos += LineHeight + mm;
+        data+=PrintText("5", 0, Ypos, "Powered by: FIELDTECH SPECIALIST, INC. (FSI)");
+        Ypos += LineHeight;
+        data+="PRINT\r\n";
+        try {
+
+            outputStream.write(data.getBytes());
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private static void WriteNoticeIleco2()
     {
         int total_height =115 + LineHeight * 5 + mm * 3;
@@ -2326,6 +2565,51 @@ public class LiquidPrintBill {
             return String.format(format,value);
     }
 
+    private static void WriteHeaderBaliwagWD(int section)
+    {
+        try
+        {
+            int totalHeaderHeight = HeaderHeight - 100 + mm;
+            String data = "! "+Margin+" 200 200 "+totalHeaderHeight+" 1\r\n";
+            String address = Liquid.Complete_Address;
+            if(address.length() >= 35)
+                address = address.subSequence(0,34)+"...";
+            data+=PrintLine(0, LineGap, 0, HeaderHeight - 4 - 90);// left
+//            data+=PrintLine(Columns[0], LineGap, Columns[0], TitleHeight - LineGap - 4); // top center
+            data+=PrintLine(Columns[2], LineGap, Columns[2], HeaderHeight - 4 - 90);                       // right
+            data+=PrintLine(0, HeaderHeight - 4 - 90, Columns[2], HeaderHeight - 4 - 90);                       // bottom
+            data+=PrintLine(Columns[0], TopSectionHeight + LineGap, Columns[0], HeaderHeight - 4);    // bottom center
+            Ypos = 0;
+            String AccountLabel = Liquid.AccountNumber;
+            data+=WriteHeaderHeader("Acct No. " + AccountLabel, "","");
+            int offset = (TopSectionHeight - TitleHeight - 2 * 24 - 12) / 12;
+            data+=PrintLeft();
+            data+=PrintText("5", Padding + 18, Ypos + offset + LinePad + 10, Liquid.AccountName);
+            data+=PrintText("5", Padding + 18, Ypos + offset + LinePad + 10 + 24 + 12, address);
+            data+=PrintLeft();
+            Ypos = TopSectionHeight;
+
+            data+=WriteHeaderHeaderBaliwagWD();
+
+            Ypos = TopSectionHeight + LineGap + Padding * 2 + LineHeight* 2;
+
+            data+=WriteBaliwagMeterReading(
+                    Liquid.dateChangeFormat(Liquid.previous_reading_date,"yyyy-MM-dd","MM/dd/yyyy"), Liquid.previous_reading,
+                    Liquid.setUpCurrentDate("MM/dd/yyyy"), Liquid.Reading,
+                    Liquid.FormatKWH(Liquid.Present_Consumption));
+            //String.valueOf(Liquid.RoundUp(Double.parseDouble(Liquid.Present_Consumption))));
+
+
+            Ypos = HeaderHeight - ThreeMosHeight - 4;
+            //WriteThreeMos();
+            data+="PRINT\n";
+
+            outputStream.write(data.getBytes());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
     private static void WriteHeaderPelco2(int section)
     {
         try
@@ -2536,6 +2820,39 @@ public class LiquidPrintBill {
 
     }
 
+    private static String WriteBaliwagMeterReading(String a, String b, String c, String d, String e)
+    {
+        int gap = LineGap;
+        int offset = (SectionHeight - 66 - gap - LineHeight) / 2;
+        int xpad = Columns[0] / 10 + 8;
+
+        String data = PrintText("5", Columns[0] + Padding * 10, Ypos + offset-10, "Cubic Meter");
+        data += PrintText("5", Columns[0] + Padding * 11, Ypos + offset+15, "Consumed");
+
+        data+=PrintText("4", Columns[0] + Padding * 15, Ypos + offset + 24 + gap, String.valueOf(Math.round(Float.parseFloat(e))));
+
+        Ypos += LineGap * 2;
+        data+=PrintText("5", xpad + 38, Ypos + LinePad + 1, "Date");
+        data+=PrintRight(Columns[0] + Margin - xpad);
+        data+=PrintText("5", 0, Ypos + LinePad + 1, "Reading");
+
+        Ypos += LineHeight + LineGap + Padding;
+        data+=PrintLeft();
+        data+=PrintText("7", xpad, Ypos, c);
+        data+=PrintRight(Columns[0] - xpad - Padding - 10);
+        data+=PrintText("7", 0, Ypos, d);
+        data+=PrintLeft();
+
+        Ypos += LineHeight + Padding;
+        data+=PrintLeft();
+        data+=PrintText("7", xpad, Ypos, a);
+        data+=PrintRight(Columns[0] - xpad - Padding - 10);
+        data+=PrintText("7", 0, Ypos, b);
+        data+=PrintLeft();
+
+        return data;
+    }
+
     private static String WritePelco2MeterReading(String a, String b, String c, String d, String e)
     {
         int gap = LineGap;
@@ -2647,8 +2964,43 @@ public class LiquidPrintBill {
         data+=PrintText("5", Columns[0] + Padding + 10, Ypos + LinePad + 1, acctype);
         Ypos += LineHeight + Padding;
         data+=PrintLine(0, Ypos, Columns[2], Ypos);
-        data+=PrintLine(Columns[0], save, Columns[0], Ypos);
+        if(!acctype.matches(""))
+            data+=PrintLine(Columns[0], save, Columns[0], Ypos);
         Ypos += LineGap;
+        return data;
+    }
+
+    private static String WriteHeaderHeaderBaliwagWD()
+    {
+        Ypos += LineGap; //SORECO
+
+        String data = PrintLine(0, Ypos, Columns[2], Ypos);
+
+        Ypos += Padding;
+        data+=PrintText("5", Padding + 10, Ypos + LinePad + 1, "Type");
+        data+=PrintRight(Columns[0] + Margin - Padding - 6);
+        data+=PrintText("7", Padding + 10, Ypos + LinePad + 1, Liquid.rate_code);
+        data+=PrintLeft();
+        data+=PrintText("5", Columns[0] + Padding + 10, Ypos + LinePad + 1,"Zone");
+        data+=PrintRight(Columns[2] + Margin - Padding - 6);
+        data+=PrintText("7", Padding + 10, Ypos + LinePad + 1, Liquid.route);
+
+        Ypos += LineHeight;
+        data+=PrintLeft();
+        data+=PrintText("5", Padding + 10, Ypos + LinePad + 1, "Meter No.");
+        data+=PrintRight(Columns[0] + Margin - Padding - 6);
+        data+=PrintText("7", Padding + 10, Ypos + LinePad + 1, Liquid.MeterNumber);
+
+        data+=PrintLeft();
+        data+=PrintText("5", Columns[0] + Padding + 10, Ypos + LinePad + 1, "Sequence");
+        data+=PrintRight(Columns[2] + Margin - Padding - 6);
+        data+=PrintText("7", Padding + 10, Ypos + LinePad + 1, Liquid.Sequence);
+        data+=PrintLeft();
+
+        Ypos += LineHeight + Padding;
+        data+=PrintLine(0, Ypos, Columns[2], Ypos);
+        Ypos += LineGap;
+
         return data;
     }
 
