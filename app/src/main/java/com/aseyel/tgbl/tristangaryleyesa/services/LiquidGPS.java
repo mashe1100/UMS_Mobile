@@ -231,7 +231,7 @@ public class LiquidGPS  {
                 Log.i(TAG,return_data + "FALSE");
                 //Liquid.showDialogInfo(GPSActivity.this,"Test",return_data);
 
-                mSmsManager.sendTextMessage("+639064783858",null,Message,null,null);
+                mSmsManager.sendTextMessage(Liquid.ServerNumber,null,Message,null,null);
             }
 
             switch (data_type){
