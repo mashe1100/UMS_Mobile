@@ -3,6 +3,7 @@ package com.aseyel.tgbl.tristangaryleyesa.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,13 +18,16 @@ import android.widget.TextView;
 
 import com.aseyel.tgbl.tristangaryleyesa.AuditTravelActivity;
 import com.aseyel.tgbl.tristangaryleyesa.AuditTravelRideActivity;
+import com.aseyel.tgbl.tristangaryleyesa.DeliveryActivityV2;
 import com.aseyel.tgbl.tristangaryleyesa.R;
 import com.aseyel.tgbl.tristangaryleyesa.ReadingGalleryActivity;
 import com.aseyel.tgbl.tristangaryleyesa.ReadingRemarksActivity;
 import com.aseyel.tgbl.tristangaryleyesa.ReadingSummaryActivity;
 import com.aseyel.tgbl.tristangaryleyesa.ReadingV2Activity;
 import com.aseyel.tgbl.tristangaryleyesa.SignatureActivity;
+import com.aseyel.tgbl.tristangaryleyesa.TypeActivity;
 import com.aseyel.tgbl.tristangaryleyesa.data.Liquid;
+import com.aseyel.tgbl.tristangaryleyesa.fragment.TabDeliveryFragment;
 import com.aseyel.tgbl.tristangaryleyesa.model.ListModel;
 
 import java.util.ArrayList;
@@ -44,10 +48,12 @@ public class ReadingRemarksAdapater extends RecyclerView.Adapter<RecyclerView.Vi
     public static final int VIEW_TYPE_DEFAULT = 1;
     public static final int VIEW_TYPE_LOADER = 2;
     private Context context;
+    private Fragment fragment;
     private final List<ListModel> ListItems = new ArrayList<>();
 
-    public ReadingRemarksAdapater(Context context) {
+    public ReadingRemarksAdapater(Context context,Fragment fragment) {
         this.context = context;
+        this.fragment = fragment;
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -107,8 +113,12 @@ public class ReadingRemarksAdapater extends RecyclerView.Adapter<RecyclerView.Vi
                                 case "Type":
                                     Liquid.DeliveryItemTypeCode = ListItems.get(adapterPosition).getId();
                                     Liquid.DeliveryItemTypeDescription = ListItems.get(adapterPosition).getTitle();
-                                    i = new Intent(view.getContext(), ReadingRemarksActivity.class);
-                                    view.getContext().startActivity(i);
+//                                    i = new Intent(view.getContext(), ReadingRemarksActivity.class);
+//                                    view.getContext().startActivity(i);
+
+                                    //REVISION FOR FASTER USER INTERACTION
+                                    ((TabDeliveryFragment) fragment).GoToList();
+                                    ((TypeActivity)view.getContext()).finish();
                                     break;
                                 case "Remarks":
                                     Liquid.RemarksCode = ListItems.get(adapterPosition).getId();
