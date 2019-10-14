@@ -57,6 +57,9 @@ public class LiquidReference {
     public static String TrackingCategoryComment = "CREATE TABLE IF NOT EXISTS  [mt_category_comment] ([customer_id] TEXT  NULL,[category] TEXT  NULL,[comment] TEXT  NULL,[period] TEXT  NULL, sysentrydate text null,modifieddate text null,modifiedby TEXT, PRIMARY KEY ([customer_id],[category],[period],[modifiedby]))";
     //public static String DropDeliveryRemarksList = "DROP TABLE IF EXISTS delivery_remarks";
     //public static String DeliveryRemarksList = "CREATE TABLE IF NOT EXISTS  delivery_remarks (id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT,description TEXT  NULL)";
+    public static String DropDeliveryPictures = "DROP TABLE IF EXISTS messengerial_pictures";
+    public static String DeliveryPictures = "CREATE TABLE IF NOT EXISTS [messengerial_pictures] (client TEXT NULL,accountnumber TEXT NULL,picture TEXT NULL,timestamp TEXT NULL,date TEXT NULL,user_id TEXT NULL,sysentrydate TEXT NULL,modifieddate TEXT NULL,modifiedby TEXT NULL)";
+
 
     //AUDIT
     public static String DropAuditDownload = "DROP TABLE IF EXISTS audit_download";
@@ -294,6 +297,7 @@ public class LiquidReference {
                     "total_initial TEXT NULL,"+
                     "latitude TEXT NULL,"+
                     "longitude TEXT NULL,"+
+                    "CMPresentReadingKWH TEXT NULL,"+
                     "PRIMARY KEY ([C_Client],[C_ID],[C_AccountNumber],[CED_MeterNumber],[serial],[reading_date])" +
                     ")";
 
@@ -1096,6 +1100,7 @@ public class LiquidReference {
 
     };
     public static String[] MeterReadingDeliveryRemarksData = {
+            "INSERT INTO ref_delivery_remarks(remarks_id,remarks_description) VALUES (0,'No Field Findings');",
             "INSERT INTO ref_delivery_remarks(remarks_id,remarks_description) VALUES (39,'Slip Under the Door');",
             "INSERT INTO ref_delivery_remarks(remarks_id,remarks_description) VALUES (40,'Clip On Gate');",
             "INSERT INTO ref_delivery_remarks(remarks_id,remarks_description) VALUES (48,'Drop To Mailbox');",
@@ -1115,7 +1120,6 @@ public class LiquidReference {
             "INSERT INTO ref_delivery_remarks(remarks_id,remarks_description) VALUES (46,'Always Out');",
             "INSERT INTO ref_delivery_remarks(remarks_id,remarks_description) VALUES (47,'Wrong Address');",
             "INSERT INTO ref_delivery_remarks(remarks_id,remarks_description) VALUES (50,'OTHERS');",
-            "INSERT INTO ref_delivery_remarks(remarks_id,remarks_description) VALUES (0,'No Field Findings');",
     };
 
 
@@ -1152,7 +1156,6 @@ public class LiquidReference {
     };
     public static String DeleteRemarks = "DELETE FROM ref_remarks";
     public static String[] MeterReadingBaliwagWDRemarksData = {
-            "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('0','NO FIELD FINDINGS','');",
             "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('11','NORMAL READING','AA');",
             "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('12','REALIGNMENT OF METER','AB');",
             "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('13','BROKEN GLASS METER','BGR');",
@@ -1228,7 +1231,7 @@ public class LiquidReference {
     };
     public static String[] MeterReadingIleco2RemarksData = {
             "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES (0,'NO FIELD FINDINGS');",
-            "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES (1,'STOP METER');",
+//            "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES (1,'STOP METER');",
             "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES (2,'BROKEN GLASS');",
             "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES (5,'DEFECTIVE REGISTRY');",
             "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES (7,'UNSYNCHRONIZED');",
@@ -1244,6 +1247,7 @@ public class LiquidReference {
             "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES (1007,'HIGH METER');",
             "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES (1008,'HARD TO READ');",
             "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES (1009,'BURNED METER');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES (1010,'STOP METER');",
             "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES (97,'CHANGED METER');",
             "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES (28,'WRAP AROUND');",
             "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES (110,'BROWNOUT');",
