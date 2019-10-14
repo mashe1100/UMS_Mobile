@@ -2,7 +2,11 @@ package com.aseyel.tgbl.tristangaryleyesa.services;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.Location;
@@ -11,6 +15,8 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.SmsManager;
@@ -33,6 +39,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -162,6 +169,39 @@ public class LiquidGPS  {
             }
         }
 
+        // Temporary get last records and send all to server
+        Cursor record = ReadingModel.GetRecentData(1);
+        if(record.getCount() != 0){
+            while (record.moveToNext()) {
+                type = "1";
+                latitude = record.getString(2);
+                longitude = record.getString(3);
+                remark = record.getString(4);
+                accountnumber = record.getString(1);
+                details = record.getString(5);
+                job_id = record.getString(0);
+                Message = Liquid.User + "," +
+                        Liquid.Client + "," +
+                        type + "," +
+                        latitude + "," +
+                        longitude + "," +
+                        remark + "," +
+                        comment + "," +
+                        accountnumber + "," +
+                        tag_desciption + "," +
+                        details;
+
+                JSONObject Details = new JSONObject();
+                Details.put("data_type","accomplishment");
+                Details.put("message", Message);
+                Details.put("accountnumber", accountnumber);
+                Details.put("job_id", job_id);
+
+                UntransferedData.put(Details);
+            }
+        }
+
+
         for (int i=0; i<UntransferedData.length(); i++){
             new GPSCloudPosting().execute(UntransferedData.getJSONObject(i));
         }
@@ -180,6 +220,9 @@ public class LiquidGPS  {
         String today = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss").format(new Date());
         SmsManager mSmsManager = SmsManager.getDefault();
 
+        public void cancel(){
+            this.cancel(true);
+        }
         @Override
         protected Void doInBackground(JSONObject... json) {
             try{
@@ -193,7 +236,6 @@ public class LiquidGPS  {
                 data_type = json[0].getString("data_type");
 
                 JSONObject dataObject = new JSONObject();
-
                 dataObject.put("receiver_group","1");
                 dataObject.put("senttime", today);
                 dataObject.put("contact", Build.SERIAL); // serial muna -> dapat phone number
@@ -203,7 +245,7 @@ public class LiquidGPS  {
                 dataObject.put("deviceserial", Build.SERIAL);
                 dataObject.put("sysid",Liquid.User);
                 Log.i(TAG, String.valueOf(dataObject));
-                String jsonStr = sh.makeServicePostCall(mPOSTApiData.API_Link,dataObject);
+                String jsonStr = sh.makeServicePostCallWithTimeout(mPOSTApiData.API_Link,dataObject);
                 Log.i(TAG, String.valueOf(jsonStr));
                 return_data = jsonStr;
                 JSONObject response = Liquid.StringToJsonObject(jsonStr);
@@ -226,20 +268,65 @@ public class LiquidGPS  {
             super.onPostExecute(aVoid);
             if(result){
                 Log.i(TAG,return_data + "TRUE");
+
+                switch (data_type){
+                    case "accomplishment":
+                        ReadingModel.UpdateTransferStatus(job_id, accountnumber);
+                        break;
+                    default:
+                }
                 //Liquid.showDialogInfo(GPSActivity.this,"Test",return_data);
             }else{
                 Log.i(TAG,return_data + "FALSE");
                 //Liquid.showDialogInfo(GPSActivity.this,"Test",return_data);
 
-                mSmsManager.sendTextMessage(Liquid.ServerNumber,null,Message,null,null);
-            }
+                String SENT = "SMS_SENT";
+                String DELIVERED = "SMS_DELIVERED";
+                PendingIntent sentPI = PendingIntent.getBroadcast(mContext, 0, new Intent(SENT), 0);
+                PendingIntent deliveredPI = PendingIntent.getBroadcast(mContext, 0,new Intent(DELIVERED), 0);
 
-            switch (data_type){
-                case "accomplishment":
-                    ReadingModel.UpdateTransferStatus(job_id, accountnumber);
-                    break;
+                mContext.registerReceiver(new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context arg0,Intent arg1)
+                    {
+                        switch(getResultCode()) {
+                            case Activity.RESULT_OK:
+                                switch (data_type) {
+                                    case "accomplishment":
+                                        ReadingModel.UpdateTransferStatus(job_id, accountnumber);
+                                        break;
+                                    default:
+                                }
+                                Log.e("sms check","true");
+                                break;
+                            default:
+                                Log.e("sms check","false");
+                        }
+                    }
+                }, new IntentFilter(SENT));
+                // ---when the SMS has been delivered---
+                mContext.registerReceiver(new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context arg0, Intent arg1)
+                    {
+                        switch(getResultCode()) {
+                            case Activity.RESULT_OK:
+                                Log.e("sms check","sent");
+                                break;
+                            case Activity.RESULT_CANCELED:
+                                Log.e("sms check","not sent");
+                                break;
+                        }
+                    }
+                }, new IntentFilter(DELIVERED));
 
-                default:
+
+                String receiver = Liquid.ServerNumberSmart;
+                if(Liquid.Client.matches("ileco2"))
+                    receiver = Liquid.ServerNumberGlobe;
+
+                SmsManager sms = SmsManager.getDefault();
+                sms.sendTextMessage(receiver, null,Message,sentPI, deliveredPI);
             }
         }
     }
