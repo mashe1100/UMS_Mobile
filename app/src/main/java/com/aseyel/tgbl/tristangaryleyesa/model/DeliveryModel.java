@@ -58,8 +58,8 @@ public class DeliveryModel {
                 "select remarks_id," + //0
                         "remarks_description " + //1
                         "from ref_delivery_remarks " +
-                        "where remarks_description like '%"+Query+"%' OR remarks_id like '%"+Query+"%'" +
-                        "order by remarks_id  "
+                        "where remarks_description like '%"+Query+"%' OR remarks_id like '%"+Query+"%'" // +
+//                        "order by remarks_id  "
         );
     }
 
@@ -132,10 +132,6 @@ public class DeliveryModel {
 
     public static Cursor GetMessengerialForUpload(String JobId,String TrackingNumber,String Status){
 
-
-
-
-
         return SplashActivity.mDatabaseHelper.SqliteSelectQuery(
                 "select " +
                         "m_client,"+ //0
@@ -159,6 +155,35 @@ public class DeliveryModel {
                         "user_id "+//18
                         "from messengerial " +
                         "where job_id = '"+JobId+"' AND m_accountnumber like '%"+TrackingNumber+"%' AND  upload_status = '"+Status+"' "
+
+        );
+    }
+
+    public static Cursor GetAllMessengerialForUpload(String JobId,String TrackingNumber){
+
+        return SplashActivity.mDatabaseHelper.SqliteSelectQuery(
+                "select " +
+                        "m_client,"+ //0
+                        "job_id,"+//1
+                        "job_title,"+//2
+                        "m_accountnumber,"+//3
+                        "m_type,"+//4
+                        "m_type_description,"+//5
+                        "m_status,"+//6
+                        "m_remark_code,"+//7
+                        "m_remark,"+//8
+                        "m_comment,"+//9
+                        "m_latitude,"+//10
+                        "m_longitude,"+//11
+                        "transfer_data_status,"+//12
+                        "m_signature,"+//13
+                        "upload_status,"+//14
+                        "battery_life,"+//15
+                        "m_delivered_timestamp,"+//16
+                        "m_delivered_date,"+//17
+                        "user_id "+//18
+                        "from messengerial " +
+                        "where job_id = '"+JobId+"' AND m_accountnumber like '%"+TrackingNumber+"%'"
 
         );
     }
