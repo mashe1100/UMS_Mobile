@@ -1,5 +1,6 @@
 package com.aseyel.tgbl.tristangaryleyesa;
 
+import android.support.v4.app.Fragment;
 import android.database.Cursor;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -82,11 +83,12 @@ public class TypeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         }
     }
 
+    public static Fragment fragment;
     private void init(){
         Liquid.DeliveryStep = "Type";
         //initialization of the needed component and objects
 
-        Adapter = new ReadingRemarksAdapater(this);
+        Adapter = new ReadingRemarksAdapater(this,fragment);
         rvList = (RecyclerView) findViewById(R.id.rvList);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         rvList.setHasFixedSize(true);
