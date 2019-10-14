@@ -69,7 +69,41 @@ public class HttpHandler {
         }
         return response;
     }
+    public String makeServicePostCallWithTimeout(String reqUrl,JSONObject postData) {
+        String response = null;
+        try {
 
+            URL url = new URL(reqUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+            conn.setReadTimeout(10000);
+            conn.setConnectTimeout(10000);
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestMethod("POST");
+            // Send the post body
+            if (postData != null) {
+                OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
+                writer.write(postData.toString());
+                writer.flush();
+            }
+            // read the response
+
+            InputStream in = new BufferedInputStream(conn.getInputStream(),8192);
+            response = convertStreamToString(in);
+
+        } catch (MalformedURLException e) {
+            Log.e(TAG, "MalformedURLException: " + e.getMessage());
+        } catch (ProtocolException e) {
+            Log.e(TAG, "ProtocolException: " + e.getMessage());
+        } catch (IOException e) {
+            Log.e(TAG, "IOException: " + e.getMessage());
+        } catch (Exception e) {
+            Log.e(TAG, "Exception: " + e.getMessage());
+        }
+        return response;
+    }
     public String makeServicePostCall(String reqUrl,JSONObject postData) {
         String response = null;
         try {
