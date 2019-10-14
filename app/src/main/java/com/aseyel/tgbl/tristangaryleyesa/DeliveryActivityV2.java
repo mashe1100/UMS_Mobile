@@ -3,6 +3,7 @@ package com.aseyel.tgbl.tristangaryleyesa;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aseyel.tgbl.tristangaryleyesa.data.Liquid;
 import com.aseyel.tgbl.tristangaryleyesa.model.DeliveryModel;
@@ -24,7 +26,7 @@ public class DeliveryActivityV2 extends BaseActivity {
     private static final int SCANNING_FORM = 1;
     private MenuItem searchMenuItem;
     private MaterialSearchView search_view;
-    private EditText txtTrackingNumber;
+    private com.aseyel.tgbl.tristangaryleyesa.utils.AlphaNumericKeyboard txtTrackingNumber;
     private Button btnScan;
     private Button btnNext;
     private TextView txtQuestion;
@@ -121,7 +123,7 @@ public class DeliveryActivityV2 extends BaseActivity {
 
     private void init(){
 
-        txtTrackingNumber = (EditText)  findViewById(R.id.txtTrackingNumber);
+        txtTrackingNumber = (com.aseyel.tgbl.tristangaryleyesa.utils.AlphaNumericKeyboard)  findViewById(R.id.txtTrackingNumber);
         txtQuestion = (TextView)  findViewById(R.id.txtQuestion);
         btnScan = (Button)  findViewById(R.id.btnScan);
         btnNext = (Button)  findViewById(R.id.btnNext);
@@ -181,13 +183,13 @@ public class DeliveryActivityV2 extends BaseActivity {
                     Liquid.showDialogInfo(DeliveryActivityV2.this, "Invalid", "Please enable GPS!");
                 }
                 else{
-                    Intent i = new Intent(getApplicationContext(), TypeActivity.class);
+//                    Intent i = new Intent(getApplicationContext(), TypeActivity.class);
+                    //REVISION FOR FASTER USER INTERACTION
+                    Intent i = new Intent(getApplicationContext(), ReadingRemarksActivity.class);
                     startActivity(i);
                 }
             }
         });
 
-        Intent intent = new Intent(DeliveryActivityV2.this,OCRActivity.class);
-        startActivity(intent);
     }
 }
