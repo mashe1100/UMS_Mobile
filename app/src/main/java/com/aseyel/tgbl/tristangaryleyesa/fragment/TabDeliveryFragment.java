@@ -147,7 +147,7 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
             try {
                 Liquid.ErrorFileUpload = new JSONObject();
                 Liquid.ErrorUpload = new JSONArray();
-                data = postData.getString("data");
+                data = postData.getString("all_data");
                 dataArray = new JSONArray(data);
 
                 total = dataArray.length();
@@ -467,6 +467,169 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
             mProgressDialog.dismiss();
         }
     }
+
+    public class AllDataMessengerialToServer extends AsyncTask<Void, Integer, Integer> {
+        // This is the JSON body of the post
+        JSONObject postData;
+        String data;
+        String dataPicture;
+        String dataLogs;
+        String dataMeterNotInList;
+        JSONArray dataArray;
+        JSONArray dataArrayPicture;
+        JSONArray dataArrayLogs;
+        JSONArray dataArrayMeterNotInList;
+        boolean result_status = false;
+        int progress = 0;
+        int total = 0;
+
+        // This is a constructor that allows you to pass in the JSON body
+        public AllDataMessengerialToServer(JSONObject postData) {
+            if (postData != null) {
+                this.postData = postData;
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //UploadImage
+            //showUploadProgressBar(true);
+            try {
+                Liquid.ErrorDataUpload = new JSONObject();
+                Liquid.ErrorUpload = new JSONArray();
+                data = postData.getString("all_data");
+
+                dataArray = new JSONArray(data);
+
+                total = dataArray.length();
+
+                mProgressDialog = new ProgressDialog(getContext());
+                mProgressDialog.setMessage("Processing....");
+                mProgressDialog.setTitle("Uploading Data");
+                mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                mProgressDialog.setCancelable(false);
+                mProgressDialog.setMax(0);
+                mProgressDialog.setMax(total);
+                mProgressDialog.show();
+
+                //progressBar.setMax(total);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected Integer doInBackground(Void... strings) {
+            try {
+
+                HttpHandler sh = new HttpHandler();
+                int limit = 50;
+                if(dataArray.length() == 0){
+                    //No Data
+                    //return 2;
+                }else{
+
+                    List<String> arrayList = new ArrayList<String>();
+                    for(int i = 0; i < dataArray.length(); i++){
+                        arrayList.add(dataArray.getString(i));
+                    }
+
+                    for(int j = 0; j < arrayList.size(); j+=limit) {
+                        int k = Math.min(j + limit, arrayList.size());
+                        List<String> subList = arrayList.subList(j,k);
+
+                        JSONArray newDataArray = new JSONArray(subList);
+                        JSONObject reading = new JSONObject();
+                        reading.put("sysid",Liquid.User);
+                        reading.put("username",Liquid.Username);
+                        reading.put("password",Liquid.Password);
+                        reading.put("data",newDataArray);
+
+                        mPOSTApiData = new Liquid.POSTApiData("fmts/php/api/Delivery.php");
+                        //Log.i(TAG, String.valueOf(test));
+                        String jsonStr = sh.makeServicePostCall(mPOSTApiData.API_Link, reading);
+                        Log.i(TAG,"Tristan "+jsonStr);
+                        //Log.i(TAG, "ALEX:" + jsonStr);
+                        JSONObject response = Liquid.StringToJsonObject(jsonStr);
+                        if (response.getString("result").equals("false")) {
+                            Liquid.ErrorUpload.put(reading);
+                        } else {
+                            progress = progress + limit;
+                            publishProgress(progress);
+                            JSONArray newReadingArray = reading.getJSONArray("data");
+                            for(int i=0; i < newReadingArray.length(); i++){
+                                JSONObject dataObject = new JSONObject(newReadingArray.getString(i));
+                                Log.i(TAG,"Tristan "+ dataObject);
+                                result_status = DeliveryModel.UpdateUploadStatus(dataObject.getString("job_id").toString(),dataObject.getString("trackingNumber").toString());
+                            }
+                        }
+
+
+                    }
+
+                }
+
+
+                if (Liquid.ErrorUpload.length() != 0) {
+                    Liquid.ErrorDataUpload.put("data", Liquid.ErrorUpload);
+                }
+
+            } catch (JSONException e) {
+                Log.e(TAG,"Error :",e);
+                //JSON Problem
+                return 1;
+            }
+            catch (Exception e){
+                //An error has occured
+                Log.e(TAG,"Error :",e);
+                return 0;
+            }
+            return 29;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            //progressBar.setProgress(values[0]);
+            mProgressDialog.setProgress(values[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            super.onPostExecute(result);
+            try {
+                switch(result){
+                    case 29:
+                        Liquid.showDialogInfo(mView.getContext(),"Valid","Successfully Uploaded!");
+                        Log.i(TAG,"Successfully Uploaded");
+                        break;
+                    case 0:
+                        Log.i(TAG,"Unsuccessfully Uploaded");
+                        Liquid.showDialogInfo(mView.getContext(),"Invalid","Please check your Internet Connection!");
+                        break;
+                    case 1:
+                        Log.i(TAG,"Unsuccessfully Uploaded");
+                        Liquid.showDialogInfo(mView.getContext(),"Invalid","Unsuccessfully Uploaded / Some data is not uploaded!");
+                        break;
+                    case 2:
+                        Liquid.showDialogInfo(mView.getContext(),"Valid","There is no data to be upload!");
+                        break;
+                    default:
+                        Log.i(TAG,"Unsuccessfully Uploaded");
+                        Liquid.showDialogInfo(mView.getContext(),"Invalid","An error has occured!");
+
+                }
+
+
+            } catch (Exception e){
+                Log.e(TAG,"Error :",e);
+                Liquid.showDialogInfo(mView.getContext(),"Invalid","An error has occured!");
+            }
+            mProgressDialog.dismiss();
+        }
+    }
     public void DoUploadMessengerial(final JSONObject postData){
         try {
 
@@ -483,13 +646,16 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
 
                             new DeliveryFilePostingToServer(postData).execute();
                             break;
+                        case DialogInterface.BUTTON_NEUTRAL:
+                            new AllDataMessengerialToServer(postData).execute();
+                            break;
                     }
                 }
             };
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setMessage("Please select what you want to upload.").setPositiveButton("Data", dialogClickListener)
-                    .setNegativeButton("File", dialogClickListener).show();
+            builder.setMessage("Please select what you want to upload.").setPositiveButton("Pending Data", dialogClickListener)
+                    .setNegativeButton("File", dialogClickListener).setNeutralButton("All Data", dialogClickListener).show();
 
         } catch (Exception e) {
             e.printStackTrace();
