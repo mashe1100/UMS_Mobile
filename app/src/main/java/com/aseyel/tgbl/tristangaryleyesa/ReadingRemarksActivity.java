@@ -1,5 +1,6 @@
 package com.aseyel.tgbl.tristangaryleyesa;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -88,7 +89,7 @@ public class ReadingRemarksActivity extends BaseActivity implements SwipeRefresh
         //initialization of the needed component and objects
         Liquid.DeliveryStep = "Remarks";
         txtComment = (EditText) findViewById(R.id.txtComment);
-        Adapter = new ReadingRemarksAdapater(this);
+        Adapter = new ReadingRemarksAdapater(this,null);
         rvList = (RecyclerView) findViewById(R.id.rvList);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         rvList.setHasFixedSize(true);
@@ -188,6 +189,39 @@ public class ReadingRemarksActivity extends BaseActivity implements SwipeRefresh
                     final_result.add(data);
                 }
 
+//                switch (Liquid.Client){
+//                    case "baliwag_wd":
+//                        Liquid.RemarksCode = Id;
+//                        Liquid.Remarks = Title;
+//                        Liquid.ReaderComment = "";
+//                        Liquid.RemarksAbbreviation = Abbreviation;
+//
+//                        Intent i = new Intent(this, ReadingSummaryActivity.class);
+//                        switch (Liquid.reading_remarks) {
+//                            case "LOW CONSUMPTION":
+//                                if(Abbreviation.matches("IBA")) {
+//                                    startActivity(i);
+//                                    finish();
+//                                    return;
+//                                }
+//                                break;
+//                            case "HIGH CONSUMPTION":
+//                                if(Abbreviation.matches("HC")) {
+//                                    startActivity(i);
+//                                    finish();
+//                                    return;
+//                                }
+//                                break;
+//                            case "NEGATIVE CONSUMPTION":
+//                                if(Abbreviation.matches("IBA")) {
+//                                    startActivity(i);
+//                                    finish();
+//                                    return;
+//                                }
+//                                break;
+//                        }
+//                        break;
+//                }
             }
             Adapter.updateItems(false,final_result);
         } catch (Exception e) {
