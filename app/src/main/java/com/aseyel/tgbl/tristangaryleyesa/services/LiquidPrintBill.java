@@ -148,6 +148,10 @@ public class LiquidPrintBill {
                                 SetPageParams(); //ok
                                 WriteTitleBaliwagWD(0); //ok
                                 WriteHeaderBaliwagWD(1); //ok
+                                if(!Liquid.coreloss.matches("")){
+                                    if(Double.parseDouble(Liquid.coreloss)>0)
+                                        WriteOptionalHeaderBaliwagWD(1);
+                                }
                                 WriteDetailsBaliwagWD(mBill.BillItemsBaliwagWD);
                                 WriteNoticeBaliwagWD();
                                 break;
@@ -254,12 +258,13 @@ public class LiquidPrintBill {
             int BillTitleHeight = 10;
             int BillTitleMargin = 0;
             int BillNoHeight = LineHeight-20;
-            int TotalSize = LogoHeight + LogoMargin + BillTitleHeight + BillTitleMargin + BillNoHeight * 2 + 2 * mm + 6;
+            int TotalSize = LogoHeight + LogoMargin + BillTitleHeight + BillTitleMargin + BillNoHeight * 5 + 2 * mm + 6;
 
             String data = "! "+Margin+" 200 200 "+ TotalSize +" 1\r\n"
                     +PrintCenter(Columns[2] + Margin)
                     +"PCX 0 0 !<MORE_POW.PCX\r\n"
                     +PrintText("4", 0, LogoHeight + LogoMargin + LineHeight - 25, Ileco2BillTitle)
+                    +PrintText("5", 0, LogoHeight + LogoMargin + LineHeight *2, "Bill No: "+Liquid.bill_number)
                     +"PRINT\r\n";
 
             outputStream.write(data.getBytes());
@@ -674,6 +679,25 @@ public class LiquidPrintBill {
         return data;
     }
 
+    private static String WriteNegativeAfterTotal(String label, String value)
+    {
+        String data = "";
+        if (PrintToFile)
+        {
+            final String FORMAT_FOOTER_LINE = "{0,50}{1,15}";
+            //data+=(FORMAT_FOOTER_LINE, label, value);
+        }
+        else
+        {
+
+            data+=PrintText("5", 34, Ypos + LinePad, label);
+            data+=PrintRight(Columns[2] + Margin - Padding - 4);
+            data+=PrintText("5", Columns[1], Ypos + LinePad, value);
+            data+=PrintLeft();
+            Ypos += LineHeight;
+        }
+        return data;
+    }
     private static String WriteAfterTotal(String label, String value)
     {
         String data = "";
@@ -1603,10 +1627,12 @@ public class LiquidPrintBill {
                     break;
 
                 case OptionalFooter:
-                    if (Double.parseDouble(item.Amount()) == 0 || Double.parseDouble(item.Amount()) < 0) break;
-                    data+=WriteSummaryFooter(item.Label, Double.parseDouble(item.Amount()));
+                    String discountvalue = String.valueOf(item.Amount());
+                    if (item.Label == "Senior Citizen Discount" && Double.parseDouble(item.Amount()) > 0) {
+                        data+=WriteNegativeAfterTotal(item.Label,"("+Liquid.NumberFormat(discountvalue)+")");
+                        break;
+                    }
                     break;
-
                 case Footer:
 
                     data+=WriteSummaryFooter(item.Label, Double.parseDouble(item.Amount()));
@@ -2163,7 +2189,7 @@ public class LiquidPrintBill {
             data+=PrintLeft();
             data+=PrintText("7", Padding + 30, Ypos + LinePad, label);
             data+=PrintRight(Columns[2] + Margin - Padding - 5);
-            data+=PrintText("7", 0, Ypos + LinePad, a);
+            data+=PrintText("7", 0, Ypos + LinePad, Liquid.NumberFormat(String.valueOf(a)));
             data+=PrintLeft();
             Ypos += LineHeight;
 
@@ -2328,17 +2354,16 @@ public class LiquidPrintBill {
 
     private static void WriteOptionalNoticeIleco2()
     {
-        int total_height =115 + LineHeight * 2 + mm * 3;
+        int total_height =115 + LineHeight * 2 + mm;
         String data = "! "+Margin+" 200 200 "+total_height+" 1\r\n";
         data+=PrintCenter(Columns[2] + Margin);
         Ypos = mm;
         data+=PrintText("5", 0, Ypos, "NOTICE OF DISCONNECTION");
         Ypos += LineHeight +10;
-        data+=PrintText("5", 0, Ypos, "Please check and settle your accounts withing 48 hrs");
+        data+=PrintText("5", 0, Ypos, "Please check and settle your accounts within 48 hrs");
         Ypos += LineHeight;
         data+=PrintText("5", 0, Ypos, "(2 days) upon receipt to avoid disconnection.");
-        Ypos += LineHeight;
-        Ypos += LineHeight;
+        Ypos += LineHeight+20;
         data+=PrintText("5", 0, Ypos, "Disregard this notice if payments has been made");
         data+="PRINT\r\n";
         try {
@@ -2398,11 +2423,11 @@ public class LiquidPrintBill {
         int total_height =115 + LineHeight * 5 + mm * 3;
         String data = "! "+Margin+" 200 200 "+total_height+" 1\r\n";
         data+=PrintCenter(Columns[2] + Margin);
-        Ypos = mm;
+        Ypos = 0;
         data+=PrintText("5", 0, Ypos, "Please present this when paying your electric bill");
         Ypos += LineHeight;
-        data+=PrintText("5", 0, Ypos, "*** Upon receipt you can pay after 3 days ***");
-        Ypos += LineHeight;
+//        data+=PrintText("5", 0, Ypos, "*** Upon receipt you can pay after 3 days ***");
+//        Ypos += LineHeight;
         data+=PrintCenter(Columns[2] + Margin);
         data+="BARCODE 128 1 1 "+50+" "+0+" "+Ypos+" "+Liquid.AccountNumber+"\r\n";
         Ypos += LineHeight + mm + 20;
@@ -2565,6 +2590,49 @@ public class LiquidPrintBill {
             return String.format(format,value);
     }
 
+    private static void WriteOptionalHeaderBaliwagWD(int section)
+    {
+        try
+        {
+            int totalHeaderHeight = 90;
+            String data = "! "+Margin+" 200 200 "+totalHeaderHeight+" 1\r\n";
+            String oldMeter = Liquid.MeterNumber;
+            String oldReading = Liquid.OldReading;
+            String oldConsumption = Liquid.coreloss;
+
+            data+=PrintLine(0, 0, 0, HeaderHeight - 4 - 90);// left
+            data+=PrintLine(Columns[2], 0, Columns[2], HeaderHeight - 4 - 90);                       // right
+            data+=PrintLine(0, totalHeaderHeight - 2, Columns[2], totalHeaderHeight - 2);                       // bottom
+            data+=PrintLine(Columns[0], 0, Columns[0], HeaderHeight - 4 - 90);    // bottom center
+            Ypos = 0;
+            int offset = (TopSectionHeight - TitleHeight - 2 * 24 - 12) / 12;
+            data+=PrintLeft();
+
+            data+=PrintText("5", Columns[0] + Padding * 4, Ypos + offset-15, "Old Consumption");
+            data+=PrintText("4", Columns[0] + Padding * 15, Ypos + offset+25, String.valueOf(Double.parseDouble(oldConsumption)));
+
+//            data+=PrintText("5", Padding +10, Ypos + offset + LinePad + 10, "Old Meter No.");
+            data+=PrintText("5", Padding +10, Ypos + offset + LinePad + 10 , "Old Reading" );
+
+
+            data+=PrintRight(Columns[0] + Margin - Padding - 6);
+//            data+=PrintText("7", Padding + 10, Ypos + offset + LinePad + 10, oldMeter);
+            data+=PrintText("7", Padding + 10, Ypos + offset + LinePad + 10, oldReading);
+
+            data+=PrintLeft();
+            Ypos = TopSectionHeight;
+
+
+            Ypos = HeaderHeight - 4;
+            //WriteThreeMos();
+            data+="PRINT\n";
+
+            outputStream.write(data.getBytes());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
     private static void WriteHeaderBaliwagWD(int section)
     {
         try
@@ -2666,7 +2734,7 @@ public class LiquidPrintBill {
             data+=PrintLine(Columns[0], TopSectionHeight + LineGap, Columns[0], HeaderHeight - 4);    // bottom center
             Ypos = 0;
             String AccountLabel = Liquid.AccountNumber;
-            data+=WriteHeaderHeader("Account No. " + AccountLabel, "","Book No: "+ Liquid.route);
+            data+=WriteHeaderHeader("Account No. " + AccountLabel, "","Book No: "+ Liquid.route.split("-")[0]);
             int offset = (TopSectionHeight - TitleHeight - 2 * 24 - 12) / 12;
             data+=PrintLeft();
             data+=PrintText("5", Padding + 18, Ypos + offset + LinePad + 10, Liquid.AccountName);
@@ -2829,7 +2897,7 @@ public class LiquidPrintBill {
         String data = PrintText("5", Columns[0] + Padding * 10, Ypos + offset-10, "Cubic Meter");
         data += PrintText("5", Columns[0] + Padding * 11, Ypos + offset+15, "Consumed");
 
-        data+=PrintText("4", Columns[0] + Padding * 15, Ypos + offset + 24 + gap, String.valueOf(Math.round(Float.parseFloat(e))));
+        data+=PrintText("4", Columns[0] + Padding * 15, Ypos + offset + 24 + gap, String.valueOf((double)Math.round(Float.parseFloat(e))));
 
         Ypos += LineGap * 2;
         data+=PrintText("5", xpad + 38, Ypos + LinePad + 1, "Date");
@@ -2893,7 +2961,8 @@ public class LiquidPrintBill {
 
         String data = PrintText("5", Columns[0] + Padding * 12, Ypos + offset, "KWH Used");
 
-        data+=PrintText("4", Columns[0] + Padding * 15, Ypos + offset + 24 + gap, String.valueOf(Math.round(Float.parseFloat(e))));
+//        data+=PrintText("4", Columns[0] + Padding * 15, Ypos + offset + 24 + gap, String.valueOf(Math.round(Float.parseFloat(e))));
+        data+=PrintText("4", Columns[0] + Padding * 15, Ypos + offset + 24 + gap, e);
 
         Ypos += LineGap * 2;
         data+=PrintText("5", xpad + 38, Ypos + LinePad + 1, "Date");
