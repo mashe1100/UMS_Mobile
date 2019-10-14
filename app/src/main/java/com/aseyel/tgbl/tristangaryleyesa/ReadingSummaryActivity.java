@@ -91,6 +91,12 @@ public class ReadingSummaryActivity extends BaseFormActivity {
                 txtStatus.setText("Status : "+ reading_remarks);
                 txtConsumption.setText(Liquid.Present_Consumption + " kWh");
                 break;
+            case "baliwag_wd":
+                txtAmountDue.setText("Amount Due : P "+ LiquidBilling.total_amount_due);
+                txtRemarks.setText("Remarks : "+ Liquid.Remarks);
+                txtStatus.setText("Status : "+ reading_remarks);
+                txtConsumption.setText(Liquid.Present_Consumption + " Cubic Meter");
+                break;
             default:
                     txtAmountDue.setText("Amount Due : P "+ LiquidBilling.total_amount_due);
                     txtRemarks.setText("Remarks : "+ Liquid.Remarks);
@@ -243,6 +249,9 @@ public class ReadingSummaryActivity extends BaseFormActivity {
                                 startActivity(intentOpenBluetoothSettings);
                                 return;
                             }
+                            result = Liquid.SaveReading();
+                            result_logs = Liquid.SaveReadingLogs();
+
                             new PrintBill().execute();
                             getDeviceLocation();
                             dialog.cancel();
@@ -442,15 +451,16 @@ public class ReadingSummaryActivity extends BaseFormActivity {
                 @Override
                 public void run() {
                     try {
+                        boolean result_logs = false;
+
+
                         if (Liquid.PrintResponse) {
                             result = false;
-                            boolean result_logs = false;
-                            result = Liquid.SaveReading();
-                            result_logs = Liquid.SaveReadingLogs();
+
                             Liquid.showReadingDialogNext(ReadingSummaryActivity.this, "Valid", "Successfully Print!");
                             //ShowReprint();
                         } else {
-                            Liquid.showDialogError(ReadingSummaryActivity.this, "Invalid", result2);
+                            Liquid.showDialogError(ReadingSummaryActivity.this, "Invalid", "There are some problem in printing.");
                         }
                     } catch (Exception e){
                         e.printStackTrace();
