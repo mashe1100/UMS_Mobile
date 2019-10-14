@@ -11,6 +11,11 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -138,6 +143,9 @@ public class Liquid extends AppCompatActivity {
     public static String SearchId = "";
     public static String SearchFullname = "";
     public static String SelectedMeterNumber = "";
+    public static String OldMeterNumber = "";
+    public static String OldReading = "";
+    public static String OldConsumption = "0";
     public static int ReverseInput = 0;
     public static int HideKeyboard = 0;
     public static String rowid = "0";
@@ -145,7 +153,9 @@ public class Liquid extends AppCompatActivity {
     public static String SurveyType = "";
     public static String SurveyAmpirCapacity = "";
     //Phone Server
-    public static String ServerNumber = "+639291332538";
+//    public static String ServerNumber = "+639291332538";
+    public static String ServerNumberGlobe = "+639064783858";
+    public static String ServerNumberSmart = "+639989626300";
     //Coke
     //public static String Client = "coke";
     //public static String ServiceType = "TRACKING";
@@ -157,20 +167,20 @@ public class Liquid extends AppCompatActivity {
 
     //READ AND BILL
 //    public static String Client = "batelec2";
-    public static String Client = "baliwag_wd";
+//    public static String Client = "baliwag_wd";
 //    public static String Client = "more_power";
-    // EDIT INIT LINE 99 AUDIT to READING (READING GALLERY ACTIVITY)
+//     EDIT INIT LINE 99 AUDIT to READING (READING GALLERY ACTIVITY)
     // EDIT GetImages Line 180 AUDIT to READING (READING GALLERY ACTIVITY)
     // EDIT GetImages Line 1475 AUDIT to READING (TAB LOCAL FRAGMENT)
     // Please edit remarks reference // MeterReadingRemarksData
-//    public static String Client = "ileco2"; //Please edit remarks reference // MeterReadingIleco2RemarksData
+    public static String Client = "ileco2"; //Please edit remarks reference // MeterReadingIleco2RemarksData
 //    public static String Client = "pelco2"; //Please edit remarks reference // MeterReadingPelco2RemarksData
     public static String ServiceType = "READ AND BILL";
 //    public static String ImageType = "audit";
 
 
-    //public static String Client = "ngc_express";
-    //public static String ServiceType = "LOGISTICS";
+//    public static String Client = "ngc_express";
+//    public static String ServiceType = "LOGISTICS";
 //    public static String Client = "meralco_batangas";
 //    public static String Client = "meralco_lucena";
 //    public static String Client = "philpost";
@@ -1196,8 +1206,16 @@ public class Liquid extends AppCompatActivity {
 
     public static boolean SaveReadingLogs(){
         boolean result_logs = false;
+        String customer_id = Liquid.AccountNumber;
+        switch (Liquid.Client){
+            case "baliwag_wd":
+                customer_id = Liquid.C_ID;
+                break;
+            default:
+                customer_id = Liquid.AccountNumber;
+        }
         result_logs = Liquid.SaveReadingLogs(Liquid.Client, //ok
-                Liquid.AccountNumber, //ok
+                customer_id, //ok
                 Liquid.AccountNumber, //ok
                 Liquid.JobId, //ok
                 Liquid.AccountName, //ok
@@ -1356,9 +1374,16 @@ public class Liquid extends AppCompatActivity {
     }
     public static boolean SaveReading(){
         boolean result = false;
-
+        String customer_id = Liquid.AccountNumber;
+        switch (Liquid.Client){
+            case "baliwag_wd":
+                customer_id = Liquid.C_ID;
+                break;
+            default:
+                customer_id = Liquid.AccountNumber;
+        }
         result = Liquid.SaveReading(Liquid.Client, //ok
-                Liquid.AccountNumber, //ok
+                customer_id, //ok
                 Liquid.AccountNumber, //ok
                 Liquid.JobId, //ok
                 Liquid.AccountName, //ok
@@ -2100,6 +2125,7 @@ public class Liquid extends AppCompatActivity {
             "OCDate1",
             "latitude",
             "longitude",
+            "CMPresentReadingKWH",
 
 
     };
@@ -2738,6 +2764,7 @@ public class Liquid extends AppCompatActivity {
         }
 
         Bitmap bMapScaled = Bitmap.createScaledBitmap(mBitmap,  (int)width, (int)height, true);
+        bMapScaled = setImageWatermark(bMapScaled,Client.replace("_"," ").toUpperCase()+" - "+currentDateTime());
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bMapScaled.compress(Bitmap.CompressFormat.JPEG, 70, baos);
 
@@ -2754,6 +2781,54 @@ public class Liquid extends AppCompatActivity {
         }
 
     }
+
+    public static Bitmap setImageWatermark(Bitmap src, String watermark) {
+        int text_size = 25;
+//        int margin = 15;
+        int w = src.getWidth();
+        int h = src.getHeight();
+
+        Bitmap result = Bitmap.createBitmap(w, h, src.getConfig());
+        Canvas canvas = new Canvas(result);
+        canvas.drawBitmap(src, 0, 0, null);
+        Paint paint = new Paint();
+        Paint.FontMetrics fm = new Paint.FontMetrics();
+        paint.setColor(Color.WHITE);
+        paint.getFontMetrics(fm);
+        paint.setTextSize(30);
+        int margin = 15;
+        canvas.drawRect(margin,
+                src.getHeight() - text_size - text_size - margin - 5,
+                paint.measureText(watermark) + (margin*3),
+                src.getHeight() - text_size - margin + 5,
+                paint);
+
+        paint.setColor(Color.RED);
+//        paint.setAlpha(100);
+
+        canvas.drawText(watermark, margin+margin, src.getHeight() - text_size - margin, paint);
+        return result;
+    }
+
+//    public static Bitmap setImageWatermark(Bitmap src, String watermark) {
+//        int text_size = 25;
+//        int margin = 15;
+//        int w = src.getWidth();
+//        int h = src.getHeight();
+//        Bitmap result = Bitmap.createBitmap(w, h, src.getConfig());
+//
+//        Canvas canvas = new Canvas(result);
+//        canvas.drawBitmap(src, 0, 0, null);
+//
+//        Paint paint = new Paint();
+//        paint.setColor(Color.RED);
+//        paint.setTextSize(text_size);
+//        paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+//        paint.setAntiAlias(true);
+//        canvas.drawText(watermark, margin, src.getHeight() - text_size - margin, paint);
+//
+//        return result;
+//    }
 
     public static String imageToString(String mFile){
         Bitmap mBitmap = BitmapFactory.decodeFile(mFile);
@@ -3297,8 +3372,8 @@ public class Liquid extends AppCompatActivity {
         if (dot < 0)
             return kwh;
         //modified: 010519: include decimal in soa format for kwh
-        //kwh = String.valueOf((int) Double.parseDouble(kwh));
-        kwh = String.valueOf(Liquid.RoundUp(Double.parseDouble(kwh)));
+//        kwh = String.valueOf((int) Double.parseDouble(kwh));
+//        kwh = String.valueOf(Liquid.RoundUp(Double.parseDouble(kwh)));
 
         return kwh;
     }
