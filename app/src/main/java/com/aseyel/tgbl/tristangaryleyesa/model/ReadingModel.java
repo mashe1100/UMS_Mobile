@@ -115,7 +115,23 @@ public class ReadingModel {
                         "r_longitude," + //3
                         "Remarks," +//4
                         "Present_Consumption" +//5
-                        " from reading  WHERE transfer_data_status = 'Pending' LIMIT 1"
+                        " from reading  WHERE transfer_data_status = 'Pending'"
+                        +" LIMIT 1"
+//                        " from reading ORDER BY ModifiedDate DESC LIMIT 5"
+        );
+    }
+    public static Cursor GetRecentData(int limit)
+    {
+        return SplashActivity.mDatabaseHelper.SqliteSelectQuery(
+                "select " +
+                        "job_id," + //0
+                        "AccountNumber," + //1
+                        "r_latitude," + //2
+                        "r_longitude," + //3
+                        "Remarks," +//4
+                        "Present_Consumption" +//5
+                        //  " from reading  WHERE transfer_data_status = 'Pending' LIMIT 1"
+                        " from reading ORDER BY ModifiedDate DESC LIMIT "+limit
         );
     }
     public static boolean UpdateTransferStatus(String JobId,String AccountNumber){
