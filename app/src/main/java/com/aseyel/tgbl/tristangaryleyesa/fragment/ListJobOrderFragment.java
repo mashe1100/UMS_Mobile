@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -29,6 +30,7 @@ import com.aseyel.tgbl.tristangaryleyesa.DeliveryActivity;
 import com.aseyel.tgbl.tristangaryleyesa.DeliveryActivityV2;
 import com.aseyel.tgbl.tristangaryleyesa.MeterNotInListActivity;
 import com.aseyel.tgbl.tristangaryleyesa.NewMeterNotInListActivity;
+import com.aseyel.tgbl.tristangaryleyesa.OCRActivity;
 import com.aseyel.tgbl.tristangaryleyesa.R;
 import com.aseyel.tgbl.tristangaryleyesa.adapter.JobOrderDetailsAdapater;
 import com.aseyel.tgbl.tristangaryleyesa.NewJobOrderDetailsActivity;
@@ -232,11 +234,20 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
         Liquid.TrackingNumber = "";
         Liquid.RemarksCode = "";
         Liquid.Remarks = "";
-        Liquid.DeliveryItemTypeCode = "";
-        Liquid.DeliveryItemTypeDescription = "";
+//        Liquid.DeliveryItemTypeCode = "";
+//        Liquid.DeliveryItemTypeDescription = "";
         Liquid.ReaderComment = "";
+
         e = new Intent(view.getContext(), DeliveryActivityV2.class);
         view.getContext().startActivity(e);
+
+        if(Liquid.DeliveryItemTypeCode.matches("1")) {
+
+            Intent intent = new Intent(view.getContext(), OCRActivity.class);
+            startActivity(intent);
+
+
+        }
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -245,7 +256,7 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
     }
     public void MessengerialNavigation(){
         AHBottomNavigationItem item1 = new AHBottomNavigationItem("Details", R.drawable.ic_action_all, R.color.colorAccent);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem("Add", R.drawable.ic_action_accomplishment, R.color.colorAccent);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem("Add", R.drawable.ic_action_add, R.color.colorAccent);
 
 
         mBottomNavigationView.addItem(item1);
