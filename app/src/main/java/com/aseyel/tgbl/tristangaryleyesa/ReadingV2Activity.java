@@ -529,7 +529,7 @@ public class ReadingV2Activity extends BaseActivity {
         }
     }
 
-    public void initData(){
+    public static void initData(){
         LiquidBilling.clearData();
         Liquid.Reading = "";
 
@@ -540,6 +540,9 @@ public class ReadingV2Activity extends BaseActivity {
         Liquid.route  = "";
         Liquid.itinerary  = "";
         Liquid.previous_reading  = "0";
+        Liquid.OldConsumption  = "0";
+        Liquid.OldReading  = "";
+        Liquid.OldMeterNumber  = "";
         Liquid.present_Reading = "";
         Liquid.Present_Consumption= "0";
         Liquid.previous_reading_date= "";
@@ -738,6 +741,7 @@ public class ReadingV2Activity extends BaseActivity {
                             Liquid.MeterNumber = result.getString(37);
                             break;
                 }
+                Liquid.C_ID = result.getString(3);
                 Liquid.connectionload = result.getString(87);
                 Liquid.serial =  result.getString(63);
                 Liquid.AccountType = result.getString(7);
@@ -748,6 +752,11 @@ public class ReadingV2Activity extends BaseActivity {
                 Liquid.route = result.getString(11);
                 Liquid.itinerary = result.getString(13);
                 Liquid.serial = result.getString(63);
+
+                Liquid.OldConsumption  = "0";
+                Liquid.OldReading  = result.getString(89);
+                Liquid.OldMeterNumber  = "";
+
                 Liquid.previous_reading = !result.getString(47).equals("") ? result.getString(47) : "0";
                 Liquid.previous_reading = Liquid.FixDecimal(Liquid.previous_reading);
                 Liquid.previous_consumption = !result.getString(52).equals("") ? result.getString(52) : "0";
@@ -771,6 +780,7 @@ public class ReadingV2Activity extends BaseActivity {
                 Liquid.coreloss = !result.getString(44).equals("") ? result.getString(44) : "0";
                 Liquid.meter_count = !result.getString(42).equals("") ? result.getString(42) : "1";
                 Liquid.arrears = !result.getString(43).equals("") ? result.getString(43) : "0";
+                Liquid.arrears = Liquid.arrears.replace(",","");
                 Liquid.senior_tagging = result.getString(56);
                 Liquid.eda_tagging = result.getString(70);
                 Liquid.DateChangeMeter = result.getString(88);
@@ -976,6 +986,7 @@ public class ReadingV2Activity extends BaseActivity {
                     return;
                 case "ZERO CONSUMPTION":
                     Liquid.showDialogError(this,"Invalid","Zero Consumption cannot print!");
+                    Liquid.save_only = true;
                     return;
                 default:
 
@@ -1030,9 +1041,13 @@ public class ReadingV2Activity extends BaseActivity {
             Liquid.ModifiedBy = Liquid.User;
             Liquid.reading1 = Liquid.Reading;
             Liquid.reading2 = Liquid.Demand;
+            Liquid.RemarksCode = "0";
+            Liquid.Remarks = "NO FIELD FINDINGS";
             String[] RemarksData = Liquid.RemarksValue.split("-");
-            Liquid.RemarksCode = RemarksData[0];
-            Liquid.Remarks = RemarksData[1];
+            if(type.matches("Reprint")) {
+                Liquid.RemarksCode = RemarksData[0];
+                Liquid.Remarks = RemarksData[1];
+            }
 
             //Reading Location
             Liquid.r_latitude = String.valueOf(mLiquidGPS.getLatitude());
