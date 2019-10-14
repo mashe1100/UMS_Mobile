@@ -677,7 +677,8 @@ public class workModel {
                         "Transformer, "+//85
                         "inclusion, "+//86
                         "load, "+//87
-                        "OCDate1 "+//88
+                        "OCDate1, "+//88
+                        "CMPresentReadingKWH "+//89
                         "FROM customer_reading_downloads "+
                         "WHERE job_id = '"+job_id+"' AND "+
                         "C_AccountNumber = '"+AccountNumber+"' " +
