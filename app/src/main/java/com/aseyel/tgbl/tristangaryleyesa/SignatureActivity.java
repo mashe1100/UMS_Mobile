@@ -168,11 +168,11 @@ public class SignatureActivity extends BaseFormActivity {
                                     accountnumber+","+
                                     tag_desciption+","+
                                     details;
-                    mSmsManager.sendTextMessage(Liquid.ServerNumber,null,Message,null,null);
+                    mSmsManager.sendTextMessage(Liquid.ServerNumberSmart,null,Message,null,null);
                 }
                 else{
                     while (result.moveToNext()) {
-                        type = "1";
+                        type = "2";
                         latitude = result.getString(2);
                         longitude = result.getString(3);
                         remark = result.getString(4);
@@ -190,7 +190,7 @@ public class SignatureActivity extends BaseFormActivity {
                                         accountnumber + "," +
                                         tag_desciption + "," +
                                         details;
-                        mSmsManager.sendTextMessage(Liquid.ServerNumber, null, Message, null, null);
+                        mSmsManager.sendTextMessage(Liquid.ServerNumberSmart, null, Message, null, null);
                         ReadingModel.UpdateTransferStatus(job_id, accountnumber);
                     }
                 }
