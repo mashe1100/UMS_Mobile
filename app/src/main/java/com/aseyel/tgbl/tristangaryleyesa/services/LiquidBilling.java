@@ -387,7 +387,6 @@ public class LiquidBilling {
     }
 
     public double RatesKWHComputation(String KWH, String Rates){
-
         //KWH = !KWH.equals("") || !KWH.equals(null) || !KWH.isEmpty() ? KWH : "0";
         //Rates = !Rates.equals("") || !Rates.equals(null) || !Rates.isEmpty() ? Rates : "0";
 
@@ -399,8 +398,9 @@ public class LiquidBilling {
         }
 
         double Total = Double.valueOf(KWH) * Double.valueOf(Rates);
+        double TotalRounded4decimal = Double.parseDouble(Liquid.StringRoundDown4D(Total));
 
-        return Liquid.RoundUp(Total);
+        return Double.parseDouble(Liquid.StringRoundDown2D(TotalRounded4decimal));
     }
 
     public void MorePowerElectricBillingComputaion(String KWH,
@@ -720,7 +720,6 @@ public class LiquidBilling {
 
 
         }
-
         //Generation and Transmission
 
         total_gen_sys_charge= RatesKWHComputation(KWH, String.valueOf(gen_sys_charge));
@@ -822,7 +821,6 @@ public class LiquidBilling {
                 total_fit_all +
                 total_psalm_daa;
 
-
         //Arrears
         arrears = Double.parseDouble(Arrears);
         if(arrears > 0) {
@@ -834,8 +832,14 @@ public class LiquidBilling {
             arrears_penalty = Double.parseDouble(Liquid.interest);
         } else {
             //service fee
+            arrears = 0;
             arrears_additional = 0;
             arrears_penalty = 0;
+
+            if(Double.parseDouble(Liquid.interest) > 0){
+                arrears_additional = 50;
+                arrears_penalty = Double.parseDouble(Liquid.interest);
+            }
         }
 
 
@@ -1187,6 +1191,7 @@ public class LiquidBilling {
         String RateKey = "";
         Double rate = 0.0;
         Double penalty = 0.10;
+        Double seniorDiscount = 0.05;
         Double CubicMeter = Double.parseDouble(Consumption);
         boolean multiply = true;
         if(CubicMeter <= 10){
@@ -1224,11 +1229,19 @@ public class LiquidBilling {
             total_current_bill = CubicMeter * rate;
         }
         total_current_bill = Double.parseDouble(Liquid.StringRoundDown2D(total_current_bill));
+
+        senior = 0;
+        if(Liquid.senior_tagging.matches("1") && CubicMeter <= 30){
+            senior =  total_current_bill * seniorDiscount;
+            senior = Double.parseDouble(Liquid.StringRoundDown2D(senior));
+        }
+
+
         arrears = Double.parseDouble(Liquid.arrears);
         surcharge = total_current_bill * penalty;
         surcharge = Double.parseDouble(Liquid.StringRoundDown2D(surcharge));
         total_other_charges = 10.00;
-        total_amount_due = total_current_bill + arrears +/*maintenance fee*/total_other_charges;
+        total_amount_due = total_current_bill + arrears +/*maintenance fee*/total_other_charges - senior;
         total_amount_due = Double.parseDouble(Liquid.StringRoundDown2D(total_amount_due));
         total_amount_due2 = total_amount_due + surcharge;
         total_amount_due2 = Double.parseDouble(Liquid.StringRoundDown2D(total_amount_due2));
