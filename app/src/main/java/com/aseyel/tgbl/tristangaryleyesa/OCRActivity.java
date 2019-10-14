@@ -1,6 +1,7 @@
 package com.aseyel.tgbl.tristangaryleyesa;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -32,6 +33,7 @@ public class OCRActivity extends AppCompatActivity {
     CameraSource cameraSource;
     final int RequestCameraPermissionID = 1001;
     int total=0;
+    String scanned = "";
     ArrayList<String> alldata = new ArrayList<>();
 
     @Override
@@ -144,9 +146,25 @@ public class OCRActivity extends AppCompatActivity {
                                                                     if (z != 9)
                                                                         tester = Integer.parseInt(split[x].charAt(z) + "");
                                                                 }
-                                                                Liquid.TrackingNumber = split[x];
-                                                                finish();
-                                                                return;
+
+                                                                if(scanned.matches(split[x])){
+                                                                    total++;
+
+                                                                    if(total >= 1) {
+                                                                        Liquid.TrackingNumber = split[x];
+                                                                        if(!Liquid.CheckGPS(OCRActivity.this)) {
+                                                                            Liquid.showDialogInfo(OCRActivity.this, "Invalid", "Please enable GPS!");
+                                                                        } else {
+                                                                            Intent intent = new Intent(getApplicationContext(), ReadingRemarksActivity.class);
+                                                                            startActivity(intent);
+                                                                        }
+                                                                        finish();
+                                                                        return;
+                                                                    }
+                                                                }else{
+                                                                    scanned = split[x];
+                                                                    total = 0;
+                                                                }
                                                             }
                                                         }
 
@@ -159,18 +177,32 @@ public class OCRActivity extends AppCompatActivity {
                                                                 if (x != 9)
                                                                     tester = Integer.parseInt(value.charAt(x) + "");
                                                             }
-//                                                        textView.setText(value);
-                                                            Liquid.TrackingNumber = value;
-                                                            finish();
-                                                            return;
+
+
+                                                            if(scanned.matches(value)){
+                                                                total++;
+
+                                                                if(total >= 1) {
+                                                                    Liquid.TrackingNumber = value;
+                                                                    if(!Liquid.CheckGPS(OCRActivity.this)) {
+                                                                        Liquid.showDialogInfo(OCRActivity.this, "Invalid", "Please enable GPS!");
+                                                                    } else {
+                                                                        Intent intent = new Intent(getApplicationContext(), ReadingRemarksActivity.class);
+                                                                        startActivity(intent);
+                                                                    }
+                                                                    finish();
+                                                                    return;
+                                                                }
+                                                            }else{
+                                                                scanned = value;
+                                                                total = 0;
+                                                            }
                                                         }
                                                     }
                                                 }
                                         }catch (Exception e){}
-//                                        texttext.append(item.getValue()+"\n");
                                     }
                                 }
-
                             }
                         });
                     }
