@@ -23,6 +23,8 @@ import android.widget.Toast;
 import com.aseyel.tgbl.tristangaryleyesa.JobOrderActivity;
 
 import com.aseyel.tgbl.tristangaryleyesa.R;
+import com.aseyel.tgbl.tristangaryleyesa.ReadingRemarksActivity;
+import com.aseyel.tgbl.tristangaryleyesa.TypeActivity;
 import com.aseyel.tgbl.tristangaryleyesa.data.Liquid;
 import com.aseyel.tgbl.tristangaryleyesa.fragment.TabDeliveryFragment;
 import com.aseyel.tgbl.tristangaryleyesa.fragment.TabLocalFragment;
@@ -154,7 +156,12 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
                     switch(Liquid.SelectedJobType){
                         case "Messengerial":
                         case "MESSENGERIAL":
-                            ((TabDeliveryFragment) fragment).GoToList();
+                            //REVISION FOR FASTER USER INTERACTION
+
+                            TypeActivity.fragment = fragment;
+                            Intent type = new Intent(view.getContext(), TypeActivity.class);
+                            view.getContext().startActivity(type);
+//                            ((TabDeliveryFragment) fragment).GoToList();
                             break;
                         default:
                             Intent i = new Intent(view.getContext(), JobOrderActivity.class);
