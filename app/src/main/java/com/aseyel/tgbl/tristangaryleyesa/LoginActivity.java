@@ -188,12 +188,12 @@ public class LoginActivity extends AppCompatActivity {
                         }
                 }
             });
-            btnLogin = (Button) findViewById(R.id.btnLogin);
-            final_result_user = new JSONArray();
+                        btnLogin = (Button) findViewById(R.id.btnLogin);
+                        final_result_user = new JSONArray();
 
-            btnLogin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+                        btnLogin.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
                         String status = "";
 
                         Username = etUsername.getText().toString();

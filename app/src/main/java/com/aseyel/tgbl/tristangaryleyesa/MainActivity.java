@@ -731,6 +731,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initViews(){
+
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
 
