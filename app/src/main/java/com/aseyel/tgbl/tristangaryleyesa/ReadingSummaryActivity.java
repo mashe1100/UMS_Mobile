@@ -440,7 +440,7 @@ public class ReadingSummaryActivity extends BaseFormActivity {
                 Liquid.PrintResponse = false;
                 LiquidPrintBill mLiquidPrintBill = new LiquidPrintBill();
                 result = mLiquidPrintBill.pairPrinter();
-                Thread.sleep(5000);
+                Thread.sleep(4000);
             } catch (Exception e) {
                 e.printStackTrace();
                 result2 = e.getMessage().toString();
