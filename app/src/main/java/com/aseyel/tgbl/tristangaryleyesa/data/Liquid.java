@@ -88,11 +88,11 @@ public class Liquid extends AppCompatActivity {
 //    public static String pathEnvironment = "USI_TEST";
     public static String pathEnvironment = "USI_BETA";
     //MORE POWER path
-//    public static String pathEnvironment = "USI";
+    //public static String pathEnvironment = "USI";
     //UMS server
     private static final String umsUrl = "usi.3utilities.com:14147";
     //MORE POWER server
-//    private static final String umsUrl = "125.5.181.225:8080";
+   //private static final String umsUrl = "125.5.181.225:8080";
 
     private static final String TAG = "Liquid";
     public static String DefaultErrorMessage = "An error has occured!";
@@ -167,15 +167,15 @@ public class Liquid extends AppCompatActivity {
 
     //READ AND BILL
 //    public static String Client = "batelec2";
-//    public static String Client = "baliwag_wd";
+    public static String Client = "baliwag_wd";
 //    public static String Client = "more_power";
 //     EDIT INIT LINE 99 AUDIT to READING (READING GALLERY ACTIVITY)
     // EDIT GetImages Line 180 AUDIT to READING (READING GALLERY ACTIVITY)
     // EDIT GetImages Line 1475 AUDIT to READING (TAB LOCAL FRAGMENT)
     // Please edit remarks reference // MeterReadingRemarksData
-    public static String Client = "ileco2"; //Please edit remarks reference // MeterReadingIleco2RemarksData
-//    public static String Client = "pelco2"; //Please edit remarks reference // MeterReadingPelco2RemarksData
-    public static String ServiceType = "READ AND BILL";
+      //public static String Client = "ileco2"; //Please edit remarks reference // MeterReadingIleco2RemarksData
+   // public static String Client = "pelco2"; //Please edit remarks reference // MeterReadingPelco2RemarksData
+      public static String ServiceType = "READ AND BILL";
 //    public static String ImageType = "audit";
 
 
