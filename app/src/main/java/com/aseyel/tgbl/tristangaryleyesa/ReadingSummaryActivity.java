@@ -243,10 +243,6 @@ public class ReadingSummaryActivity extends BaseFormActivity {
 
                         case DialogInterface.BUTTON_NEGATIVE:
                             BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-                            Liquid.printlatitude = Latitude;
-                            Liquid.printlongitude = Longitude;
-                            Liquid.Print_TimeStamp = Liquid.currentDateTime();
-                            Liquid.Print_Attempt = String.valueOf(Integer.parseInt(Liquid.Print_Attempt) + 1);
                             if(!bluetoothAdapter.isEnabled()){
                                 Intent intentOpenBluetoothSettings = new Intent();
                                 intentOpenBluetoothSettings.setAction(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
@@ -440,7 +436,7 @@ public class ReadingSummaryActivity extends BaseFormActivity {
                 Liquid.PrintResponse = false;
                 LiquidPrintBill mLiquidPrintBill = new LiquidPrintBill();
                 result = mLiquidPrintBill.pairPrinter();
-                Thread.sleep(5000);
+                Thread.sleep(3000);
             } catch (Exception e) {
                 e.printStackTrace();
                 result2 = e.getMessage().toString();
@@ -457,15 +453,15 @@ public class ReadingSummaryActivity extends BaseFormActivity {
                     try {
                         boolean result_logs = false;
 
-                          Liquid.showReadingDialogNext(ReadingSummaryActivity.this, "Information.", "Choose done to go back to the list and close to try again.");
-//                        if (Liquid.PrintResponse) {
-//                            result = false;
-//
-//                            Liquid.showReadingDialogNext(ReadingSummaryActivity.this, "Valid", "Successfully Print!");
-//                            //ShowReprint();
-//                        } else {
-//                            Liquid.showDialogError(ReadingSummaryActivity.this, "Invalid", "There are some problem in printing.");
-//                        }
+
+                        if (Liquid.PrintResponse) {
+                            result = false;
+
+                            Liquid.showReadingDialogNext(ReadingSummaryActivity.this, "Valid", "Successfully Print!");
+                            //ShowReprint();
+                        } else {
+                            Liquid.showDialogError(ReadingSummaryActivity.this, "Invalid", "There are some problem in printing.");
+                        }
                     } catch (Exception e){
                         e.printStackTrace();
                     }
