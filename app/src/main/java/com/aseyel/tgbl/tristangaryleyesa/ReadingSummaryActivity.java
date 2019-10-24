@@ -243,6 +243,7 @@ public class ReadingSummaryActivity extends BaseFormActivity {
 
                         case DialogInterface.BUTTON_NEGATIVE:
                             BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                            //print
                             Liquid.printlatitude = Latitude;
                             Liquid.printlongitude = Longitude;
                             Liquid.Print_TimeStamp = Liquid.currentDateTime();
