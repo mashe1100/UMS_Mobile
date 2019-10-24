@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/UMS_Mobile.iml" filepath="$PROJECT_DIR$/UMS_Mobile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UMS_Mobile_GIT.iml" filepath="$PROJECT_DIR$/UMS_Mobile_GIT.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
