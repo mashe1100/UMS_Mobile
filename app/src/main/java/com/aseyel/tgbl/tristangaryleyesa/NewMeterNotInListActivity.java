@@ -39,6 +39,7 @@ public class NewMeterNotInListActivity extends BaseFormActivity {
     private EditText txtType;
     private EditText txtDemand;
     private EditText txtMeterNumber;
+    private EditText txtSerialNumber;
     private EditText txtCustomerName;
     private EditText txtAddress;
     private EditText txtReading;
@@ -58,6 +59,7 @@ public class NewMeterNotInListActivity extends BaseFormActivity {
     ArrayAdapter<CharSequence> AdapterSpinnerStructure;
     private String RemarksValue = "";
     private String MeterNumber  = "";
+    private String SerialNumber  = "";
     private String CustomerName  = "";
     private String Address  = "";
     private String Reading  = "";
@@ -104,6 +106,7 @@ public class NewMeterNotInListActivity extends BaseFormActivity {
         txtQuestion = (TextView) findViewById(R.id.txtQuestion);
         btnGallery = (FloatingActionButton) findViewById(R.id.btnGallery);
        txtMeterNumber = (EditText) findViewById(R.id.txtMeterNumber) ;
+        txtSerialNumber = (EditText) findViewById(R.id.txtSerialNumber) ;
        txtCustomerName = (EditText) findViewById(R.id.txtCustomerName);
        txtAddress = (EditText) findViewById(R.id.txtAddress);
         txtDemand = (EditText) findViewById(R.id.txtDemand) ;
@@ -192,20 +195,21 @@ public class NewMeterNotInListActivity extends BaseFormActivity {
             }
         });
         if(Liquid.HideKeyboard == 1){
-            mEditTextData = new EditText[13];
+            mEditTextData = new EditText[14];
             mEditTextData[0] = txtMeterNumber;
-            mEditTextData[1] = txtCustomerName;
-            mEditTextData[2] = txtAddress;
-            mEditTextData[3] = txtReading;
-            mEditTextData[4] = txtNearMeter;
-            mEditTextData[5] = txtNearSequence;
-            mEditTextData[6] = txtComment;
-            mEditTextData[7] = txtContact;
-            mEditTextData[8] = txtEmail;
-            mEditTextData[9] = txtMeterBrand;
-            mEditTextData[10] = txtDemand;
-            mEditTextData[11] = txtampirCapacity;
-            mEditTextData[12] = txtType;
+            mEditTextData[1] = txtSerialNumber;
+            mEditTextData[2] = txtCustomerName;
+            mEditTextData[3] = txtAddress;
+            mEditTextData[4] = txtReading;
+            mEditTextData[5] = txtNearMeter;
+            mEditTextData[6] = txtNearSequence;
+            mEditTextData[7] = txtComment;
+            mEditTextData[8] = txtContact;
+            mEditTextData[9] = txtEmail;
+            mEditTextData[10] = txtMeterBrand;
+            mEditTextData[11] = txtDemand;
+            mEditTextData[12] = txtampirCapacity;
+            mEditTextData[13] = txtType;
             mLiquid.hideSoftKeyboard(mEditTextData);
         }
 
@@ -229,6 +233,7 @@ public class NewMeterNotInListActivity extends BaseFormActivity {
             }
             while(result.moveToNext()) {
                 txtMeterNumber.setText(result.getString(2)) ;
+                txtSerialNumber.setText(result.getString(25)) ;
                 txtCustomerName.setText(result.getString(3));
                 txtAddress.setText(result.getString(4));
                 txtReading.setText(result.getString(17));
@@ -330,7 +335,8 @@ public class NewMeterNotInListActivity extends BaseFormActivity {
     public void Save(){
 
           boolean result = false;
-          MeterNumber  = txtMeterNumber.getText().toString();
+        MeterNumber  = txtMeterNumber.getText().toString();
+        SerialNumber  = txtSerialNumber.getText().toString();
           CustomerName  = txtCustomerName.getText().toString();
           Address  = txtAddress.getText().toString();
           Reading  = txtReading.getText().toString();
@@ -384,7 +390,7 @@ public class NewMeterNotInListActivity extends BaseFormActivity {
                         MeterTypeValue,
                         StructureValue,
                         "",
-                        "");
+                        SerialNumber);
 
             }else{
                 result = MeterNotInListModel.Update(  Liquid.SelectedCode,
@@ -417,7 +423,7 @@ public class NewMeterNotInListActivity extends BaseFormActivity {
                         MeterTypeValue,
                         StructureValue,
                         "",
-                        ""
+                        SerialNumber
                         );
             }
 
