@@ -511,6 +511,15 @@ public class ReadingGalleryActivity extends BaseActivity {
                         Liquid.Average_Reading = Liquid.AverageIleco2Validation(Liquid.Remarks,Liquid.RemarksCode);
                         Liquid.reading_remarks = Liquid.ConsumptionValidation(Liquid.Averange_Consumption, Liquid.previous_consumption, Liquid.Present_Consumption);
                         return true;
+                    case "baliwag_wd":
+                        for (int x=0; x<Liquid.BaliwagAverageRemarksAbbreviation.length; x++){
+                            if(Liquid.RemarksAbbreviation.matches(Liquid.BaliwagAverageRemarksAbbreviation[x])){
+                                Liquid.Reading = Integer.toString((int)(Integer.parseInt(Liquid.previous_reading)+Integer.parseInt(Liquid.Averange_Consumption)));
+                                Liquid.Present_Consumption = Liquid.Averange_Consumption;
+                            }
+                        }
+
+                        return true;
                     default:
                         Liquid.Average_Reading = Liquid.AverageValidation(Liquid.Remarks,Liquid.RemarksCode);
                         Liquid.Present_Consumption = Liquid.Averange_Consumption;

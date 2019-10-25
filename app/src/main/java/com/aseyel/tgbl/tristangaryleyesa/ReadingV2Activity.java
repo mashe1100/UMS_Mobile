@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aseyel.tgbl.tristangaryleyesa.data.Liquid;
 import com.aseyel.tgbl.tristangaryleyesa.model.ReadingModel;
@@ -1065,6 +1066,7 @@ public class ReadingV2Activity extends BaseActivity {
             }
             Liquid.demand_consumption = Liquid.GetKWH(Liquid.multiplier, String.valueOf(0), Liquid.Demand);
 
+            Toast.makeText(ReadingV2Activity.this, Liquid.RemarksCode, Toast.LENGTH_SHORT).show();
             if (Liquid.RemarksCode.equals("0") || Liquid.RemarksCode.equals("28")) {
 
             }else{
@@ -1077,6 +1079,15 @@ public class ReadingV2Activity extends BaseActivity {
                     case "pelco2":
                         Liquid.Average_Reading = Liquid.AverageIleco2Validation(Liquid.Remarks,Liquid.RemarksCode);
                         Liquid.reading_remarks = Liquid.ConsumptionValidation(Liquid.Averange_Consumption, Liquid.previous_consumption, Liquid.Present_Consumption);
+                        return true;
+                    case "baliwag_wd":
+                        for (int x=0; x<Liquid.BaliwagAverageRemarksAbbreviation.length; x++){
+                            if(Liquid.RemarksAbbreviation.matches(Liquid.BaliwagAverageRemarksAbbreviation[x])){
+                                Liquid.Reading = Integer.toString((int)(Integer.parseInt(Liquid.previous_reading)+Integer.parseInt(Liquid.Averange_Consumption)));
+                                Liquid.Present_Consumption = Liquid.Averange_Consumption;
+                            }
+                        }
+
                         return true;
                     default:
                         Liquid.Average_Reading = Liquid.AverageValidation(Liquid.Remarks,Liquid.RemarksCode);
