@@ -1066,7 +1066,6 @@ public class ReadingV2Activity extends BaseActivity {
             }
             Liquid.demand_consumption = Liquid.GetKWH(Liquid.multiplier, String.valueOf(0), Liquid.Demand);
 
-            Toast.makeText(ReadingV2Activity.this, Liquid.RemarksCode, Toast.LENGTH_SHORT).show();
             if (Liquid.RemarksCode.equals("0") || Liquid.RemarksCode.equals("28")) {
 
             }else{
