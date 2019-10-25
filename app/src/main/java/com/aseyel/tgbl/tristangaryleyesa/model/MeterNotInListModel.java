@@ -140,7 +140,8 @@ public class MeterNotInListModel {
                              "[ampirCapacity], "+ //21
                              "[meterbrand], "+//22
                              "[emailaddress], "+//23
-                             "[contactnumber] "+//24
+                             "[contactnumber], "+//24
+                             "[serial] "+//25
                         "from meter_not_in_list " +
                         "where [job_id] = '"+id+"' AND [customer_meterno] = '"+MeterNumber+"' " +
                         "order by timestamp  DESC"
@@ -223,7 +224,6 @@ public class MeterNotInListModel {
                     reading_date,
                     nearest_meter,
                     nearest_seq,
-                    reading,
                     reading,
                     contact,
                     email,
