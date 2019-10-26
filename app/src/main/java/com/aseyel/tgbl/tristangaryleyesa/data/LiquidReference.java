@@ -1256,8 +1256,12 @@ public class LiquidReference {
             "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('26','HN','HOLD BILL-NEGATIVE');",
             "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('27','HD','HOLD BILL-DECREASE');",
             "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('28','HC','HOLD BILL-INCREASE');",
-            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('29','EM','ELEVATED METER CLUSTER');"
-
+            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('29','TR','TAMPERED METER');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('30','OR','OTHER REMARKS');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('31','CL','CLUSTERED METER');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('32','AM','ARRAY METER');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('33','MS','UNCLEAR METER AND SERIAL NUMBERS');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('34','OM','OLD METER');",
     };
     public static String[] MeterReadingIleco2RemarksData = {
             "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES (0,'NO FIELD FINDINGS');",
