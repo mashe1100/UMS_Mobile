@@ -16,6 +16,10 @@ public class LiquidReference {
     public static String AlterLatitudeCustomerReadingDownload = "ALTER TABLE  customer_reading_download ADD COLUMN latitude TEXT NULL";
     public static String AlterLongitudeCustomerReadingDownload = "ALTER TABLE  customer_reading_download ADD COLUMN longitude TEXT NULL";
 
+
+    //Update 10/28/2019 remarks update
+
+
     //SQLITE TABLE
     public static String DropCokeCustomerTable = "DROP TABLE IF EXISTS customer";
     public static String CokeCustomerTable = "CREATE TABLE IF NOT EXISTS  customer (INCLUDED text  NULL,EVO text  NULL,SERVICE_MODEL text  NULL,MKTSGM text  NULL,SEGM text  NULL,CU text  NULL,REGION text  NULL,SALES_LOC_CODE text  NULL,SUB_DEMAND_CODE text  NULL,WITH_SCL text  NULL,SCL text  NULL,WITH_VOLUME text  NULL,VOLUME text  NULL,LEGO text  NULL,Customer_No text  PRIMARY KEY NOT NULL,Customer_group text  NULL,Oprl_Mark_Type text  NULL,Transportzone text  NULL,DeliverPlant text  NULL,Region_Lookup text  NULL,Sales_Org text  NULL,Sales_Group text  NULL,Sales_Office text  NULL,Sales_Route text  NULL,Sales_Location text  NULL,Demand_area text  NULL,Sub_Demand_Area text  NULL,Name text  NULL,Name_2 text  NULL,City text  NULL,Postal_Codes text  NULL,Street text  NULL,House_No text  NULL,Street_4 text  NULL,Train_station text  NULL,Created_on text  NULL,Account_group text  NULL,Customer_class text  NULL,Business_Type text  NULL,Bus_Type_Ext text  NULL,Cus_Subtrd_Chn text  NULL,Suppres_Reason text  NULL,Cust_Plan_Lev text  NULL,Sales_district text  NULL,Master_Route text  NULL,Driver text  NULL,BP__Customer_Partner text  NULL,PY__Customer_Partner text  NULL,ZR__Personel_Partner text  NULL,ZW__Customer_Partner text  NULL,ZG__Personel_Partner text  NULL,Longitude text  NULL,Latitude text  NULL,Bus_Comp_Type text  NULL,DPWI text  NULL,Account text  NULL,address text  NULL,new_address text  NULL,province text  NULL,mt_region text  NULL,Address_1 text  NULL,address_2 text  NULL,Remarks text  NULL,mt_city text  NULL,period TEXT  NULL,sysentrydate TEXT NULL,modifieddate TEXT NULL,modifiedby TEXT NULL)";
@@ -1228,7 +1232,7 @@ public class LiquidReference {
 //            "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES ('132','BILLING IMPROBABLE - DECREASE');",
 //            "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES ('133','BILLING IMPROBABLE - ZERO');",
 
-            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('0','NF','NO FIELD FINDINGS');",
+            //"INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('0','NF','NO FIELD FINDINGS');",
             "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('2','HM','HANGING METER');",
             "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('3','BG','BROKEN GLASS');",
             "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('4','MP','METER INSIDE PREMISES');",
@@ -1244,18 +1248,19 @@ public class LiquidReference {
             "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('14','DS','DISCONNECTED');",
             "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('15','FI','FOR INSPECTION');",
             "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('16','VH','VERY HIGH METER');",
-            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('17','OR','OTHER REMARKS');",
-            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('18','UN','UNCLEAR METER NUMBER');",
-            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('19','US','UNCLEAR SERIAL NUMBER');",
-            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('20','MM','MISSING MORE SEAL');",
-            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('21','ME','MISSING ERC SEAL');",
-            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('22','TM','TRANSFERRED METER');",
-            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('23','DR','DEFECTIVE DEMAND REGISTRY');",
-            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('24','WJ','WITH JUMPER');",
-            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('25','HZ','HOLD BILL-ZERO');",
-            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('26','HN','HOLD BILL-NEGATIVE');",
-            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('27','HD','HOLD BILL-DECREASE');",
-            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('28','HC','HOLD BILL-INCREASE');",
+            //"INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('17','OR','OTHER REMARKS');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('17','UN','UNCLEAR METER NUMBER');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('18','US','UNCLEAR SERIAL NUMBER');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('19','MM','MISSING MORE SEAL');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('20','ME','MISSING ERC SEAL');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('21','TM','TRANSFERRED METER');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('22','DR','DEFECTIVE DEMAND REGISTRY');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('23','WJ','WITH JUMPER');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('24','HZ','HOLD BILL-ZERO');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('25','HN','HOLD BILL-NEGATIVE');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('26','HD','HOLD BILL-DECREASE');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('27','HC','HOLD BILL-INCREASE');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('28','EM','ELEVATED METER CLUSTER');",
             "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('29','TR','TAMPERED METER');",
             "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('30','OR','OTHER REMARKS');",
             "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('31','CL','CLUSTERED METER');",
@@ -1263,6 +1268,7 @@ public class LiquidReference {
             "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('33','MS','UNCLEAR METER AND SERIAL NUMBERS');",
             "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('34','OM','OLD METER');",
     };
+
     public static String[] MeterReadingIleco2RemarksData = {
             "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES (0,'NO FIELD FINDINGS');",
 //            "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES (1,'STOP METER');",
