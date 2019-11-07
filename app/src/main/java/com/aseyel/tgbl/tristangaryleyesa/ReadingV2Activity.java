@@ -139,6 +139,7 @@ public class ReadingV2Activity extends BaseActivity {
                         Liquid.Present_Consumption = "0";
                         Liquid.ReadingInputTemporaryHolder = Liquid.Reading;
                         Liquid.PresentConsumptionTemporaryHolder = Liquid.Present_Consumption;
+                        Liquid.Reading_TimeStamp = Liquid.currentDateTime();
                         startActivity(i);
                         dialog.cancel();
 
@@ -208,7 +209,13 @@ public class ReadingV2Activity extends BaseActivity {
                         ConsumptionFindingsNotification(Liquid.reading_remarks);
                         etxtReading.requestFocus();
                     } else {
-                        Liquid.save_only = true;
+                        switch (Liquid.Client){
+                            case "baliwag_wd":
+                                Computation();
+                                break;
+                            default:
+                                Liquid.save_only = true;
+                        }
                         startActivity(i);
                     }
                     break;
@@ -971,14 +978,14 @@ public class ReadingV2Activity extends BaseActivity {
             };
             switch(Liquid.reading_remarks){
                 case "LOW CONSUMPTION":
-                    Liquid.showDialogError(this,"Invalid","Low Consumption cannot print!");
                     switch (Liquid.Client){
                         case "baliwag_wd":
                             break;
                         default:
+                            Liquid.showDialogError(ReadingV2Activity.this,"Invalid","Low Consumption cannot print!");
                             Liquid.save_only = true;
+                            return;
                     }
-                    return;
                 case "HIGH CONSUMPTION":
                     break;
                 case "NEGATIVE CONSUMPTION":
@@ -986,9 +993,14 @@ public class ReadingV2Activity extends BaseActivity {
                     Liquid.save_only = true;
                     return;
                 case "ZERO CONSUMPTION":
-                    Liquid.showDialogError(this,"Invalid","Zero Consumption cannot print!");
-                    Liquid.save_only = true;
-                    return;
+                    switch (Liquid.Client){
+                        case "baliwag_wd":
+                            break;
+                        default:
+                            Liquid.showDialogError(this,"Invalid","Zero Consumption cannot print!");
+                            Liquid.save_only = true;
+                            return;
+                    }
                 default:
 
             }
