@@ -153,6 +153,10 @@ public class LiquidPrintBill {
                                         WriteOptionalHeaderBaliwagWD(1);
                                 }
                                 WriteDetailsBaliwagWD(mBill.BillItemsBaliwagWD);
+                                if(Double.parseDouble(Liquid.arrears) <= 0)
+                                    WriteAdditionalNotice1BaliwagWD();
+                                else
+                                    WriteAdditionalNotice2BaliwagWD();
                                 WriteNoticeBaliwagWD();
                                 break;
                             default:
@@ -2376,6 +2380,54 @@ public class LiquidPrintBill {
         }
     }
 
+    private static void WriteAdditionalNotice1BaliwagWD  ()
+    {
+        int total_height =115 + LineHeight;
+        String data = "! "+Margin+" 200 200 "+total_height+" 1\r\n";
+        data+=PrintCenter(Columns[2] + Margin);
+        Ypos = mm;
+        data+=PrintText("5", 0, Ypos, "IF THE CURRENT BILL REMAINS UNPAID");
+        Ypos += LineHeight;
+        data+=PrintText("5", 0, Ypos, "FIVE (5) DAYS AFTER THE DUE DATE, YOUR");
+        Ypos += LineHeight;
+        data+=PrintText("5", 0, Ypos, "ACCOUNT WILL BE FOR DISCONNECTION");
+        Ypos += LineHeight;
+        data+=PrintText("5", 0, Ypos, "ON (March 1, 2019)");
+        data+="PRINT\r\n";
+        try {
+
+            outputStream.write(data.getBytes());
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void WriteAdditionalNotice2BaliwagWD  ()
+    {
+        int total_height =125 + LineHeight * 2;
+        String data = "! "+Margin+" 200 200 "+total_height+" 1\r\n";
+        data+=PrintCenter(Columns[2] + Margin);
+        Ypos = mm;
+        data+=PrintText("5", 0, Ypos, "IF THE BALANCE REMAINS UNPAID AFTER");
+        Ypos += LineHeight;
+        data+=PrintText("5", 0, Ypos, "THE DUE DATE, YOUR ACCOUNT WILL BE");
+        Ypos += LineHeight + 20;
+        data+=PrintText("4", 0, Ypos, "FOR DISCONNECTION ON");
+        Ypos += LineHeight + 15;
+        data+=PrintText("4", 0, Ypos, "(March 1, 2019)");
+        data+="PRINT\r\n";
+        try {
+
+            outputStream.write(data.getBytes());
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private static void WriteNoticeBaliwagWD()
     {
         int total_height =115 + LineHeight * 12 + mm * 3;
@@ -2385,14 +2437,13 @@ public class LiquidPrintBill {
         data+=PrintText("5", 0, Ypos, "Reconnection Fee of P100.00 will be charged if");
         Ypos += LineHeight;
         data+=PrintText("5", 0, Ypos, "Service has been disconnected.");
+        Ypos += LineHeight + 20;
+        data+=PrintText("5", 0, Ypos, "Simula po sa Oktubre 2019, ipapatupad na ang");
         Ypos += LineHeight;
+        data+=PrintText("5", 0, Ypos, "SEPTAGE FEE (P3.00 / Cubic Meter) sa bisa ng");
         Ypos += LineHeight;
-        data+=PrintText("5", 0, Ypos, "ALL BILLING COMPLAINTS WILL BE");
-        Ypos += LineHeight;
-        data+=PrintText("5", 0, Ypos, "ACKNOWLEDGED WITHIN 7 WORKING DAYS");
-        Ypos += LineHeight;
-        data+=PrintText("5", 0, Ypos, "ONLY AFTER READING DATE.");
-        Ypos += LineHeight+3;
+        data+=PrintText("5", 0, Ypos, "Board Res. No. 057, s. 2019");
+        Ypos += LineHeight+5;
         data+=PrintText("5", 0, Ypos, "NO FIELD COLLECTOR");
         Ypos += LineHeight;
         Ypos += LineHeight;
