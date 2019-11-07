@@ -176,11 +176,11 @@ public class Liquid extends AppCompatActivity {
 //    public static String Client = "ileco2"; //Please edit remarks reference // MeterReadingIleco2RemarksData
 //    public static String Client = "pelco2"; //Please edit remarks reference // MeterReadingPelco2RemarksData
     public static String ServiceType = "READ AND BILL";
-//    public static String ImageType = "audit";
+//    public static String ImageType = "audit";[
 
 
 //    public static String Client = "ngc_express";
-//    public static String ServiceType = "LOGISTICS";
+//    public static String ServiceType = "h";
 //    public static String Client = "meralco_batangas";
 //    public static String Client = "meralco_lucena";
 //    public static String Client = "philpost";
@@ -2125,6 +2125,8 @@ public class Liquid extends AppCompatActivity {
             "latitude",
             "longitude",
             "CMPresentReadingKWH",
+            "over30days",
+            "over60days",
 
 
     };
