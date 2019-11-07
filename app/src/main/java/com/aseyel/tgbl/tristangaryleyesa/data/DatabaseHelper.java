@@ -38,15 +38,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void UpdateDatabase(){
         try{
             SQLiteDatabase db = this.getWritableDatabase();
-            db.execSQL(LiquidReference.AlterStatusPicture);
-            db.execSQL(LiquidReference.AlterStatusMeterNotInList);
-            db.execSQL(LiquidReference.AlterDemandMeterNotInList);
-            db.execSQL(LiquidReference.AlterHouseLatitudeMeterNotInList);
-            db.execSQL(LiquidReference.AlterHouseLongitudeMeterNotInList);
-            db.execSQL(LiquidReference.AlterAmpirCapacityMeterNotInList);
-            db.execSQL(LiquidReference.AlterTypeMeterNotInList);
-            db.execSQL(LiquidReference.AlterLatitudeCustomerReadingDownload);
-            db.execSQL(LiquidReference.AlterLongitudeCustomerReadingDownload);
+
+            if(Liquid.currentDate().equals("2019-10-28") || Liquid.currentDate().equals("2019-10-29")) {
+                switch (Liquid.Client) {
+                    case "more_power":
+                        db.execSQL(LiquidReference.DropMeterReadingRemarks);
+                        db.execSQL(LiquidReference.MeterReadingRemarks);
+                        Log.e(TAG, LiquidReference.DropMeterReadingRemarks);
+                        for (int a = 0; a < LiquidReference.MeterReadingMorePowerRemarksData.length; a++) {
+                            db.execSQL(LiquidReference.MeterReadingMorePowerRemarksData[a]);
+                        }
+                        break;
+                }
+            }
+            if(Liquid.currentDate().equals("2019-03-02") || Liquid.currentDate().equals("2019-03-03")){
+                db.execSQL(LiquidReference.AlterStatusPicture);
+                db.execSQL(LiquidReference.AlterStatusMeterNotInList);
+                db.execSQL(LiquidReference.AlterDemandMeterNotInList);
+                db.execSQL(LiquidReference.AlterHouseLatitudeMeterNotInList);
+                db.execSQL(LiquidReference.AlterHouseLongitudeMeterNotInList);
+                db.execSQL(LiquidReference.AlterAmpirCapacityMeterNotInList);
+                db.execSQL(LiquidReference.AlterTypeMeterNotInList);
+                db.execSQL(LiquidReference.AlterLatitudeCustomerReadingDownload);
+                db.execSQL(LiquidReference.AlterLongitudeCustomerReadingDownload);
+            }
+
+
+
+
 
         }catch(Exception e){
             Log.e(TAG,"Tristan :",e);
