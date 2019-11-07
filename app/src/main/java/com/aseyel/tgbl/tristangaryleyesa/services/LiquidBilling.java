@@ -1188,45 +1188,59 @@ public class LiquidBilling {
         Consumption = Consumption != "" ? Consumption : "0";
         Demand = Demand != "" ? Demand : "0";
 
-        String RateKey = "";
-        Double rate = 0.0;
         Double penalty = 0.10;
         Double seniorDiscount = 0.05;
+        Double septage = 3.00;
         Double CubicMeter = Double.parseDouble(Consumption);
-        boolean multiply = true;
-        if(CubicMeter <= 10){
-            RateKey = "MINIMUM";
-            multiply = false;
-        }else if(CubicMeter <= 20){
-            RateKey = "BLOCK 1";
-        }else if(CubicMeter <= 30){
-            RateKey = "BLOCK 2";
-        }else if(CubicMeter <= 40){
-            RateKey = "BLOCK 3";
-        }else if(CubicMeter <= 50){
-            RateKey = "BLOCK 4";
-        }else{
-            RateKey = "BLOCK 5";
-        }
+        if(CubicMeter < 0)
+            CubicMeter = 0.0;
+
+        //min, block1, block2, block3, block4, block5
+        double[] block_rate = {0,0,0,0,0,0};
+        double[] block_offset = {0,10,20,30,40,50};
+        double[] block_range = {10,20,30,40,50,999999999};
+        boolean[] block_multiply = {false,true,true,true,true,true};
 
         Cursor result = BillingModel.GetRates(RateCode, Classification, BillingCycle);
+        if (result.getCount() != 0) {
+            while (result.moveToNext()) {
+                rate_description = result.getString(result.getColumnIndex("rate_description"));
 
-        if (result.getCount() == 0) {
-            return;
-        }
-        while (result.moveToNext()) {
-
-            rate_description = result.getString(result.getColumnIndex("rate_description"));
-
-            if(rate_description.matches(RateKey)){
-                rate = Double.parseDouble(result.getString(result.getColumnIndex("Rates_Price")));
+                if (rate_description.matches("MINIMUM")) {
+                    block_rate[0] = Double.parseDouble(result.getString(result.getColumnIndex("Rates_Price")));
+                }else if (rate_description.matches("BLOCK 1")) {
+                    block_rate[1] = Double.parseDouble(result.getString(result.getColumnIndex("Rates_Price")));
+                }else if (rate_description.matches("BLOCK 2")) {
+                    block_rate[2] = Double.parseDouble(result.getString(result.getColumnIndex("Rates_Price")));
+                }else if (rate_description.matches("BLOCK 3")) {
+                    block_rate[3] = Double.parseDouble(result.getString(result.getColumnIndex("Rates_Price")));
+                }else if (rate_description.matches("BLOCK 4")) {
+                    block_rate[4] = Double.parseDouble(result.getString(result.getColumnIndex("Rates_Price")));
+                }else if (rate_description.matches("BLOCK 5")) {
+                    block_rate[5] = Double.parseDouble(result.getString(result.getColumnIndex("Rates_Price")));
+                }
             }
         }
 
-
-        total_current_bill = rate;
-        if(multiply){
-            total_current_bill = CubicMeter * rate;
+        total_current_bill = 0;
+        for (int i=0; i<block_rate.length; i++){
+            if(CubicMeter > block_range[i]){
+                if(block_multiply[i]){
+                    double block_amount = Double.parseDouble(Liquid.StringRoundDown2D(10 * block_rate[i]));
+                    total_current_bill += (block_amount);
+                }else{
+                    total_current_bill += block_rate[i];
+                }
+            }else{
+                if (block_multiply[i]) {
+                    double remainder = CubicMeter - block_offset[i];
+                    double offset = Double.parseDouble(Liquid.StringRoundDown2D(remainder * block_rate[i]));
+                    total_current_bill += (offset);
+                }else {
+                    total_current_bill += block_rate[i];
+                }
+                break;
+            }
         }
         total_current_bill = Double.parseDouble(Liquid.StringRoundDown2D(total_current_bill));
 
@@ -1236,14 +1250,15 @@ public class LiquidBilling {
             senior = Double.parseDouble(Liquid.StringRoundDown2D(senior));
         }
 
-
         arrears = Double.parseDouble(Liquid.arrears);
         surcharge = total_current_bill * penalty;
         surcharge = Double.parseDouble(Liquid.StringRoundDown2D(surcharge));
-        total_other_charges = 10.00;
-        total_amount_due = total_current_bill + arrears +/*maintenance fee*/total_other_charges - senior;
+        total_environmental_charge = Double.parseDouble(Liquid.StringRoundDown2D(CubicMeter * septage));
+        total_other_charges = total_environmental_charge * penalty;
+
+        total_amount_due = total_current_bill + arrears +/*maintenance fee*/total_environmental_charge - senior;
         total_amount_due = Double.parseDouble(Liquid.StringRoundDown2D(total_amount_due));
-        total_amount_due2 = total_amount_due + surcharge;
+        total_amount_due2 = total_amount_due + surcharge + total_other_charges;
         total_amount_due2 = Double.parseDouble(Liquid.StringRoundDown2D(total_amount_due2));
     }
 
