@@ -1,5 +1,6 @@
 package com.aseyel.tgbl.tristangaryleyesa;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -582,14 +583,14 @@ public class ReadingGalleryActivity extends BaseActivity {
             };
             switch(Liquid.reading_remarks){
                 case "LOW CONSUMPTION":
-                    Liquid.showDialogError(this,"Invalid","Low Consumption cannot print!");
                     switch (Liquid.Client){
                         case "baliwag_wd":
                             break;
                         default:
+                            Liquid.showDialogError(ReadingGalleryActivity.this,"Invalid","Low Consumption cannot print!");
                             Liquid.save_only = true;
+                            return;
                     }
-                    return;
                 case "HIGH CONSUMPTION":
                     break;
                 case "NEGATIVE CONSUMPTION":
@@ -597,9 +598,14 @@ public class ReadingGalleryActivity extends BaseActivity {
                     Liquid.save_only = true;
                     return;
                 case "ZERO CONSUMPTION":
-                    Liquid.showDialogError(this,"Invalid","Zero Consumption cannot print!");
-                    Liquid.save_only = true;
-                    return;
+                    switch (Liquid.Client){
+                        case "baliwag_wd":
+                            break;
+                        default:
+                            Liquid.showDialogError(this,"Invalid","Zero Consumption cannot print!");
+                            Liquid.save_only = true;
+                            return;
+                    }
                 default:
 
             }
