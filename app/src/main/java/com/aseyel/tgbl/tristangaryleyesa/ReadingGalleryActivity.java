@@ -375,12 +375,24 @@ public class ReadingGalleryActivity extends BaseActivity {
                 Liquid.rowid = result.getString(84);
 
                 //Discon and DueDate
-                Liquid.duedate = result.getString(64);
-
-                if (Liquid.duedate.equals("")) {
-                    Liquid.duedate = Liquid.getDueDate(Liquid.present_reading_date);
+                switch (Liquid.Client){
+                    case "baliwag_wd":
+                        if(Double.parseDouble(Liquid.arrears) <= 0){
+                            Liquid.duedate = result.getString(64);
+                            Liquid.discondate = result.getString(75);
+                        }else{
+                            Liquid.duedate = result.getString(90);
+                            Liquid.discondate = Liquid.getDisconDate(Liquid.duedate,1);
+                        }
+                        break;
+                    default:
+                        Liquid.duedate = result.getString(64);
+                        if (Liquid.duedate.equals("")) {
+                            Liquid.duedate = Liquid.getDueDate(Liquid.present_reading_date);
+                        }
+                        Liquid.discondate = Liquid.getDisconDate(Liquid.duedate);
+                        break;
                 }
-                Liquid.discondate = Liquid.getDisconDate(Liquid.duedate);
                 Liquid.present_reading_date = Liquid.currentDate();
                 Liquid.BillingCycle = Liquid.year + "-" + Liquid.BillMonth;
                 //Reading
