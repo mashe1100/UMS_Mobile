@@ -678,7 +678,8 @@ public class workModel {
                         "inclusion, "+//86
                         "load, "+//87
                         "OCDate1, "+//88
-                        "CMPresentReadingKWH "+//89
+                        "CMPresentReadingKWH, "+//89
+                        "over30days " + //90
                         "FROM customer_reading_downloads "+
                         "WHERE job_id = '"+job_id+"' AND "+
                         "C_AccountNumber = '"+AccountNumber+"' " +
