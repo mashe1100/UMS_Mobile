@@ -789,6 +789,7 @@ public class ReadingV2Activity extends BaseActivity {
                 Liquid.meter_count = !result.getString(42).equals("") ? result.getString(42) : "1";
                 Liquid.arrears = !result.getString(43).equals("") ? result.getString(43) : "0";
                 Liquid.arrears = Liquid.arrears.replace(",","");
+
                 Liquid.senior_tagging = result.getString(56);
                 Liquid.eda_tagging = result.getString(70);
                 Liquid.DateChangeMeter = result.getString(88);
@@ -817,12 +818,24 @@ public class ReadingV2Activity extends BaseActivity {
                 Liquid.rowid = result.getString(84);
 
                 //Discon and DueDate
-                Liquid.duedate = result.getString(64);
-
-                if (Liquid.duedate.equals("")) {
-                    Liquid.duedate = Liquid.getDueDate(Liquid.present_reading_date);
+                switch (Liquid.Client){
+                    case "baliwag_wd":
+                        if(Double.parseDouble(Liquid.arrears) <= 0){
+                            Liquid.duedate = result.getString(64);
+                            Liquid.discondate = result.getString(75);
+                        }else{
+                            Liquid.duedate = result.getString(90);
+                            Liquid.discondate = Liquid.getDisconDate(Liquid.duedate,1);
+                        }
+                        break;
+                    default:
+                        Liquid.duedate = result.getString(64);
+                        if (Liquid.duedate.equals("")) {
+                            Liquid.duedate = Liquid.getDueDate(Liquid.present_reading_date);
+                        }
+                        Liquid.discondate = Liquid.getDisconDate(Liquid.duedate);
+                        break;
                 }
-                Liquid.discondate = Liquid.getDisconDate(Liquid.duedate);
                 Liquid.present_reading_date = Liquid.currentDate();
                 Liquid.BillingCycle = Liquid.year + "-" + Liquid.BillMonth;
                 //Reading
