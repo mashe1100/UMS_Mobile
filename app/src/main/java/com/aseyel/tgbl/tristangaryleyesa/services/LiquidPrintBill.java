@@ -2392,7 +2392,7 @@ public class LiquidPrintBill {
         Ypos += LineHeight;
         data+=PrintText("5", 0, Ypos, "ACCOUNT WILL BE FOR DISCONNECTION");
         Ypos += LineHeight;
-        data+=PrintText("5", 0, Ypos, "ON (March 1, 2019)");
+        data+=PrintText("5", 0, Ypos, "ON ("+Liquid.dateChangeFormat(Liquid.discondate,"yyyy-MM-dd","MMMM dd, yyyy")+")");
         data+="PRINT\r\n";
         try {
 
@@ -2416,7 +2416,7 @@ public class LiquidPrintBill {
         Ypos += LineHeight + 20;
         data+=PrintText("4", 0, Ypos, "FOR DISCONNECTION ON");
         Ypos += LineHeight + 15;
-        data+=PrintText("4", 0, Ypos, "(March 1, 2019)");
+        data+=PrintText("4", 0, Ypos, "("+Liquid.dateChangeFormat(Liquid.discondate,"yyyy-MM-dd","MMMM dd, yyyy")+")");
         data+="PRINT\r\n";
         try {
 
