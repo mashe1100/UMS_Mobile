@@ -86,13 +86,13 @@ import java.util.concurrent.TimeUnit;
 public class Liquid extends AppCompatActivity {
     public static final String DATABASE_NAME = "ums_mobile.db";
 //    public static String pathEnvironment = "USI_TEST";
-   // public static String pathEnvironment = "USI_BETA";
+    public static String pathEnvironment = "USI_BETA";
     //MORE POWER path
-    public static String pathEnvironment = "USI";
+//    public static String pathEnvironment = "USI";
     //UMS server
-    //private static final String umsUrl = "usi.3utilities.com:14147";
+    private static final String umsUrl = "usi.3utilities.com:14147";
     //MORE POWER server
-    private static final String umsUrl = "125.5.181.225:8080";
+//    private static final String umsUrl = "125.5.181.225:8080";
 
     private static final String TAG = "Liquid";
     public static String DefaultErrorMessage = "An error has occured!";
@@ -167,8 +167,8 @@ public class Liquid extends AppCompatActivity {
 
     //READ AND BILL
 //    public static String Client = "batelec2";
-    //public static String Client = "baliwag_wd";
-    public static String Client = "more_power";
+    public static String Client = "baliwag_wd";
+//    public static String Client = "more_power";
 //     EDIT INIT LINE 99 AUDIT to READING (READING GALLERY ACTIVITY)
     // EDIT GetImages Line 180 AUDIT to READING (READING GALLERY ACTIVITY)
     // EDIT GetImages Line 1475 AUDIT to READING (TAB LOCAL FRAGMENT)
@@ -3429,6 +3429,23 @@ public class Liquid extends AppCompatActivity {
             Calendar c = Calendar.getInstance();
             c.setTime(date);
             c.add(Calendar.DATE, 2);
+            Date DisconDate = c.getTime();
+            return dateFormat.format(DisconDate);
+        }catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public static String getDisconDate(String mDate, int datediff){
+        try {
+            SimpleDateFormat  dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = null;
+            date = dateFormat.parse(mDate);
+            Calendar c = Calendar.getInstance();
+            c.setTime(date);
+            c.add(Calendar.DATE, datediff);
             Date DisconDate = c.getTime();
             return dateFormat.format(DisconDate);
         }catch (ParseException e) {
