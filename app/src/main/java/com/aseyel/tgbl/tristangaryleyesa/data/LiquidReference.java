@@ -302,6 +302,8 @@ public class LiquidReference {
                     "latitude TEXT NULL,"+
                     "longitude TEXT NULL,"+
                     "CMPresentReadingKWH TEXT NULL,"+
+                    "CMPreviousReadingKWH  TEXT NULL,"+
+                    "CareOf  TEXT NULL,"+
                     "PRIMARY KEY ([C_Client],[C_ID],[C_AccountNumber],[CED_MeterNumber],[serial],[reading_date])" +
                     ")";
 

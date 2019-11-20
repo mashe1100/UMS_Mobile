@@ -135,6 +135,7 @@ public class ReadingV2Activity extends BaseActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent i = new Intent(ReadingV2Activity.this, ReadingRemarksActivity.class);
+                        Liquid.save_only = true;
                         Liquid.Reading = "";
                         Liquid.Present_Consumption = "0";
                         Liquid.ReadingInputTemporaryHolder = Liquid.Reading;
@@ -550,6 +551,7 @@ public class ReadingV2Activity extends BaseActivity {
         Liquid.previous_reading  = "0";
         Liquid.OldConsumption  = "0";
         Liquid.OldReading  = "";
+        Liquid.OldPreviousReading  = "";
         Liquid.OldMeterNumber  = "";
         Liquid.present_Reading = "";
         Liquid.Present_Consumption= "0";
@@ -763,6 +765,7 @@ public class ReadingV2Activity extends BaseActivity {
 
                 Liquid.OldConsumption  = "0";
                 Liquid.OldReading  = result.getString(89);
+                Liquid.OldPreviousReading  = result.getString(91);
                 Liquid.OldMeterNumber  = "";
 
                 Liquid.previous_reading = !result.getString(47).equals("") ? result.getString(47) : "0";
@@ -816,6 +819,15 @@ public class ReadingV2Activity extends BaseActivity {
                 Liquid.OtherBill = !result.getString(83).equals("") ? result.getString(83) : "0";
                 Liquid.bill_number = !result.getString(65).equals("") ? result.getString(65) : Liquid.year + Liquid.BillMonth + AccountNumber;
                 Liquid.rowid = result.getString(84);
+                Liquid.pn_promo = result.getString(92);
+                if(!Liquid.pn_promo.matches(""))
+                    try{
+                        Liquid.pn_promotitle = Liquid.pn_promo.split("~")[0];
+
+                        Liquid.pn_promo = Liquid.pn_promo.split("~")[1];
+                        Liquid.pn_promo = Liquid.pn_promo.replace(",","");
+                        Liquid.pn_promo = Liquid.pn_promo.replace("/","");
+                    }catch (Exception e){}
 
                 //Discon and DueDate
                 switch (Liquid.Client){
@@ -824,7 +836,7 @@ public class ReadingV2Activity extends BaseActivity {
                             Liquid.duedate = result.getString(64);
                             Liquid.discondate = result.getString(75);
                         }else{
-                            Liquid.duedate = result.getString(90);
+                            Liquid.duedate = !result.getString(90).equals("") ? result.getString(90) : result.getString(64);
                             Liquid.discondate = Liquid.getDisconDate(Liquid.duedate,1);
                         }
                         break;
@@ -1112,7 +1124,7 @@ public class ReadingV2Activity extends BaseActivity {
                             }
                         }
 
-                        return true;
+                        break;
                     default:
                         Liquid.Average_Reading = Liquid.AverageValidation(Liquid.Remarks,Liquid.RemarksCode);
                         Liquid.Present_Consumption = Liquid.Averange_Consumption;

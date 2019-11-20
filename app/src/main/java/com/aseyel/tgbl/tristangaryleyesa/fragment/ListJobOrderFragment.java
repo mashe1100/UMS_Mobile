@@ -487,7 +487,7 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                 break;
             case "METER READER":
                 mBottomNavigationView.setVisibility(View.VISIBLE);
-                SearchBy = "All";
+//                SearchBy = "All";
                 GetReadAndBillDataReaded("",false,SearchBy,Liquid.SelectedId,"" );
                 if(getCount){
                     getCountItem();
@@ -707,6 +707,7 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                 data.put("Longitude", "0");
                 data.put("JobOrderDate",Date);
                 data.put("Status", Status);
+                data.put("Print", result.getString(86));
 
                 data.put("Accomplishment",Accomplishment);
                 final_result.add(data);
@@ -764,16 +765,15 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
         mBottomNavigationView.setNotification(notification, 0);
     }
     public void getCountItem(){
-        SearchBy = "All";
-        CountAll = GetReadAndBillDataReaded("Count",false,SearchBy,Liquid.SelectedId,"" );
+        CountAll = GetReadAndBillDataReaded("Count",false,"All",Liquid.SelectedId,"" );
         AHNotification notification = new AHNotification.Builder()
                 .setText(String.valueOf(CountAll))
                 .setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent))
                 .setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary))
                 .build();
         mBottomNavigationView.setNotification(notification, 1);
-        SearchBy = "Read";
-        CountRead = GetReadAndBillDataReaded("Count",false,SearchBy,Liquid.SelectedId,"" );
+
+        CountRead = GetReadAndBillDataReaded("Count",false,"Read",Liquid.SelectedId,"" );
         notification = new AHNotification.Builder()
                 .setText(String.valueOf(CountRead))
                 .setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent))
@@ -781,8 +781,7 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                 .build();
         mBottomNavigationView.setNotification(notification, 1);
 
-        SearchBy = "Unread";
-        CountUnread = GetReadAndBillDataReaded("Count",false,SearchBy,Liquid.SelectedId,"" );
+        CountUnread = GetReadAndBillDataReaded("Count",false,"Unread",Liquid.SelectedId,"" );
         notification = new AHNotification.Builder()
                 .setText(String.valueOf(CountUnread))
                 .setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent))
@@ -790,8 +789,7 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                 .build();
         mBottomNavigationView.setNotification(notification, 2);
 
-        SearchBy = "Print";
-        CountPrint = GetReadAndBillDataReaded("Count",false,SearchBy,Liquid.SelectedId,"" );
+        CountPrint = GetReadAndBillDataReaded("Count",false,"Print",Liquid.SelectedId,"" );
         notification = new AHNotification.Builder()
                 .setText(String.valueOf(CountPrint))
                 .setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent))
@@ -799,8 +797,7 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                 .build();
         mBottomNavigationView.setNotification(notification, 3);
 
-        SearchBy = "Unprint";
-        CountUnprint = GetReadAndBillDataReaded("Count",false,SearchBy,Liquid.SelectedId,"" );
+        CountUnprint = GetReadAndBillDataReaded("Count",false,"Unprint",Liquid.SelectedId,"" );
         notification = new AHNotification.Builder()
                 .setText(String.valueOf(CountUnprint))
                 .setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent))

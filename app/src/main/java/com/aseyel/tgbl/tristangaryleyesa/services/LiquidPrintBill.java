@@ -153,9 +153,10 @@ public class LiquidPrintBill {
                                         WriteOptionalHeaderBaliwagWD(1);
                                 }
                                 WriteDetailsBaliwagWD(mBill.BillItemsBaliwagWD);
-                                if(Double.parseDouble(Liquid.arrears) <= 0)
-                                    WriteAdditionalNotice1BaliwagWD();
-                                else
+                                if(Double.parseDouble(Liquid.arrears) <= 0) {
+                                    if (LiquidBilling.total_amount_due >= 800)
+                                        WriteAdditionalNotice1BaliwagWD();
+                                } else
                                     WriteAdditionalNotice2BaliwagWD();
                                 WriteNoticeBaliwagWD();
                                 break;
@@ -1635,6 +1636,9 @@ public class LiquidPrintBill {
                     if (item.Label == "Senior Citizen Discount" && Double.parseDouble(item.Amount()) > 0) {
                         data+=WriteNegativeAfterTotal(item.Label,"("+Liquid.NumberFormat(discountvalue)+")");
                         break;
+                    } else if (Double.parseDouble(item.Amount()) > 0) {
+                        data+=WriteAfterTotal(item.Label,Liquid.NumberFormat(discountvalue));
+                        break;
                     }
                     break;
                 case Footer:
@@ -2645,30 +2649,34 @@ public class LiquidPrintBill {
     {
         try
         {
-            int totalHeaderHeight = 90;
+            int totalHeaderHeight = 140;
             String data = "! "+Margin+" 200 200 "+totalHeaderHeight+" 1\r\n";
             String oldMeter = Liquid.MeterNumber;
             String oldReading = Liquid.OldReading;
+            String oldPreviousReading = Liquid.OldPreviousReading;
             String oldConsumption = Liquid.coreloss;
 
             data+=PrintLine(0, 0, 0, HeaderHeight - 4 - 90);// left
             data+=PrintLine(Columns[2], 0, Columns[2], HeaderHeight - 4 - 90);                       // right
+            data+=PrintLine(0, totalHeaderHeight - 52, Columns[2], totalHeaderHeight - 52);                       // bottom
             data+=PrintLine(0, totalHeaderHeight - 2, Columns[2], totalHeaderHeight - 2);                       // bottom
-            data+=PrintLine(Columns[0], 0, Columns[0], HeaderHeight - 4 - 90);    // bottom center
+            data+=PrintLine(Columns[0], 0, Columns[0], totalHeaderHeight - 52);    // bottom center
             Ypos = 0;
             int offset = (TopSectionHeight - TitleHeight - 2 * 24 - 12) / 12;
             data+=PrintLeft();
 
             data+=PrintText("5", Columns[0] + Padding * 4, Ypos + offset-15, "Old Consumption");
             data+=PrintText("4", Columns[0] + Padding * 15, Ypos + offset+25, String.valueOf(Double.parseDouble(oldConsumption)));
+            data+=PrintText("5", Padding +10, Ypos + offset+100, "Total Cubic Consumption");
+            data+=PrintText("4", Columns[0] + Padding * 15, Ypos + offset+90, String.valueOf(Double.parseDouble(Liquid.Present_Consumption)));
 
-//            data+=PrintText("5", Padding +10, Ypos + offset + LinePad + 10, "Old Meter No.");
-            data+=PrintText("5", Padding +10, Ypos + offset + LinePad + 10 , "Old Reading" );
+            data+=PrintText("5", Padding +10, Ypos + offset + LinePad + 10, "Old Present Reading");
+            data+=PrintText("5", Padding +10, Ypos + offset + LinePad + 40 , "Old Previous Reading" );
 
 
             data+=PrintRight(Columns[0] + Margin - Padding - 6);
-//            data+=PrintText("7", Padding + 10, Ypos + offset + LinePad + 10, oldMeter);
             data+=PrintText("7", Padding + 10, Ypos + offset + LinePad + 10, oldReading);
+            data+=PrintText("7", Padding + 10, Ypos + offset + LinePad + 40, oldPreviousReading);
 
             data+=PrintLeft();
             Ypos = TopSectionHeight;
@@ -2693,6 +2701,8 @@ public class LiquidPrintBill {
             String address = Liquid.Complete_Address;
             if(address.length() >= 35)
                 address = address.subSequence(0,34)+"...";
+            String consumption = Double.toString(Double.parseDouble(Liquid.Present_Consumption)-Double.parseDouble(Liquid.coreloss));
+
             data+=PrintLine(0, LineGap, 0, HeaderHeight - 4 - 90);// left
 //            data+=PrintLine(Columns[0], LineGap, Columns[0], TitleHeight - LineGap - 4); // top center
             data+=PrintLine(Columns[2], LineGap, Columns[2], HeaderHeight - 4 - 90);                       // right
@@ -2715,7 +2725,7 @@ public class LiquidPrintBill {
             data+=WriteBaliwagMeterReading(
                     Liquid.dateChangeFormat(Liquid.previous_reading_date,"yyyy-MM-dd","MM/dd/yyyy"), Liquid.previous_reading,
                     Liquid.setUpCurrentDate("MM/dd/yyyy"), Liquid.Reading,
-                    Liquid.FormatKWH(Liquid.Present_Consumption));
+                    Liquid.FormatKWH(consumption));
             //String.valueOf(Liquid.RoundUp(Double.parseDouble(Liquid.Present_Consumption))));
 
 

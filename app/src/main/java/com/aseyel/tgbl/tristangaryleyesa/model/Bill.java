@@ -348,6 +348,7 @@ public class Bill {
                     new BillItem(                                                                                                                                                              ItemStyle.Separator),
                     new BillItem("Arrears",              String.valueOf(LiquidBilling.arrears), ItemStyle.Aftertotal),
                     new BillItem("Septage/Environmental Fee",              String.valueOf(LiquidBilling.total_environmental_charge), ItemStyle.Aftertotal),
+                    new BillItem(Liquid.pn_promotitle,              Liquid.pn_promo, ItemStyle.OptionalFooter),
                     new BillItem(                                                                                                                                                                      ItemStyle.Separator),
                     new BillItem("AMOUNT BEFORE DUE",                    String.valueOf(LiquidBilling.total_amount_due), ItemStyle.Total),
                     new BillItem(                                                                                          ItemStyle.Separator),

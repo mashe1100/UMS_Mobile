@@ -17,12 +17,13 @@ public class JobOrdersDetailsModel {
     public String JobOrderDate;
     public String Status;
     public String Accomplishment;
+    public String Print;
 
 
 
 
 
-    public JobOrdersDetailsModel(String JobOrderId, String AccountNumber, String AccountName, String MeterNumber, String Title, String Details, String Date, double Latitude, double Longitude, String JobOrderDate, String Status,String Accomplishment) {
+    public JobOrdersDetailsModel(String JobOrderId, String AccountNumber, String AccountName, String MeterNumber, String Title, String Details, String Date, double Latitude, double Longitude, String JobOrderDate, String Status,String Accomplishment,String Print) {
 
         this.JobOrderId = JobOrderId;
         this.AccountNumber = AccountNumber;
@@ -36,6 +37,7 @@ public class JobOrdersDetailsModel {
         this.JobOrderDate = JobOrderDate;
         this.Accomplishment = Accomplishment;
         this.Status = Status;
+        this.Print = Print;
 
     }
 

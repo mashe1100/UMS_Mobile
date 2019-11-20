@@ -1419,7 +1419,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
             try {
                 Liquid.ErrorFileUpload = new JSONObject();
                 Liquid.ErrorUpload = new JSONArray();
-                dataLogs = postData.getString("get_picture_data");
+                dataLogs = postData.getString("logs");
                 dataMeterNotInList = postData.getString("meter_not_in_list");
                 dataLogsArray = new JSONArray(dataLogs);
                 dataArrayMeterNotInList = new JSONArray(dataMeterNotInList);
@@ -1676,7 +1676,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
             try {
                 Liquid.ErrorFileUpload = new JSONObject();
                 Liquid.ErrorUpload = new JSONArray();
-                dataLogs = postData.getString("get_picture_data");
+                dataLogs = postData.getString("logs");
                 dataMeterNotInList = postData.getString("meter_not_in_list");
                 dataLogsArray = new JSONArray(dataLogs);
                 dataArrayMeterNotInList = new JSONArray(dataMeterNotInList);
@@ -2571,7 +2571,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
             try {
                 Liquid.ErrorDataUpload = new JSONObject();
                 Liquid.ErrorUpload = new JSONArray();
-                data = postData.getString("get_picture_data");
+                data = postData.getString("data");
                 dataPicture = postData.getString("picture");
                 dataLogs = postData.getString("logs");
                 dataMeterNotInList = postData.getString("meter_not_in_list");

@@ -1256,7 +1256,12 @@ public class LiquidBilling {
         total_environmental_charge = Double.parseDouble(Liquid.StringRoundDown2D(CubicMeter * septage));
         total_other_charges = total_environmental_charge * penalty;
 
-        total_amount_due = total_current_bill + arrears +/*maintenance fee*/total_environmental_charge - senior;
+        double pnpromo = 0;
+        try{
+            pnpromo = Double.parseDouble(Liquid.pn_promo);
+        }catch (Exception e){}
+
+        total_amount_due = total_current_bill + arrears +/*maintenance fee*/total_environmental_charge + pnpromo - senior;
         total_amount_due = Double.parseDouble(Liquid.StringRoundDown2D(total_amount_due));
         total_amount_due2 = total_amount_due + surcharge + total_other_charges;
         total_amount_due2 = Double.parseDouble(Liquid.StringRoundDown2D(total_amount_due2));

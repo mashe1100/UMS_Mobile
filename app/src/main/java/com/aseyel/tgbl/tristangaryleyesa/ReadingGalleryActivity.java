@@ -321,6 +321,7 @@ public class ReadingGalleryActivity extends BaseActivity {
 
                 Liquid.OldConsumption  = "0";
                 Liquid.OldReading  = result.getString(89);
+                Liquid.OldPreviousReading  = result.getString(91);
                 Liquid.OldMeterNumber  = "";
 
                 Liquid.previous_reading = !result.getString(47).equals("") ? result.getString(47) : "0";
@@ -373,6 +374,17 @@ public class ReadingGalleryActivity extends BaseActivity {
                 Liquid.OtherBill = !result.getString(83).equals("") ? result.getString(83) : "0";
                 Liquid.bill_number = !result.getString(65).equals("") ? result.getString(65) : Liquid.year + Liquid.BillMonth + Liquid.AccountNumber;
                 Liquid.rowid = result.getString(84);
+                Liquid.pn_promotitle = result.getString(92);
+                Liquid.pn_promo = !result.getString(92).equals("") ? result.getString(92) : "0";
+                Liquid.pn_promo = Liquid.pn_promo!=null ? Liquid.pn_promo : "0";
+                if(!Liquid.pn_promo.matches("0"))
+                    try{
+                        Liquid.pn_promotitle = Liquid.pn_promo.split("~")[0];
+
+                        Liquid.pn_promo = Liquid.pn_promo.split("~")[1];
+                        Liquid.pn_promo = Liquid.pn_promo.replace(",","");
+                        Liquid.pn_promo = Liquid.pn_promo.replace("/","");
+                    }catch (Exception e){}
 
                 //Discon and DueDate
                 switch (Liquid.Client){
@@ -532,7 +544,7 @@ public class ReadingGalleryActivity extends BaseActivity {
                             }
                         }
 
-                        return true;
+                        break;
                     default:
                         Liquid.Average_Reading = Liquid.AverageValidation(Liquid.Remarks,Liquid.RemarksCode);
                         Liquid.Present_Consumption = Liquid.Averange_Consumption;

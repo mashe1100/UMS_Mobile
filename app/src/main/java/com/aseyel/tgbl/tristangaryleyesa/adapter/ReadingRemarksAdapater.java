@@ -29,6 +29,7 @@ import com.aseyel.tgbl.tristangaryleyesa.TypeActivity;
 import com.aseyel.tgbl.tristangaryleyesa.data.Liquid;
 import com.aseyel.tgbl.tristangaryleyesa.fragment.TabDeliveryFragment;
 import com.aseyel.tgbl.tristangaryleyesa.model.ListModel;
+import com.aseyel.tgbl.tristangaryleyesa.services.LiquidBilling;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -92,6 +93,7 @@ public class ReadingRemarksAdapater extends RecyclerView.Adapter<RecyclerView.Vi
                                         if(Liquid.RemarksAbbreviation.matches(Liquid.BaliwagAverageRemarksAbbreviation[x])){
                                             Liquid.Reading = Integer.toString((int)(Integer.parseInt(Liquid.previous_reading)+Integer.parseInt(Liquid.Averange_Consumption)));
                                             Liquid.Present_Consumption = Liquid.Averange_Consumption;
+                                            Liquid.save_only = false;
                                             ReadingV2Activity.Computation();
                                             hit = true;
                                         }
@@ -101,6 +103,20 @@ public class ReadingRemarksAdapater extends RecyclerView.Adapter<RecyclerView.Vi
                                         Liquid.Reading = Liquid.ReadingInputTemporaryHolder;
                                         Liquid.Present_Consumption = Liquid.PresentConsumptionTemporaryHolder;
                                         ReadingV2Activity.Computation();
+                                    }
+
+                                    if(Liquid.Reading.matches("") && !hit){
+                                        LiquidBilling.total_current_bill = 0;
+                                        LiquidBilling.senior = 0;
+                                        LiquidBilling.arrears = 0;
+                                        LiquidBilling.surcharge = 0;
+                                        LiquidBilling.surcharge = 0;
+                                        LiquidBilling.total_environmental_charge = 0;
+                                        LiquidBilling.total_other_charges = 0;
+                                        LiquidBilling.total_amount_due = 0;
+                                        LiquidBilling.total_amount_due2 = 0;
+
+                                        Liquid.save_only = true;
                                     }
                                     break;
                             }

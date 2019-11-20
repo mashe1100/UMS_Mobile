@@ -479,7 +479,8 @@ public class workModel {
                         "c.discount," + //82
                         "c.total_initial, "+ //83
                         "ifnull(r.Present_Consumption,'NO READING') as Present_Consumption, "+ //84
-                        "ifnull(r.amountdue,'0.00') as amountdue "+ //85
+                        "ifnull(r.amountdue,'0.00') as amountdue, "+ //85
+                        "ifnull(r.Print_TimeStamp,'') as Print_TimeStamp "+ //86
                         where + orderby +" LIMIT "+(Liquid.RecyclerItemLimit+Liquid.UpdateRecyclerItemLimit)
         );
 
@@ -679,7 +680,9 @@ public class workModel {
                         "load, "+//87
                         "OCDate1, "+//88
                         "CMPresentReadingKWH, "+//89
-                        "over30days " + //90
+                        "over30days, "+//90
+                        "CMPreviousReadingKWH, "+//91
+                        "CareOf " + //92
                         "FROM customer_reading_downloads "+
                         "WHERE job_id = '"+job_id+"' AND "+
                         "C_AccountNumber = '"+AccountNumber+"' " +

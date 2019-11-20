@@ -51,7 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         break;
                 }
             }
-            if(Liquid.currentDate().equals("2019-03-02") || Liquid.currentDate().equals("2019-03-03")){
+           // if(Liquid.currentDate().equals("2019-03-02") || Liquid.currentDate().equals("2019-03-03")){
                 db.execSQL(LiquidReference.AlterStatusPicture);
                 db.execSQL(LiquidReference.AlterStatusMeterNotInList);
                 db.execSQL(LiquidReference.AlterDemandMeterNotInList);
@@ -61,7 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 db.execSQL(LiquidReference.AlterTypeMeterNotInList);
                 db.execSQL(LiquidReference.AlterLatitudeCustomerReadingDownload);
                 db.execSQL(LiquidReference.AlterLongitudeCustomerReadingDownload);
-            }
+            //}
 
 
 

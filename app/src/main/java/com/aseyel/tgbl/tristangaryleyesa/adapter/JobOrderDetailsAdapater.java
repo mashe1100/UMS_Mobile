@@ -244,6 +244,9 @@ public class JobOrderDetailsAdapater extends RecyclerView.Adapter<RecyclerView.V
 
         ListItems.clear();
         for(int i = 0; i < Data.size(); i++) {
+            if(Data.get(i).get("Print") == null)
+                Data.get(i).put("Print","");
+
             ListItems.addAll(Arrays.asList(
                     new JobOrdersDetailsModel(
                             Data.get(i).get("JobOrderId"),
@@ -257,7 +260,8 @@ public class JobOrderDetailsAdapater extends RecyclerView.Adapter<RecyclerView.V
                             Double.parseDouble(Data.get(i).get("Longitude").isEmpty()? "0" : Data.get(i).get("Longitude")),
                             Data.get(i).get("JobOrderDate"),
                             Data.get(i).get("Status"),
-                            Data.get(i).get("Accomplishment")
+                            Data.get(i).get("Accomplishment"),
+                            Data.get(i).get("Print")
                     )
             ));
         }
@@ -340,6 +344,11 @@ public class JobOrderDetailsAdapater extends RecyclerView.Adapter<RecyclerView.V
 
                     }else{
                         llJobDetails.setBackgroundColor(view.getResources().getColor(R.color.colorAccent));
+                        tvJobOrderDetailsTitle.setTextColor(view.getResources().getColor(R.color.colorPrimary));
+                        tvJobOrderDetailsDetails.setTextColor(view.getResources().getColor(R.color.colorPrimary));
+                    }
+                    if(!JobOrdersDetailsItems.Print.matches("")){
+                        llJobDetails.setBackgroundColor(view.getResources().getColor(R.color.btn_send_pressed));
                         tvJobOrderDetailsTitle.setTextColor(view.getResources().getColor(R.color.colorPrimary));
                         tvJobOrderDetailsDetails.setTextColor(view.getResources().getColor(R.color.colorPrimary));
                     }

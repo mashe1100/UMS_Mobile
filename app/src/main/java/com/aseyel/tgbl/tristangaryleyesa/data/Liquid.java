@@ -145,6 +145,7 @@ public class Liquid extends AppCompatActivity {
     public static String SelectedMeterNumber = "";
     public static String OldMeterNumber = "";
     public static String OldReading = "";
+    public static String OldPreviousReading = "";
     public static String OldConsumption = "0";
     public static int ReverseInput = 0;
     public static int HideKeyboard = 0;
@@ -383,6 +384,8 @@ public class Liquid extends AppCompatActivity {
     public static String franchise_tax= "";
     public static String coreloss= "";
     public static String surcharge= "";
+    public static String pn_promo= "";
+    public static String pn_promotitle= "";
     public static String delivered= "";
     public static String check_previous = "False";
     public static String ispn= "";
@@ -2127,6 +2130,8 @@ public class Liquid extends AppCompatActivity {
             "CMPresentReadingKWH",
             "over30days",
             "over60days",
+            "CMPreviousReadingKWH",
+            "CareOf",
 
 
     };
