@@ -864,6 +864,9 @@ public class LiquidBilling {
 
         surcharge = Double.parseDouble(Liquid.surcharge); //ILP
         overdue = Double.parseDouble(Liquid.overdue); // inclusion
+        if(Double.parseDouble(Liquid.Present_Consumption) <= 0){
+            overdue = 0;
+        }
 
 //        total_current_bill = Liquid.RoundUp(total_gen_trans + total_distribution_revenue + total_universal + total_others + total_rfsc + total_prompt_payment_disc_adj);
         total_current_bill = Liquid.RoundUp(total_energy_charges + total_senior + surcharge + overdue );
