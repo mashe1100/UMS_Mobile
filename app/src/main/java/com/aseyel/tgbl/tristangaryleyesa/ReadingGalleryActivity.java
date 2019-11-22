@@ -546,10 +546,10 @@ public class ReadingGalleryActivity extends BaseActivity {
 
                         break;
                     default:
-                        Liquid.Average_Reading = Liquid.AverageValidation(Liquid.Remarks,Liquid.RemarksCode);
-                        Liquid.Present_Consumption = Liquid.Averange_Consumption;
-                        Liquid.reading_remarks = Liquid.ConsumptionValidation(Liquid.Averange_Consumption, Liquid.previous_consumption, Liquid.Present_Consumption);
-                        return true;
+//                        Liquid.Average_Reading = Liquid.AverageValidation(Liquid.Remarks,Liquid.RemarksCode);
+//                        Liquid.Present_Consumption = Liquid.Averange_Consumption;
+//                        Liquid.reading_remarks = Liquid.ConsumptionValidation(Liquid.Averange_Consumption, Liquid.previous_consumption, Liquid.Present_Consumption);
+//                        return true;
                 }
             };
 

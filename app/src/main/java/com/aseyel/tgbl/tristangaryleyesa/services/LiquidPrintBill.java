@@ -127,7 +127,10 @@ public class LiquidPrintBill {
                                 WriteHeaderMorePower(1); //ok
                                 WriteDetailsMorePower(mBill.BillItemsMorePower);
 
-                                WriteDashedLine(2);
+                                if(Liquid.reading_remarks.matches("HIGH CONSUMPTION"))
+                                    WriteDashedLineMorePower(0);
+                                else
+                                    WriteDashedLineMorePower(2);
 
                                 WriteTitleMorePower(0); //ok
                                 WriteHeaderMorePower(1); //ok
@@ -1491,7 +1494,7 @@ public class LiquidPrintBill {
 
     }
 
-    private static void WriteDashedLine(int section)
+    private static void WriteDashedLineMorePower(int section)
     {
 //        int total_height =115 + LineHeight * 5 + mm * 3;
 //        String data = "! "+Margin+" 200 200 "+total_height+" 1\r\n";
@@ -1533,8 +1536,9 @@ public class LiquidPrintBill {
 //        Ypos += LineHeight;
 //        data+=PrintText("7", 0, Ypos + mm / 2, Liquid.repeatChar('-',45));
         String data = "";
-        if (section == 2)
-        {
+        if (section == 2){
+            // normal footer with dash line
+
             int total_height =LineHeight * 6;
             data ="! "+Margin+" 200 200 "+total_height+" 1\r\n";
             data+=PrintCenter(Columns[2] + Margin);
@@ -1551,13 +1555,27 @@ public class LiquidPrintBill {
             Ypos += LineHeight;
             data+=PrintText("7", 0, Ypos + mm / 2, Liquid.repeatChar('-',45));
             data+="PRINT\r\n";
-        }
-        else
-        {
-//            data+="! "+Margin+" 200 200 "+0 * 3 + 5 * mm+" 1";
-//            data+=PrintLeft();
-//            data+=PrintText("7", 0, 0, Liquid.repeatChar('-',47));
-//            data+="PRINT\r\n";
+        } else {
+            // high consumption footer with dash line (ADDED DRAFT BILL NOTICE)
+
+            int total_height =LineHeight * 8;
+            data ="! "+Margin+" 200 200 "+total_height+" 1\r\n";
+            data+=PrintCenter(Columns[2] + Margin);
+            Ypos = mm + 2;
+            data+=PrintText("5", 0, Ypos, "Meter Readers are not authorized");
+            Ypos += LineHeight;
+            data+=PrintText("5", 0, Ypos, "to accept payments.");
+            Ypos += LineHeight;
+            data+=PrintText("5", 0, Ypos, "This document is not valid for claim of input tax.");
+            Ypos += LineHeight;
+            data+=PrintText("5", 0, Ypos, "This is a system-generated statement of account.");
+            Ypos += LineHeight;
+            data+=PrintText("5", 0, Ypos, "No signature is required.");
+            Ypos += LineHeight +10;
+            data+=PrintText("4", 0, Ypos, "THIS IS A DRAFT BILL");
+            Ypos += LineHeight +10;
+            data+=PrintText("7", 0, Ypos + mm / 2, Liquid.repeatChar('-',45));
+            data+="PRINT\r\n";
         }
 
         try {
@@ -1634,6 +1652,9 @@ public class LiquidPrintBill {
                 case OptionalFooter:
                     String discountvalue = String.valueOf(item.Amount());
                     if (item.Label == "Senior Citizen Discount" && Double.parseDouble(item.Amount()) > 0) {
+                        data+=WriteNegativeAfterTotal(item.Label,"("+Liquid.NumberFormat(discountvalue)+")");
+                        break;
+                    } else if (item.Label == "EMF SC Discount" && Double.parseDouble(item.Amount()) > 0) {
                         data+=WriteNegativeAfterTotal(item.Label,"("+Liquid.NumberFormat(discountvalue)+")");
                         break;
                     } else if (Double.parseDouble(item.Amount()) > 0) {

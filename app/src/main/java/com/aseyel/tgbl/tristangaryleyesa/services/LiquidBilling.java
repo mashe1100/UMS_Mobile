@@ -118,6 +118,7 @@ public class LiquidBilling {
             rfsc= 0,
             lifeline= 0,
             senior= 0,
+            emf_senior= 0,
             generation= 0,
             transmission= 0,
             distribution= 0,
@@ -1247,24 +1248,28 @@ public class LiquidBilling {
         }
         total_current_bill = Double.parseDouble(Liquid.StringRoundDown2D(total_current_bill));
 
-        senior = 0;
-        if(Liquid.senior_tagging.matches("1") && CubicMeter <= 30){
-            senior =  total_current_bill * seniorDiscount;
-            senior = Double.parseDouble(Liquid.StringRoundDown2D(senior));
-        }
-
         arrears = Double.parseDouble(Liquid.arrears);
         surcharge = total_current_bill * penalty;
         surcharge = Double.parseDouble(Liquid.StringRoundDown2D(surcharge));
         total_environmental_charge = Double.parseDouble(Liquid.StringRoundDown2D(CubicMeter * septage));
         total_other_charges = total_environmental_charge * penalty;
 
+        senior = 0;
+        emf_senior = 0;
+        if(Liquid.senior_tagging.matches("1") && CubicMeter <= 30){
+            senior =  total_current_bill * seniorDiscount;
+            senior = Double.parseDouble(Liquid.StringRoundDown2D(senior));
+
+            emf_senior =  total_environmental_charge * seniorDiscount;
+            emf_senior = Double.parseDouble(Liquid.StringRoundDown2D(emf_senior));
+        }
+
         double pnpromo = 0;
         try{
             pnpromo = Double.parseDouble(Liquid.pn_promo);
         }catch (Exception e){}
 
-        total_amount_due = total_current_bill + arrears +/*maintenance fee*/total_environmental_charge + pnpromo - senior;
+        total_amount_due = total_current_bill + arrears +/*maintenance fee*/total_environmental_charge + pnpromo - senior - emf_senior;
         total_amount_due = Double.parseDouble(Liquid.StringRoundDown2D(total_amount_due));
         total_amount_due2 = total_amount_due + surcharge + total_other_charges;
         total_amount_due2 = Double.parseDouble(Liquid.StringRoundDown2D(total_amount_due2));
