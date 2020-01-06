@@ -15,6 +15,7 @@ import java.io.IOException;
 
 import java.io.OutputStream;
 
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
@@ -127,7 +128,7 @@ public class LiquidPrintBill {
                                 WriteHeaderMorePower(1); //ok
                                 WriteDetailsMorePower(mBill.BillItemsMorePower);
 
-                                if(Liquid.reading_remarks.matches("HIGH CONSUMPTION"))
+                                if(Liquid.reading_remarks.matches("HIGH CONSUMPTION") && Liquid.draftBill)
                                     WriteDashedLineMorePower(0);
                                 else
                                     WriteDashedLineMorePower(2);
@@ -2717,31 +2718,87 @@ public class LiquidPrintBill {
     {
         try
         {
-            int totalHeaderHeight = HeaderHeight - 100 + mm;
+            int maxlength = 35; 
+            String[] names = {Liquid.AccountName};
+            if(Liquid.AccountName.contains(" ")) 
+                names = Liquid.AccountName.split(" ");
+
+            String[] addresses = {Liquid.Complete_Address};
+            if(Liquid.Complete_Address.contains(" "))
+                addresses = Liquid.Complete_Address.split(" ");
+            
+            ArrayList<String> namelines = new ArrayList<>();
+            ArrayList<String> addresslines = new ArrayList<>();
+
+            String nameloop = "";
+            for (int i=0;i<names.length;i++){
+                if(nameloop.length()+names[i].length() < maxlength){
+                    if(!nameloop.matches("")) {
+                        nameloop += " ";
+                    }
+                    nameloop+=names[i];
+                    
+                    if(i == names.length-1) {
+                        namelines.add(nameloop);
+                    }
+                }else{
+                    namelines.add(nameloop);
+                    nameloop = names[i];
+
+                    if(i == names.length-1) {
+                        namelines.add(nameloop);
+                    }
+                }
+            }
+
+            String addressloop = "";
+            for (int i=0;i<addresses.length;i++){
+                if(addressloop.length()+addresses[i].length() < maxlength){
+                    if(!addressloop.matches("")) {
+                        addressloop += " ";
+                    }
+                    addressloop+=addresses[i];
+
+                    if(i == addresses.length-1) {
+                        addresslines.add(addressloop);
+                    }
+                }else{
+                    addresslines.add(addressloop);
+                    addressloop = addresses[i];
+
+                    if(i == addresses.length-1) {
+                        addresslines.add(addressloop);
+                    }
+                }
+            }
+            int AdditionalLines = ((addresslines.size()-1+namelines.size()-1) * 25);
+
+            int totalHeaderHeight = HeaderHeight - 100 + mm+ AdditionalLines;
             String data = "! "+Margin+" 200 200 "+totalHeaderHeight+" 1\r\n";
-            String address = Liquid.Complete_Address;
-            if(address.length() >= 35)
-                address = address.subSequence(0,34)+"...";
             String consumption = Double.toString(Double.parseDouble(Liquid.Present_Consumption)-Double.parseDouble(Liquid.coreloss));
 
-            data+=PrintLine(0, LineGap, 0, HeaderHeight - 4 - 90);// left
-//            data+=PrintLine(Columns[0], LineGap, Columns[0], TitleHeight - LineGap - 4); // top center
-            data+=PrintLine(Columns[2], LineGap, Columns[2], HeaderHeight - 4 - 90);                       // right
-            data+=PrintLine(0, HeaderHeight - 4 - 90, Columns[2], HeaderHeight - 4 - 90);                       // bottom
-            data+=PrintLine(Columns[0], TopSectionHeight + LineGap, Columns[0], HeaderHeight - 4);    // bottom center
+            data+=PrintLine(0, LineGap + AdditionalLines, 0, HeaderHeight - 4 - 90 + AdditionalLines);// left
+//            data+=PrintLine(Columns[0], LineGap + AdditionalLines, Columns[0], TitleHeight - LineGap - 4); // top center
+            data+=PrintLine(Columns[2], LineGap, Columns[2], HeaderHeight - 4 - 90 + AdditionalLines);                       // right
+            data+=PrintLine(0, HeaderHeight - 4 - 90 + AdditionalLines, Columns[2], HeaderHeight - 4 - 90 + AdditionalLines);                       // bottom
+            data+=PrintLine(Columns[0], TopSectionHeight + LineGap + AdditionalLines, Columns[0], HeaderHeight - 4);    // bottom center
             Ypos = 0;
             String AccountLabel = Liquid.AccountNumber;
             data+=WriteHeaderHeader("Acct No. " + AccountLabel, "","");
             int offset = (TopSectionHeight - TitleHeight - 2 * 24 - 12) / 12;
             data+=PrintLeft();
-            data+=PrintText("5", Padding + 18, Ypos + offset + LinePad + 10, Liquid.AccountName);
-            data+=PrintText("5", Padding + 18, Ypos + offset + LinePad + 10 + 24 + 12, address);
+            for (int i=0;i<namelines.size();i++){
+                data+=PrintText("5", Padding + 18, Ypos + offset + LinePad + 10 + (i*30), namelines.get(i));
+            }
+            for (int i=0;i<addresslines.size();i++){
+                data+=PrintText("5", Padding + 18, Ypos + offset + LinePad + 10 + ((i+(namelines.size()))*30), addresslines.get(i));
+            }
             data+=PrintLeft();
             Ypos = TopSectionHeight;
 
-            data+=WriteHeaderHeaderBaliwagWD();
+            data+=WriteHeaderHeaderBaliwagWD(AdditionalLines);
 
-            Ypos = TopSectionHeight + LineGap + Padding * 2 + LineHeight* 2;
+            Ypos = TopSectionHeight + LineGap + Padding * 2 + LineHeight* 2 + AdditionalLines;
 
             data+=WriteBaliwagMeterReading(
                     Liquid.dateChangeFormat(Liquid.previous_reading_date,"yyyy-MM-dd","MM/dd/yyyy"), Liquid.previous_reading,
@@ -2846,30 +2903,89 @@ public class LiquidPrintBill {
 
     }
 
-    private static void WriteHeaderMorePower(int section)
-    {
-        try
-        {
-            int totalHeaderHeight = HeaderHeight - 40 + mm;
+    private static void WriteHeaderMorePower(int section) {
+        try {
+            int maxlength = 35;
+            String[] names = {Liquid.AccountName};
+            if(Liquid.AccountName.contains(" "))
+                names = Liquid.AccountName.split(" ");
+
+            String[] addresses = {Liquid.Complete_Address};
+            if(Liquid.Complete_Address.contains(" "))
+                addresses = Liquid.Complete_Address.split(" ");
+
+            ArrayList<String> namelines = new ArrayList<>();
+            ArrayList<String> addresslines = new ArrayList<>();
+
+            String nameloop = "";
+            for (int i=0;i<names.length;i++){
+                if(nameloop.length()+names[i].length() < maxlength){
+                    if(!nameloop.matches("")) {
+                        nameloop += " ";
+                    }
+                    nameloop+=names[i];
+
+                    if(i == names.length-1) {
+                        namelines.add(nameloop);
+                    }
+                }else{
+                    namelines.add(nameloop);
+                    nameloop = names[i];
+
+                    if(i == names.length-1) {
+                        namelines.add(nameloop);
+                    }
+                }
+            }
+
+            String addressloop = "";
+            for (int i=0;i<addresses.length;i++){
+                if(addressloop.length()+addresses[i].length() < maxlength){
+                    if(!addressloop.matches("")) {
+                        addressloop += " ";
+                    }
+                    addressloop+=addresses[i];
+
+                    if(i == addresses.length-1) {
+                        addresslines.add(addressloop);
+                    }
+                }else{
+                    addresslines.add(addressloop);
+                    addressloop = addresses[i];
+
+                    if(i == addresses.length-1) {
+                        addresslines.add(addressloop);
+                    }
+                }
+            }
+            int AdditionalLines = ((addresslines.size()-1+namelines.size()-1) * 25);
+
+            int totalHeaderHeight = HeaderHeight - 40 + mm + AdditionalLines;
             String data = "! "+Margin+" 200 200 "+totalHeaderHeight+" 1\r\n";
-            data+=PrintLine(0, LineGap, 0, HeaderHeight - 4 - 90 + 60);// left
+            data+=PrintLine(0, LineGap, 0, HeaderHeight - 4 - 90 + 60 + AdditionalLines);// left
             data+=PrintLine(Columns[0], LineGap, Columns[0], TitleHeight - LineGap - 4); // top center
-            data+=PrintLine(Columns[2], LineGap, Columns[2], HeaderHeight - 4 - 90 + 60);                       // right
-            data+=PrintLine(0, HeaderHeight - 4 - 90 + 60, Columns[2], HeaderHeight - 4 - 90 + 60);    // bottom
-            data+=PrintLine(Columns[0], TopSectionHeight + LineGap, Columns[0], HeaderHeight - 4);    // bottom center
+            data+=PrintLine(Columns[2], LineGap, Columns[2], HeaderHeight - 4 - 90 + 60 + AdditionalLines);                       // right
+            data+=PrintLine(0, HeaderHeight - 4 - 90 + 60 + AdditionalLines, Columns[2], HeaderHeight - 4 - 90 + 60 + AdditionalLines);    // bottom
+            data+=PrintLine(Columns[0], TopSectionHeight + LineGap + AdditionalLines, Columns[0], HeaderHeight - 4);    // bottom center
             Ypos = 0;
             String AccountLabel = Liquid.AccountNumber;
             data+=WriteHeaderHeader("Accnt No. " + AccountLabel, "","Route: "+ Liquid.route);
             int offset = (TopSectionHeight - TitleHeight - 2 * 24 - 12) / 12;
             data+=PrintLeft();
-            data+=PrintText("5", Padding + 18, Ypos + offset + LinePad + 10, Liquid.AccountName);
-            data+=PrintText("5", Padding + 18, Ypos + offset + LinePad + 10 + 24 + 12, Liquid.Complete_Address);
+            for (int i=0;i<namelines.size();i++){
+                data+=PrintText("5", Padding + 18, Ypos + offset + LinePad + 10 + (i*30), namelines.get(i));
+            }
+            for (int i=0;i<addresslines.size();i++){
+                data+=PrintText("5", Padding + 18, Ypos + offset + LinePad + 10 + ((i+(namelines.size()))*30), addresslines.get(i));
+            }
+//            data+=PrintText("5", Padding + 18, Ypos + offset + LinePad + 10, Liquid.AccountName);
+//            data+=PrintText("5", Padding + 18, Ypos + offset + LinePad + 10 + 24 + 12, Liquid.Complete_Address);
             data+=PrintLeft();
             Ypos = TopSectionHeight;
 
-            data+=WriteHeaderHeaderMorePower();
+            data+=WriteHeaderHeaderMorePower(AdditionalLines);
 
-            Ypos = TopSectionHeight + LineGap + Padding * 2 + LineHeight * 2 + 60;
+            Ypos = TopSectionHeight + LineGap + Padding * 2 + LineHeight * 2 + 60 + AdditionalLines;
 
             data+=WriteIleco2MeterReading(
                     Liquid.dateChangeFormat(Liquid.previous_reading_date,"yyyy-MM-dd","MM/dd/yyyy"), Liquid.previous_reading,
@@ -3121,9 +3237,9 @@ public class LiquidPrintBill {
         return data;
     }
 
-    private static String WriteHeaderHeaderBaliwagWD()
+    private static String WriteHeaderHeaderBaliwagWD(int AdditionalLines)
     {
-        Ypos += LineGap; //SORECO
+        Ypos += LineGap + AdditionalLines; //SORECO
 
         String data = PrintLine(0, Ypos, Columns[2], Ypos);
 
@@ -3224,9 +3340,9 @@ public class LiquidPrintBill {
     }
 
 
-    private static String WriteHeaderHeaderMorePower()
+    private static String WriteHeaderHeaderMorePower(int AdditionalLines)
     {
-        Ypos += LineGap; //SORECO
+        Ypos += LineGap + AdditionalLines; //SORECO
 
         String data = PrintLine(0, Ypos, Columns[2], Ypos);
 
