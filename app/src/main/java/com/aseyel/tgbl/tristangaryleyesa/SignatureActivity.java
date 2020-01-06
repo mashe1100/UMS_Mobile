@@ -191,7 +191,7 @@ public class SignatureActivity extends BaseFormActivity {
                                         tag_desciption + "," +
                                         details;
                         mSmsManager.sendTextMessage(Liquid.ServerNumberSmart, null, Message, null, null);
-                        ReadingModel.UpdateTransferStatus(job_id, accountnumber);
+                        DeliveryModel.UpdateTransferStatus(job_id, accountnumber);
                     }
                 }
                 //"user,client,type,latitude,longitude,remark,comment,accountnumber,tag_desciption,details"
