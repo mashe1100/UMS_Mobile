@@ -825,12 +825,18 @@ public class LiquidBilling {
         //Arrears
         arrears = Double.parseDouble(Arrears);
         if(arrears > 0) {
-            //service fee
-            arrears_additional = 50;
+            if(Double.parseDouble(Liquid.arrears) < 5.60){
+                arrears = 0;
+                arrears_additional = 0;
+                arrears_penalty = 0;
+            }else {
+                //service fee
+                arrears_additional = 50;
 //            arrears_penalty = RatesPenaltyComputation(arrears,Liquid.AccountType);
 
-            // computed penalty (system generated) depends on amount and months .
-            arrears_penalty = Double.parseDouble(Liquid.interest);
+                // computed penalty (system generated) depends on amount and months .
+                arrears_penalty = Double.parseDouble(Liquid.interest);
+            }
         } else {
             //service fee
             arrears = 0;
