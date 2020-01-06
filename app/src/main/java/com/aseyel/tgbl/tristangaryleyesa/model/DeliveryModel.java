@@ -32,6 +32,28 @@ public class DeliveryModel {
         );
     }
 
+    public static boolean UpdateTransferStatus(String JobId,String AccountNumber){
+        try{
+            boolean result = false;
+            String whereClause = "";
+            String[] whereArgs = {};
+
+            Liquid.LiquidColumns = new String[]{
+                    "transfer_data_status",
+            };
+            Liquid.LiquidValues = new String[] {
+                    "Uploaded",
+            };
+            whereClause = "m_accountnumber=? AND job_id =?";
+            whereArgs = new String[] {AccountNumber,JobId};
+            result = SplashActivity.mDatabaseHelper.SqliteUpdateQuery("messengerial",Liquid.LiquidColumns,Liquid.LiquidValues,whereClause,whereArgs);
+            return true;
+        }catch(Exception e){
+            Log.e(TAG, "Tristan Gary Leyesa", e);
+            return false;
+        }
+    }
+
     public static boolean UpdateUploadStatus(String JobId,String AccountNumber){
         try{
             boolean result = false;
