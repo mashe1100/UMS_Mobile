@@ -91,6 +91,7 @@ public class Liquid extends AppCompatActivity {
     public static String pathEnvironment = "USI";
     //UMS server
 //    private static final String umsUrl = "usi.3utilities.com:14147";
+//    private static final String umsUrl = "usi.3utilities.com:8081";
     //MORE POWER server
     private static final String umsUrl = "125.5.181.225:8080";
 
@@ -424,6 +425,7 @@ public class Liquid extends AppCompatActivity {
     //public static String UpdatedMeterNumber = "";
    // public static String UpdatedSequence = "";
 
+     public static boolean draftBill = true;
 
     public static String WrapAround(String PreviousReading, String Reading) {
         Reading = Reading != "" ? Reading : "0";
