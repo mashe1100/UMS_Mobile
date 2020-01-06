@@ -135,6 +135,8 @@ public class ReadingGalleryActivity extends BaseActivity {
                 if(ImageCount == 0){
                     Liquid.showDialogInfo(ReadingGalleryActivity.this,"Warning","Please take a picture to prove your reading and remarks. Thank you.");
                 }else{
+                    Liquid.draftBill = true;
+
                     //Intent i = new Intent(ReadingGalleryActivity.this, ReadingSummaryActivity.class);
                     Intent i = new Intent();
                     switch(Liquid.ServiceType){
@@ -634,30 +636,73 @@ public class ReadingGalleryActivity extends BaseActivity {
 
             }
 
-            ReadingV2Activity.Computation();
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which) {
-                        case DialogInterface.BUTTON_POSITIVE:
-                            boolean result_logs = false;
-                            Liquid. ModifiedDate = Liquid.currentDateTime();
-                            Liquid.timestamp = Liquid.currentDateTime();
-                            Liquid.ModifiedBy = Liquid.User;
-                            ReadingModel.UpdatePrintAttempt(Liquid.SelectedId,Liquid.AccountNumber,Liquid.Print_Attempt);
-                            new PrintBill().execute();
-                            result_logs = Liquid.SaveReadingLogs();
-                            break;
 
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            break;
+            switch (Liquid.Client){
+                case "more_power":
+                    if(Liquid.reading_remarks.matches("HIGH CONSUMPTION")){
+                        ReadingV2Activity.Computation();
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        Liquid.draftBill = false;
+                                        boolean result_logs = false;
+                                        Liquid. ModifiedDate = Liquid.currentDateTime();
+                                        Liquid.timestamp = Liquid.currentDateTime();
+                                        Liquid.ModifiedBy = Liquid.User;
+                                        ReadingModel.UpdatePrintAttempt(Liquid.SelectedId,Liquid.AccountNumber,Liquid.Print_Attempt);
+                                        new PrintBill().execute();
+                                        result_logs = Liquid.SaveReadingLogs();
+                                        break;
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        Liquid.draftBill = true;
+                                        Liquid. ModifiedDate = Liquid.currentDateTime();
+                                        Liquid.timestamp = Liquid.currentDateTime();
+                                        Liquid.ModifiedBy = Liquid.User;
+                                        ReadingModel.UpdatePrintAttempt(Liquid.SelectedId,Liquid.AccountNumber,Liquid.Print_Attempt);
+                                        new PrintBill().execute();
+                                        result_logs = Liquid.SaveReadingLogs();
+                                        break;
+                                    case DialogInterface.BUTTON_NEUTRAL:
+                                        break;
 
+                                }
+                            }
+                        };
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage("Which bill do you want to reprint?").setPositiveButton("Official", dialogClickListener)
+                                .setNegativeButton("Draft", dialogClickListener).setNeutralButton("Cancel", dialogClickListener).show();
+                        break;
                     }
-                }
-            };
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Do you really want to reprint bill?").setPositiveButton("Yes", dialogClickListener)
-                    .setNegativeButton("No", dialogClickListener).show();
+                default:
+
+                    ReadingV2Activity.Computation();
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    boolean result_logs = false;
+                                    Liquid. ModifiedDate = Liquid.currentDateTime();
+                                    Liquid.timestamp = Liquid.currentDateTime();
+                                    Liquid.ModifiedBy = Liquid.User;
+                                    ReadingModel.UpdatePrintAttempt(Liquid.SelectedId,Liquid.AccountNumber,Liquid.Print_Attempt);
+                                    new PrintBill().execute();
+                                    result_logs = Liquid.SaveReadingLogs();
+                                    break;
+
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                    break;
+
+                            }
+                        }
+                    };
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage("Do you really want to reprint bill?").setPositiveButton("Yes", dialogClickListener)
+                            .setNegativeButton("No", dialogClickListener).show();
+            }
+
         }catch(Exception e){
             Log.e(TAG,"Tristan Gary Leyesa",e);
         }
