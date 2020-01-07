@@ -272,7 +272,7 @@ public class LiquidPrintBill {
             String data = "! "+Margin+" 200 200 "+ TotalSize +" 1\r\n"
                     +PrintCenter(Columns[2] + Margin)
                     +"PCX 0 0 !<MORE_POW.PCX\r\n"
-                    +PrintText("4", 0, LogoHeight + LogoMargin + LineHeight - 25, Ileco2BillTitle)
+                    +PrintText("4", 0, LogoHeight + LogoMargin + LineHeight - 25, "Spot Bill")
                     +PrintText("5", 0, LogoHeight + LogoMargin + LineHeight *2, "Bill No: "+Liquid.bill_number)
                     +"PRINT\r\n";
 
