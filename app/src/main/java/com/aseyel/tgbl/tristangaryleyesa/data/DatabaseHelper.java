@@ -39,7 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try{
             SQLiteDatabase db = this.getWritableDatabase();
 
-            if(Liquid.currentDate().equals("2019-10-28") || Liquid.currentDate().equals("2019-10-29")) {
+            if(Liquid.currentDate().equals("2020-01-08") || Liquid.currentDate().equals("2020-01-09")) {
                 switch (Liquid.Client) {
                     case "more_power":
                         db.execSQL(LiquidReference.DropMeterReadingRemarks);
