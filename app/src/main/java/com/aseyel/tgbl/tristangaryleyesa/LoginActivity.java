@@ -52,8 +52,8 @@ public class LoginActivity extends AppCompatActivity {
         setup();
 
 
-        AutoLogin("ums_job");
-//        AutoLogin("ums_delivery");
+            AutoLogin("ums_job");
+//            AutoLogin("ums_delivery");
 
     }
 
