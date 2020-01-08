@@ -1234,7 +1234,7 @@ public class LiquidReference {
 //            "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES ('132','BILLING IMPROBABLE - DECREASE');",
 //            "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES ('133','BILLING IMPROBABLE - ZERO');",
 
-            //"INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('0','NF','NO FIELD FINDINGS');",
+            "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('1','NF','NO FIELD FINDINGS');",
             "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('2','HM','HANGING METER');",
             "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('3','BG','BROKEN GLASS');",
             "INSERT INTO ref_remarks(remarks_id,remarks_abbreviation,remarks_description) VALUES ('4','MP','METER INSIDE PREMISES');",
