@@ -327,7 +327,7 @@ public class ReadingGalleryActivity extends BaseActivity {
                 Liquid.OldMeterNumber  = "";
 
                 Liquid.previous_reading = !result.getString(47).equals("") ? result.getString(47) : "0";
-                Liquid.previous_reading = Liquid.FixDecimal(Liquid.previous_reading);
+//                Liquid.previous_reading = Liquid.FixDecimal(Liquid.previous_reading);
                 Liquid.previous_consumption = !result.getString(52).equals("") ? result.getString(52) : "0";
                 Liquid.present_reading_date = Liquid.currentDate();
                 Liquid.previous_reading_date = !result.getString(53).equals("") ? result.getString(53) : Liquid.ReadingDate;
