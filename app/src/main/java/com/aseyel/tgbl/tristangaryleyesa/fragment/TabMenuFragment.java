@@ -131,7 +131,7 @@ public class TabMenuFragment extends Fragment {
         OfficialBusiness.put("FilePath","Official Business");
 //        final_response.add(OfficialBusiness);
 
-        if(Liquid.User.equals("000")){
+        if(Liquid.User.equals("000") || Liquid.User.equals("ums_admin")){
             ClearData.put("Id","005");
             ClearData.put("Description","Clear Data");
             ClearData.put("FilePath","Clear Data");

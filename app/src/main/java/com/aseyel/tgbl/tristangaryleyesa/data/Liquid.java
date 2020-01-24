@@ -91,9 +91,10 @@ public class Liquid extends AppCompatActivity {
     public static String pathEnvironment = "USI";
     //UMS server
 //    private static final String umsUrl = "usi.3utilities.com:14147";
+      private static final String umsUrl = "usi.3utilities.com:1529";
 //    private static final String umsUrl = "usi.3utilities.com:8081";
     //MORE POWER server
-    private static final String umsUrl = "125.5.181.225:8080";
+//    private static final String umsUrl = "125.5.181.225:8080";
 
     private static final String TAG = "Liquid";
     public static String DefaultErrorMessage = "An error has occured!";
@@ -1186,6 +1187,96 @@ public class Liquid extends AppCompatActivity {
         }
 
         return "";
+    }
+
+// 01-23-2020 New update more power Low Consumptions
+    public static String MorePowerLowConsumptions(String AvgKWH, String KWH) {
+        boolean result = false;
+        double consumption = 0;
+        double consumptionpercent = 0;
+        double avg = Double.parseDouble(AvgKWH);
+        double kwh = Double.parseDouble(KWH);
+
+        if(kwh == 0){
+            return "ZERO CONSUMPTION";
+        }
+        if (kwh < 0) {
+            return "NEGATIVE CONSUMPTION";
+        }
+
+
+        consumption = Math.abs((avg  - kwh));
+
+        avg = avg == 0 ? 1 : avg;
+        consumptionpercent = Math.round(((consumption / avg) * 100)) / 100;
+
+
+            if  (avg <= 100) {
+                if (consumptionpercent >= 1) {
+                    return "LOW CONSUMPTION";
+                }
+            }
+            else if (avg > 100 && avg <= 15000) {
+                if (consumptionpercent >= 0.2) {
+                    return "LOW CONSUMPTION";
+                }
+            }
+            else if (avg > 100 && avg > 15000) {
+                if (consumptionpercent >= 0.1) {
+                    return "LOW CONSUMPTION";
+                }
+            }
+            else
+                return "";
+
+
+        return "";
+
+    }
+    // 01-23-2020 New update more power High Consumptions
+    public static String MorePowerHighConsumptions(String AvgKWH, String KWH) {
+        boolean result = false;
+        double consumption = 0;
+        double consumptionpercent = 0;
+        double avg = Double.parseDouble(AvgKWH);
+        double kwh = Double.parseDouble(KWH);
+
+        if(kwh == 0){
+            return "ZERO CONSUMPTION";
+        }
+        if (kwh < 0) {
+            return "NEGATIVE CONSUMPTION";
+        }
+
+
+
+        consumption = Math.abs((avg  - kwh));
+
+        avg = avg == 0 ? 1 : avg;
+        consumptionpercent = Math.round(((consumption / avg) * 100)) / 100;
+
+            if (avg <= 100) {
+                if (consumptionpercent >= 1) {
+                    return "HIGH CONSUMPTION";
+                }
+            }
+            else if (avg > 100 && avg <= 15000) {
+                    if (consumptionpercent >= 0.5) {
+                        return "HIGH CONSUMPTION";
+                    }
+                }
+            else if (avg > 100 && avg > 15000) {
+                if (consumptionpercent >= 0.1) {
+                    return "HIGH CONSUMPTION";
+                }
+            }
+            else
+
+                return "";
+
+
+        return "";
+
     }
 
     public static String GetKWH(String Multiplier, String PreviousReading, String Reading) {

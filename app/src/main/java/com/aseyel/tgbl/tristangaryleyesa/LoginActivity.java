@@ -134,8 +134,9 @@ public class LoginActivity extends AppCompatActivity {
         mThread.start();
     }
     private void setup(){
-        try{
 
+        try{
+            SplashActivity.mDatabaseHelper.UpdateDatabase();
             etUsername  = (EditText) findViewById(R.id.etUsername);
             etUsername.addTextChangedListener(new TextWatcher() {
                 int charcount = 0;
@@ -512,9 +513,21 @@ public class LoginActivity extends AppCompatActivity {
                         for (int i = 0; i < mJsonArray.length(); i++) {
                             JSONObject c = mJsonArray.getJSONObject(i);
                             JSONObject data = new JSONObject();
+                            Log.i(TAG, "tristan" + jsonStr);
+
+                        // Jan 24, 2020 Update Change password(if new password equal to null the password = user id, else password = new password) by Mariesher zapico
+                            String Password = "";
+                            if (c.getString("password").equals("")){
+                                Password = Liquid.md5(c.getString("id"));
+
+                            }
+                            else
+                            {
+                                Password = c.getString("password");
+                            }
                             data.put("UserID",c.getString("id"));
                             data.put("Username",c.getString("id"));
-                            data.put("Password",c.getString("id"));
+                            data.put("Password",Password);
                             data.put("Client", c.getString("client"));
                             data.put("branch", c.getString("branch"));
                             data.put("name", c.getString("name"));
@@ -525,6 +538,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             final_result_user.put(data);
 
+
                         }
 
                         boolean query_result = false;
@@ -532,7 +546,7 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject c = final_result_user.getJSONObject(a);
                             String UserId = c.getString("UserID");
                             String Username = c.getString("Username");
-                            String Password = Liquid.md5(c.getString("Password"));
+                            String Password = c.getString("Password");
                             String Client = c.getString("Client");
                             String branch = c.getString("branch");
                             String name = c.getString("name");

@@ -97,7 +97,7 @@ public class ChangePasswordActivity extends BaseFormActivity {
                     CurrentPassword = accountsData.getString(1);
                 }
                 //if the old password is not equal to current password it will return false
-//                Log.i(TAG,"Old Password "+ OldPassword);
+//                  Log.i(TAG,"Old Password"+ OldPassword);
 //                Log.i(TAG,"Hash Old Password "+ Liquid.md5(OldPassword));
 //                Log.i(TAG,"Current Password "+ CurrentPassword);
 
@@ -128,7 +128,9 @@ public class ChangePasswordActivity extends BaseFormActivity {
                         postData.put("method","changepassword");
                         Log.i(TAG,"Sino ang user?"+ Liquid.User);
                         postData.put("user", Liquid.User);
-                        postData.put("password",NewPassword);
+                        postData.put("username", "tgbleyesa");
+                        postData.put("old_password", OldPassword);
+                        postData.put("new_password",NewPassword);
                         mPOSTApiData = new Liquid.POSTApiData("profile/php/profile-route.php");
                         jsonStr = sh.makeServicePostCall(mPOSTApiData.API_Link, postData);
                         Log.i(TAG,"Tristan xxx"+ jsonStr);

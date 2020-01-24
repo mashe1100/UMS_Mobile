@@ -102,7 +102,11 @@ public class LiquidReference {
             "[modifiedby] TEXT  NULL )";
 
     //ADMIN
-    public static String Admin = "INSERT INTO ums_account ([UserId],[Username],[Password],[Status]) VALUES('001','000','c6f057b86584942e415435ffb1fa93d4','Logout')";
+    // previous admin user
+  //   public static String Admin = "INSERT INTO ums_account ([UserId],[Username],[Password],[Status]) VALUES('001','000','c6f057b86584942e415435ffb1fa93d4','Logout')";
+
+    public static String DeleteAdmin = "DELETE FROM ums_account WHERE Username = '000';";
+    public static String Admin = "REPLACE INTO ums_account ([UserId],[Username],[Password],[Status]) VALUES('001','ums_admin','63c1704c5e7fc429ff7a5bcad234d230','Logout')";
     public static String[] CoolerPlanogramListData = {
             "INSERT INTO cde_planogram_compliance(id,description) VALUES ('1','60:40');",
             "INSERT INTO cde_planogram_compliance(id,description) VALUES ('2','Coke RED Cooler');",

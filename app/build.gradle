@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'tgblKey'
             keyPassword '4172012jeanTG'
-            storeFile file('C:/Users/IT-Jp/Desktop/USI/KeyStore/tgblAndroidKey.jks')
+            storeFile file('C:/GITHUB_MOBILE/UMS_Mobile/KeyStore/tgblAndroidKey.jks')
             storePassword '4172012jeanTG'
         }
     }
