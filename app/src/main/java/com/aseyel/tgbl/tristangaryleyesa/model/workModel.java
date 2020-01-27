@@ -783,7 +783,7 @@ public class workModel {
                         "FROM  customer_reading_downloads  c "+
                         "LEFT JOIN  reading r "+
                         "ON r.AccountNumber = c.C_AccountNumber AND c.reading_date = r.Reading_Date AND c.job_id = r.job_id " +
-                        "WHERE c.job_id like '%"+job_id+"%' AND "+
+                        "WHERE c.job_id = '"+job_id+"' AND "+
                         "(c.C_AccountNumber like '%"+Search+"%' OR c.CED_MeterNumber like '%"+Search+"%' OR c.account_name like '%"+Search+"%' OR c.serial like '%"+Search+"%' OR c.Complete_Address like '%"+Search+"%') "+
                         "ORDER BY c.CED_Sequence ASC"
 
