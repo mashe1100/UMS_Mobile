@@ -2767,8 +2767,10 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                         String jsonStr = sh.makeServicePostCall(mPOSTApiData.API_Link, notinlist);
                         //Log.i(TAG, "TRISTAN:" + jsonStr);
                         //Log.i(TAG, "ALEX:" + jsonStr);
+                        Log.i(TAG, "qwe:" + jsonStr);
                         JSONObject response = Liquid.StringToJsonObject(jsonStr);
                         //JSONObject response2 = new JSONObject(response.getString("Data"));
+
 
                         if (response.getString("result").equals("false")) {
                             Liquid.ErrorUpload.put(notinlist);

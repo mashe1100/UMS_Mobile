@@ -1126,12 +1126,19 @@ public class ReadingV2Activity extends BaseActivity {
                                 Liquid.Reading = Integer.toString((int)(Integer.parseInt(Liquid.previous_reading)+Integer.parseInt(Liquid.Averange_Consumption)));
                                 Liquid.Present_Consumption = Liquid.Averange_Consumption;
                             }
+
                         }
 
+
                         break;
+
+                    case "more_power":
+                        break;
+
                     default:
                         Liquid.Average_Reading = Liquid.AverageValidation(Liquid.Remarks,Liquid.RemarksCode);
                         Liquid.Present_Consumption = Liquid.Averange_Consumption;
+
                         Liquid.reading_remarks = Liquid.ConsumptionValidation(Liquid.Averange_Consumption, Liquid.previous_consumption, Liquid.Present_Consumption);
                         return true;
                 }
@@ -1153,7 +1160,31 @@ public class ReadingV2Activity extends BaseActivity {
             }
 
             Liquid.Present_Consumption = String.valueOf(AddCons(Double.parseDouble(Liquid.coreloss),Double.parseDouble(Liquid.Present_Consumption)));
-            Liquid.reading_remarks = Liquid.ConsumptionValidation(Liquid.Averange_Consumption, Liquid.previous_consumption, Liquid.Present_Consumption);
+
+            switch (Liquid.Client)
+            {
+                case "more_power":
+
+
+                        if (Double.parseDouble(Liquid.Averange_Consumption) < Double.parseDouble(Liquid.Present_Consumption)) {
+                            Liquid.reading_remarks = Liquid.MorePowerHighConsumptions(Liquid.Averange_Consumption, Liquid.Present_Consumption);
+
+                            return true;
+
+                        } else if (Double.parseDouble(Liquid.Averange_Consumption) > Double.parseDouble(Liquid.Present_Consumption)) {
+
+                            Liquid.reading_remarks = Liquid.MorePowerLowConsumptions(Liquid.Averange_Consumption, Liquid.Present_Consumption);
+                            return true;
+                        }
+
+                break;
+
+                default:
+
+                    Liquid.reading_remarks = Liquid.ConsumptionValidation(Liquid.Averange_Consumption, Liquid.previous_consumption, Liquid.Present_Consumption);
+
+                    return true;
+            }
 
             return true;
         }catch(Exception e){
