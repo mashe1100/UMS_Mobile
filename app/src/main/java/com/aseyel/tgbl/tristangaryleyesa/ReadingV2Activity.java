@@ -174,11 +174,15 @@ public class ReadingV2Activity extends BaseActivity {
                         LowConsumptionAttempt = 1;
                         ConsumptionFindingsNotification(Liquid.reading_remarks);
                     } else {
-                        Computation();
                         switch (Liquid.Client){
                             case "baliwag_wd":
+                                Computation();
                                 break;
-                            default:
+//                            case "ileco2":
+//                                Liquid.save_only = true;
+//                                break;
+                            default:    
+                                Computation();
                                 Liquid.save_only = true;
                         }
                         startActivity(i);
