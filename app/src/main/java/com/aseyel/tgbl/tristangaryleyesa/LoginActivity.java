@@ -507,6 +507,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (jsonStr != null) {
                     try {
                         JSONArray mJsonArray = new JSONArray(jsonStr);
+                        Log.i(TAG, "users_update: "+mJsonArray.toString(1));
 
                         // looping through All Data
                         for (int i = 0; i < mJsonArray.length(); i++) {

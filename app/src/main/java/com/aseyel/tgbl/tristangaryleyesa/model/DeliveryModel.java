@@ -467,4 +467,28 @@ public class DeliveryModel {
 
 
     }
+
+    public static Cursor GetMapData(String job_id) {
+
+        return SplashActivity.mDatabaseHelper.SqliteSelectQuery(
+                "SELECT "+
+                        "c.job_id as JobId,  "+ //0
+                        "c.m_type_description as Name, "+ //1
+                        "c.m_type_description as Name_2, "+ //2
+                        "c.m_accountnumber as Customer_No, "+ //3
+                        "c.job_title as MKTSGM, "+ //4
+                        "c.job_id as SEGM, "+ //5
+                        "c.m_client as City, "+ //6
+                        "c.m_type_description as sequence, "+ //7
+                        "c.sysentrydate as sysentrydate, "+ //8
+                        "c.m_latitude as Latitude, "+ //9
+                        "c.m_longitude as Longitude, "+ //10
+                        "c.m_status as status, "+ //11
+                        "c.m_accountnumber as meternumber, "+ //12
+                        "c.m_accountnumber as accountnumber "+ //13
+                        "FROM messengerial c "+
+                        "WHERE c.job_id = '"+job_id +"'"
+        );
+
+    }
 }

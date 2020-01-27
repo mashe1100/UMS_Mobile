@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.aseyel.tgbl.tristangaryleyesa.ReadingGalleryActivity;
+import com.aseyel.tgbl.tristangaryleyesa.model.DeliveryModel;
 import com.aseyel.tgbl.tristangaryleyesa.model.ReadingModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -127,7 +128,6 @@ public class MapListFragment extends Fragment implements OnMapReadyCallback, OnM
         String longitude = "";
         float markericon = 0;
 
-//            Toast.makeText(getActivity(), Liquid.SelectedId+"\n"+data.toString(), Toast.LENGTH_SHORT).show();
         myMarker = new Marker[data.size()];
         for(int i = 0 ; i < data.size() ; i++ ) {
             latitude = "0";
@@ -142,13 +142,13 @@ public class MapListFragment extends Fragment implements OnMapReadyCallback, OnM
                latitude = data.get(i).get("Latitude");
                longitude = data.get(i).get("Longitude");
            }
-            if(data.get(i).get("Status") == null){
-                markericon = BitmapDescriptorFactory.HUE_RED;
-            }else{
-                latitude = data.get(i).get("R_Latitude");
-                longitude = data.get(i).get("R_Longitude");
-                markericon = BitmapDescriptorFactory.HUE_AZURE;
-            }
+//            if(data.get(i).get("Status") == null){
+//                markericon = BitmapDescriptorFactory.HUE_RED;
+//            }else{
+//                latitude = data.get(i).get("R_Latitude");
+//                longitude = data.get(i).get("R_Longitude");
+//                markericon = BitmapDescriptorFactory.HUE_AZURE;
+//            }
 
            myMarker[i] = createMarker(
                          Double.parseDouble(latitude),
@@ -208,7 +208,7 @@ public class MapListFragment extends Fragment implements OnMapReadyCallback, OnM
     protected Marker createMarker(double latitude, double longitude, String title, String snippet, float iconResID,GoogleMap googleMap){
         return googleMap.addMarker(new MarkerOptions()
                 .position(new LatLng(latitude, longitude))
-                .anchor(0.5f, 0.5f)
+//                .anchor(0.5f, 0.5f)
                 .title(title)
                 .snippet(snippet)
                 .icon(BitmapDescriptorFactory.defaultMarker(iconResID)));
@@ -223,6 +223,9 @@ public class MapListFragment extends Fragment implements OnMapReadyCallback, OnM
         switch (Liquid.ServiceType){
             case "READ AND BILL":
                 result = ReadingModel.GetMapData(job_id);
+                break;
+            case "MESSENGER":
+                result = DeliveryModel.GetMapData(job_id);
                 break;
             default:
                 //from coke
