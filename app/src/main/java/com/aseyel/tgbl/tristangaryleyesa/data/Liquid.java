@@ -92,8 +92,9 @@ public class Liquid extends AppCompatActivity {
     //UMS server
 //    private static final String umsUrl = "usi.3utilities.com:14147";
 //    private static final String umsUrl = "usi.3utilities.com:8081";
+    private static final String umsUrl = "usi.3utilities.com:1529";
     //MORE POWER server
-    private static final String umsUrl = "125.5.181.225:8080";
+//    private static final String umsUrl = "125.5.181.225:8080";
 
     private static final String TAG = "Liquid";
     public static String DefaultErrorMessage = "An error has occured!";
