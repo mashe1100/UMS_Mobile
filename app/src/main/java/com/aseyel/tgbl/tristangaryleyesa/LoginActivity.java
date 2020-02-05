@@ -434,8 +434,12 @@ public class LoginActivity extends AppCompatActivity {
                     auth_result = false;
                 }
                 while(result.moveToNext()){
+                    Log.i(TAG,"jan 27, 2020 "+ result.getString(0) + " " + result.getString(1));
+                    Log.i(TAG,"jan 27, 2020 new "+ (Liquid.md5(Password)));
                     if(result.getString(0).equals(Username) && result.getString(1).equals(Liquid.md5(Password))){
+
                         auth_result = true;
+
                     }else{
                         auth_result = false;
                     }
@@ -514,7 +518,7 @@ public class LoginActivity extends AppCompatActivity {
                         for (int i = 0; i < mJsonArray.length(); i++) {
                             JSONObject c = mJsonArray.getJSONObject(i);
                             JSONObject data = new JSONObject();
-                            Log.i(TAG, "tristan" + jsonStr);
+                         //   Log.i(TAG, "tristan new jan 24" + jsonStr);
 
                         // Jan 24, 2020 Update Change password(if new password equal to null the password = user id, else password = new password) by Mariesher zapico
                             String Password = "";
@@ -522,10 +526,13 @@ public class LoginActivity extends AppCompatActivity {
                                 Password = Liquid.md5(c.getString("id"));
 
                             }
+
                             else
                             {
                                 Password = c.getString("password");
                             }
+
+
                             data.put("UserID",c.getString("id"));
                             data.put("Username",c.getString("id"));
                             data.put("Password",Password);

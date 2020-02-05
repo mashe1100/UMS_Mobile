@@ -2988,10 +2988,14 @@ public class LiquidPrintBill {
             Ypos = TopSectionHeight + LineGap + Padding * 2 + LineHeight * 2 + 60 + AdditionalLines;
 
             data+=WriteIleco2MeterReading(
-                    Liquid.dateChangeFormat(Liquid.previous_reading_date,"yyyy-MM-dd","MM/dd/yyyy"), Liquid.previous_reading,
-                    Liquid.setUpCurrentDate("MM/dd/yyyy"), Liquid.Reading,
-                    Liquid.FormatKWH(Liquid.Present_Consumption));
+                    Liquid.dateChangeFormat(Liquid.previous_reading_date,"yyyy-MM-dd","MM/dd/yyyy"), Liquid.ConvertToWholeNumber(Liquid.previous_reading),
+                    Liquid.setUpCurrentDate("MM/dd/yyyy"), Liquid.ConvertToWholeNumber(Liquid.Reading),
+                    Liquid.ConvertToWholeNumber(Liquid.FormatKWH(Liquid.Present_Consumption)));
+
             //String.valueOf(Liquid.RoundUp(Double.parseDouble(Liquid.Present_Consumption))));
+
+
+
 
 
             Ypos = HeaderHeight - ThreeMosHeight - 4;

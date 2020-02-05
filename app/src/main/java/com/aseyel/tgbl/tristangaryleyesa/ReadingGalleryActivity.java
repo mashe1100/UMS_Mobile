@@ -547,7 +547,17 @@ public class ReadingGalleryActivity extends BaseActivity {
                         }
 
                         break;
+
+                    case "more_power":
+                        break;
+
                     default:
+                        Liquid.Average_Reading = Liquid.AverageValidation(Liquid.Remarks,Liquid.RemarksCode);
+                        Liquid.Present_Consumption = Liquid.Averange_Consumption;
+
+                        Liquid.reading_remarks = Liquid.ConsumptionValidation(Liquid.Averange_Consumption, Liquid.previous_consumption, Liquid.Present_Consumption);
+                        return true;
+
 //                        Liquid.Average_Reading = Liquid.AverageValidation(Liquid.Remarks,Liquid.RemarksCode);
 //                        Liquid.Present_Consumption = Liquid.Averange_Consumption;
 //                        Liquid.reading_remarks = Liquid.ConsumptionValidation(Liquid.Averange_Consumption, Liquid.previous_consumption, Liquid.Present_Consumption);
@@ -571,7 +581,33 @@ public class ReadingGalleryActivity extends BaseActivity {
             }
 
             Liquid.Present_Consumption = String.valueOf(AddCons(Double.parseDouble(Liquid.coreloss),Double.parseDouble(Liquid.Present_Consumption)));
-            Liquid.reading_remarks = Liquid.ConsumptionValidation(Liquid.Averange_Consumption, Liquid.previous_consumption, Liquid.Present_Consumption);
+
+            switch (Liquid.Client)
+            {
+                case "more_power":
+
+
+                    if (Double.parseDouble(Liquid.Averange_Consumption) < Double.parseDouble(Liquid.Present_Consumption)) {
+                        Liquid.reading_remarks = Liquid.MorePowerHighConsumptions(Liquid.Averange_Consumption, Liquid.Present_Consumption);
+
+                        return true;
+
+                    } else if (Double.parseDouble(Liquid.Averange_Consumption) > Double.parseDouble(Liquid.Present_Consumption)) {
+
+                        Liquid.reading_remarks = Liquid.MorePowerLowConsumptions(Liquid.Averange_Consumption, Liquid.Present_Consumption);
+                        return true;
+                    }
+
+                    break;
+
+                default:
+
+                    Liquid.reading_remarks = Liquid.ConsumptionValidation(Liquid.Averange_Consumption, Liquid.previous_consumption, Liquid.Present_Consumption);
+
+                    return true;
+            }
+
+
 
             return true;
         }catch(Exception e){
@@ -618,6 +654,16 @@ public class ReadingGalleryActivity extends BaseActivity {
                             return;
                     }
                 case "HIGH CONSUMPTION":
+                    // Jan 31, 2020
+                    // Mariesher Zapico
+                    // Cannot reprint if the bill is super bill which is present consumption >= 1000 percent of average consumption
+                   /* if(Liquid.SuperBillAverageconsumption(Liquid.Present_Consumption,Liquid.Averange_Consumption)){
+                        Liquid.showDialogError(this,"Invalid","Super Consumption cannot print!");
+                        Liquid.save_only = true;
+                        return;
+                    }*/
+
+
                     break;
                 case "NEGATIVE CONSUMPTION":
                     Liquid.showDialogError(this,"Invalid","Negative Consumption cannot print!");

@@ -168,8 +168,10 @@ public class ReadingV2Activity extends BaseActivity {
             Liquid.ReadingInputTemporaryHolder = Liquid.Reading;
             Liquid.PresentConsumptionTemporaryHolder = Liquid.Present_Consumption;
             //This is the section where the status of the reading where will it go.
+            Log.i(TAG,"mashe test average consumption " + Liquid.Averange_Consumption);
             switch (Liquid.reading_remarks) {
                 case "LOW CONSUMPTION":
+
                     if (LowConsumptionAttempt == 0) {
                         LowConsumptionAttempt = 1;
                         ConsumptionFindingsNotification(Liquid.reading_remarks);
@@ -189,15 +191,29 @@ public class ReadingV2Activity extends BaseActivity {
                     }
                     break;
                 case "HIGH CONSUMPTION":
+                    // condition to validate user attempt
                     if (HighConsumptionAttempt == 0) {
                         HighConsumptionAttempt = 1;
+                        // first attempt will show the findings of HIGH CONSUMPTION
                         ConsumptionFindingsNotification(Liquid.reading_remarks);
-                    } else {
+
+                    }
+                    // second attempt of user
+                    else {
+                        //compute and print if not super consumption
                         Computation();
-                        startActivity(i);
+                        // Feb 05, 2020
+                        // Mariesher Zapico
+                        // Create a condition that will validate a super bill which is present consumption >= 1000 percent of an average consumption
+                       /* if(Liquid.SuperBillAverageconsumption(Liquid.Present_Consumption,Liquid.Averange_Consumption)){
+                            //cannot print if super consumption
+                            Liquid.save_only = true;
+                        }*/
+                            startActivity(i);
                     }
 
                     break;
+
                 case "NEGATIVE CONSUMPTION":
                     if (NegativeConsumptionAttempt == 0) {
                         NegativeConsumptionAttempt = 1;
@@ -393,7 +409,7 @@ public class ReadingV2Activity extends BaseActivity {
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("The Consumption is " + findings + " Please check the READING again!").
+        builder.setMessage("The Consumption is " +"'"+ findings +"'" + " Please check the Reading and your input reading again!").
                 setPositiveButton("Done", dialogClickListener).show();
         ;
     }
@@ -1016,6 +1032,15 @@ public class ReadingV2Activity extends BaseActivity {
                             return;
                     }
                 case "HIGH CONSUMPTION":
+                    // Jan 31, 2020
+                    // Mariesher Zapico
+                    // Cannot reprint if the bill is super bill which is present consumption >= 1000 percent of average consumption
+                   /* if(Liquid.SuperBillAverageconsumption(Liquid.Present_Consumption,Liquid.Averange_Consumption)){
+                        Liquid.showDialogError(this,"Invalid","Super Consumption cannot print!");
+                        Liquid.save_only = true;
+                        return;
+                    }*/
+
                     break;
                 case "NEGATIVE CONSUMPTION":
                     Liquid.showDialogError(this,"Invalid","Negative Consumption cannot print!");
@@ -1030,6 +1055,7 @@ public class ReadingV2Activity extends BaseActivity {
                             Liquid.save_only = true;
                             return;
                     }
+
                 default:
 
             }
@@ -1095,13 +1121,13 @@ public class ReadingV2Activity extends BaseActivity {
             Liquid.r_latitude = String.valueOf(mLiquidGPS.getLatitude());
             Liquid.r_longitude = String.valueOf(mLiquidGPS.getLongitude());
 
-
-
             if (LastDial.equals("9")) {
+
                 Liquid.Present_Consumption = Liquid.WrapAround(Liquid.previous_reading, Liquid.Reading);
                 Liquid.Remarks = "WRAP AROUND MTR";
                 Liquid.RemarksCode = "28";
             } else {
+
                 Liquid.Present_Consumption = Liquid.GetKWH(Liquid.multiplier, Liquid.previous_reading, Liquid.Reading);
 
             }
@@ -1128,7 +1154,6 @@ public class ReadingV2Activity extends BaseActivity {
                             }
 
                         }
-
 
                         break;
 
@@ -1160,6 +1185,7 @@ public class ReadingV2Activity extends BaseActivity {
             }
 
             Liquid.Present_Consumption = String.valueOf(AddCons(Double.parseDouble(Liquid.coreloss),Double.parseDouble(Liquid.Present_Consumption)));
+
 
             switch (Liquid.Client)
             {

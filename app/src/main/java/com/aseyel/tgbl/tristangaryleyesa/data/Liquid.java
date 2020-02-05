@@ -86,16 +86,17 @@ import java.util.concurrent.TimeUnit;
 public class Liquid extends AppCompatActivity {
     public static final String DATABASE_NAME = "ums_mobile.db";
 //    public static String pathEnvironment = "USI_TEST";
-//    public static String pathEnvironment = "USI_BETA";
+ //   public static String pathEnvironment = "USI_BETA";
     //MORE POWER path
     public static String pathEnvironment = "USI";
+
     //UMS server
 //    private static final String umsUrl = "usi.3utilities.com:14147";
-      private static final String umsUrl = "usi.3utilities.com:1529";
-//    private static final String umsUrl = "usi.3utilities.com:8081";
-    private static final String umsUrl = "usi.3utilities.com:1529";
+//    private static final String umsUrl = "usi.3utilities.com:1529";
+    private static final String umsUrl = "usi.3utilities.com:8081";
+//    private static final String umsUrl = "usi.3utilities.com:1529";
     //MORE POWER server
-//    private static final String umsUrl = "125.5.181.225:8080";
+//   private static final String umsUrl = "125.5.181.225:8080";
 
     private static final String TAG = "Liquid";
     public static String DefaultErrorMessage = "An error has occured!";
@@ -173,12 +174,12 @@ public class Liquid extends AppCompatActivity {
     //READ AND BILL
 //    public static String Client = "batelec2";
 //    public static String Client = "baliwag_wd";
-    public static String Client = "more_power";
+ //mashe   public static String Client = "more_power";
 //     EDIT INIT LINE 99 AUDIT to READING (READING GALLERY ACTIVITY)
     // EDIT GetImages Line 180 AUDIT to READING (READING GALLERY ACTIVITY)
     // EDIT GetImages Line 1475 AUDIT to READING (TAB LOCAL FRAGMENT)
     // Please edit remarks reference // MeterReadingRemarksData
-//    public static String Client = "ileco2"; //Please edit remarks reference // MeterReadingIleco2RemarksData
+    public static String Client = "ileco2"; //Please edit remarks reference // MeterReadingIleco2RemarksData
 //    public static String Client = "pelco2"; //Please edit remarks reference // MeterReadingPelco2RemarksData
     public static String ServiceType = "READ AND BILL";
 //    public static String ImageType = "audit";[
@@ -430,7 +431,10 @@ public class Liquid extends AppCompatActivity {
      public static boolean draftBill = true;
 
     public static String WrapAround(String PreviousReading, String Reading) {
+        Log.i(TAG,"mashe test WrapAround Reading ");
         Reading = Reading != "" ? Reading : "0";
+        String PreviousReadingWithDecimal = PreviousReading;
+        String ReadingWithDecimal = Reading;
         double dMultiplier = Double.parseDouble(multiplier);
         double dPreviousReading = Double.parseDouble(PreviousReading);
         double dReading = Double.parseDouble(Reading);
@@ -459,10 +463,10 @@ public class Liquid extends AppCompatActivity {
                     Consumption = String.valueOf(((999999 - dPreviousReading) + dReading + 1)* dMultiplier);
                     break;
                 default :
-                    Consumption = GetKWH(multiplier, PreviousReading, Reading);
+                    Consumption = GetKWH(multiplier, PreviousReadingWithDecimal, ReadingWithDecimal);
             }
         }else{
-            Consumption = GetKWH(multiplier, PreviousReading, Reading);
+            Consumption = GetKWH(multiplier, PreviousReadingWithDecimal, ReadingWithDecimal);
         }
 
 
@@ -1172,6 +1176,7 @@ public class Liquid extends AppCompatActivity {
             return "";
         }
         consumption_percentage = average_consumption * percentage;
+
         //consumption_percentage = Double.parseDouble(AvgKWH) * percentage;
         high_consumption_range = average_consumption + consumption_percentage;
         low_consumption_range = average_consumption - consumption_percentage;
@@ -1183,14 +1188,16 @@ public class Liquid extends AppCompatActivity {
         if (Double.parseDouble(KWH) <= low_consumption_range) {
             return "LOW CONSUMPTION";
         }
+
         if (Double.parseDouble(KWH) >= high_consumption_range) {
             return "HIGH CONSUMPTION";
         }
 
         return "";
     }
-
-// 01-23-2020 New update more power Low Consumptions
+// Jan 23, 2020
+// Mariesher B. Zapico
+// New update more power Low Consumptions
     public static String MorePowerLowConsumptions(String AvgKWH, String KWH) {
         boolean result = false;
         double consumption = 0;
@@ -1234,7 +1241,10 @@ public class Liquid extends AppCompatActivity {
         return "";
 
     }
-    // 01-23-2020 New update more power High Consumptions
+
+    // Jan 23, 2020
+    // Mariesher B. Zapico
+    // New update more power High Consumptions
     public static String MorePowerHighConsumptions(String AvgKWH, String KWH) {
         boolean result = false;
         double consumption = 0;
@@ -1282,11 +1292,11 @@ public class Liquid extends AppCompatActivity {
 
     public static String GetKWH(String Multiplier, String PreviousReading, String Reading) {
 
-        if(Reading.equals("") || Reading.equals(null) || Reading.isEmpty()){
+        Log.i(TAG,"mashe test GetKWH reading "+ Reading);
+        if(Reading==("") || Reading==(null) || Reading.isEmpty()){
             Reading = "0";
         }
 
-      
         double KWH = 0;
         String Consumption = "";
 
@@ -1299,6 +1309,7 @@ public class Liquid extends AppCompatActivity {
         KWH = KWH * mMultiplier;
         //ALEX - KWH from rounddown to round Up // 010318
         Consumption = String.valueOf(Liquid.RoundUp(KWH));
+
         return Consumption;
     }
 
@@ -3794,6 +3805,39 @@ public class Liquid extends AppCompatActivity {
 
     }
 
+    public static String ConvertToWholeNumber(String decimalValue){
+        double decimalValue2 = Double.parseDouble(decimalValue);
 
+        int value = (int)Math.round(decimalValue2);
+        return String.valueOf(value);
+    }
+    //Jan 29, 2020
+    //by Mariesher Zapico
+    //Create a function to identify if the present consumption will give a super bill
+    public static boolean SuperBillAverageconsumption(String PresentKWH, String AverageConsumptionKWH) {
+        //declare boolean variable and set the value into false to return the function into false without the condition
+        boolean SuperBill = false;
+        //declare a variable to set the value for 1000 percent holder
+        double percentage = 10;
+        //declare a double variable to assign your super bill computation
+        double ResultAverageconsumptionkwh = 0;
+
+        // declare a variable to convert present parameter variable from string to double
+        double presentkwh = Double.parseDouble(PresentKWH);
+        // declare a variable to convert average consumption parameter variable from string to double
+        double averageconsumptionkwh = Double.parseDouble(AverageConsumptionKWH);
+
+        //computation to get the 1000 percent of average consumption
+        ResultAverageconsumptionkwh = averageconsumptionkwh * percentage;
+        // create a condition that will return a super bill if present consumption is greater than or equal to 1000 percent of average consumption
+        if(presentkwh >= ResultAverageconsumptionkwh){
+            // change the boolean value into true
+            SuperBill = true;
+        }
+
+        //return false
+        return SuperBill;
+    }
 
 }
+
