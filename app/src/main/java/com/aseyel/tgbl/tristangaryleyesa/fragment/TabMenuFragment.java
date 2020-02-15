@@ -27,6 +27,7 @@ import com.aseyel.tgbl.tristangaryleyesa.QRCodeScannerActivity;
 import com.aseyel.tgbl.tristangaryleyesa.R;
 import com.aseyel.tgbl.tristangaryleyesa.SettingsActivity;
 import com.aseyel.tgbl.tristangaryleyesa.SplashActivity;
+import com.aseyel.tgbl.tristangaryleyesa.UpdateHostActivity;
 import com.aseyel.tgbl.tristangaryleyesa.adapter.MainMenuAdapter;
 import com.aseyel.tgbl.tristangaryleyesa.data.ExternalDatabaseHelper;
 import com.aseyel.tgbl.tristangaryleyesa.data.Liquid;
@@ -100,6 +101,8 @@ public class TabMenuFragment extends Fragment {
         HashMap<String,String> Settings = new HashMap<>();
         HashMap<String,String> ChangePassword = new HashMap<>();
         HashMap<String,String> OfficialBusiness = new HashMap<>();
+        //mashe try
+        HashMap<String,String> ChangeHost = new HashMap<>();
 
         Backup.put("Id","001");
         Backup.put("Description","Data Back Up");
@@ -131,12 +134,21 @@ public class TabMenuFragment extends Fragment {
         OfficialBusiness.put("FilePath","Official Business");
 //        final_response.add(OfficialBusiness);
 
+        //mashe try
+        if(Liquid.User.equals("000") || Liquid.User.equals("ums_admin")){
+            ChangeHost.put("Id","009");
+            ChangeHost.put("Description","Change Host");
+            ChangeHost.put("FilePath","Change Host");
+            final_response.add(ChangeHost);
+        }
+
         if(Liquid.User.equals("000") || Liquid.User.equals("ums_admin")){
             ClearData.put("Id","005");
             ClearData.put("Description","Clear Data");
             ClearData.put("FilePath","Clear Data");
             final_response.add(ClearData);
         }
+
 
         final_response.add(Backup);
         final_response.add(Import);
@@ -166,6 +178,16 @@ public class TabMenuFragment extends Fragment {
             getActivity().startActivity(i);
         }catch(Exception e){
             Log.e(TAG,"Error ",e);
+        }
+    }
+    //mashe try
+    public void ChangeHost(){
+        try{
+            //go to Update/change host activity
+            Intent i = new Intent(getActivity(), UpdateHostActivity.class);
+            getActivity().startActivity(i);
+        }catch(Exception e){
+            Log.e(TAG,"mashe update host error ",e);
         }
     }
 

@@ -97,9 +97,9 @@ public class ChangePasswordActivity extends BaseFormActivity {
                     CurrentPassword = accountsData.getString(1);
                 }
                 //if the old password is not equal to current password it will return false
-//                  Log.i(TAG,"Old Password"+ OldPassword);
-//                Log.i(TAG,"Hash Old Password "+ Liquid.md5(OldPassword));
-//                Log.i(TAG,"Current Password "+ CurrentPassword);
+                 Log.i(TAG,"Old Password: "+ OldPassword);
+                Log.i(TAG,"Hash Old Password: "+ Liquid.md5(OldPassword));
+                Log.i(TAG,"Current Password: "+ CurrentPassword);
 
 
                 if(!Liquid.md5(OldPassword).equals(CurrentPassword)){

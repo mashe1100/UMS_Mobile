@@ -53,6 +53,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                 db.execSQL(LiquidReference.DeleteAdmin);
                 db.execSQL(LiquidReference.Admin);
+
+                //mashe try
+                db.execSQL(LiquidReference.UMShost);
+                db.execSQL(LiquidReference.Host);
+
           //  }
            // if(Liquid.currentDate().equals("2019-03-02") || Liquid.currentDate().equals("2019-03-03")){
                 db.execSQL(LiquidReference.AlterStatusPicture);
@@ -112,6 +117,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             for(int a = 0; a < LiquidReference.SettingsData.length; a++){
                 db.execSQL(LiquidReference.SettingsData[a]);
             }
+            //mashe try table
+            db.execSQL(LiquidReference.UMShost);
 
             db.execSQL(LiquidReference.UMSAccount);
             db.execSQL(LiquidReference.Admin);
@@ -276,6 +283,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.execSQL(LiquidReference.DropAuditDownload);
             db.execSQL(LiquidReference.DropAuditUpload);
             db.execSQL(LiquidReference.DropUMSAccount);
+            //mashe try
+            db.execSQL(LiquidReference.DropUMShost);
 
             //DELIVERY TABLE
             //db.execSQL(LiquidReference.DropDeliveryRemarksList);

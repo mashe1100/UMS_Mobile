@@ -14,25 +14,22 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
-import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.Environment;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Base64;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -40,15 +37,14 @@ import android.widget.Toast;
 
 
 import com.aseyel.tgbl.tristangaryleyesa.JobOrderActivity;
-import com.aseyel.tgbl.tristangaryleyesa.MainActivity;
+import com.aseyel.tgbl.tristangaryleyesa.R;
+import com.aseyel.tgbl.tristangaryleyesa.SplashActivity;
 import com.aseyel.tgbl.tristangaryleyesa.model.AccountModel;
+import com.aseyel.tgbl.tristangaryleyesa.model.HostModel;
 import com.aseyel.tgbl.tristangaryleyesa.model.MeterNotInListModel;
 import com.aseyel.tgbl.tristangaryleyesa.model.ReadingModel;
 import com.aseyel.tgbl.tristangaryleyesa.model.SettingModel;
-import com.aseyel.tgbl.tristangaryleyesa.services.ExportCSV;
 import com.aseyel.tgbl.tristangaryleyesa.services.LiquidBilling;
-import com.aseyel.tgbl.tristangaryleyesa.services.LiquidPrintBill;
-import com.aseyel.tgbl.tristangaryleyesa.services.Speech;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -83,7 +79,7 @@ import java.util.concurrent.TimeUnit;
  * Created by Tristan on 12/12/2017.
  */
 
-public class Liquid extends AppCompatActivity {
+public class Liquid extends AppCompatActivity{
     public static final String DATABASE_NAME = "ums_mobile.db";
 //    public static String pathEnvironment = "USI_TEST";
  //   public static String pathEnvironment = "USI_BETA";
@@ -93,11 +89,16 @@ public class Liquid extends AppCompatActivity {
     //UMS server
 //    private static final String umsUrl = "usi.3utilities.com:14147";
 //    private static final String umsUrl = "usi.3utilities.com:1529";
-    private static final String umsUrl = "usi.3utilities.com:8081";
-//    private static final String umsUrl = "usi.3utilities.com:1529";
+//    private static final String umsUrl = "usi.3utilities.com:8081";
+ //   private static final String umsUrl = "usi.3utilities.com:1529";
     //MORE POWER server
 //   private static final String umsUrl = "125.5.181.225:8080";
 
+    public static String currenthost = "";
+    public static String umsUrl= "";
+
+
+    public static String id = "1";
     private static final String TAG = "Liquid";
     public static String DefaultErrorMessage = "An error has occured!";
     public static int RecyclerItemLimit = 50;
@@ -174,14 +175,14 @@ public class Liquid extends AppCompatActivity {
     //READ AND BILL
 //    public static String Client = "batelec2";
 //    public static String Client = "baliwag_wd";
- //mashe   public static String Client = "more_power";
+      public static String Client = "more_power";
 //     EDIT INIT LINE 99 AUDIT to READING (READING GALLERY ACTIVITY)
     // EDIT GetImages Line 180 AUDIT to READING (READING GALLERY ACTIVITY)
     // EDIT GetImages Line 1475 AUDIT to READING (TAB LOCAL FRAGMENT)
     // Please edit remarks reference // MeterReadingRemarksData
-    public static String Client = "ileco2"; //Please edit remarks reference // MeterReadingIleco2RemarksData
+//    public static String Client = "ileco2"; //Please edit remarks reference // MeterReadingIleco2RemarksData
 //    public static String Client = "pelco2"; //Please edit remarks reference // MeterReadingPelco2RemarksData
-    public static String ServiceType = "READ AND BILL";
+      public static String ServiceType = "READ AND BILL";
 //    public static String ImageType = "audit";[
 
 
@@ -3324,7 +3325,7 @@ public class Liquid extends AppCompatActivity {
 
 
     public static class GETUMSApiData {
-        public  String Url = "http://"+umsUrl+"/"+pathEnvironment+"/tgbl/php/api/";
+         public  String Url = "http://"+umsUrl+"/"+pathEnvironment+"/tgbl/php/api/";
         public  String API = "";
         public  String Username = "tgbleyesa";
         public  String Password = "C0mpl3x17y";
@@ -3395,7 +3396,7 @@ public class Liquid extends AppCompatActivity {
     }
 
     public static class POSTApiData {
-        public  String Url = "http://"+umsUrl+"/"+pathEnvironment+"/";
+       public  String Url = "http://"+umsUrl+"/"+pathEnvironment+"/";
         public  String API = "";
         public  String Username = "username=tgbleyesa";
         public  String Password = "password=C0mpl3x17y";
@@ -3410,7 +3411,7 @@ public class Liquid extends AppCompatActivity {
 
 
     public static class CokePOSTUMSApiData {
-        public  String Url = "http://"+umsUrl+"/"+pathEnvironment+"/coke/php/api/";
+       public  String Url = "http://"+umsUrl+"/"+pathEnvironment+"/coke/php/api/";
         public  String API = "";
         public  String Username = "username=tgbleyesa";
         public  String Password = "password=C0mpl3x17y";
@@ -3785,7 +3786,6 @@ public class Liquid extends AppCompatActivity {
         //mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(LastPosition));
     }
 
-
     public static void GetUserDetails(){
         Cursor result = AccountModel.GetLoginAccount();
         try
@@ -3795,7 +3795,6 @@ public class Liquid extends AppCompatActivity {
             }
             while(result.moveToNext()){
                 Liquid.UserFullname = result.getString(2).toString().toUpperCase();
-
             }
         }
         catch(Exception e){

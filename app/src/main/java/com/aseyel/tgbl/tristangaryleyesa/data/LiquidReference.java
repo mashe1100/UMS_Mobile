@@ -1959,4 +1959,17 @@ public class LiquidReference {
             "INSERT INTO delivery_remarks(id,description) VALUES (51,'Lack of Time');",
     };
 
+
+    //Mariesher Zapico
+    //February 8, 2020
+    //Create table for host data
+    public static String DropUMShost = "DROP TABLE IF EXISTS ums_host";
+    public static String UMShost = "CREATE TABLE IF NOT EXISTS  [ums_host] (" +
+            "[id] TEXT PRIMARY KEY," +
+            "[hostname] TEXT  NULL," +
+            "[modifieddate] TEXT  NULL," +
+            "[modifiedby] TEXT  NULL )";
+    //Create insert query for ums_host table
+    public static String Host = "INSERT INTO ums_host ([id],[hostname]) " +
+            "VALUES('1','usi.3utilities.com:1529')";
 }

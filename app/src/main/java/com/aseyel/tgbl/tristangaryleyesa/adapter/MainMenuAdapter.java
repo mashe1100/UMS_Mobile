@@ -120,6 +120,10 @@ public class MainMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             case "008":
                 ((TabMenuFragment) fragment).DoQRScan();
                 break;
+                //Add change host on menu
+            case "009":
+                ((TabMenuFragment) fragment).ChangeHost();
+                break;
         }
     }
     public void updateItems(boolean animated,ArrayList<HashMap<String, String>> Data) {

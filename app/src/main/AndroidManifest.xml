@@ -40,8 +40,9 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OCRActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".OCRActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".ChangePasswordActivity" />
         <activity
             android:name=".SplashActivity"
@@ -211,8 +212,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ReadingActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".LogisticsActivity"
             android:screenOrientation="portrait" />
@@ -242,43 +243,44 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ReadingV2Activity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ReadingRemarksActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ReadingGalleryActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ReadingSummaryActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SurveyActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".DeliveryMainActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".DeliveryReceived"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".DeliveryActivityV2"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".TypeActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SignatureActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity android:name=".UpdateHostActivity"></activity>
     </application>
 
 </manifest>

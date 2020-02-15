@@ -1,13 +1,16 @@
 package com.aseyel.tgbl.tristangaryleyesa;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.aseyel.tgbl.tristangaryleyesa.data.DatabaseHelper;
 import com.aseyel.tgbl.tristangaryleyesa.data.Liquid;
+import com.aseyel.tgbl.tristangaryleyesa.model.HostModel;
 import com.aseyel.tgbl.tristangaryleyesa.services.LiquidFile;
 import com.aseyel.tgbl.tristangaryleyesa.services.Speech;
 
@@ -33,6 +36,7 @@ public class SplashActivity extends AppCompatActivity {
 
         mDatabaseHelper = new DatabaseHelper(this);
         setupImage();
+        Host();
 
          /* New Handler to start the Menu-Activity
          * and close this Splash-Screen after some seconds.*/
@@ -49,9 +53,24 @@ public class SplashActivity extends AppCompatActivity {
         }, SPLASH_DISPLAY_LENGTH);
 
     }
+    //Mariesher on Feb 15, 2020
+    //Create a function to control column to get hostname from ums_host table
+    public static String GetHost(String host) {
+    //get the current host
+        Cursor hostData = HostModel.GetHostID(Liquid.id);
+        if(hostData.getCount() == 0){
+            return null;
+        }
+        while(hostData.moveToNext()){
+            host = hostData.getString(1);
+        }
+        Log.i(TAG,"mashe test host in splash: "+ host);
+        return host;
+    }
 
-
-
+    public static void Host(){
+      Liquid.umsUrl = GetHost(Liquid.currenthost);
+    }
 
     private void setupImage(){
 
