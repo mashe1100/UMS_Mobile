@@ -19,13 +19,18 @@ public class HostModel {
 
     public static Cursor GetHostID(String ID) {
 
-        return SplashActivity.mDatabaseHelper.SqliteSelectQuery("SELECT id, hostname FROM ums_host "+
+        return SplashActivity.mDatabaseHelper.SqliteSelectQuery(
+                "SELECT id," +
+                        "username," +
+                        "password," +
+                        "hostname " +
+                        "FROM ums_host "+
                 "WHERE id = '" + ID + "' "
         );
 
     }
 
-    public static boolean DoUpdateHost(String Hostid,String Hostname){
+    public static boolean DoUpdateHost(String Hostid,String Hostname,String Username,String Password){
         try{
             boolean result = false;
             String whereClause = "";
@@ -33,9 +38,14 @@ public class HostModel {
 
             Liquid.LiquidColumns = new String[]{
                     "hostname",
+                    "username",
+                    "password",
             };
+
             Liquid.LiquidValues = new String[] {
                     Hostname,
+                    Username,
+                    Password
             };
             whereClause = "id=?";
             whereArgs = new String[] { Hostid };

@@ -180,7 +180,7 @@ public class Liquid extends AppCompatActivity{
     // EDIT GetImages Line 180 AUDIT to READING (READING GALLERY ACTIVITY)
     // EDIT GetImages Line 1475 AUDIT to READING (TAB LOCAL FRAGMENT)
     // Please edit remarks reference // MeterReadingRemarksData
-//    public static String Client = "ileco2"; //Please edit remarks reference // MeterReadingIleco2RemarksData
+   //   public static String Client = "ileco2"; //Please edit remarks reference // MeterReadingIleco2RemarksData
 //    public static String Client = "pelco2"; //Please edit remarks reference // MeterReadingPelco2RemarksData
       public static String ServiceType = "READ AND BILL";
 //    public static String ImageType = "audit";[
@@ -2775,6 +2775,32 @@ public class Liquid extends AppCompatActivity{
         builder.show();
     }
 
+    public static void showDialogClose(final Activity activity,String title,String Message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(Message);
+        builder.setPositiveButton("Close",new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int id)
+            {
+
+                dialog.cancel();
+            }
+        });
+
+        builder.setNegativeButton("Done",new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int id)
+            {
+                activity.finish();
+                dialog.cancel();
+                System.exit(0);
+            }
+        });
+        builder.show();
+    }
+
     public static void showReadingDialogNext(final Activity activity,String title,String Message){
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setCancelable(true);
@@ -3216,8 +3242,8 @@ public class Liquid extends AppCompatActivity{
         public  String Call_Class = "workController";
         public  String Call_Method = "get_job_list" ;
         public  String Parameters = "client=" + Client;
-        public  String Username = "username=tgbleyesa";
-        public  String Password = "password=C0mpl3x17y";
+        public  String Username = "username="+Liquid.Username;
+        public  String Password = "password="+Liquid.Password;
         public  String API_Link = "";
 
         public ApiData(String Route,String Call_Class,String Call_Method,String Parameters) {
@@ -3243,8 +3269,8 @@ public class Liquid extends AppCompatActivity{
         public  String Call_Class = "workController";
         public  String Call_Method = "get_job_list" ;
         public  String Parameters = "client=" + Client;
-        public  String Username = "username=tgbleyesa";
-        public  String Password = "password=C0mpl3x17y";
+        public  String Username = "username="+Liquid.Username;
+        public  String Password = "password="+Liquid.Password;
         public  String API_Link = "";
 
         public CokeApiData(String Route,String Call_Class,String Call_Method,String Parameters) {
@@ -3270,8 +3296,8 @@ public class Liquid extends AppCompatActivity{
         public  String Call_Class = "workController";
         public  String Call_Method = "get_job_list" ;
         public  String Parameters = "client=coke";
-        public  String Username = "username=tgbleyesa";
-        public  String Password = "password=C0mpl3x17y";
+        public  String Username = "username="+Liquid.Username;
+        public  String Password = "password="+Liquid.Password;
         public  String API_Link = "";
 
         public ApiDataField(String Route,String Call_Class,String Call_Method,String Parameters) {
@@ -3295,8 +3321,8 @@ public class Liquid extends AppCompatActivity{
     public static class GETUMSAPI {
         public  String Url = "http://"+umsUrl+"/"+pathEnvironment+"/";
         public  String API = "";
-        public  String Username = "tgbleyesa";
-        public  String Password = "C0mpl3x17y";
+        public  String Username = Liquid.Username;
+        public  String Password = Liquid.Password;
         public  String API_Link = "";
         public  String Parameters = "";
         public GETUMSAPI(String API,String Parameters) {
@@ -3311,10 +3337,9 @@ public class Liquid extends AppCompatActivity{
 
     public static class POSTUMSAPI {
         public  String Url = "http://"+umsUrl+"/"+pathEnvironment+"/";
-        //public  String Url = "http://192.168.1.15/USI_BETA/";
         public  String API = "";
-        public  String Username = "username=tgbleyesa";
-        public  String Password = "password=C0mpl3x17y";
+        public  String Username = "username="+Liquid.Username;
+        public  String Password = "password="+Liquid.Username;
         public  String API_Link = "";
         public POSTUMSAPI(String API) {
             this.API = API;
@@ -3327,8 +3352,8 @@ public class Liquid extends AppCompatActivity{
     public static class GETUMSApiData {
          public  String Url = "http://"+umsUrl+"/"+pathEnvironment+"/tgbl/php/api/";
         public  String API = "";
-        public  String Username = "tgbleyesa";
-        public  String Password = "C0mpl3x17y";
+        public  String Username = Liquid.Username;
+        public  String Password = Liquid.Password;
         public  String API_Link = "";
         public  String Parameters = "";
         public GETUMSApiData(String API,String Parameters) {
@@ -3344,8 +3369,8 @@ public class Liquid extends AppCompatActivity{
     public static class POSTAuditApiData {
         public  String Url = "http://"+umsUrl+"/"+pathEnvironment+"/ams/php/api/";
         public  String API = "";
-        public  String Username = "username=tgbleyesa";
-        public  String Password = "password=C0mpl3x17y";
+        public  String Username = "username="+Liquid.Username;
+        public  String Password = "password="+Liquid.Password;
         public  String API_Link = "";
         public POSTAuditApiData(String API) {
             this.API = API;
@@ -3357,8 +3382,8 @@ public class Liquid extends AppCompatActivity{
     public static class GETBMSApiData {
         public  String Url = "http://"+umsUrl+"/"+pathEnvironment+"/bms/php/api/";
         public  String API = "";
-        public  String Username = "username=tgbleyesa";
-        public  String Password = "password=C0mpl3x17y";
+        public  String Username = "username="+Liquid.Username;
+        public  String Password = "password="+Liquid.Password;
         public  String API_Link = "";
         public GETBMSApiData(String API,String Parameters) {
             this.API = API;
@@ -3370,8 +3395,8 @@ public class Liquid extends AppCompatActivity{
     public static class POSTBMSApiData {
         public  String Url = "http://"+umsUrl+"/"+pathEnvironment+"/bms/php/api/";
         public  String API = "";
-        public  String Username = "username=tgbleyesa";
-        public  String Password = "password=C0mpl3x17y";
+        public  String Username = "username="+Liquid.Username;
+        public  String Password = "password="+Liquid.Password;
         public  String API_Link = "";
         public POSTBMSApiData(String API) {
             this.API = API;
@@ -3385,8 +3410,8 @@ public class Liquid extends AppCompatActivity{
     public static class GETApiData {
         public  String Url = "http://"+umsUrl+"/"+pathEnvironment+"/";
         public  String API = "";
-        public  String Username = "username=tgbleyesa";
-        public  String Password = "password=C0mpl3x17y";
+        public  String Username = "username="+Liquid.Username;
+        public  String Password = "password="+Liquid.Password;
         public  String API_Link = "";
         public GETApiData(String API,String Parameters) {
             this.API = API;
@@ -3398,8 +3423,8 @@ public class Liquid extends AppCompatActivity{
     public static class POSTApiData {
        public  String Url = "http://"+umsUrl+"/"+pathEnvironment+"/";
         public  String API = "";
-        public  String Username = "username=tgbleyesa";
-        public  String Password = "password=C0mpl3x17y";
+        public  String Username = "username="+Liquid.Username;
+        public  String Password = "password="+Liquid.Password;
         public  String API_Link = "";
         public POSTApiData(String API) {
             this.API = API;
@@ -3413,8 +3438,8 @@ public class Liquid extends AppCompatActivity{
     public static class CokePOSTUMSApiData {
        public  String Url = "http://"+umsUrl+"/"+pathEnvironment+"/coke/php/api/";
         public  String API = "";
-        public  String Username = "username=tgbleyesa";
-        public  String Password = "password=C0mpl3x17y";
+        public  String Username = "username="+Liquid.Username;
+        public  String Password = "password="+Liquid.Password;
         public  String API_Link = "";
         public CokePOSTUMSApiData(String API) {
             this.API = API;

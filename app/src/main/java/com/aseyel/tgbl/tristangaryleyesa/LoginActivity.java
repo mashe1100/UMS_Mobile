@@ -195,21 +195,22 @@ public class LoginActivity extends AppCompatActivity {
                         btnLogin.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                        String status = "";
 
-                        Username = etUsername.getText().toString();
-                        Password = etPassword.getText().toString();
-                        //result = UMSAuthentication(Username,Password);
-                        new GetUserListDetails().execute();
+                                        String status = "";
 
-                        new UMSAuth().execute(Username,Password,"ums_job");
-//                        new UMSAuth().execute(Username,Password,"ums_delivery");
+                                        Username = etUsername.getText().toString();
+                                        Password = etPassword.getText().toString();
+                                        //result = UMSAuthentication(Username,Password);
+                                        new GetUserListDetails().execute();
+
+                                        new UMSAuth().execute(Username,Password,"ums_job");
+                //                        new UMSAuth().execute(Username,Password,"ums_delivery");
 
 
 
-                        //new UMSAuthAPI().execute(Username,Password,"ums_ai");
-                        //new UMSAuthAPI().execute(Username,Password,"ums_logistics");
-                        //new UMSAuth().execute(Username,Password,"ums_delivery");
+                                        //new UMSAuthAPI().execute(Username,Password,"ums_ai");
+                                        //new UMSAuthAPI().execute(Username,Password,"ums_logistics");
+                                        //new UMSAuth().execute(Username,Password,"ums_delivery");
 
                 }
             });

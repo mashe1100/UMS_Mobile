@@ -64,6 +64,8 @@ public class TabMenuFragment extends Fragment {
         return mView;
     }
 
+
+
     @Override
     public void onResume() {
         super.onResume();

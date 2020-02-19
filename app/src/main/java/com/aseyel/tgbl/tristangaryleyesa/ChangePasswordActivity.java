@@ -156,6 +156,7 @@ public class ChangePasswordActivity extends BaseFormActivity {
                     Liquid.showDialogError(ChangePasswordActivity.this,"Warning",result.get("message").toString());
                 }else{
                     Liquid.showDialogNext(ChangePasswordActivity.this,"Information",result.get("message").toString());
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

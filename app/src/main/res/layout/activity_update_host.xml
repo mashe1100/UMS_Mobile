@@ -40,19 +40,21 @@
                     android:paddingBottom="10dp"
                     android:fontFamily="@string/main_font"
                     android:text="Question" />
+
+
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     >
                     <EditText
-                        android:id="@+id/txtOldHost"
+                        android:id="@+id/txtHostname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:fontFamily="@string/main_font"
                         android:inputType="text"
-                        android:hint="Old Host"
+                        android:hint="domain:port (Sample: usi.com:8080)"
                         />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -61,13 +63,13 @@
                     android:layout_marginTop="10dp"
                     >
                     <EditText
-                        android:id="@+id/txtNewHost"
+                        android:id="@+id/txtUsername"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:fontFamily="@string/main_font"
                         android:inputType="text"
-                        android:hint="New Host"
+                        android:hint="Username"
                         />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -76,13 +78,13 @@
                     android:layout_marginTop="10dp"
                     >
                     <EditText
-                        android:id="@+id/txtConfirmHost"
+                        android:id="@+id/txtPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:fontFamily="@string/main_font"
-                        android:inputType="text"
-                        android:hint="Confirm Host"
+                        android:inputType="textPassword"
+                        android:hint="Password"
                         />
                 </android.support.design.widget.TextInputLayout>
 

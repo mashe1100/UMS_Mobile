@@ -53,23 +53,34 @@ public class SplashActivity extends AppCompatActivity {
         }, SPLASH_DISPLAY_LENGTH);
 
     }
+
     //Mariesher on Feb 15, 2020
     //Create a function to control column to get hostname from ums_host table
     public static String GetHost(String host) {
-    //get the current host
+        //get the current host
         Cursor hostData = HostModel.GetHostID(Liquid.id);
         if(hostData.getCount() == 0){
             return null;
         }
+
         while(hostData.moveToNext()){
-            host = hostData.getString(1);
+
+            Liquid.Username = hostData.getString(1);
+            Liquid.Password = hostData.getString(2);
+            host = hostData.getString(3);
         }
+
         Log.i(TAG,"mashe test host in splash: "+ host);
         return host;
     }
 
     public static void Host(){
-      Liquid.umsUrl = GetHost(Liquid.currenthost);
+        try{
+            Liquid.umsUrl = GetHost(Liquid.currenthost);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     private void setupImage(){

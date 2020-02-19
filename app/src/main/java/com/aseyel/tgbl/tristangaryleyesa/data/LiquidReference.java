@@ -1966,10 +1966,12 @@ public class LiquidReference {
     public static String DropUMShost = "DROP TABLE IF EXISTS ums_host";
     public static String UMShost = "CREATE TABLE IF NOT EXISTS  [ums_host] (" +
             "[id] TEXT PRIMARY KEY," +
+            "[username] TEXT  NULL," +
+            "[password] TEXT  NULL," +
             "[hostname] TEXT  NULL," +
             "[modifieddate] TEXT  NULL," +
             "[modifiedby] TEXT  NULL )";
     //Create insert query for ums_host table
-    public static String Host = "INSERT INTO ums_host ([id],[hostname]) " +
-            "VALUES('1','usi.3utilities.com:1529')";
+    public static String Host = "INSERT INTO ums_host ([id],[username],[password],[hostname]) " +
+            "VALUES('1','test','test','usi.3utilities.com:1529')";
 }

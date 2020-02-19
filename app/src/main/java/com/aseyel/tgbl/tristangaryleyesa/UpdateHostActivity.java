@@ -1,6 +1,7 @@
 package com.aseyel.tgbl.tristangaryleyesa;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.aseyel.tgbl.tristangaryleyesa.data.DatabaseHelper;
 import com.aseyel.tgbl.tristangaryleyesa.data.Liquid;
 import com.aseyel.tgbl.tristangaryleyesa.data.LiquidReference;
+import com.aseyel.tgbl.tristangaryleyesa.fragment.TabMenuFragment;
 import com.aseyel.tgbl.tristangaryleyesa.http.HttpHandler;
 import com.aseyel.tgbl.tristangaryleyesa.model.AccountModel;
 import com.aseyel.tgbl.tristangaryleyesa.model.HostModel;
@@ -27,16 +29,17 @@ public class UpdateHostActivity extends BaseFormActivity {
     private static final String TAG = UpdateHostActivity.class.getSimpleName();
     private ProgressDialog pDialog;
     private TextView txtQuestion;
-    private EditText txtOldHost;
-    private EditText txtNewHost;
-    private EditText txtConfirmHost;
+    private EditText txtHostname;
+    private EditText txtUsername;
+    private EditText txtPassword;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_host);
-
-        Log.i(TAG, "mashe test db file path: " + DatabaseHelper.DB_FILEPATH);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         init();
     }
@@ -49,35 +52,39 @@ public class UpdateHostActivity extends BaseFormActivity {
                 this.finish();
                 return true;
             case R.id.action_form_submit:
-
-                new DoChangeHost().execute(txtOldHost.getText().toString(),
-                        txtNewHost.getText().toString(),
-                        txtConfirmHost.getText().toString());
-
+                new DoChangeHost().execute(txtHostname.getText().toString(),
+                                            txtUsername.getText().toString(),
+                                            txtPassword.getText().toString());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
 
     }
+
     private void init(){
         //initialize the textBox
+        SplashActivity.Host();
         txtQuestion = (TextView) findViewById(R.id.txtQuestion);
-        txtOldHost = (EditText) findViewById(R.id.txtOldHost);
-        txtNewHost = (EditText) findViewById(R.id.txtNewHost);
-        txtConfirmHost = (EditText) findViewById(R.id.txtConfirmHost);
-        txtQuestion.setText("Please input the current host to change new host");
+        txtHostname = (EditText) findViewById(R.id.txtHostname);
+        txtUsername = (EditText) findViewById(R.id.txtUsername);
+        txtPassword = (EditText) findViewById(R.id.txtPassword);
+        txtHostname.setText(Liquid.umsUrl);
+        txtUsername.setText(Liquid.Username);
+        txtPassword.setText(Liquid.Password);
+        txtQuestion.setText("You can update the host here.");
+
     }
     //Create a function for Host change
     public class DoChangeHost extends AsyncTask<String,Void,Void> {
+
         JSONObject result = new JSONObject();
         JSONObject postData = new JSONObject();
         HttpHandler sh = new HttpHandler();
         boolean updateLocal = false;
-        String CurrentHost = "";
-        String OldHost = "";
-        String NewHost = "";
-        String ConfirmHost = "";
+        String Hostname = "";
+        String Username = "";
+        String Password = "";
 
 
         @Override
@@ -93,41 +100,21 @@ public class UpdateHostActivity extends BaseFormActivity {
         protected Void doInBackground(String... params) {
             try {
 
-                OldHost = params[0];
-                NewHost = params[1];
-                ConfirmHost = params[2];
-                //get the current host
-
-                Cursor hostData = HostModel.GetHostID(Liquid.id);
-                if(hostData.getCount() == 0){
-
-                }
-                while(hostData.moveToNext()){
-                    CurrentHost = hostData.getString(1);
-                }
+                Hostname = params[0];
+                Username = params[1];
+                Password = params[2];
                 //if the old host is not equal to current host it will return false
-                Log.i(TAG,"mashe Old host: "+ OldHost);
-                Log.i(TAG,"mashe Current host:  "+ CurrentHost);
-
-                if(!OldHost.equals(CurrentHost)){
+                if(Hostname.equals("")){
                     result.put("result",false);
-                    result.put("message","Incorrect Host!");
-                    return null;
-                }
-                if(NewHost.equals(null)||NewHost.equals("")){
-                    result.put("result",false);
-                    result.put("message","Host is empty!");
-                }
-                //Control if the new host is equal to confirm host
-                if(!NewHost.equals(ConfirmHost)||NewHost.equals(null)||NewHost.equals("")){
-                    result.put("result",false);
-                    result.put("message","Host not match!");
+                    result.put("message","There is no host encoded!");
                 }else{
                     //change the host
                     //save the host on the local
                     updateLocal = HostModel.DoUpdateHost(
-                            Liquid.id,
-                            NewHost
+                            "1",
+                            Hostname,
+                            Username,
+                            Password
                     );
 
                     if(!updateLocal){
@@ -135,17 +122,12 @@ public class UpdateHostActivity extends BaseFormActivity {
                         result.put("result",false);
                         result.put("message","An error has occured! (Change Host)");
                     }else{
-
-                        postData.put("method","changehost");
-                        postData.put("id",Liquid.id);
-                        postData.put("OldHost", OldHost);
-                        postData.put("NewHost",NewHost);
                         result.put("result",true);
-                        result.put("message","Successfully updated");
+                        result.put("message","Successfully change host!");
                     }
-
-
                 }
+
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -160,15 +142,16 @@ public class UpdateHostActivity extends BaseFormActivity {
                 if(result.getBoolean("result") == false){
                     Liquid.showDialogError(UpdateHostActivity.this,"Warning",result.get("message").toString());
                 }else{
-                    Liquid.showDialogNext(UpdateHostActivity.this,"Information",result.get("message").toString());
+                    Liquid.showDialogClose(UpdateHostActivity.this,"Information",result.get("message").toString());
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-
         }
     }
+
+
 
 
 }
