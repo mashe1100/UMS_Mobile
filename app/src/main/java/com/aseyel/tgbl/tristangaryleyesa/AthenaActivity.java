@@ -70,18 +70,14 @@ public class AthenaActivity extends BaseActivity implements TextToSpeech.OnInitL
     private SpeechRecognizer speechRecognizer;
     private static final int REQUEST_RECORD_AUDIO_PERMISSION_CODE = 1;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_athena);
         init();
-
     }
 
     public void getSpeechInput(Context context) {
-
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
@@ -97,9 +93,7 @@ public class AthenaActivity extends BaseActivity implements TextToSpeech.OnInitL
         Intent check = new Intent();
         check.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
         startActivityForResult(check, CHECK_CODE);
-
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -122,7 +116,6 @@ public class AthenaActivity extends BaseActivity implements TextToSpeech.OnInitL
                         //mMessage.setText(result.get(0));
                         SendMessage(result.get(0));
                     }
-
                 }
                 break;
             case CHECK_CODE:
@@ -137,7 +130,6 @@ public class AthenaActivity extends BaseActivity implements TextToSpeech.OnInitL
                 allow(true);
                 break;
         }
-
     }
 
     private void AthenaSpeak(String Message){
@@ -187,7 +179,6 @@ public class AthenaActivity extends BaseActivity implements TextToSpeech.OnInitL
         btnVoiceRecognition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 mMessage.setVisibility(View.GONE);
                 recognitionProgressView.setVisibility(View.VISIBLE);
                 stopSpecking();
@@ -214,8 +205,6 @@ public class AthenaActivity extends BaseActivity implements TextToSpeech.OnInitL
             }
         });
     }
-
-
 
     private void requestPermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
@@ -250,6 +239,7 @@ public class AthenaActivity extends BaseActivity implements TextToSpeech.OnInitL
         recognitionProgressView.setVisibility(View.GONE);
         mMessage.setVisibility(View.VISIBLE);
     }
+
     private void init(){
         try {
             mAnalyzingLoading = (LinearLayout) findViewById(R.id.mAnalyzingLoading);
@@ -286,11 +276,9 @@ public class AthenaActivity extends BaseActivity implements TextToSpeech.OnInitL
 
             AnalyzingLoading();
 
-
         } catch (Exception e){
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -321,7 +309,6 @@ public class AthenaActivity extends BaseActivity implements TextToSpeech.OnInitL
         });
         return true;
     }
-
 
     private ArrayList WelcomeMessage(){
         ArrayList<HashMap<String, String>> finalResult = new ArrayList<>();
@@ -371,12 +358,9 @@ public class AthenaActivity extends BaseActivity implements TextToSpeech.OnInitL
         Items = Items + 1;
         mChatRecyclerView.scrollToPosition(Items - 1);
         GetReply(Message);
-
-
     }
 
     private void GetReply(String Message){
-
         new DoTalkToAthena().execute(Message);
     }
 
@@ -393,10 +377,7 @@ public class AthenaActivity extends BaseActivity implements TextToSpeech.OnInitL
         mTranslatorAdapater.updateItems(false,finalResult);
         Items = Items + 1;
         mChatRecyclerView.scrollToPosition(Items - 1);
-
-
     }
-
 
     public class DoTalkToAthena extends AsyncTask<String,Void,Void> {
         ArrayList<HashMap<String, String>> TranslationMessage = new ArrayList<>();
@@ -440,8 +421,6 @@ public class AthenaActivity extends BaseActivity implements TextToSpeech.OnInitL
             } catch (Exception e){
                 Log.e(TAG,"Error :",e);
             }
-
-
             return null;
         }
 
@@ -462,11 +441,8 @@ public class AthenaActivity extends BaseActivity implements TextToSpeech.OnInitL
             AthenaSpeak(Message);
             mTranslatorAdapater.updateItems(false,TranslationMessage);
             AnalyzingLoading();
-
         }
     }
-
-
 
     @Override
     public void onInit(int i) {
@@ -494,7 +470,6 @@ public class AthenaActivity extends BaseActivity implements TextToSpeech.OnInitL
 
     }
 
-
     public void allow(boolean allowed){
         this.allowed = allowed;
     }
@@ -510,9 +485,7 @@ public class AthenaActivity extends BaseActivity implements TextToSpeech.OnInitL
             //tts.speak(text, TextToSpeech.QUEUE_ADD, hash);
             Log.i(TAG,text);
             tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
-
         }
-
     }
 
     public void pause(int duration){
@@ -526,12 +499,10 @@ public class AthenaActivity extends BaseActivity implements TextToSpeech.OnInitL
     }
     // Free up resources
     public void destroy(){
-
         if(tts !=null){
             tts.stop();
             tts.shutdown();
         }
         // tts.shutdown();
     }
-
 }

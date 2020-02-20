@@ -71,7 +71,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
     CardView cvProgressBar;
     @BindView(R.id.floatBtnAdd)
     FloatingActionButton floatBtnAdd;
-
     private ProgressBar progressBar;
     private JSONObject mpostData;
     private ProgressDialog mProgressDialog;
@@ -103,7 +102,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     public void prograssBarStatus(int percent){
-
         progressBar.setProgress(percent);
         if(percent == 100){
             //showUploadProgressBar(false);
@@ -113,7 +111,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 Liquid.showDialogInfo(view.getContext(),"Invalid","Some data is not uploaded");
             }
         }
-
     }
 
     private void setupLocalJobOrder(final View view) {
@@ -150,11 +147,9 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
         }catch(Exception e){
             Log.e(TAG,"Error ",e);
         }
-
     }
 
     public void GetLocalJobOrder(boolean animated,String job_id){
-
         try
         {
             mLocalJobOrderAdapter.updateItems(animated, LiquidModel.GetLocalJobOrder(job_id));
@@ -167,7 +162,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     public void DeleteData(final String JobOrderId,final String JobType,final int position){
-
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -187,9 +181,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
-
                         break;
-
                 }
             }
         };
@@ -197,13 +189,10 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage("Are you sure you want to DELETE?").setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
-
     }
-
 
     public void DoUploadAudit(final JSONObject postData){
         try {
-
             mpostData = postData;
 
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -233,7 +222,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     public void DoUploadDisconnection(final JSONObject postData){
         try {
-
             mpostData = postData;
 
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -243,6 +231,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                         case DialogInterface.BUTTON_POSITIVE:
                             new DataDisconnectionPostingToServer(mpostData).execute();
                             break;
+
                         case DialogInterface.BUTTON_NEGATIVE:
 
                             new DisconnectionFilePostingToServer(mpostData).execute();
@@ -255,16 +244,13 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setMessage("Please select what you want to upload.").setPositiveButton("Data", dialogClickListener)
                     .setNegativeButton("File", dialogClickListener).show();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-
     public void DoUploadReading(final JSONObject postData){
         try {
-
             mpostData = postData;
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
@@ -294,9 +280,9 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
             e.printStackTrace();
         }
     }
+
     public void DoUploadCoke(JSONObject postData){
         try {
-
             mpostData = postData;
 
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -322,7 +308,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
         }
     }
 
-
     @Override
     public void onRefresh() {
         GetLocalJobOrder(false,"");
@@ -331,11 +316,9 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     public void RetryErrorUpload(){
         try{
-
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage("Some data are not uploaded, Do you want to retry?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-
                     dialog.dismiss();
                 }
             });
@@ -344,7 +327,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
         }catch(Exception e){
             Log.e(TAG,"Error ",e);
         }
-
     }
 
     public class DataAuditPostingToServer extends AsyncTask<Void, Integer, Integer> {
@@ -410,7 +392,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
 
                     JSONObject response = Liquid.StringToJsonObject(jsonStr);
 
-
                     if (response.getString("result").equals("false")) {
                         Liquid.ErrorUpload.put(dataObject);
                     } else {
@@ -454,7 +435,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 Log.e(TAG,"Error :",e);
                 return 0;
             }
-
             return 29;
         }
 
@@ -489,18 +469,13 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                     default:
                         Log.i(TAG,"Unsuccessfully Uploaded");
                         Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
-
                 }
-
-
             } catch (Exception e){
                 Log.e(TAG,"Error :",e);
                 Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
             }
             mProgressDialog.dismiss();
         }
-
-
     }
 
     public class DataPostingToServer extends AsyncTask<Void, Integer, Integer> {
@@ -539,7 +514,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 mProgressDialog.setMax(0);
                 mProgressDialog.setMax(total);
                 //progressBar.setMax(total);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -622,7 +596,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                     default:
                         Log.i(TAG,"Unsuccessfully Uploaded");
                         Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
-
                 }
 
 
@@ -632,10 +605,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
             }
             mProgressDialog.dismiss();
         }
-
-
     }
-
 
     public class CokeFilePostingToServer extends AsyncTask<Void, Integer, Integer> {
         // This is the JSON body of the post
@@ -644,11 +614,9 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
         JSONArray dataArray;
         JSONArray imageArray;
         JSONArray signatureArray;
-
         int toUploadCount = 0;
         int progress = 0;
         int total = 0;
-
         String data;
         String Category;
         String jsonStr;
@@ -663,6 +631,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 this.postData = postData;
             }
         }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -749,8 +718,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                                     }
                                 }
                             }
-
-
                     }
 
                     //Signature
@@ -788,9 +755,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 }
                             }
                         }
-
                 }
-
             } catch (JSONException e) {
                 Log.e(TAG,"Error :",e);
                 //JSON Problem
@@ -802,8 +767,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 return 0;
             }
             return 29;
-
-
         }
 
         @Override
@@ -846,22 +809,14 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                     default:
                         Log.i(TAG,"Unsuccessfully Uploaded");
                         Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
-
                 }
-
-
             } catch (Exception e){
                 Log.e(TAG,"Error :",e);
                 Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
             }
             mProgressDialog.dismiss();
-
         }
-
-
     }
-
-
 
     public class AuditFilePostingToServer extends AsyncTask<Void, Integer, Integer> {
         // This is the JSON body of the post
@@ -870,11 +825,9 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
         JSONArray dataArray;
         JSONArray imageArray;
         JSONArray signatureArray;
-
         int toUploadCount = 0;
         int progress = 0;
         int total = 0;
-
         String data;
         String Category;
         String jsonStr;
@@ -889,6 +842,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 this.postData = postData;
             }
         }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -907,7 +861,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                 mProgressDialog.setCancelable(false);
                 mProgressDialog.show();
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -945,7 +898,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                                     JSONArray final_image_result = new JSONArray();
                                     JSONObject final_image_response = new JSONObject();
                                     JSONObject data = new JSONObject();
-
                                     data.put("Client", Liquid.Client);
                                     data.put("FileData", Liquid.imageToString(listFile[e].getAbsolutePath()));
                                     data.put("Filename", listFile[e].getName());
@@ -955,7 +907,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                                     imageData = final_image_response.getString("image");
                                     imageArray = new JSONArray(imageData);
                                     mPOSTAuditApiData = new Liquid.POSTAuditApiData("tgblUploadImage.php");
-
                                     jsonStr = sh.makeServicePostCall(mPOSTAuditApiData.API_Link, imageArray.getJSONObject(0));
                                     response = Liquid.StringToJsonObject(jsonStr);
 
@@ -971,8 +922,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                             }
                         }
                     }
-
-
             } catch (JSONException e) {
                 Log.e(TAG,"Error :",e);
                 //JSON Problem
@@ -984,15 +933,12 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 return 0;
             }
             return 29;
-
-
         }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
             mProgressDialog.setProgress(values[0]);
-
         }
 
         @Override
@@ -1028,22 +974,14 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                     default:
                         Log.i(TAG,"Unsuccessfully Uploaded");
                         Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
-
                 }
-
-
             } catch (Exception e){
                 Log.e(TAG,"Error :",e);
                 Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
             }
             mProgressDialog.dismiss();
-
         }
-
-
     }
-
-
 
     public class DisconnectionFilePostingToServer extends AsyncTask<Void, Integer, Integer> {
         // This is the JSON body of the post
@@ -1052,11 +990,9 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
         JSONArray dataArray;
         JSONArray imageArray;
         JSONArray signatureArray;
-
         int toUploadCount = 0;
         int progress = 0;
         int total = 0;
-
         String data;
         String Category;
         String jsonStr;
@@ -1071,6 +1007,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 this.postData = postData;
             }
         }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -1126,7 +1063,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 JSONArray final_image_result = new JSONArray();
                                 JSONObject final_image_response = new JSONObject();
                                 JSONObject data = new JSONObject();
-
                                 data.put("Client", Liquid.Client);
                                 data.put("FileData", Liquid.imageToString(listFile[e].getAbsolutePath()));
                                 data.put("Filename", listFile[e].getName());
@@ -1156,8 +1092,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                         }
                     }
                 }
-
-
             } catch (JSONException e) {
                 Log.e(TAG,"Error :",e);
                 //JSON Problem
@@ -1169,15 +1103,12 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 return 0;
             }
             return 29;
-
-
         }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
             mProgressDialog.setProgress(values[0]);
-
         }
 
         @Override
@@ -1213,20 +1144,15 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                     default:
                         Log.i(TAG,"Unsuccessfully Uploaded");
                         Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
-
                 }
-
-
             } catch (Exception e){
                 Log.e(TAG,"Error :",e);
                 Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
             }
             mProgressDialog.dismiss();
-
         }
-
-
     }
+
     public class DataDisconnectionPostingToServer extends AsyncTask<Void, Integer, Integer> {
         // This is the JSON body of the post
         JSONObject postData;
@@ -1290,7 +1216,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                     Log.i(TAG,jsonStr);
                     JSONObject response = Liquid.StringToJsonObject(jsonStr);
 
-
                     if (response.getString("result").equals("false")) {
                         Liquid.ErrorUpload.put(dataObject);
                     } else {
@@ -1298,11 +1223,10 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                         publishProgress(progress);
                     }
                 }
-
-
                 mProgressDialog.setMax(0);
                 mProgressDialog.setMax(dataArrayPicture.length());
                 progress = 0;
+
                 for (int a = 0; a < dataArrayPicture.length(); a++) {
                     mPOSTApiData = new Liquid.POSTApiData("fmts/php/api/DisconnectionPicture.php");
                     JSONObject dataObject = new JSONObject(dataArrayPicture.getString(a));
@@ -1321,7 +1245,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 if (Liquid.ErrorUpload.length() != 0) {
                     Liquid.ErrorDataUpload.put("data", Liquid.ErrorUpload);
                 }
-
             } catch (JSONException e) {
                 Log.e(TAG,"Error :",e);
                 //JSON Problem
@@ -1366,19 +1289,15 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                     default:
                         Log.i(TAG,"Unsuccessfully Uploaded");
                         Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
-
                 }
-
-
             } catch (Exception e){
                 Log.e(TAG,"Error :",e);
                 Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
             }
             mProgressDialog.dismiss();
         }
-
-
     }
+
     public class ReadingFilePostingToServer extends AsyncTask<Void, Integer, Integer> {
         // This is the JSON body of the post
         JSONObject postData;
@@ -1389,11 +1308,9 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
         JSONArray dataArrayMeterNotInList;
         JSONArray imageArray;
         JSONArray signatureArray;
-
         int toUploadCount = 0;
         int progress = 0;
         int total = 0;
-
         String data;
         String Category;
         String jsonStr;
@@ -1411,6 +1328,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 this.postData = postData;
             }
         }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -1431,7 +1349,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                 mProgressDialog.setCancelable(false);
                 mProgressDialog.show();
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -1483,7 +1400,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 }
                                 data.put("date", String.valueOf(dataObject.get("BillMonth"))+String.valueOf(dataObject.get("BillYear")));
 
-
                                 //combine all data for image
                                 final_image_result.put(data);
                                 final_image_response.put("image", final_image_result);
@@ -1508,7 +1424,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                         }
                     }
                 }
-
 
                 for(int a = 0; a < dataArrayMeterNotInList.length();a++){
                     JSONObject dataObject = new JSONObject(dataArrayMeterNotInList.getString(a));
@@ -1564,8 +1479,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                         }
                     }
                 }
-
-
             } catch (JSONException e) {
                 Log.e(TAG,"Error :",e);
                 //JSON Problem
@@ -1577,15 +1490,12 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 return 0;
             }
             return 29;
-
-
         }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
             mProgressDialog.setProgress(values[0]);
-
         }
 
         @Override
@@ -1593,7 +1503,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
             super.onPostExecute(result);
 
             try {
-
                 switch(result){
                     case 29:
                         Liquid.showDialogInfo(view.getContext(),"Valid","Successfully Uploaded!");
@@ -1622,20 +1531,15 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                     default:
                         Log.i(TAG,"Unsuccessfully Uploaded");
                         Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
-
                 }
-
-
             } catch (Exception e){
                 Log.e(TAG,"Error :",e);
                 Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
             }
             mProgressDialog.dismiss();
-
         }
-
-
     }
+
     public class ReadingFileNoLoadingPostingToServer extends AsyncTask<Void, Integer, Integer> {
         // This is the JSON body of the post
         JSONObject postData;
@@ -1646,11 +1550,9 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
         JSONArray dataArrayMeterNotInList;
         JSONArray imageArray;
         JSONArray signatureArray;
-
         int toUploadCount = 0;
         int progress = 0;
         int total = 0;
-
         String data;
         String Category;
         String jsonStr;
@@ -1668,6 +1570,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 this.postData = postData;
             }
         }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -1730,7 +1633,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 data.put("Filename", listFile[e].getName());
                                 data.put("service_type", "MeterReading");
                                 data.put("date", String.valueOf(dataObject.get("BillMonth"))+String.valueOf(dataObject.get("BillYear")));
-
                                 //combine all data for image
                                 final_image_result.put(data);
                                 final_image_response.put("image", final_image_result);
@@ -1750,14 +1652,11 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                                     imageUploaded = imageUploaded+1;
                                     progress = progress+1;
                                     Log.i(TAG, "File"+String.valueOf(progress));
-
-
                                 }
                             }
                         }
                     }
                 }
-
 
                 for(int a = 0; a < dataArrayMeterNotInList.length();a++){
                     JSONObject dataObject = new JSONObject(dataArrayMeterNotInList.getString(a));
@@ -1770,8 +1669,8 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                         String[] Subfolder = new String[1];
                         Subfolder[0] = Category;
                         int imageUploaded = 0;
-
                         mImages = Liquid.getDiscPicture(AccountNumber+"_audit",Subfolder);
+
                         if (!mImages.exists() && !mImages.mkdirs()) {
                             Liquid.ShowMessage(view.getContext(), "Can't create directory to save image");
                         } else {
@@ -1788,7 +1687,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 data.put("Filename", listFile[e].getName());
                                 data.put("service_type", "Audit");
                                 data.put("date", Liquid.dateChangeFormat(Liquid.currentDate(),"yyyy-MM-dd","MMyyyy"));
-
                                 //combine all data for image
                                 final_image_result.put(data);
                                 final_image_response.put("image", final_image_result);
@@ -1808,14 +1706,11 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                                     imageUploaded = imageUploaded+1;
                                     progress = progress+1;
                                     Log.i(TAG, "File"+String.valueOf(progress));
-
                                 }
                             }
                         }
                     }
                 }
-
-
             } catch (JSONException e) {
                 Log.e(TAG,"Error :",e);
                 //JSON Problem
@@ -1827,10 +1722,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 return 0;
             }
             return 29;
-
-
         }
-
 
         @Override
         protected void onPostExecute(Integer result) {
@@ -1852,7 +1744,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                         break;
                     case 2:
                         Liquid.showDialogInfo(view.getContext(),"Valid","There is no data to be upload!");
-
                         break;
                     case 3:
                         Log.i(TAG,"Unsuccessfully Uploaded");
@@ -1865,19 +1756,13 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                     default:
                         Log.i(TAG,"Unsuccessfully Uploaded");
                         Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
-
                 }
-
-
             } catch (Exception e){
                 Log.e(TAG,"Error :",e);
                 Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
             }
             mProgressDialog.dismiss();
-
         }
-
-
     }
 
    /* public class DataReadingPostingToServer extends AsyncTask<Void, Integer, Integer> {
@@ -2106,11 +1991,8 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 Liquid.ErrorDataUpload = new JSONObject();
                 Liquid.ErrorUpload = new JSONArray();
                 data = postData.getString("data");
-
                 dataArray = new JSONArray(data);
-
                 total = dataArray.length();
-
                 mProgressDialog = new ProgressDialog(getContext());
                 mProgressDialog.setMessage("Processing....");
                 mProgressDialog.setTitle("Uploading Data");
@@ -2119,9 +2001,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 mProgressDialog.setMax(0);
                 mProgressDialog.setMax(total);
                 mProgressDialog.show();
-
                 //progressBar.setMax(total);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -2130,7 +2010,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
         @Override
         protected Integer doInBackground(Void... strings) {
             try {
-
                 HttpHandler sh = new HttpHandler();
                 int limit = 50;
                 if(dataArray.length() == 0){
@@ -2145,7 +2024,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                     for(int j = 0; j < arrayList.size(); j+=limit) {
                         int k = Math.min(j + limit, arrayList.size());
                         List<String> subList = arrayList.subList(j,k);
-
                         JSONArray newDataArray = new JSONArray(subList);
                         JSONObject reading = new JSONObject();
                         reading.put("sysid",Liquid.User);
@@ -2170,17 +2048,12 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 result_status = ReadingModel.UpdateUploadStatus(dataObject.getString("job_id").toString(),dataObject.getString("AccountNumber").toString());
                             }
                         }
-
-
                     }
-
                 }
-
 
                 if (Liquid.ErrorUpload.length() != 0) {
                     Liquid.ErrorDataUpload.put("data", Liquid.ErrorUpload);
                 }
-
             } catch (JSONException e) {
                 Log.e(TAG,"Error :",e);
                 //JSON Problem
@@ -2224,10 +2097,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                     default:
                         Log.i(TAG,"Unsuccessfully Uploaded");
                         Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
-
                 }
-
-
             } catch (Exception e){
                 Log.e(TAG,"Error :",e);
                 Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
@@ -2275,7 +2145,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 dataArrayLogs = new JSONArray(dataLogs);
                 dataArrayMeterNotInList =  new JSONArray(dataMeterNotInList);
                 total = dataArray.length();
-
                 mProgressDialog = new ProgressDialog(getContext());
                 mProgressDialog.setMessage("Processing....");
                 mProgressDialog.setTitle("Uploading Data");
@@ -2284,9 +2153,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 mProgressDialog.setMax(0);
                 mProgressDialog.setMax(total);
                 mProgressDialog.show();
-
                 //progressBar.setMax(total);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -2295,7 +2162,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
         @Override
         protected Integer doInBackground(Void... strings) {
             try {
-
                 HttpHandler sh = new HttpHandler();
                 int limit = 50;
                 if(dataArray.length() == 0){
@@ -2310,7 +2176,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                         for(int j = 0; j < arrayList.size(); j+=limit) {
                             int k = Math.min(j + limit, arrayList.size());
                             List<String> subList = arrayList.subList(j,k);
-
                             JSONArray newDataArray = new JSONArray(subList);
                             JSONObject reading = new JSONObject();
                             reading.put("sysid",Liquid.User);
@@ -2318,7 +2183,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                             reading.put("password",Liquid.Password);
                             reading.put("data",newDataArray);
                             mPOSTApiData = new Liquid.POSTApiData("fmts/php/api/ReadingTest.php");
-
                             //Log.i(TAG, String.valueOf(test));
                             String jsonStr = sh.makeServicePostCall(mPOSTApiData.API_Link, reading);
                             Log.i(TAG,"TRISTAN:"+jsonStr);
@@ -2335,16 +2199,12 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                                     result_status = ReadingModel.UpdateUploadStatus(dataObject.getString("job_id").toString(),dataObject.getString("AccountNumber").toString());
                                 }
                             }
-
-
                         }
-
                     }
                     if(dataArrayLogs.length() == 0){
                         //No Data
                         //return 2;
                     }else {
-
                         mProgressDialog.setMax(0);
                         mProgressDialog.setMax(dataArrayLogs.length());
                         progress = 0;
@@ -2356,7 +2216,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                         for(int j = 0; j < arrayListLogs.size(); j+=limit) {
                             int k = Math.min(j + limit, arrayListLogs.size());
                             List<String> subList = arrayListLogs.subList(j,k);
-
                             JSONArray newDataArrayLogs = new JSONArray(subList);
                             JSONObject readlogs = new JSONObject();
                             readlogs.put("sysid",Liquid.User);
@@ -2381,10 +2240,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                                     result_status = ReadingModel.UpdateUploadStatusLogs(dataObject.getString("row_id").toString());
                                 }
                             }
-
-
                         }
-
                 }
 
                 if(dataArrayPicture.length() == 0){
@@ -2429,8 +2285,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 result_status = ReadingModel.UpdateUploadStatusPicture(dataObject.getString("row_id").toString());
                             }
                         }
-
-
                     }
                 }
 
@@ -2476,10 +2330,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 result_status = ReadingModel.UpdateUploadStatusMeterNotInList(dataObject.getString("row_id").toString());
                             }
                           }
-
-
                     }
-
                 }
 
                 if (Liquid.ErrorUpload.length() != 0) {
@@ -2529,10 +2380,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                     default:
                         Log.i(TAG,"Unsuccessfully Uploaded");
                         Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
-
                 }
-
-
             } catch (Exception e){
                 Log.e(TAG,"Error :",e);
                 Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
@@ -2580,7 +2428,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 dataArrayLogs = new JSONArray(dataLogs);
                 dataArrayMeterNotInList =  new JSONArray(dataMeterNotInList);
                 total = dataArray.length();
-
                 mProgressDialog = new ProgressDialog(getContext());
                 mProgressDialog.setMessage("Processing....");
                 mProgressDialog.setTitle("Uploading Data");
@@ -2589,9 +2436,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 mProgressDialog.setMax(0);
                 mProgressDialog.setMax(total);
                 mProgressDialog.show();
-
                 //progressBar.setMax(total);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -2600,14 +2445,12 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
         @Override
         protected Integer doInBackground(Void... strings) {
             try {
-
                 HttpHandler sh = new HttpHandler();
                 int limit = 50;
                 if(dataArray.length() == 0){
                     //No Data
                     //return 2;
                 }else{
-
                     List<String> arrayList = new ArrayList<String>();
                     for(int i = 0; i < dataArray.length(); i++){
                         arrayList.add(dataArray.getString(i));
@@ -2640,16 +2483,12 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 result_status = ReadingModel.UpdateUploadStatus(dataObject.getString("job_id").toString(),dataObject.getString("AccountNumber").toString());
                             }
                         }
-
-
                     }
-
                 }
                 if(dataArrayLogs.length() == 0){
                     //No Data
                     //return 2;
                 }else {
-
                     mProgressDialog.setMax(0);
                     mProgressDialog.setMax(dataArrayLogs.length());
                     progress = 0;
@@ -2686,10 +2525,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 result_status = ReadingModel.UpdateUploadStatusLogs(dataObject.getString("row_id").toString());
                             }
                         }
-
-
                     }
-
                 }
 
                 if(dataArrayPicture.length() == 0){
@@ -2734,8 +2570,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 result_status = ReadingModel.UpdateUploadStatusPicture(dataObject.getString("row_id").toString());
                             }
                         }
-
-
                     }
                 }
 
@@ -2783,12 +2617,8 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 result_status = ReadingModel.UpdateUploadStatusMeterNotInList(dataObject.getString("row_id").toString());
                             }
                         }
-
-
                     }
-
                 }
-
                 if (Liquid.ErrorUpload.length() != 0) {
                     Liquid.ErrorDataUpload.put("data", Liquid.ErrorUpload);
                 }
@@ -2836,10 +2666,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                     default:
                         Log.i(TAG,"Unsuccessfully Uploaded");
                         Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
-
                 }
-
-
             } catch (Exception e){
                 Log.e(TAG,"Error :",e);
                 Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
@@ -2847,7 +2674,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
             mProgressDialog.dismiss();
         }
     }
-
 
     public class DataReadingNoLoadingPostingToServer extends AsyncTask<Void, Integer, Integer> {
         // This is the JSON body of the post
@@ -2894,9 +2720,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                 mProgressDialog.setTitle("Uploading Data");
                 mProgressDialog.setCancelable(false);
                 mProgressDialog.show();
-
                 //progressBar.setMax(total);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -2905,7 +2729,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
         @Override
         protected Integer doInBackground(Void... strings) {
             try {
-
                 HttpHandler sh = new HttpHandler();
                 if(dataArray.length() == 0){
                     //No Data
@@ -2935,8 +2758,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                     //No Data
                     //return 2;
                 }else {
-
-
                     for (int a = 0; a < dataArrayLogs.length(); a++) {
                         mPOSTApiData = new Liquid.POSTApiData("fmts/php/api/ReadingLogs.php");
                         JSONObject dataObject = new JSONObject(dataArrayLogs.getString(a));
@@ -3001,9 +2822,6 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                     }
                 }
 
-
-
-
                 if (Liquid.ErrorUpload.length() != 0) {
                     Liquid.ErrorDataUpload.put("data", Liquid.ErrorUpload);
                 }
@@ -3051,10 +2869,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                     default:
                         Log.i(TAG,"Unsuccessfully Uploaded");
                         Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
-
                 }
-
-
             } catch (Exception e){
                 Log.e(TAG,"Error :",e);
                 Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
@@ -3062,7 +2877,4 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
             mProgressDialog.dismiss();
         }
     }
-
-
-
 }

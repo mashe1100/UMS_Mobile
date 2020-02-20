@@ -58,7 +58,6 @@ public class MapListFragment extends Fragment implements OnMapReadyCallback, OnM
         mView = inflater.inflate(R.layout.fragment_tab_maplist, container, false);
         mLiquidGPS = new LiquidGPS(mView.getContext());
         setup();
-
         return mView;
     }
 
@@ -68,12 +67,10 @@ public class MapListFragment extends Fragment implements OnMapReadyCallback, OnM
         }catch(Exception e){
             Liquid.ShowMessage(getActivity(),"Please allow UMS Mobile to access the device GPS.");
         }
-
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-
             super.onViewCreated(view, savedInstanceState);
             mMapView = (MapView) mView.findViewById(R.id.jobOrderListMap);
             if(mMapView != null){
@@ -81,18 +78,13 @@ public class MapListFragment extends Fragment implements OnMapReadyCallback, OnM
                 mMapView.onResume();
                 mMapView.getMapAsync(this);
             }
-
-
     }
-
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         try{
         MapsInitializer.initialize(getContext());
         mGoogleMap = googleMap;
-            //
             //MyLocation
              if((ActivityCompat.checkSelfPermission(mView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
                     ActivityCompat.checkSelfPermission(mView.getContext(),Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)){
@@ -102,25 +94,22 @@ public class MapListFragment extends Fragment implements OnMapReadyCallback, OnM
                     requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSION_FINE_LOCATION);
                 }
             }
-
         //settings
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         //mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         //mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         //mGoogleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         //mygoogleMapMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-
         mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
         mGoogleMap.getUiSettings().setCompassEnabled(true);
         mGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
-
         mGoogleMap.getUiSettings().setRotateGesturesEnabled(true);
         mGoogleMap.getUiSettings().setScrollGesturesEnabled(true);
         mGoogleMap.getUiSettings().setTiltGesturesEnabled(true);
         mGoogleMap.getUiSettings().setZoomGesturesEnabled(true);
         //mGoogleMap.getUiSettings().setAllGesturesEnabled(true);
-            //mGoogleMap.setTrafficEnabled(true);
-            //mGoogleMap.setOnMapLongClickListener(this);
+        //mGoogleMap.setTrafficEnabled(true);
+        //mGoogleMap.setOnMapLongClickListener(this);
         mGoogleMap.setOnMarkerClickListener(this);
         //mGoogleMap.setInfoWindowAdapter(new MapInfoWindowAdapter(getActivity(),mView));
         ArrayList<HashMap<String, String>> data = GetData(Liquid.SelectedId,"");
@@ -178,7 +167,6 @@ public class MapListFragment extends Fragment implements OnMapReadyCallback, OnM
             Log.e(TAG,"Error : ",e);
         }
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -277,7 +265,6 @@ public class MapListFragment extends Fragment implements OnMapReadyCallback, OnM
             Log.e(TAG,"Error : ",e);
             return final_result;
         }
-
     }
 
     public void showInformation(String title, final String Message){
@@ -296,7 +283,6 @@ public class MapListFragment extends Fragment implements OnMapReadyCallback, OnM
                         String[] details = Message.split("\n");
                         String accountnumber = details[0].replace("Account #: ","");
                         String meternumber = details[0].replace("Meter #: ","");
-
                         Liquid.SelectedAccountNumber = accountnumber;
                         Liquid.AccountNumber = accountnumber;
                         Liquid.TrackingNumber = accountnumber;
@@ -305,7 +291,6 @@ public class MapListFragment extends Fragment implements OnMapReadyCallback, OnM
                         Liquid.SelectedAccountName = SelectedId;
 //                        Liquid.SelectedJobOrderDate = ListItems.get(adapterPosition).getJobOrderDate();
 //                        Liquid.ReadingDate = ListItems.get(adapterPosition).getDate();
-
 
                         i = new Intent(getActivity(), ReadingGalleryActivity.class);
                         break;
@@ -336,7 +321,6 @@ public class MapListFragment extends Fragment implements OnMapReadyCallback, OnM
                 showInformation(myMarker[a].getTitle(), myMarker[a].getSnippet());
             }
         }
-
         return false;
     }
 }

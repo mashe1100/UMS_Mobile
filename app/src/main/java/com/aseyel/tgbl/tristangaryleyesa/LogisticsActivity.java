@@ -71,9 +71,9 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final float DEFAULT_ZOOM = 15f;
+
     private static final LatLngBounds LAT_LNG_BOUNDS = new LatLngBounds(
             new LatLng(-40, -168), new LatLng(71, 136));
-
 
     private Boolean mLocationPermissionsGranted = false;
     private GoogleMap mGoogleMap;
@@ -86,7 +86,6 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
    // private PlaceAutocompleteFragment mGoingtoLocation;
     private TextView mSearchingLocation;
     private TextView mGoingtoLocation;
-
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private PlaceAutocompleteAdapter mPlaceAutocompleteAdapter;
     private GoogleApiClient mGoogleApiClient;
@@ -96,16 +95,12 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
     private int searchLocation = 0;
     private Button btnTripTicket;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logistics);
         init();
     }
-
 
     public  void clearData(){
         Liquid.GoingToLocation = "";
@@ -119,7 +114,6 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
     }
 
     private void init(){
-
         mLiquidGPS = new LiquidGPS(this);
         mMapView = (MapView) findViewById(R.id.mMap);
        //mSearchingLocation = (AutoCompleteTextView) findViewById(R.id.mSearchingLocation);
@@ -128,9 +122,7 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
         mGoingtoLocation = (TextView) findViewById(R.id.mGoingtoLocation);
         btnMyLocation = (FloatingActionButton) findViewById(R.id.btnMyLocation);
         btnTripTicket = (Button) findViewById(R.id.btnTripTicket);
-
         mLocationPermissionsGranted = true;
-
         filter = new AutocompleteFilter.Builder().setCountry("PH").build();
 
         if(mMapView != null){
@@ -145,7 +137,6 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
                 .addApi(Places.PLACE_DETECTION_API)
                 .enableAutoManage(this, this)
                 .build();
-
 
         mSearchingLocation.setOnClickListener(new View.OnClickListener(){
 
@@ -166,7 +157,6 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
             }
         });
 
-
        /*  mSearchingLocation = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.mSearchingLocation);
          mGoingtoLocation = (PlaceAutocompleteFragment)
@@ -174,7 +164,6 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
 
         mSearchingLocation.setOnPlaceSelectedListener(this);
         mGoingtoLocation.setOnPlaceSelectedListener(this);*/
-
 
         /*
         mPlaceAutocompleteAdapter = new PlaceAutocompleteAdapter(this, mGoogleApiClient,
@@ -190,8 +179,6 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
                   geoSearchLocate();
                 }
             }
-
-
         });
         mGoingtoLocation.addTextChangedListener(new TextWatcher() {
             @Override
@@ -227,7 +214,6 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
             }
         }); */
 
-
         btnMyLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -244,13 +230,9 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
                     Intent i = new Intent(LogisticsActivity.this, NewTripActivity.class);
                     startActivity(i);
                 }
-
             }
         });
-
-
     }
-
 
     private void openAutocompleteActivity() {
         try {
@@ -277,7 +259,6 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
         }
     }
 
-
     @Override
     protected void setupToolbar() {
         super.setupToolbar();
@@ -295,7 +276,6 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         // Check that the result was from the autocomplete widget.
         if (requestCode == REQUEST_CODE_AUTOCOMPLETE) {
             if (resultCode == RESULT_OK) {
@@ -304,7 +284,6 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
                 Log.i(TAG, "Place Selected: " + place.getName());
 
                 // Format the place's details and display them in the TextView.
-
                 switch(searchLocation){
                     case 0:
                         /*mSearchingLocation.setText(formatPlaceDetails(getResources(), place.getName(),
@@ -316,7 +295,6 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
                         Liquid.SearchLocation = String.valueOf(place.getName());
                         Liquid.SearchLocationLatitude = String.valueOf(place.getLatLng().latitude);
                         Liquid.SearchLocationLongtitude = String.valueOf(place.getLatLng().longitude);
-
 
                         break;
                     case 1:
@@ -334,6 +312,7 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
                 moveCamera(place.getLatLng(),DEFAULT_ZOOM, String.valueOf(place.getAddress()));
                 // Display attributions if required.
                 CharSequence attributions = place.getAttributions();
+
                 if (!TextUtils.isEmpty(attributions)) {
                     //mPlaceAttribution.setText(Html.fromHtml(attributions.toString()));
                 } else {
@@ -348,8 +327,6 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
             }
         }
     }
-
-
 
     private void geoSearchLocate(){
         Log.d(TAG, "geoLocate: geolocating");
@@ -377,9 +354,7 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
 
     private void geoGoingToLocate(){
         Log.d(TAG, "geoLocate: geolocating");
-
         /*String searchString = mSearchingLocation.getText().toString();
-
         Geocoder geocoder = new Geocoder(this);
         List<Address> list = new ArrayList<>();
         try{
@@ -419,13 +394,11 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
 
     private void getDeviceLocation(){
         Log.d(TAG, "getDeviceLocation: getting the devices current location");
-
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         try{
 
             if(mLocationPermissionsGranted){
-
                 final Task location = mFusedLocationProviderClient.getLastLocation();
 
                 location.addOnCompleteListener(new OnCompleteListener() {
@@ -438,7 +411,6 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
                                     DEFAULT_ZOOM,
                                     "My Location");
-
                         }else{
                             Log.d(TAG, "onComplete: current location is null");
                             Toast.makeText(LogisticsActivity.this, "unable to get current location", Toast.LENGTH_SHORT).show();
@@ -453,6 +425,7 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
         //CameraPosition LastPosition =  CameraPosition.builder().target(new LatLng(Double.parseDouble(String.valueOf(mLiquidGPS.getLatitude())),Double.parseDouble(String.valueOf(mLiquidGPS.getLongitude())))).zoom(30).bearing(0).tilt(45).build();
         //mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(LastPosition));
     }
+
     @Override
     public boolean onMarkerClick(Marker marker) {
         return false;
@@ -463,7 +436,7 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
         try{
             MapsInitializer.initialize(this);
             mGoogleMap = googleMap;
-            //
+
             //MyLocation
             if((ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
                     ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)){
@@ -476,18 +449,14 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
 
             //settings
             mGoogleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-
             //mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
             //mGoogleMap.getUiSettings().setCompassEnabled(true);
             //mGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
-
             mGoogleMap.getUiSettings().setRotateGesturesEnabled(true);
             mGoogleMap.getUiSettings().setScrollGesturesEnabled(true);
             mGoogleMap.getUiSettings().setTiltGesturesEnabled(true);
             mGoogleMap.getUiSettings().setZoomGesturesEnabled(true);
-
             mGoogleMap.setOnMarkerClickListener(this);
-
 
             CameraPosition LastPosition =  CameraPosition.builder().target(new LatLng(Double.parseDouble(String.valueOf(mLiquidGPS.getLatitude())),Double.parseDouble(String.valueOf(mLiquidGPS.getLongitude())))).zoom(16).bearing(0).tilt(45).build();
             mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(LastPosition));
@@ -509,7 +478,6 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
                     if((ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
                             ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)){
                         mGoogleMap.setMyLocationEnabled(true);
-
                     }
                 }else{
                     Toast.makeText(this,"This app requires location permission to be granted", Toast.LENGTH_LONG).show();
@@ -531,15 +499,12 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
     @Override
     public void onPlaceSelected(Place place) {
         Log.i(TAG, "Place Selected: " + place.getName());
-
         // Format the returned place's details and display them in the TextView.
-
     }
 
     @Override
     public void onError(Status status) {
         Log.e(TAG, "onError: Status = " + status.toString());
-
         Toast.makeText(this, "Place selection failed: " + status.getStatusMessage(),
                 Toast.LENGTH_SHORT).show();
     }
@@ -550,6 +515,5 @@ public class LogisticsActivity extends BaseLogisticActivity implements OnMapRead
                 websiteUri));
         return Html.fromHtml(res.getString(R.string.place_details_2, name, id, address, phoneNumber,
                 websiteUri));
-
     }
 }

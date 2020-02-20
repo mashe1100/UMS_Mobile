@@ -25,7 +25,6 @@ import java.util.Date;
 
 public class LiquidCanvas extends View {
     private static final String TAG = LiquidCanvas.class.getSimpleName();
-
     static final float STROKE_WIDTH = 5f;
     static final float HALF_STROKE_WIDTH = STROKE_WIDTH / 2;
     Paint paint = new Paint();
@@ -46,6 +45,7 @@ public class LiquidCanvas extends View {
         paint.setStrokeWidth(STROKE_WIDTH);
         mContent = mLinearLayout;
     }
+
     public void save(String FileName) {
         FileOutputStream fileOutputStream = null;
         File file = Liquid.getDiscSignature(Liquid.SelectedAccountNumber);
@@ -122,8 +122,6 @@ public class LiquidCanvas extends View {
 
     }
 
-
-
     @Override
     protected void onDraw(Canvas canvas) {
         // TODO Auto-generated method stub
@@ -134,7 +132,6 @@ public class LiquidCanvas extends View {
     public boolean onTouchEvent(MotionEvent event) {
         float eventX = event.getX();
         float eventY = event.getY();
-
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:

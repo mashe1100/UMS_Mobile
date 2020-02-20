@@ -36,10 +36,10 @@ public class TrackingSoviLocationFragment extends Fragment  implements SwipeRefr
     private TrackingSoviLocationAdapter Adapter;
     private Liquid.ApiData mApiData;
     private View mView;
-
     @BindView(R.id.rvList)
     RecyclerView rvList;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,11 +78,9 @@ public class TrackingSoviLocationFragment extends Fragment  implements SwipeRefr
         Cursor result = TrackingModel.GetSoviLocationList(search);
         try
         {
-
             if(result.getCount() == 0){
                 return;
             }
-
             while(result.moveToNext()){
                 HashMap<String, String> data = new HashMap<>();
                 data.put("Id", result.getString(0));
@@ -93,21 +91,16 @@ public class TrackingSoviLocationFragment extends Fragment  implements SwipeRefr
 
                 final_result.add(data);
             }
-
-
             Adapter.updateItems(animated,final_result);
-
         }
         catch(Exception e){
             Log.e(TAG,"Error : ",e);
             return;
         }
-
     }
 
 
     public void DeleteData(final String OutletNumber, final String ProductCode, final String Period){
-
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -131,9 +124,7 @@ public class TrackingSoviLocationFragment extends Fragment  implements SwipeRefr
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage("Are you sure you want to DELETE?").setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
-
     }
-
 
     private int GetImagesThumbnail(String value){
         int imageURL = R.drawable.img_ums;

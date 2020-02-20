@@ -31,7 +31,6 @@ import butterknife.BindView;
 /**
  * Created by Romeo on 2018-01-13.
  */
-
 public class TrackingCDEFragment  extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = TrackingCDEFragment.class.getSimpleName();
     private String[] GetColumns;
@@ -41,14 +40,12 @@ public class TrackingCDEFragment  extends Fragment implements SwipeRefreshLayout
     Liquid.ApiData mApiData;
     View mView;
     String Count = "0";
-
     File mFile;
     File[] listFile;
     File mImages;
     String[] Subfolder;
     @BindView(R.id.rvTrackingCDEList)
     RecyclerView rvList;
-
     @BindView(R.id.fabTrackingCDEAdd)
     FloatingActionButton fabTrackingCDEAdd;
     FloatingActionButton floatBtnGallery;
@@ -67,7 +64,6 @@ public class TrackingCDEFragment  extends Fragment implements SwipeRefreshLayout
     }
 
     public void DeleteData(final String OutletNumber, final String ProductCode, final String Period,final int postion){
-
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -82,12 +78,9 @@ public class TrackingCDEFragment  extends Fragment implements SwipeRefreshLayout
                         } else {
                             Liquid.showDialogError(getActivity(), "Invalid", "Unsuccessfully Deleted!");
                         }
-
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
-
                         break;
-
                 }
             }
         };
@@ -95,9 +88,6 @@ public class TrackingCDEFragment  extends Fragment implements SwipeRefreshLayout
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage("Are you sure you want to DELETE?").setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
-
-
-
     }
 
     private void setup(View view) {
@@ -149,8 +139,6 @@ public class TrackingCDEFragment  extends Fragment implements SwipeRefreshLayout
         GetData(false,Liquid.SelectedAccountNumber,"","",Liquid.SelectedPeriod);
     }
 
-
-
     public void GetData(boolean animated,
                         String AccountNumber,
                         String Area,
@@ -168,7 +156,6 @@ public class TrackingCDEFragment  extends Fragment implements SwipeRefreshLayout
                 Period);
         try
         {
-
             if(result.getCount() == 0){
                 Count = String.valueOf(1);
                 return;
@@ -186,7 +173,6 @@ public class TrackingCDEFragment  extends Fragment implements SwipeRefreshLayout
                 data.put("Filepath",GetImagesThumbnail(Title));
                 final_result.add(data);
             }
-
             Count = String.valueOf(final_result.size()+1);
             Adapter.updateItems(animated,final_result);
 
@@ -195,7 +181,6 @@ public class TrackingCDEFragment  extends Fragment implements SwipeRefreshLayout
             Log.e(TAG,"Error : ",e);
             return;
         }
-
     }
 
     private String GetImagesThumbnail(String value){
@@ -218,7 +203,6 @@ public class TrackingCDEFragment  extends Fragment implements SwipeRefreshLayout
         }
         return "";
     }
-
 
     @Override
     public void onRefresh() {

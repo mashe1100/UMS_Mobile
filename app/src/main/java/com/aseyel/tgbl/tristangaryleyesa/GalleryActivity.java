@@ -32,7 +32,6 @@ public class GalleryActivity extends BaseActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         init(Liquid.SelectedCategory);
-
     }
 
     private void init(String Folder){
@@ -45,6 +44,7 @@ public class GalleryActivity extends BaseActivity {
         rvList.setLayoutManager(glm);
         rvList.setAdapter(Adapter);
         mLiquidFile = new LiquidFile(this);
+
        switch(Subfolder[0]){
            case "SOVI Location":
                    GetImageSoviLocation(true,Subfolder);
@@ -69,15 +69,11 @@ public class GalleryActivity extends BaseActivity {
                break;
                default:
                    GetImages(true,Subfolder,"");
-
         }
-
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-
         switch(item.getItemId())
         {
             case android.R.id.home:
@@ -92,8 +88,8 @@ public class GalleryActivity extends BaseActivity {
 
     private void GetNewMeterImages(boolean animated,String[] Subfolder) {
         File mImages = Liquid.getDiscPicture(Liquid.SelectedId+"_audit",Subfolder);
-        if(!mImages.exists() && !mImages.mkdirs()){
 
+        if(!mImages.exists() && !mImages.mkdirs()){
             Liquid.ShowMessage(this,"Can't create directory to save image");
         }
         else{
@@ -110,14 +106,14 @@ public class GalleryActivity extends BaseActivity {
                 }
             }
             Adapter.updateItems(animated,final_result);
-
         }
     }
+
     private void GetAuditImages(boolean animated,String[] Subfolder){
         Subfolder[0] = "";
         File mImages = Liquid.getDiscPicture(Liquid.SelectedAccountNumber,Subfolder);
-        if(!mImages.exists() && !mImages.mkdirs()){
 
+        if(!mImages.exists() && !mImages.mkdirs()){
             Liquid.ShowMessage(this,"Can't create directory to save image");
         }
         else{
@@ -134,7 +130,6 @@ public class GalleryActivity extends BaseActivity {
                 }
             }
             Adapter.updateItems(animated,final_result);
-
         }
     }
 
@@ -143,8 +138,8 @@ public class GalleryActivity extends BaseActivity {
         Log.i(TAG,Liquid.SelectedAccountNumber);
         Log.i(TAG,Liquid.ReadingDate);
         File mImages = Liquid.getDiscPicture(Liquid.SelectedId,Subfolder);
-        if(!mImages.exists() && !mImages.mkdirs()){
 
+        if(!mImages.exists() && !mImages.mkdirs()){
             Liquid.ShowMessage(this,"Can't create directory to save image");
         }
         else{
@@ -161,14 +156,13 @@ public class GalleryActivity extends BaseActivity {
                 }
             }
             Adapter.updateItems(animated,final_result);
-
         }
     }
+
     private void GetDisconnectionImages(boolean animated,String[] Subfolder){
-
         File mImages = Liquid.getDiscPicture(Liquid.SelectedId,Subfolder);
-        if(!mImages.exists() && !mImages.mkdirs()){
 
+        if(!mImages.exists() && !mImages.mkdirs()){
             Liquid.ShowMessage(this,"Can't create directory to save image");
         }
         else{
@@ -185,17 +179,14 @@ public class GalleryActivity extends BaseActivity {
                 }
             }
             Adapter.updateItems(animated,final_result);
-
         }
     }
-    private void GetImageSoviLocation(boolean animated,String[] Subfolder){
 
+    private void GetImageSoviLocation(boolean animated,String[] Subfolder){
         File mImages = Liquid.getDiscPicture(Liquid.SelectedAccountNumber,Subfolder);
 
         if(!mImages.exists() && !mImages.mkdirs()){
-
             Liquid.ShowMessage(this,"Can't create directory to save image");
-
         }
         else{
             File[] listFile = mImages.listFiles();
@@ -212,15 +203,12 @@ public class GalleryActivity extends BaseActivity {
                 }
             }
             Adapter.updateItems(animated,final_result);
-
         }
     }
 
-
-
-
     private void GetImages(boolean animated,String[] Subfolder,String Filename){
         File mImages = Liquid.getDiscPicture(Liquid.SelectedAccountNumber,Subfolder);
+
         if(!mImages.exists() && !mImages.mkdirs()){
             Liquid.ShowMessage(this,"Can't create directory to save image");
         }else{

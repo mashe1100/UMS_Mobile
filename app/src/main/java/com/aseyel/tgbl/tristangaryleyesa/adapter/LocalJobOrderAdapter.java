@@ -111,8 +111,8 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
         LocalJobOrdersListItems.remove(adapterPosition);
         notifyItemRemoved(adapterPosition);
     }
-    private void setupClickableViews(final View view, final LocalJobOrderAdapter.CellLocalJobOrderViewHolder mCellLocalJobOrderViewHolder) {
 
+    private void setupClickableViews(final View view, final LocalJobOrderAdapter.CellLocalJobOrderViewHolder mCellLocalJobOrderViewHolder) {
         /*mCellLocalJobOrderViewHolder.vLocalJobOrderImageRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,7 +136,6 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
                 }
             }
         });*/
-
         mCellLocalJobOrderViewHolder.llJobDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,16 +165,13 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
                         default:
                             Intent i = new Intent(view.getContext(), JobOrderActivity.class);
                             view.getContext().startActivity(i);
-
                     }
-
                 }
                 catch(Exception e){
                     Toast.makeText(view.getContext(), e.toString(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
 
         mCellLocalJobOrderViewHolder.btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,9 +207,7 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
                                 ((TabLocalFragment) fragment).DoUploadReading(LiquidReading.UploadReading(Liquid.SelectedId));
                                 break;
                         }
-
                     }
-
                 }
                 catch(Exception e){
                    Log.e(TAG,"Error ",e);
@@ -237,12 +231,7 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
                 }
             }
         });
-
-
     }
-
-
-
 
     private void UploadCokeTrackingData(){
         try{
@@ -319,24 +308,19 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
                 }
             }
             final_data_response.put("data",final_data_result);
-
-
             //final_data_response.put("data",final_data_result);
             //final_image_response.put("image",final_image_result);
             //final_signature_response.put("signature",final_signature_result);
-
-
             //((TabLocalFragment) fragment).new FilePostingToServer(final_image_response).execute();
             //((TabLocalFragment) fragment).new FileSignaturePostingToServer(final_signature_response).execute();
             //((TabLocalFragment) fragment).new DataPostingToServer(final_data_response).execute();
             //((TabLocalFragment) fragment).new DataPostingToServer(final_data_response).execute();
             ((TabLocalFragment) fragment).DoUploadCoke(final_data_response);
-
         }catch(Exception e){
             Log.e(TAG,"Error ",e);
         }
-
     }
+
     private JSONArray UploadSignature(View view,String AccountNumber){
         JSONArray final_image_result = new JSONArray();
         try {
@@ -353,18 +337,12 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
                 } else {
                     listFile = mImages.listFiles();
                     for (int e = 0; e < listFile.length; e++) {
-
                         JSONObject data = new JSONObject();
-
                         data.put("FileData", Liquid.imageToString(listFile[e].getAbsolutePath()));
-
                         data.put("Filename", listFile[e].getName());
-
                         //combine all data for image
                         final_image_result.put(data);
-
                     }
-
                 }
             }
             return final_image_result;
@@ -391,20 +369,13 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
                 } else {
                     listFile = mImages.listFiles();
                     for (int e = 0; e < listFile.length; e++) {
-
                         JSONObject data = new JSONObject();
-
                         data.put("FileData", Liquid.imageToString(listFile[e].getAbsolutePath()));
-
                         data.put("Filename", listFile[e].getName());
-
                         //combine all data for image
                         final_image_result.put(data);
                         final_image_response.put("image",final_image_result);
-
-
                     }
-
                 //}
             }
             return final_image_result;
@@ -415,16 +386,14 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     private Boolean CokeUploadImage(View view,String AccountNumber,String Category){
-
         try {
-
             //for (int c = 0; c < Liquid.CokeCategory.length; c++) {
             File mImages;
             File[] listFile;
             String[] Subfolder = new String[1];
             Subfolder[0] = Category;
-
             mImages = Liquid.getDiscPicture(AccountNumber, Subfolder);
+
             if (!mImages.exists() && !mImages.mkdirs()) {
                 Liquid.ShowMessage(view.getContext(), "Can't create directory to save image");
             } else {
@@ -476,9 +445,7 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
-
         return final_response;
     }
 
@@ -506,7 +473,6 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
         return final_response;
     }
@@ -537,6 +503,7 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
         return final_response;
     }
+
     private JSONArray UploadComment(String AccountNumber){
         JSONArray final_response = new JSONArray();
         Cursor result = TrackingModel.GetComment(AccountNumber,
@@ -561,6 +528,7 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
         return final_response;
     }
+
     private JSONArray UploadCategoryComment(String AccountNumber){
         JSONArray final_response = new JSONArray();
         Cursor result = TrackingModel.GetCategoryComment(AccountNumber,"",
@@ -586,6 +554,7 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
         return final_response;
     }
+
     private JSONArray UploadShelfPlanogram(String AccountNumber){
         JSONArray final_response = new JSONArray();
         Cursor result = TrackingModel.GetShelfPlanogram(AccountNumber,
@@ -749,6 +718,7 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
         return final_response;
     }
+
     private JSONArray UploadActivation(String AccountNumber){
         JSONArray final_response = new JSONArray();
         Cursor result = TrackingModel.GetTrackingActivation(AccountNumber,"","",
@@ -778,7 +748,6 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     private JSONArray UploadSOVI(String AccountNumber){
-
         JSONArray final_response = new JSONArray();
         Cursor result = TrackingModel.GetSovi("",AccountNumber,"",
                 "",Liquid.SelectedPeriod);
@@ -818,12 +787,7 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
             }
         }
         return final_response;
-
     }
-
-
-
-
 
     private  ArrayList<HashMap<String, String>> GetCokeJobOrderDetails(String JobOrderId){
         ArrayList<HashMap<String, String>> final_result = new ArrayList<>();
@@ -880,18 +844,14 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
                     break;
                 default:
                     //ivLocalJobOrderCenter.setImageResource(adapterPosition % 2 == 0 ? R.drawable.img_ums : R.drawable.img_ums);
-
             }
             btnDelete.setVisibility(View.GONE);
             tvLocalJobOrderTitle.setText(LocalJobOrdersItems.Title);
             tvLocalJobOrderAging.setText(LocalJobOrdersItems.Date);
             tsLocalJobOrderDetails.setCurrentText(adapterPosition % 2 == 0 ? LocalJobOrdersItems.Details : LocalJobOrdersItems.Details);
         }
-
         public LocalJobOrdersModel getLocalJobOrdersItems() {
             return LocalJobOrdersItems;
         }
     }
-
-
 }

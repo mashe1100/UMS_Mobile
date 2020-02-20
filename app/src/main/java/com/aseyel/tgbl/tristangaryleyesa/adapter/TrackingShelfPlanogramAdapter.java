@@ -43,6 +43,7 @@ public class TrackingShelfPlanogramAdapter extends RecyclerView.Adapter<Recycler
     public TrackingShelfPlanogramAdapter(Fragment fragment) {
         this.fragment = fragment;
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -50,7 +51,6 @@ public class TrackingShelfPlanogramAdapter extends RecyclerView.Adapter<Recycler
             CellViewHolder mCellViewHolder = new CellViewHolder(view);
             setupClickableViews(view,mCellViewHolder);
             return mCellViewHolder;
-
     }
 
     @Override
@@ -69,12 +69,10 @@ public class TrackingShelfPlanogramAdapter extends RecyclerView.Adapter<Recycler
                     Liquid.SelectedDescription = ListItems.get(adapterPosition).getTitle();
                     Intent i = new Intent(view.getContext(), TrackingShelfPlanogramActivity.class);
                     view.getContext().startActivity(i);
-
                 }
                 catch(Exception e){
                     Log.e(TAG,"Error ",e);
                 }
-
             }
         });
         mCellViewHolder.btnToDo.setOnClickListener(new View.OnClickListener() {
@@ -108,12 +106,8 @@ public class TrackingShelfPlanogramAdapter extends RecyclerView.Adapter<Recycler
                 catch(Exception e){
                     Log.e(TAG,"Error ",e);
                 }
-
             }
         });
-
-
-
     }
 
     @Override
@@ -142,15 +136,11 @@ public class TrackingShelfPlanogramAdapter extends RecyclerView.Adapter<Recycler
         }
     }
 
-
-
     public static class CellViewHolder extends RecyclerView.ViewHolder {
-
         @BindView(R.id.ivTrackingShelfPlanogramCenter)
         ImageView ivTrackingShelfPlanogramCenter;
         @BindView(R.id.tsTrackingShelfPlanogramDetails)
         TextSwitcher tsTrackingShelfPlanogramDetails;
-
         @BindView(R.id.vTrackingShelfPlanogramSelected)
         View vTrackingShelfPlanogramSelected;
         @BindView(R.id.ivTrackingShelfPlanogramProfile)
@@ -168,7 +158,7 @@ public class TrackingShelfPlanogramAdapter extends RecyclerView.Adapter<Recycler
         @BindView(R.id.btnToDo)
         ImageButton btnToDo;
         @BindView(R.id.btnDelete)
-                ImageButton btnDelete;
+        ImageButton btnDelete;
         FeedModel Items;
 
         public CellViewHolder(View view) {
@@ -190,11 +180,4 @@ public class TrackingShelfPlanogramAdapter extends RecyclerView.Adapter<Recycler
             return Items;
         }
     }
-
-
-
-
-
-
-
 }

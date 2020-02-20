@@ -81,23 +81,23 @@ import java.util.concurrent.TimeUnit;
 
 public class Liquid extends AppCompatActivity{
     public static final String DATABASE_NAME = "ums_mobile.db";
-//    public static String pathEnvironment = "USI_TEST";
- //   public static String pathEnvironment = "USI_BETA";
-    //MORE POWER path
+//  public static String pathEnvironment = "USI_TEST";
+//  public static String pathEnvironment = "USI_BETA";
+//  MORE POWER path
     public static String pathEnvironment = "USI";
 
-    //UMS server
-//    private static final String umsUrl = "usi.3utilities.com:14147";
-//    private static final String umsUrl = "usi.3utilities.com:1529";
-//    private static final String umsUrl = "usi.3utilities.com:8081";
- //   private static final String umsUrl = "usi.3utilities.com:1529";
-    //MORE POWER server
-//   private static final String umsUrl = "125.5.181.225:8080";
+//  UMS server
+//  private static final String umsUrl = "usi.3utilities.com:14147";
+//  private static final String umsUrl = "usi.3utilities.com:1529";
+//  private static final String umsUrl = "usi.3utilities.com:8081";
+//  private static final String umsUrl = "usi.3utilities.com:1529";
+
+//  MORE POWER server
+//  private static final String umsUrl = "125.5.181.225:8080";
+
 
     public static String currenthost = "";
     public static String umsUrl= "";
-
-
     public static String id = "1";
     private static final String TAG = "Liquid";
     public static String DefaultErrorMessage = "An error has occured!";
@@ -158,55 +158,54 @@ public class Liquid extends AppCompatActivity{
     public static String TrackingNumber = "";
     public static String SurveyType = "";
     public static String SurveyAmpirCapacity = "";
-    //Phone Server
-//    public static String ServerNumber = "+639291332538";
-//    public static String ServerNumberGlobe = "+639064783858"; // old broken
+
+
+//  Phone Server
+//  public static String ServerNumber = "+639291332538";
+//  public static String ServerNumberGlobe = "+639064783858"; // old broken
     public static String ServerNumberGlobe = "+639062533106";
     public static String ServerNumberSmart = "+639989626300";
-    //Coke
-    //public static String Client = "coke";
-    //public static String ServiceType = "TRACKING";
 
-    //Auditor
-    //public static String Client = "magelco";
-    //public static String ServiceType = "AUDIT";
+//  Coke
+//  public static String Client = "coke";
+//  public static String ServiceType = "TRACKING";
 
-
-    //READ AND BILL
-//    public static String Client = "batelec2";
-//    public static String Client = "baliwag_wd";
-      public static String Client = "more_power";
-//     EDIT INIT LINE 99 AUDIT to READING (READING GALLERY ACTIVITY)
-    // EDIT GetImages Line 180 AUDIT to READING (READING GALLERY ACTIVITY)
-    // EDIT GetImages Line 1475 AUDIT to READING (TAB LOCAL FRAGMENT)
-    // Please edit remarks reference // MeterReadingRemarksData
-   //   public static String Client = "ileco2"; //Please edit remarks reference // MeterReadingIleco2RemarksData
-//    public static String Client = "pelco2"; //Please edit remarks reference // MeterReadingPelco2RemarksData
-      public static String ServiceType = "READ AND BILL";
-//    public static String ImageType = "audit";[
+//  Auditor
+//  public static String Client = "magelco";
+//  public static String ServiceType = "AUDIT";
 
 
-//    public static String Client = "ngc_express";
-//    public static String ServiceType = "h";
-//    public static String Client = "meralco_batangas";
-//    public static String Client = "meralco_lucena";
-//    public static String Client = "philpost";
-//    public static String ServiceType = "MESSENGER";
+//  READ AND BILL
+//  public static String Client = "batelec2";
+//  public static String Client = "baliwag_wd";
+    public static String Client = "more_power";
+//  EDIT INIT LINE 99 AUDIT to READING (READING GALLERY ACTIVITY)
+//  EDIT GetImages Line 180 AUDIT to READING (READING GALLERY ACTIVITY)
+//  EDIT GetImages Line 1475 AUDIT to READING (TAB LOCAL FRAGMENT)
+//  Please edit remarks reference // MeterReadingRemarksData
+//  public static String Client = "ileco2"; //Please edit remarks reference // MeterReadingIleco2RemarksData
+//  public static String Client = "pelco2"; //Please edit remarks reference // MeterReadingPelco2RemarksData
+    public static String ServiceType = "READ AND BILL";
+//  public static String ImageType = "audit";[
+//  public static String Client = "ngc_express";
+//  public static String ServiceType = "h";
+//  public static String Client = "meralco_batangas";
+//  public static String Client = "meralco_lucena";
+//  public static String Client = "philpost";
+//  public static String ServiceType = "MESSENGER";
 
-    //public static String Client = "athena";
-    //public static String ServiceType = "ADMIN";
+//  public static String Client = "athena";
+//  public static String ServiceType = "ADMIN";
 
     //Disconnection
-//    public static String Client = "primewater_bulacan";
-//    public static String Client = "primewater_cavite";
-//    public static String ServiceType = "DISCONNECTION";
+//  public static String Client = "primewater_bulacan";
+//  public static String Client = "primewater_cavite";
+//  public static String ServiceType = "DISCONNECTION";
 
     public static String LiquidTable = "";
     public static String LiquidPackageName;
-
     public static int screenHeight;
     public static int screenWidth;
-
     //DELIVERY
     public static String m_type = "";
     public static String m_type_description = "";
@@ -214,14 +213,11 @@ public class Liquid extends AppCompatActivity{
     public static String m_remark_code = "";
     public static String m_remark = "";
     public static String battery_life = "";
-
     public static String LiquidDBPath = "sdcard/UMS/BackUp/";
     public static JSONObject ErrorFileSignatureUpload = new JSONObject();
     public static JSONArray ErrorUpload = new JSONArray();
     public static JSONObject ErrorDataUpload = new JSONObject();
     public static JSONObject ErrorFileUpload = new JSONObject();
-
-
     //Reading
     public static boolean save_only = false;
     public static String BillingCycle;
@@ -234,17 +230,14 @@ public class Liquid extends AppCompatActivity{
     public static String ShareCap;
     public static String PoleRent = "0";
     public static String OtherBill;
-
     public static String ConsumerStatus;
     public static String AccountType;
     public static String Reading = "";
     public static String ReadingInputTemporaryHolder = "";
     public static String PresentConsumptionTemporaryHolder = "";
-
     public static String classification = "";
     public static String arrears = "";
     public static String ReaderComment = "";
-
     public static  String route  = "";
     public static String itinerary  = "";
     public static String previous_reading  = "0";
@@ -272,7 +265,6 @@ public class Liquid extends AppCompatActivity{
     public static String change_meter = "0";
     public static String interest = "0";
     public static String RemarksValue = "";
-
     public static String C_ID = "";
     public static String job_id  = "";
     public static String name  = "";
@@ -306,10 +298,7 @@ public class Liquid extends AppCompatActivity{
     public static String Meter_Box= "";
     public static String Demand_Reset= "";
     public static String Test_Block= "";
-
     public static String remarks_abbreviation= "";
-
-
     public static String Reader_ID= "";
     public static String meter_reader= "";
     public static String Reading_Attempt = "0";
@@ -332,7 +321,6 @@ public class Liquid extends AppCompatActivity{
     public static String area= "";
     public static String cummulative_multiplier= "";
     public static String oebr_number= "";
-
     public static String Reading_TimeStamp= "";
     public static String Print_TimeStamp= "";
     public static String timestamp= "";
@@ -417,19 +405,16 @@ public class Liquid extends AppCompatActivity{
     public static String delivery_remarks= "";
     public static boolean reprint = false;
     public static boolean PrintResponse = false;
-
     public static String ContactNumber = "";
     public static String EmailAdd = "";
     public static String MeterBrand = "";
     public static String MeterTypeValue = "";
     public static String StructureValue = "";
-
     //public static String UpdatedAccountName = "";
     public static String UpdatedAddress = "";
     //public static String UpdatedMeterNumber = "";
    // public static String UpdatedSequence = "";
-
-     public static boolean draftBill = true;
+    public static boolean draftBill = true;
 
     public static String WrapAround(String PreviousReading, String Reading) {
         Log.i(TAG,"mashe test WrapAround Reading ");
@@ -450,7 +435,6 @@ public class Liquid extends AppCompatActivity{
         int DialLength2 = Reading.length();
         int DialLength = PreviousReading.length();
         String Consumption = "";
-
 
         if(DialLength2 == 2 || DialLength2 == 1 || DialLength2 == 3){
             switch (DialLength) {
@@ -484,6 +468,7 @@ public class Liquid extends AppCompatActivity{
             }
         },milliseconds);
     }
+
     public static boolean SaveReading(String Client, //ok
                                String CustomerID, //ok
                                String AccountNumber, //ok
@@ -884,252 +869,253 @@ public class Liquid extends AppCompatActivity{
                                            String timestamp, //ok
                                            String bill_number, // ok
                                            String GenerationSystem , // ok
-                                            String BenHost, // Bill PECO
-                                            String GRAM , // ok
-                                                    String ICERA , // ok
-                                                            String PowerArtReduction , // ok
-    String  TransmissionDelivery , // ok
-            String TransmissionDelivery2, // ok
-    String  System_Loss,// ok
-    String  Gen_Trans_Rev, // ok
-    String  DistributionNetwork, // ok
-    String  DistributionNetwork2,// ok
-    String   DistributionNetwork3, // ok
-    String   RetailElectricService , // ok
-    String  RetailElectricService2, // ok
-    String   Metering_cust, // ok
-    String  Metering_cust_2, // ok
-    String Metering_kwh, // Bill
-            String loan , // Bill
-                    String RFSC , // ok
-    String  Distribution_Rev , // ok
-    String  MissionaryElectrification, // ok
-    String  EnvironmentCharge, // ok
-    String  NPC_StrandedDebts,  // ok
-    String   NPC_StrandedCost, // ok
-    String  DUsCost, // ok
-    String    DCDistributionCharge, // ok
-    String   DCDemandCharge, // ok
-    String  TCTransSystemCharge, // ok
-    String   SCSupplySysCharge, // ok
-    String  equal_tax, // ok
-    String   CrossSubsidyRemoval , // ok
-    String  Universal_Charges , // ok
-    String   Lifeline_Charge, // ok
-    String   InterclassCrossSubsidy , // ok
-    String   SeniorCitizenSubsidy, // ok
-    String   ICCS_Adjustment, // ok
-    String   ICCrossSubsidyCharge, // ok //ME Renewable Energy Dev ILECO II
-    String   FitAllCharge, // ok
-    String   PPD_Adjustment, // ok
-    String    GenerationCostAdjustment, // ok
-    String    PowerCostAdjustment, // ok
-    String    Other_Rev, // ok
-    String   GenerationVat, // ok
-    String     TransmissionVat , // ok
-    String   SystemLossVat , // ok
-    String    DistributionVat, // ok
-    String    OtherVat, // ok
-    String     Government_Rev,  // ok
-    String     CurrentBill, // ok
-    String     amountdue, // ok
-    String     overdue, // ok
-    String      franchise_tax, // Bill
-    String    coreloss, //ok
-    String       surcharge, //ok
-    String      rentalfee,
-    String    delivered, //ok
-    String       check_previous, // Taging if previous is check
-    String       ispn,  //PECO
-    String     SCD , //ok
-    String        pnrecvdte, //PECO
-    String      pnrecvby, //PECO
-    String    recvby, // Delivery
-    String   hash, //PECO
-    String      isreset, // DI ALAM NI ALEX
-    String       isprntd, // DI ALAM NI ALEX
-    String       meter_count, //ok
-    String        delivery_id, // Delivery
-    String          delivery_remarks, // Delivery
-    String        delivery_comment, // Delivery
-    String       reading_signature, // Delivery
-    String       real_property_tax,  //Bill
-    String         cc_rstc_refund, //Bill
-    String        cc_rstc_refund2, //Bill
-    String      moa, //Bill
-    String      eda, //Bill
-    String       ModifiedDate,
-    String       ModifiedBy){
-        boolean result = false;
+                                           String BenHost, // Bill PECO
+                                           String GRAM , // ok
+                                           String ICERA , // ok
+                                           String PowerArtReduction , // ok
+                                           String  TransmissionDelivery , // ok
+                                           String TransmissionDelivery2, // ok
+                                           String  System_Loss,// ok
+                                           String  Gen_Trans_Rev, // ok
+                                           String  DistributionNetwork, // ok
+                                           String  DistributionNetwork2,// ok
+                                           String   DistributionNetwork3, // ok
+                                           String   RetailElectricService , // ok
+                                           String  RetailElectricService2, // ok
+                                           String   Metering_cust, // ok
+                                           String  Metering_cust_2, // ok
+                                           String Metering_kwh, // Bill
+                                           String loan , // Bill
+                                           String RFSC , // ok
+                                           String  Distribution_Rev , // ok
+                                           String  MissionaryElectrification, // ok
+                                           String  EnvironmentCharge, // ok
+                                           String  NPC_StrandedDebts,  // ok
+                                           String   NPC_StrandedCost, // ok
+                                           String  DUsCost, // ok
+                                           String    DCDistributionCharge, // ok
+                                           String   DCDemandCharge, // ok
+                                           String  TCTransSystemCharge, // ok
+                                           String   SCSupplySysCharge, // ok
+                                           String  equal_tax, // ok
+                                           String   CrossSubsidyRemoval , // ok
+                                           String  Universal_Charges , // ok
+                                           String   Lifeline_Charge, // ok
+                                           String   InterclassCrossSubsidy , // ok
+                                           String   SeniorCitizenSubsidy, // ok
+                                           String   ICCS_Adjustment, // ok
+                                           String   ICCrossSubsidyCharge, // ok //ME Renewable Energy Dev ILECO II
+                                           String   FitAllCharge, // ok
+                                           String   PPD_Adjustment, // ok
+                                           String    GenerationCostAdjustment, // ok
+                                           String    PowerCostAdjustment, // ok
+                                           String    Other_Rev, // ok
+                                           String   GenerationVat, // ok
+                                           String     TransmissionVat , // ok
+                                           String   SystemLossVat , // ok
+                                           String    DistributionVat, // ok
+                                           String    OtherVat, // ok
+                                           String     Government_Rev,  // ok
+                                           String     CurrentBill, // ok
+                                           String     amountdue, // ok
+                                           String     overdue, // ok
+                                           String      franchise_tax, // Bill
+                                           String    coreloss, //ok
+                                           String       surcharge, //ok
+                                           String      rentalfee,
+                                           String    delivered, //ok
+                                           String       check_previous, // Taging if previous is check
+                                           String       ispn,  //PECO
+                                           String     SCD , //ok
+                                           String        pnrecvdte, //PECO
+                                           String      pnrecvby, //PECO
+                                           String    recvby, // Delivery
+                                           String   hash, //PECO
+                                           String      isreset, // DI ALAM NI ALEX
+                                           String       isprntd, // DI ALAM NI ALEX
+                                           String       meter_count, //ok
+                                           String        delivery_id, // Delivery
+                                           String          delivery_remarks, // Delivery
+                                           String        delivery_comment, // Delivery
+                                           String       reading_signature, // Delivery
+                                           String       real_property_tax,  //Bill
+                                           String         cc_rstc_refund, //Bill
+                                           String        cc_rstc_refund2, //Bill
+                                           String      moa, //Bill
+                                           String      eda, //Bill
+                                           String       ModifiedDate,
+                                           String       ModifiedBy){
+                                                    boolean result = false;
 
-        result = ReadingModel.doReadingLogs(
-                Client, //ok
-                CustomerID, //ok
-                AccountNumber, //ok
-                JobId, //ok
-                AccountName, //ok
-                route, //ok
-                itinerary, //ok
-                MeterNumber, //ok
-                serial, //ok
-                previous_reading, //ok
-                Reading, //ok
-                previous_consumption, //ok
-                Present_Consumption, //computation
-                previous_reading_date, //ok
-                present_reading_date, //ok
-                duedate, // if there value currentdate +6 //ok
-                discondate, // duedate +2 days //ok
-                ReadingDate, //ok
-                BillYear, //ok
-                BillMonth, //ok
-                BillDate, //ok
-                month, //ok
-                day, //ok
-                year, //ok
-                Demand, // New TextBox
-                reactive, // ok
-                powerfactor, //ok
-                kw_cummulative, //ok
-                reading1, //ok
-                reading2, //ok
-                reading3, //ok
-                reading4, //ok
-                reading5, //ok
-                reading6, //ok
-                reading7, //ok
-                reading8, //ok
-                reading9, //ok
-                reading10, //ok
-                iwpowerfactor, //ok
-                demand_consumption, //ok
-                reactive_consumption, //ok
-                Averange_Consumption, //ok
-                Average_Reading, //ok
-                multiplier, //ok
-                Meter_Box, //ok
-                Demand_Reset, //ok
-                Test_Block, //ok
-                RemarksCode,
-                remarks_abbreviation, // not OK
-                Remarks, //ok
-                Comment, //ok
-                Reader_ID, //ok
-                meter_reader, //ok
-                Reading_Attempt, //ok
-                Print_Attempt, // ok but no print
-                force_reading, //ok
-                r_latitude, //ok
-                r_longitude, //ok
-                printlatitude, //ok
-                printlongitude, //ok
-                improbable_reading, //ok
-                negative_reading, //ok
-                change_reading, //ok
-                cg_vat_zero_tag, //ok
-                reading_remarks, //ok
-                old_key, // not textbox
-                new_key, // not textbox
-                transfer_data_status, // SMS or LTE function
-                upload_status, //upload function status
-                code, //ok
-                area,
-                rate_code, //ok
-                cummulative_multiplier, //ok
-                oebr_number, //ok
-                Sequence, //ok
-                Reading_TimeStamp, //ok
-                Print_TimeStamp, //ok
-                timestamp, //ok
-                bill_number, // ok
-                GenerationSystem, // ok
-                BenHost, // Bill PECO
-                GRAM, // ok
-                ICERA , // ok
-                PowerArtReduction, // ok
-                TransmissionDelivery, // ok
-                TransmissionDelivery2, // ok
-                System_Loss,// ok
-                Gen_Trans_Rev , // ok
-                DistributionNetwork, // ok
-                DistributionNetwork2 ,// ok
-                DistributionNetwork3 , // ok
-                RetailElectricService , // ok
-                RetailElectricService2 , // ok
-                Metering_cust , // ok
-                Metering_cust_2, // ok
-                Metering_kwh, // Bill
-                loan , // Bill
-                RFSC , // ok
-                Distribution_Rev , // ok
-                MissionaryElectrification , // ok
-                EnvironmentCharge , // ok
-                NPC_StrandedDebts ,  // ok
-                NPC_StrandedCost, // ok
-                DUsCost, // ok
-                DCDistributionCharge, // ok
-                DCDemandCharge, // ok
-                TCTransSystemCharge, // ok
-                SCSupplySysCharge, // ok
-                equal_tax , // ok
-                CrossSubsidyRemoval , // ok
-                Universal_Charges, // ok
-                Lifeline_Charge , // ok
-                InterclassCrossSubsidy  , // ok
-                SeniorCitizenSubsidy, // ok
-                ICCS_Adjustment, // ok
-                ICCrossSubsidyCharge, // ok //ME Renewable Energy Dev ILECO II
-                FitAllCharge, // ok
-                PPD_Adjustment, // ok
-                GenerationCostAdjustment, // ok
-                PowerCostAdjustment, // ok
-                Other_Rev, // ok
-                GenerationVat , // ok
-                TransmissionVat , // ok
-                SystemLossVat , // ok
-                DistributionVat, // ok
-                OtherVat, // ok
-                Government_Rev ,  // ok
-                CurrentBill, // ok
-                amountdue , // ok
-                overdue, // ok
-                franchise_tax, // Bill
-                coreloss, //ok
-                surcharge, //ok
-                rentalfee,
-                delivered, //ok
-                check_previous, // Taging if previous is check
-                ispn,  //PECO
-                SCD, //ok
-                pnrecvdte, //PECO
-                pnrecvby, //PECO
-                recvby, // Delivery
-                hash, //PECO
-                isreset, // DI ALAM NI ALEX
-                isprntd, // DI ALAM NI ALEX
-                meter_count, //ok
-                delivery_id, // Delivery
-                delivery_remarks, // Delivery
-                delivery_comment, // Delivery
-                reading_signature, // Delivery
-                real_property_tax,  //Bill
-                cc_rstc_refund, //Bill
-                cc_rstc_refund2, //Bill
-                moa, //Bill
-                eda, //Bill
-                ModifiedDate,
-                ModifiedBy
-        );
-       // ExportCSV mExportCSV = new ExportCSV();
-       // mExportCSV.Excute("Test");
+                                                    result = ReadingModel.doReadingLogs(
+                                                            Client, //ok
+                                                            CustomerID, //ok
+                                                            AccountNumber, //ok
+                                                            JobId, //ok
+                                                            AccountName, //ok
+                                                            route, //ok
+                                                            itinerary, //ok
+                                                            MeterNumber, //ok
+                                                            serial, //ok
+                                                            previous_reading, //ok
+                                                            Reading, //ok
+                                                            previous_consumption, //ok
+                                                            Present_Consumption, //computation
+                                                            previous_reading_date, //ok
+                                                            present_reading_date, //ok
+                                                            duedate, // if there value currentdate +6 //ok
+                                                            discondate, // duedate +2 days //ok
+                                                            ReadingDate, //ok
+                                                            BillYear, //ok
+                                                            BillMonth, //ok
+                                                            BillDate, //ok
+                                                            month, //ok
+                                                            day, //ok
+                                                            year, //ok
+                                                            Demand, // New TextBox
+                                                            reactive, // ok
+                                                            powerfactor, //ok
+                                                            kw_cummulative, //ok
+                                                            reading1, //ok
+                                                            reading2, //ok
+                                                            reading3, //ok
+                                                            reading4, //ok
+                                                            reading5, //ok
+                                                            reading6, //ok
+                                                            reading7, //ok
+                                                            reading8, //ok
+                                                            reading9, //ok
+                                                            reading10, //ok
+                                                            iwpowerfactor, //ok
+                                                            demand_consumption, //ok
+                                                            reactive_consumption, //ok
+                                                            Averange_Consumption, //ok
+                                                            Average_Reading, //ok
+                                                            multiplier, //ok
+                                                            Meter_Box, //ok
+                                                            Demand_Reset, //ok
+                                                            Test_Block, //ok
+                                                            RemarksCode,
+                                                            remarks_abbreviation, // not OK
+                                                            Remarks, //ok
+                                                            Comment, //ok
+                                                            Reader_ID, //ok
+                                                            meter_reader, //ok
+                                                            Reading_Attempt, //ok
+                                                            Print_Attempt, // ok but no print
+                                                            force_reading, //ok
+                                                            r_latitude, //ok
+                                                            r_longitude, //ok
+                                                            printlatitude, //ok
+                                                            printlongitude, //ok
+                                                            improbable_reading, //ok
+                                                            negative_reading, //ok
+                                                            change_reading, //ok
+                                                            cg_vat_zero_tag, //ok
+                                                            reading_remarks, //ok
+                                                            old_key, // not textbox
+                                                            new_key, // not textbox
+                                                            transfer_data_status, // SMS or LTE function
+                                                            upload_status, //upload function status
+                                                            code, //ok
+                                                            area,
+                                                            rate_code, //ok
+                                                            cummulative_multiplier, //ok
+                                                            oebr_number, //ok
+                                                            Sequence, //ok
+                                                            Reading_TimeStamp, //ok
+                                                            Print_TimeStamp, //ok
+                                                            timestamp, //ok
+                                                            bill_number, // ok
+                                                            GenerationSystem, // ok
+                                                            BenHost, // Bill PECO
+                                                            GRAM, // ok
+                                                            ICERA , // ok
+                                                            PowerArtReduction, // ok
+                                                            TransmissionDelivery, // ok
+                                                            TransmissionDelivery2, // ok
+                                                            System_Loss,// ok
+                                                            Gen_Trans_Rev , // ok
+                                                            DistributionNetwork, // ok
+                                                            DistributionNetwork2 ,// ok
+                                                            DistributionNetwork3 , // ok
+                                                            RetailElectricService , // ok
+                                                            RetailElectricService2 , // ok
+                                                            Metering_cust , // ok
+                                                            Metering_cust_2, // ok
+                                                            Metering_kwh, // Bill
+                                                            loan , // Bill
+                                                            RFSC , // ok
+                                                            Distribution_Rev , // ok
+                                                            MissionaryElectrification , // ok
+                                                            EnvironmentCharge , // ok
+                                                            NPC_StrandedDebts ,  // ok
+                                                            NPC_StrandedCost, // ok
+                                                            DUsCost, // ok
+                                                            DCDistributionCharge, // ok
+                                                            DCDemandCharge, // ok
+                                                            TCTransSystemCharge, // ok
+                                                            SCSupplySysCharge, // ok
+                                                            equal_tax , // ok
+                                                            CrossSubsidyRemoval , // ok
+                                                            Universal_Charges, // ok
+                                                            Lifeline_Charge , // ok
+                                                            InterclassCrossSubsidy  , // ok
+                                                            SeniorCitizenSubsidy, // ok
+                                                            ICCS_Adjustment, // ok
+                                                            ICCrossSubsidyCharge, // ok //ME Renewable Energy Dev ILECO II
+                                                            FitAllCharge, // ok
+                                                            PPD_Adjustment, // ok
+                                                            GenerationCostAdjustment, // ok
+                                                            PowerCostAdjustment, // ok
+                                                            Other_Rev, // ok
+                                                            GenerationVat , // ok
+                                                            TransmissionVat , // ok
+                                                            SystemLossVat , // ok
+                                                            DistributionVat, // ok
+                                                            OtherVat, // ok
+                                                            Government_Rev ,  // ok
+                                                            CurrentBill, // ok
+                                                            amountdue , // ok
+                                                            overdue, // ok
+                                                            franchise_tax, // Bill
+                                                            coreloss, //ok
+                                                            surcharge, //ok
+                                                            rentalfee,
+                                                            delivered, //ok
+                                                            check_previous, // Taging if previous is check
+                                                            ispn,  //PECO
+                                                            SCD, //ok
+                                                            pnrecvdte, //PECO
+                                                            pnrecvby, //PECO
+                                                            recvby, // Delivery
+                                                            hash, //PECO
+                                                            isreset, // DI ALAM NI ALEX
+                                                            isprntd, // DI ALAM NI ALEX
+                                                            meter_count, //ok
+                                                            delivery_id, // Delivery
+                                                            delivery_remarks, // Delivery
+                                                            delivery_comment, // Delivery
+                                                            reading_signature, // Delivery
+                                                            real_property_tax,  //Bill
+                                                            cc_rstc_refund, //Bill
+                                                            cc_rstc_refund2, //Bill
+                                                            moa, //Bill
+                                                            eda, //Bill
+                                                            ModifiedDate,
+                                                            ModifiedBy
+                                                    );
+                                                   // ExportCSV mExportCSV = new ExportCSV();
+                                                   // mExportCSV.Excute("Test");
 
-        return result;
-    }
+                                                    return result;
+                                                }
 
     public static String AverageIleco2Validation(String Remarks,String RemarksCode) {
         String Average_Reading = "False";
         return Average_Reading;
     }
+
     public static String AverageValidation(String Remarks,String RemarksCode) {
         String Average_Reading = "False";
         if (Remarks.contains("*")) {
@@ -1159,14 +1145,15 @@ public class Liquid extends AppCompatActivity{
         }
         return Average_Reading;
     }
-    public static String ConsumptionValidation(String AvgKWH, String PreviousKWH, String KWH) {
 
+    public static String ConsumptionValidation(String AvgKWH, String PreviousKWH, String KWH) {
         double percentage = 0.80;
         double consumption_percentage = 0;
         double high_consumption_range = 0;
         double low_consumption_range = 0;
         double average_consumption = 0;
         average_consumption = Double.valueOf(AvgKWH);
+
         if(Double.parseDouble(KWH) == 0){
             return "ZERO CONSUMPTION";
         }
@@ -1177,7 +1164,6 @@ public class Liquid extends AppCompatActivity{
             return "";
         }
         consumption_percentage = average_consumption * percentage;
-
         //consumption_percentage = Double.parseDouble(AvgKWH) * percentage;
         high_consumption_range = average_consumption + consumption_percentage;
         low_consumption_range = average_consumption - consumption_percentage;
@@ -1186,19 +1172,18 @@ public class Liquid extends AppCompatActivity{
         Log.i(TAG,"consumption_percentage "+ consumption_percentage);
         Log.i(TAG,"high_consumption_range "+ high_consumption_range);
         Log.i(TAG,"low_consumption_range "+ low_consumption_range);
+
         if (Double.parseDouble(KWH) <= low_consumption_range) {
             return "LOW CONSUMPTION";
         }
-
         if (Double.parseDouble(KWH) >= high_consumption_range) {
             return "HIGH CONSUMPTION";
         }
-
         return "";
     }
-// Jan 23, 2020
-// Mariesher B. Zapico
-// New update more power Low Consumptions
+//  Jan 23, 2020
+//  Mariesher B. Zapico
+//  New update more power Low Consumptions
     public static String MorePowerLowConsumptions(String AvgKWH, String KWH) {
         boolean result = false;
         double consumption = 0;
@@ -1213,12 +1198,9 @@ public class Liquid extends AppCompatActivity{
             return "NEGATIVE CONSUMPTION";
         }
 
-
         consumption = Math.abs((avg  - kwh));
-
         avg = avg == 0 ? 1 : avg;
         consumptionpercent = Math.round(((consumption / avg) * 100)) / 100;
-
 
             if  (avg <= 100) {
                 if (consumptionpercent >= 1) {
@@ -1238,11 +1220,8 @@ public class Liquid extends AppCompatActivity{
             else
                 return "";
 
-
         return "";
-
     }
-
     // Jan 23, 2020
     // Mariesher B. Zapico
     // New update more power High Consumptions
@@ -1260,10 +1239,7 @@ public class Liquid extends AppCompatActivity{
             return "NEGATIVE CONSUMPTION";
         }
 
-
-
         consumption = Math.abs((avg  - kwh));
-
         avg = avg == 0 ? 1 : avg;
         consumptionpercent = Math.round(((consumption / avg) * 100)) / 100;
 
@@ -1286,13 +1262,10 @@ public class Liquid extends AppCompatActivity{
 
                 return "";
 
-
         return "";
-
     }
 
     public static String GetKWH(String Multiplier, String PreviousReading, String Reading) {
-
         Log.i(TAG,"mashe test GetKWH reading "+ Reading);
         if(Reading==("") || Reading==(null) || Reading.isEmpty()){
             Reading = "0";
@@ -1300,17 +1273,13 @@ public class Liquid extends AppCompatActivity{
 
         double KWH = 0;
         String Consumption = "";
-
         double mMultiplier = Double.parseDouble(Multiplier);
         double mPreviousReading = Double.parseDouble(PreviousReading);
         double mReading = Double.parseDouble(Reading);
-
         KWH = mReading - mPreviousReading;
-
         KWH = KWH * mMultiplier;
         //ALEX - KWH from rounddown to round Up // 010318
         Consumption = String.valueOf(Liquid.RoundUp(KWH));
-
         return Consumption;
     }
 
@@ -1482,6 +1451,7 @@ public class Liquid extends AppCompatActivity{
                 Liquid.ModifiedBy);
         return result_logs;
     }
+
     public static boolean SaveReading(){
         boolean result = false;
         String customer_id = Liquid.AccountNumber;
@@ -1649,14 +1619,12 @@ public class Liquid extends AppCompatActivity{
                 Liquid.ModifiedDate,
                 Liquid.ModifiedBy);
 
-
        // ExportCSV mExportCSV = new ExportCSV();
        // mExportCSV.Excute("Test");
         return result;
     }
 
     public static boolean SaveSurvey(){
-
         boolean result = false;
 
         result = MeterNotInListModel.Save(  Liquid.SelectedId,
@@ -1730,9 +1698,6 @@ public class Liquid extends AppCompatActivity{
             "middlename" ,
     };
 
-
-
-
     public static String[] CustomerDeliveryColumns = {
             "tracking_number" ,
             "barcode" ,
@@ -1753,6 +1718,7 @@ public class Liquid extends AppCompatActivity{
 
 
     };
+
     public static String[] MeterNotInListColumnsUpdate = {
             "[id]" ,
             "[job_id]" ,
@@ -1786,6 +1752,7 @@ public class Liquid extends AppCompatActivity{
             "[accountnumber]",
             "[serial]"
     };
+
     public static String[] MeterNotInListColumns = {
                     "[job_id]" ,
                     "[client]" ,
@@ -1799,8 +1766,8 @@ public class Liquid extends AppCompatActivity{
                     "[picture]" ,
                     "[latitude]" ,
                     "[longitude]" ,
-            "[house_latitude]" ,
-            "[house_longitude]" ,
+                    "[house_latitude]" ,
+                    "[house_longitude]" ,
                     "[timestamp]" ,
                     "[Reader_ID]" ,
                     "[modifiedby]" ,
@@ -1815,11 +1782,9 @@ public class Liquid extends AppCompatActivity{
                     "[meterbrand]",
                     "[metertype]",
                     "[structure]",
-            "[accountnumber]",
-            "[serial]"
+                    "[accountnumber]",
+                    "[serial]"
     };
-
-
 
     public static String[] ReadingColumns = {
             "[Client] ",
@@ -1980,7 +1945,6 @@ public class Liquid extends AppCompatActivity{
             "[ModifiedBy]",
     };
 
-
     public static String[] DisconnectionTable = {
             "job_id",
             "client",
@@ -2068,6 +2032,7 @@ public class Liquid extends AppCompatActivity{
             "modifieddate",
             "modifiedby",
     };
+
     public static String[] CustomerDisconnectionDownloadColumns = {
             "Client",
             "Code",
@@ -2125,7 +2090,7 @@ public class Liquid extends AppCompatActivity{
             "modifieddate",
             "modifiedby",
 
-};
+    };
 
     public static String[] RatesColumns = {
             "R_Client", //1
@@ -2143,6 +2108,7 @@ public class Liquid extends AppCompatActivity{
             "Rates_ModifiedDate",
             "Rates_ModifiedBy"
     };
+
     public static String[] CustomerReadingColumns = {
             "C_Client",
             "Code",
@@ -2265,18 +2231,20 @@ public class Liquid extends AppCompatActivity{
         Filename = Filename.replaceAll("-","");
         return Filename;
     }
+
     public static String[] joborders = {
             "id",
             "client",
             "details",
             "title",
             "date",
-
     };
+
     public static double getPercent(double count,double over){
         double total = (count / over) * 100;
         return total;
     }
+
     public static String[] audit_job_order = {
             "JobOrderId",
             "Client",
@@ -2286,7 +2254,6 @@ public class Liquid extends AppCompatActivity{
             "Latitude",
             "Longitude",
             "JobOrderDate",
-
     };
 
     public static String[] audit_upload = {
@@ -2300,7 +2267,6 @@ public class Liquid extends AppCompatActivity{
             "Longitude",
             "JobOrderDate",
             "Status"
-
     };
 
     public static String[] CokeCategory = {
@@ -2358,6 +2324,7 @@ public class Liquid extends AppCompatActivity{
 
 
     };
+
     public static String[] StoreStatusServer = {
                  "customer_no",
                 "latitude",
@@ -2369,6 +2336,7 @@ public class Liquid extends AppCompatActivity{
                 "period",
                 "picture",
     };
+
     public static String[] AvailabilityServer = {
             "customer_no",
             "productCode",
@@ -2466,6 +2434,7 @@ public class Liquid extends AppCompatActivity{
             "period",
             "auditor",
     };
+
     public static String[] TrackingCategory = {
             "StoreStatus",
             "Availability",
@@ -2620,13 +2589,12 @@ public class Liquid extends AppCompatActivity{
     public static Bitmap scaleDown(Bitmap realImage,float maxImageSize,boolean filter){
         float ratio = Math.min((float) maxImageSize / realImage.getWidth(),
                 (float) maxImageSize / realImage.getHeight());
-
         int width = Math.round((float) ratio * realImage.getWidth());
         int height = Math.round((float) ratio * realImage.getHeight());
-
         Bitmap newBitmap = Bitmap.createScaledBitmap(realImage,width,height,filter);
         return newBitmap;
     }
+
     public static JSONArray StringToJson(String jsonStr){
         try {
             JSONObject jsonObj = new JSONObject(jsonStr);
@@ -2699,8 +2667,6 @@ public class Liquid extends AppCompatActivity{
 
     }
 
-
-
     public static String doDecode64(String encodeValue) {
         byte[] decodeValue = Base64.decode(encodeValue, Base64.DEFAULT);
         return new String(decodeValue);
@@ -2736,6 +2702,7 @@ public class Liquid extends AppCompatActivity{
         });
         builder.show();
     }
+
     public static void showDialogInfo(final Context context,String title,String Message){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setCancelable(true);
@@ -2750,6 +2717,7 @@ public class Liquid extends AppCompatActivity{
         });
         builder.show();
     }
+
     public static void showDialogNext(final Activity activity,String title,String Message){
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setCancelable(true);
@@ -2856,6 +2824,7 @@ public class Liquid extends AppCompatActivity{
         }
         return "";
     }
+
     public static File getDiscPicture(String AccountNumber,String[] SubFolder){
         //File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
         //String file = Environment.getExternalStorageDirectory().toString();
@@ -2880,6 +2849,7 @@ public class Liquid extends AppCompatActivity{
         return new File(file);
         //return new File(file,"/DCIM");
     }
+
     public static void resizeImage(String mFile,double heightPercent,double widthPercent) {
         //resizes image file to smaller size so it is more efficient for uploading.
         //resize varies to image capture orientation. default is portrait ( height > width )
@@ -2979,6 +2949,7 @@ public class Liquid extends AppCompatActivity{
         String encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
         return encodedImage;
     }
+
     public static String[] Sovi = {
             "customer_id",
             "productname",
@@ -3033,7 +3004,6 @@ public class Liquid extends AppCompatActivity{
             "period",
     };
 
-
     public static String[] CDE = {
             "customer_id",
             "name",
@@ -3045,6 +3015,7 @@ public class Liquid extends AppCompatActivity{
             "comment",
             "period",
     };
+
     public static HashMap<String, Integer> LiquidImages = new HashMap<>();
 
     public static int IntValidation(String data){
@@ -3054,21 +3025,20 @@ public class Liquid extends AppCompatActivity{
 
         return result;
     }
+
     public static void ShowMessage(Context context, String Message){
         Toast.makeText(context,Message,Toast.LENGTH_LONG).show();
     }
     public static String[] LiquidValues = {};
     public static String[] LiquidColumns = {};
-
-
     public static String User = "1";
-
 
     public static long diffDate(Date dateFrom, Date dateTo){
 
         long diff = dateFrom.getTime() - dateTo.getTime();
         return TimeUnit.DAYS.convert(diff,TimeUnit.MILLISECONDS);
     }
+
     public static Date ConvertStringToDate(String date){
         String dtStart = date;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -3082,12 +3052,14 @@ public class Liquid extends AppCompatActivity{
 
         return mDate;
     }
+
     public static String currentDateTime(){
         String current = "";
         CharSequence currentDateTime = android.text.format.DateFormat.format("yyyy-MM-dd HH:mm:ss", new java.util.Date());
         current = currentDateTime.toString();
         return current;
     }
+
     public static String currentDate(){
         String current = "";
         CharSequence currentDateTime = android.text.format.DateFormat.format("yyyy-MM-dd", new java.util.Date());
@@ -3108,7 +3080,6 @@ public class Liquid extends AppCompatActivity{
         current = currentDateTime.toString();
         return current;
     }
-
 
     public static String setUpCurrentDate(String format){
         String current = "";
@@ -3152,7 +3123,6 @@ public class Liquid extends AppCompatActivity{
 
     public static void displayPromptForEnablingGPS(final Activity activity)
     {
-
         final AlertDialog.Builder builder =  new AlertDialog.Builder(activity);
         final String action = Settings.ACTION_LOCATION_SOURCE_SETTINGS;
         final String message = "Please open the GPS, Do you want open GPS setting?";
@@ -3174,16 +3144,11 @@ public class Liquid extends AppCompatActivity{
     }
 
     public static boolean CheckGPS(Context mContext) {
-
-
         LocationManager lm = (LocationManager) mContext.getSystemService(mContext.LOCATION_SERVICE);
         boolean gps_enabled = false;
         boolean network_enabled = false;
-
-
         gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
         network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
         return  gps_enabled;
         //if(!gps_enabled && !network_enabled) {\
         /*if (!gps_enabled) {
@@ -3301,7 +3266,6 @@ public class Liquid extends AppCompatActivity{
         public  String API_Link = "";
 
         public ApiDataField(String Route,String Call_Class,String Call_Method,String Parameters) {
-
             this.Route = Route;
             this.Call_Class = Call_Class;
             this.Call_Method = Call_Method;
@@ -3316,7 +3280,6 @@ public class Liquid extends AppCompatActivity{
 
         }
     }
-
 
     public static class GETUMSAPI {
         public  String Url = "http://"+umsUrl+"/"+pathEnvironment+"/";
@@ -3347,7 +3310,6 @@ public class Liquid extends AppCompatActivity{
                     this.API;
         }
     }
-
 
     public static class GETUMSApiData {
          public  String Url = "http://"+umsUrl+"/"+pathEnvironment+"/tgbl/php/api/";
@@ -3405,8 +3367,6 @@ public class Liquid extends AppCompatActivity{
         }
     }
 
-
-
     public static class GETApiData {
         public  String Url = "http://"+umsUrl+"/"+pathEnvironment+"/";
         public  String API = "";
@@ -3433,8 +3393,6 @@ public class Liquid extends AppCompatActivity{
         }
     }
 
-
-
     public static class CokePOSTUMSApiData {
        public  String Url = "http://"+umsUrl+"/"+pathEnvironment+"/coke/php/api/";
         public  String API = "";
@@ -3448,12 +3406,10 @@ public class Liquid extends AppCompatActivity{
         }
     }
 
-
-
-
     public static String getCokePeriod(String JobId){
         return JobId.substring(0,6);
     }
+
     public static String getCurrentAddress(View view, Double Latitude, Double Longtitude){
         Geocoder mGeocoder;
         List<Address> mLocation;
@@ -3474,9 +3430,6 @@ public class Liquid extends AppCompatActivity{
         }
     }
 
-
-
-
     public static Bitmap UriToBitmap(Uri uri){
         try{
 
@@ -3494,6 +3447,7 @@ public class Liquid extends AppCompatActivity{
         }
 
     }
+
     public static String FormatKWH(String kwh)
     {
         /*int dot = kwh.indexOf('.');
@@ -3526,6 +3480,7 @@ public class Liquid extends AppCompatActivity{
         original += new String(repeat);
         return original;
     }
+
     public static String dateChangeFormat(String data,String currentformat ,String newformat){
         try {
             SimpleDateFormat fromUser = new SimpleDateFormat(currentformat);
@@ -3537,6 +3492,7 @@ public class Liquid extends AppCompatActivity{
             return null;
         }
     }
+
     public static String getDueDate(String mDate){
         try {
             SimpleDateFormat  dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -3591,8 +3547,6 @@ public class Liquid extends AppCompatActivity{
         }
 
     }
-
-
     // Storage Permissions
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
@@ -3603,21 +3557,24 @@ public class Liquid extends AppCompatActivity{
             Manifest.permission.ACCESS_FINE_LOCATION,
 
     };
-    public static String StringRoundUp2D(double num){
 
+    public static String StringRoundUp2D(double num){
         DecimalFormat df = new DecimalFormat("###.####");
         return String.format("%.2f",num );
     }
+
     public static String StringRoundDown2D(double num){
 
         DecimalFormat df = new DecimalFormat("###.####");
         return String.format("%.2f",num );
     }
+
     public static String StringRoundDown4D(double num){
 
         DecimalFormat df = new DecimalFormat("###.####");
         return String.format("%.4f",num );
     }
+
     public static double RoundUp(double num){
        // DecimalFormat df = new DecimalFormat("#.##");
         //return Double.parseDouble(df.format(num));
@@ -3631,6 +3588,7 @@ public class Liquid extends AppCompatActivity{
         //modified: 01/02/19 Rounding Mode
         return new BigDecimal(String.valueOf(num)).setScale(2,RoundingMode.HALF_UP).doubleValue();
     }
+
     public static double RoundDown(double num){
         DecimalFormat df = new DecimalFormat("#.##");
         return Double.parseDouble(df.format(num));
@@ -3640,12 +3598,13 @@ public class Liquid extends AppCompatActivity{
         //double roundOff = Math.round(num * 100) / 100;
         //return roundOff;
     }
-    public static float RoundDown(float num){
 
+    public static float RoundDown(float num){
         float roundOff = (float) (Math.round(num * 100));
         roundOff = roundOff / 100;
         return roundOff;
     }
+
     public static double round(double number){
         BigDecimal bd = new BigDecimal(number);
         bd= bd.setScale(2,BigDecimal.ROUND_UP);
@@ -3653,8 +3612,6 @@ public class Liquid extends AppCompatActivity{
     }
 
     public static double newround2(double value) {
-
-
         return new BigDecimal(String.valueOf(value)).setScale(2,RoundingMode.HALF_UP).doubleValue();
     }
 
@@ -3691,7 +3648,6 @@ public class Liquid extends AppCompatActivity{
             );
             return false;
         }
-
         return true;
     }
 
@@ -3708,9 +3664,6 @@ public class Liquid extends AppCompatActivity{
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }*/
     }
-
-
-
 
     public void hideSoftKeyboard(Activity activity) {
         //InputMethodManager imm = ((InputMethodManager) getSystemService(activity.INPUT_METHOD_SERVICE));
@@ -3758,9 +3711,7 @@ public class Liquid extends AppCompatActivity{
             Log.e(TAG, "Error : ", e);
             return;
         }
-
     }
-
 
     public static void getDeviceLocation(Activity activity){
         try{
@@ -3805,8 +3756,6 @@ public class Liquid extends AppCompatActivity{
         }catch(Exception e){
             Log.e(TAG,"Error ",e);
         }
-
-
         //CameraPosition LastPosition =  CameraPosition.builder().target(new LatLng(Double.parseDouble(String.valueOf(mLiquidGPS.getLatitude())),Double.parseDouble(String.valueOf(mLiquidGPS.getLongitude())))).zoom(30).bearing(0).tilt(45).build();
         //mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(LastPosition));
     }
@@ -3826,7 +3775,6 @@ public class Liquid extends AppCompatActivity{
             Log.e(TAG,"Error : ",e);
             return;
         }
-
     }
 
     public static String ConvertToWholeNumber(String decimalValue){
@@ -3845,12 +3793,10 @@ public class Liquid extends AppCompatActivity{
         double percentage = 10;
         //declare a double variable to assign your super bill computation
         double ResultAverageconsumptionkwh = 0;
-
         // declare a variable to convert present parameter variable from string to double
         double presentkwh = Double.parseDouble(PresentKWH);
         // declare a variable to convert average consumption parameter variable from string to double
         double averageconsumptionkwh = Double.parseDouble(AverageConsumptionKWH);
-
         //computation to get the 1000 percent of average consumption
         ResultAverageconsumptionkwh = averageconsumptionkwh * percentage;
         // create a condition that will return a super bill if present consumption is greater than or equal to 1000 percent of average consumption
@@ -3858,10 +3804,8 @@ public class Liquid extends AppCompatActivity{
             // change the boolean value into true
             SuperBill = true;
         }
-
         //return false
         return SuperBill;
     }
-
 }
 

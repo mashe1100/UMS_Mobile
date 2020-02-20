@@ -12,7 +12,6 @@ public class ImageModel {
     public String Filepath;
     public String  Filename;
 
-
     public ImageModel(String Filepath, String Filename) {
         this.Filepath = Filepath;
         this.Filename = Filename;
@@ -33,7 +32,5 @@ public class ImageModel {
     public void setFilename(String filename) {
         Filename = filename;
     }
-
-
 
 }

@@ -20,6 +20,7 @@ public class MapInfoWindowAdapter  implements InfoWindowAdapter {
         mView = view;
         mView = mActivity.getLayoutInflater().inflate(R.layout.map_mark_info_content, null);
     }
+
     @Override
     public View getInfoWindow(Marker marker) {
         TextView tvTitle = ((TextView) mView.findViewById(R.id.map_title));

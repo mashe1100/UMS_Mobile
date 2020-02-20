@@ -40,7 +40,6 @@ public class Speech implements TextToSpeech.OnInitListener {
         }
     }
 
-
     public void speak(String text){
         // Speak only if the TTS is ready
         // and the user has allowed speech
@@ -53,7 +52,6 @@ public class Speech implements TextToSpeech.OnInitListener {
         }
 
     }
-
 
     public void pause(int duration){
 
@@ -69,6 +67,4 @@ public class Speech implements TextToSpeech.OnInitListener {
         }
        // tts.shutdown();
     }
-
-
 }

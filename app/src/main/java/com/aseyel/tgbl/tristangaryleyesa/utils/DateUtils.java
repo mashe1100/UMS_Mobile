@@ -8,12 +8,10 @@ import java.util.Locale;
  */
 
 public class DateUtils {
-
     // This class should not be initialized
     private DateUtils() {
 
     }
-
 
     /**
      * Gets timestamp in millis and converts it to HH:mm (e.g. 16:44).

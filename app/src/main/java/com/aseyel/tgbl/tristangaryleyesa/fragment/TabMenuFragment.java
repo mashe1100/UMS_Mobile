@@ -43,7 +43,6 @@ import java.util.HashMap;
 
 public class TabMenuFragment extends Fragment {
     public static final String TAG = TabMenuFragment.class.getSimpleName();
-
     private ArrayList<HashMap<String,String>> List;
     private ArrayList<HashMap<String,String>> ListDetails;
     private MainMenuAdapter Adapter;
@@ -64,17 +63,13 @@ public class TabMenuFragment extends Fragment {
         return mView;
     }
 
-
-
     @Override
     public void onResume() {
         super.onResume();
-
         if( Liquid.QRCode != ""){
 //            PostQRCode(Liquid.QRCode);
             Log.i(TAG,Liquid.QRCode);
         }
-
     }
 
     private void setup(View view){
@@ -103,7 +98,6 @@ public class TabMenuFragment extends Fragment {
         HashMap<String,String> Settings = new HashMap<>();
         HashMap<String,String> ChangePassword = new HashMap<>();
         HashMap<String,String> OfficialBusiness = new HashMap<>();
-        //mashe try
         HashMap<String,String> ChangeHost = new HashMap<>();
 
         Backup.put("Id","001");
@@ -134,9 +128,8 @@ public class TabMenuFragment extends Fragment {
         OfficialBusiness.put("Id","008");
         OfficialBusiness.put("Description","Official Business");
         OfficialBusiness.put("FilePath","Official Business");
-//        final_response.add(OfficialBusiness);
 
-        //mashe try
+//        final_response.add(OfficialBusiness);
         if(Liquid.User.equals("000") || Liquid.User.equals("ums_admin")){
             ChangeHost.put("Id","009");
             ChangeHost.put("Description","Change Host");
@@ -150,7 +143,6 @@ public class TabMenuFragment extends Fragment {
             ClearData.put("FilePath","Clear Data");
             final_response.add(ClearData);
         }
-
 
         final_response.add(Backup);
         final_response.add(Import);
@@ -182,7 +174,7 @@ public class TabMenuFragment extends Fragment {
             Log.e(TAG,"Error ",e);
         }
     }
-    //mashe try
+
     public void ChangeHost(){
         try{
             //go to Update/change host activity
@@ -214,7 +206,6 @@ public class TabMenuFragment extends Fragment {
                             }else{
 
                                 Logout();
-
                             }
                             break;
                         case DialogInterface.BUTTON_NEGATIVE:
@@ -232,19 +223,17 @@ public class TabMenuFragment extends Fragment {
             Log.e(TAG,"Error ",e);
         }
     }
-    public void Settings(){
 
+    public void Settings(){
         try{
             Intent i = new Intent(getActivity(), SettingsActivity.class);
             getActivity().startActivity(i);
         }catch(Exception e){
             Log.e(TAG,"Error ",e);
         }
-
-
     }
-    public void ClearData(){
 
+    public void ClearData(){
         try{
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
@@ -269,25 +258,19 @@ public class TabMenuFragment extends Fragment {
         }catch(Exception e){
             Log.e(TAG,"Error ",e);
         }
-
-
     }
+
     public void CreateBackUp(){
-
         try {
-
-
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which){
                         case DialogInterface.BUTTON_POSITIVE:
-
                             final_result = false;
                             new CreateBackUp().execute();
                             break;
                         case DialogInterface.BUTTON_NEGATIVE:
-
                             break;
                     }
                 }
@@ -300,11 +283,9 @@ public class TabMenuFragment extends Fragment {
             e.printStackTrace();
             Liquid.showDialogInfo(mView.getContext(),"Invalid",Liquid.DefaultErrorMessage);
         }
-
     }
 
     public void ImportData(){
-
         try {
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
@@ -328,7 +309,6 @@ public class TabMenuFragment extends Fragment {
             e.printStackTrace();
             Liquid.showDialogInfo(mView.getContext(),"Invalid",Liquid.DefaultErrorMessage);
         }
-
     }
 
     public void GoToAbout(){
@@ -344,11 +324,9 @@ public class TabMenuFragment extends Fragment {
         }catch(Exception e){
             Log.e(TAG,"Error : ",e);
         }
-
     }
 
     public class CreateBackUp extends AsyncTask<Void, Void, Void> {
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -361,13 +339,10 @@ public class TabMenuFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
             try{
-
                 final_result = SplashActivity.mDatabaseHelper.ExportDatabase(Liquid.LiquidDBPath);
-
 
             }catch(Exception e){
                 Log.e(TAG,"Error : ",e);
-
             }
             return null;
         }
@@ -376,9 +351,6 @@ public class TabMenuFragment extends Fragment {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             try{
-
-
-
                 if (mProgressDialog.isShowing())
                     mProgressDialog.dismiss();
 
@@ -398,8 +370,8 @@ public class TabMenuFragment extends Fragment {
             return new String(decodeValue);
         }
     }
-    public class ClearData extends AsyncTask<Void, Void, Void> {
 
+    public class ClearData extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -412,7 +384,6 @@ public class TabMenuFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... params) {
             try{
-
                 final_result = AccountModel.DoUpdateAccountToOut();
 
                 Liquid.deleteRecursive(new File("sdcard/UMS/UMS_"+Liquid.Client+"_Picture"));
@@ -429,8 +400,6 @@ public class TabMenuFragment extends Fragment {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             try{
-
-
                 if (mProgressDialog.isShowing())
                     mProgressDialog.dismiss();
                 if(!final_result){
@@ -450,10 +419,7 @@ public class TabMenuFragment extends Fragment {
         }
     }
 
-
-
     public class ImportData extends AsyncTask<Void, Void, Void> {
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -536,7 +502,6 @@ public class TabMenuFragment extends Fragment {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             try{
-
                 if (mProgressDialog.isShowing())
                     mProgressDialog.dismiss();
 
@@ -555,7 +520,5 @@ public class TabMenuFragment extends Fragment {
             return new String(decodeValue);
         }
     }
-
-
 }
 

@@ -17,7 +17,6 @@ public class BaseFormActivity extends AppCompatActivity {
     @Nullable
     @BindView(R.id.formtoolbar)
     Toolbar toolbar;
-
     private MenuItem formSubmitMenu;
 
     @Override
@@ -31,7 +30,6 @@ public class BaseFormActivity extends AppCompatActivity {
         setupToolbar();
     }
 
-
     protected void setupToolbar() {
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -44,10 +42,4 @@ public class BaseFormActivity extends AppCompatActivity {
         formSubmitMenu  = menu.findItem(R.id.action_form_submit);
         return true;
     }
-
-
-
-
-
-
 }

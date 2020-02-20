@@ -38,7 +38,6 @@ import butterknife.BindView;
 
 public class DeliveryReceived extends BaseFormActivity {
     private static final String TAG = DeliveryReceived.class.getSimpleName();
-
     private TextView txtQuestion;
     private EditText txtQuantity;
     private EditText txtTrackingNumber;
@@ -46,7 +45,6 @@ public class DeliveryReceived extends BaseFormActivity {
     @BindView(R.id.spinnerItemType)
     Spinner spinnerItemType;
     private ArrayAdapter<String> adapterItemType;
-
     //data parameters
     private String Category = "Delivery";
     private String stockInId = "";
@@ -61,13 +59,9 @@ public class DeliveryReceived extends BaseFormActivity {
     private String modifiedBy = "";
     private String[] ItemTypeData;
     private String Client = Liquid.Client;
-
     private List<String> ListOfItemType;
     private EditText[] mEditTextData;
     private Liquid mLiquid;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,10 +76,9 @@ public class DeliveryReceived extends BaseFormActivity {
     private void initData(){
         stockInId = Liquid.currentDateTimeForID();
         stockInTitle = "Messengerial";
-
     }
-    private void setup() {
 
+    private void setup() {
         try{
             mLiquid = new Liquid();
             txtQuestion = (TextView) findViewById(R.id.txtQuestion);
@@ -95,27 +88,20 @@ public class DeliveryReceived extends BaseFormActivity {
             iltTrackingNumber.setVisibility(View.GONE);
             ListOfItemType = new ArrayList<String>();
             txtQuestion.setText("This form is for the reference of the delivery items of the courier.");
-
             //init getting the reference data
             getItemType();
-
             //hiding the keypad on screen
             if(Liquid.HideKeyboard == 1){
                 mEditTextData = new EditText[1];
                 mEditTextData[0] = txtTrackingNumber;
                 mLiquid.hideSoftKeyboard(mEditTextData);
             }
-
-
-
         }catch(Exception e){
             Log.i(TAG,"Error : ",e);
         }
-
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-
         try{
             switch(item.getItemId()){
 
@@ -133,7 +119,6 @@ public class DeliveryReceived extends BaseFormActivity {
             Log.e(TAG, "Error :", e);
             return super.onOptionsItemSelected(item);
         }
-
     }
 
     public void getItemType() {
@@ -146,7 +131,6 @@ public class DeliveryReceived extends BaseFormActivity {
             while (result.moveToNext()) {
                 HashMap<String, String> data = new HashMap<>();
                 ListOfItemType.add(result.getString(0) + "-" + result.getString(1));
-
             }
 
             adapterItemType = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ListOfItemType);
@@ -157,7 +141,6 @@ public class DeliveryReceived extends BaseFormActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     ItemTypeValue = parent.getItemAtPosition(position).toString();
-
                 }
 
                 @Override
@@ -166,11 +149,11 @@ public class DeliveryReceived extends BaseFormActivity {
                 }
             });
         } catch (Exception e) {
-
             Log.e(TAG, "Error : ", e);
             return;
         }
     }
+
     public void saveReceived(){
         boolean result = false;
         ItemTypeData = ItemTypeValue.split("-");
@@ -179,10 +162,12 @@ public class DeliveryReceived extends BaseFormActivity {
         ItemQuantity = Integer.parseInt(txtQuantity.getText().toString());
         stockInDate = Liquid.currentDate();
         TimeStamp = Liquid.currentDateTime();
+
         if(ItemQuantity == 0 && ItemQuantity < 0){
             Liquid.showDialogError(this, "Invalid", "Invalid Item Quantity");
             return;
         }
+
         result = DeliveryModel.doSubmitStockIn(
                                          Client,
                                          stockInId,
@@ -196,14 +181,10 @@ public class DeliveryReceived extends BaseFormActivity {
                                         userId
                 );
 
-
         if(result == true){
             Liquid.showDialogNext(this, "Valid", "Successfully Saved!");
         }else{
             Liquid.showDialogError(this, "Invalid", "Unsuccessfully Saved!");
         }
-
     }
-
-
 }

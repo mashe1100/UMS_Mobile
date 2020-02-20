@@ -45,11 +45,8 @@ public class TrackingAvailabilityActivity extends BaseFormActivity {
         txtQuestion.setText("What is the price of "+Liquid.SelectedDescription+"? Please leave any comment.");
     }
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch(item.getItemId())
         {
             case android.R.id.home:
@@ -83,13 +80,11 @@ public class TrackingAvailabilityActivity extends BaseFormActivity {
                 } else {
                     Liquid.showDialogError(this, "Invalid", "Unsuccessfully Saved!");
                 }
-
-
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
     public void GetData(String AccountNumber,
@@ -117,7 +112,5 @@ public class TrackingAvailabilityActivity extends BaseFormActivity {
             Log.e(TAG,"Error : ",e);
             return;
         }
-
     }
-
 }

@@ -69,6 +69,5 @@ public class ProfileActivity extends BaseActivity {
             Log.e(TAG,"Error : ",e);
             return;
         }
-
     }
 }

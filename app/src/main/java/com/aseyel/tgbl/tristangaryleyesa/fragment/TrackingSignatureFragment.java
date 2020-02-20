@@ -35,16 +35,15 @@ public class TrackingSignatureFragment extends Fragment {
     ArrayList<HashMap<String, String>> ListDetails;
     Liquid.ApiData mApiData;
     View mView;
-
     @BindView(R.id.fabAdd)
     FloatingActionButton fabAdd;
-
     @BindView(R.id.ivSignature)
-            ImageView ivSignature;
+    ImageView ivSignature;
     File[] listFile;
     File mImages;
     @BindView(R.id.txtQuestion)
     TextView txtQuestion;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -58,6 +57,7 @@ public class TrackingSignatureFragment extends Fragment {
         }
         return mView;
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -91,10 +91,5 @@ public class TrackingSignatureFragment extends Fragment {
         }catch(Exception e){
             Log.e(TAG,"Error ",e);
         }
-
     }
-
-
-
-
 }

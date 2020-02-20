@@ -27,8 +27,6 @@ public class workModel {
                 "WHERE id like '%" + job_id + "%' OR " +
                 "details like '%" + job_id + "%'"+
                 "ORDER BY sysentrydate DESC ");
-
-
     }
 
     public static Cursor GetAuditDownload(String job_id,String AccountNumber) {
@@ -49,10 +47,7 @@ public class workModel {
                 "WHERE JobOrderId like '%" + job_id + "%' " +
                 where +
                 "ORDER BY sysentrydate DESC ");
-
-
     }
-
 
     public static Cursor GetDisconnectionSearchDownload(String job_id,String Search) {
         String where = "";
@@ -119,9 +114,8 @@ public class workModel {
                 "WHERE c.job_id like '%" + job_id + "%' " +
                 where +
                 "ORDER BY sysentrydate DESC ");
-
-
     }
+
     public static Cursor GetDisconnectionDownload(String job_id,String AccountNumber) {
         String where = "";
         if(!AccountNumber.equals("")){
@@ -187,11 +181,7 @@ public class workModel {
                 "WHERE c.job_id like '%" + job_id + "%' " +
                 where +
                 "ORDER BY sysentrydate DESC ");
-
-
     }
-
-
 
     public static Cursor GetLastJobID() {
         return SplashActivity.mDatabaseHelper.SqliteSelectQuery("SELECT " +
@@ -205,7 +195,6 @@ public class workModel {
                 "FROM audit_download "
         );
     }
-
 
     public static Cursor GetReadingRemarks(String Remarks){
         return SplashActivity.mDatabaseHelper.SqliteSelectQuery(
@@ -228,9 +217,6 @@ public class workModel {
                         "FROM ref_disconnection_remarks ORDER BY CAST(remarks_id as int)"
         );
     }
-
-
-
 
     public static Cursor GetDisconnectioAccomplishement(String SearchBy,String job_id,String AccountNumber){
         String where = "";
@@ -325,8 +311,8 @@ public class workModel {
                         "c.modifiedby "+ //54
                         where
         );
-
     }
+
     public static Cursor GetReadAndBillDataReaded(String ToGet,String SearchBy,String job_id,String AccountNumber){
         String where = "";
         String orderby = "";
@@ -587,7 +573,6 @@ public class workModel {
     }
 
     public static Cursor GetReadAndBillSelectedJobOrderDetails(String job_id,String AccountNumber) {
-
         return SplashActivity.mDatabaseHelper.SqliteSelectQuery(
                 "SELECT "+
                         "C_Client,"+ //0
@@ -691,7 +676,6 @@ public class workModel {
     }
 
     public static Cursor GetByAMNReadAndBillData(String job_id,String Search) {
-
         return SplashActivity.mDatabaseHelper.SqliteSelectQuery(
                 "SELECT "+
                         "c.C_Client,"+ //0
@@ -789,7 +773,6 @@ public class workModel {
 
 
         );
-
     }
 
     public static Cursor GetCokeLocalJobOrderDetails(String job_id,String AccountNumber) {
@@ -840,7 +823,6 @@ public class workModel {
                         "ORDER BY Name DESC ");
 
     }
-
 
     public static boolean doSubmitNewJobOrder(String JobOrderId,
                                               String client,

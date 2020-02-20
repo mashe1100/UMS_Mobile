@@ -19,10 +19,6 @@ public class JobOrdersDetailsModel {
     public String Accomplishment;
     public String Print;
 
-
-
-
-
     public JobOrdersDetailsModel(String JobOrderId, String AccountNumber, String AccountName, String MeterNumber, String Title, String Details, String Date, double Latitude, double Longitude, String JobOrderDate, String Status,String Accomplishment,String Print) {
 
         this.JobOrderId = JobOrderId;

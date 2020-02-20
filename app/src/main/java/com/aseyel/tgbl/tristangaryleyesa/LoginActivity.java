@@ -51,10 +51,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         setup();
 
-
             AutoLogin("ums_job");
 //            AutoLogin("ums_delivery");
-
     }
 
     private void BarcodeLogin(String barcode){
@@ -62,7 +60,6 @@ public class LoginActivity extends AppCompatActivity {
             Username = barcode;
             Password = barcode;
             new GetUserListDetails().execute();
-
             new UMSAuth().execute(Username,Password,"ums_job");
         }catch (Exception e){}
     }
@@ -78,9 +75,6 @@ public class LoginActivity extends AppCompatActivity {
                             .setTitle(event.getCharacters())
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-
-
-
 
                                 }
                             })
@@ -101,7 +95,6 @@ public class LoginActivity extends AppCompatActivity {
 
             }catch (Exception e){}
         }
-
         return super.dispatchKeyEvent(event);
     }
 
@@ -133,23 +126,26 @@ public class LoginActivity extends AppCompatActivity {
         mThread = new Thread(mRunnable);
         mThread.start();
     }
-    private void setup(){
 
+    private void setup(){
         try{
             SplashActivity.mDatabaseHelper.UpdateDatabase();
             etUsername  = (EditText) findViewById(R.id.etUsername);
             etUsername.addTextChangedListener(new TextWatcher() {
                 int charcount = 0;
                 String character = "";
+
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                     charcount = etUsername.getText().toString().length();
                     character = etUsername.getText().toString();
                 }
+
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
                 }
+
                 @Override
                 public void afterTextChanged(Editable s) {
                     if(etUsername.getText().toString().length() != 0)
@@ -167,15 +163,18 @@ public class LoginActivity extends AppCompatActivity {
             etPassword.addTextChangedListener(new TextWatcher() {
                 int charcount = 0;
                 String character = "";
+
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                     charcount = etPassword.getText().toString().length();
                     character = etPassword.getText().toString();
                 }
+
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
                 }
+
                 @Override
                 public void afterTextChanged(Editable s) {
                     if(etPassword.getText().toString().length() != 0)
@@ -195,29 +194,21 @@ public class LoginActivity extends AppCompatActivity {
                         btnLogin.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-
                                         String status = "";
-
                                         Username = etUsername.getText().toString();
                                         Password = etPassword.getText().toString();
                                         //result = UMSAuthentication(Username,Password);
                                         new GetUserListDetails().execute();
-
                                         new UMSAuth().execute(Username,Password,"ums_job");
-                //                        new UMSAuth().execute(Username,Password,"ums_delivery");
-
-
-
+                                        //new UMSAuth().execute(Username,Password,"ums_delivery");
                                         //new UMSAuthAPI().execute(Username,Password,"ums_ai");
                                         //new UMSAuthAPI().execute(Username,Password,"ums_logistics");
                                         //new UMSAuth().execute(Username,Password,"ums_delivery");
-
                 }
             });
         }catch(Exception e){
             Log.e(TAG,"Error ",e);
         }
-
         //getting the user on the server
         //UpdateUser();
     }
@@ -240,7 +231,6 @@ public class LoginActivity extends AppCompatActivity {
                 break;
         }
 
-
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(i);
         finish();
@@ -254,8 +244,6 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
             while(result.moveToNext()){
-
-
                 Liquid.User = result.getString(0);
                 Login(type);
             }
@@ -266,6 +254,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
+
     public boolean UMSAuthentication(String Username,String Password){
         Cursor result = AccountModel.GetAccount(Username);
         try
@@ -290,23 +279,16 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-
-
-
-
     public class UMSAuthAPI extends AsyncTask<String, Void, Void> {
-
         String type;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
             mProgressDialog = new ProgressDialog(LoginActivity.this);
             mProgressDialog.setMessage("Please wait...");
             mProgressDialog.setCancelable(false);
             mProgressDialog.show();
-
         }
 
         @Override
@@ -412,8 +394,10 @@ public class LoginActivity extends AppCompatActivity {
             return new String(decodeValue);
         }
     }
+
     public class UMSAuth extends AsyncTask<String, Void, Void> {
         String type;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -445,7 +429,6 @@ public class LoginActivity extends AppCompatActivity {
                         auth_result = false;
                     }
                 }
-
             }catch (final Exception e) {
                 Log.e(TAG,"Error : ",e);
             }
@@ -458,8 +441,6 @@ public class LoginActivity extends AppCompatActivity {
             try{
                 if (mProgressDialog.isShowing())
                     mProgressDialog.dismiss();
-
-
                 if(!auth_result){
                     Liquid.showDialogInfo(LoginActivity.this,"Invalid","Username / Password");
                 }else{
@@ -492,23 +473,20 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-//            mProgressDialog = new ProgressDialog(LoginActivity.this);
-//            mProgressDialog.setMessage("Please wait...");
-//            mProgressDialog.setCancelable(false);
-//            mProgressDialog.show();
-
+            //mProgressDialog = new ProgressDialog(LoginActivity.this);
+            //mProgressDialog.setMessage("Please wait...");
+            //mProgressDialog.setCancelable(false);
+            //mProgressDialog.show();
         }
 
         @Override
         protected Void doInBackground(Void... params) {
-
             HttpHandler sh = new HttpHandler();
 
             try{
                 mApiData = new Liquid.ApiDataField("field-route.php","fieldController","get_rover_users","client="+ Liquid.Client);
 
                 String jsonStr = sh.makeServiceCall(mApiData.API_Link);
-
                 // Making a request to url and getting response
                 if (jsonStr != null) {
                     try {
@@ -525,14 +503,11 @@ public class LoginActivity extends AppCompatActivity {
                             String Password = "";
                             if (c.getString("password").equals("")){
                                 Password = Liquid.md5(c.getString("id"));
-
                             }
-
                             else
                             {
                                 Password = c.getString("password");
                             }
-
 
                             data.put("UserID",c.getString("id"));
                             data.put("Username",c.getString("id"));
@@ -544,10 +519,7 @@ public class LoginActivity extends AppCompatActivity {
                             data.put("firstname", c.getString("firstname"));
                             data.put("middlename", c.getString("middlename"));
                             data.put("position", c.getString("position"));
-
                             final_result_user.put(data);
-
-
                         }
 
                         boolean query_result = false;
@@ -563,7 +535,6 @@ public class LoginActivity extends AppCompatActivity {
                             String lastname = c.getString("firstname");
                             String middlename = c.getString("middlename");
                             String position = c.getString("position");
-
 
                             query_result = AccountModel.doSubmitAccountDetails(
                                     UserId,
@@ -595,23 +566,19 @@ public class LoginActivity extends AppCompatActivity {
             } catch (Exception e){
                 Log.e(TAG,"Error: ",e);
             }
-
             return null;
-
         }
 
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             try{
-
 //                if (mProgressDialog.isShowing())
 //                    mProgressDialog.dismiss();
 
             }catch (final Exception e) {
                 Log.e(TAG,"Error : ",e);
             }
-
         }
 
         public String doDecode64(String encodeValue) {
@@ -619,7 +586,5 @@ public class LoginActivity extends AppCompatActivity {
             return new String(decodeValue);
         }
     }
-
-
 }
 

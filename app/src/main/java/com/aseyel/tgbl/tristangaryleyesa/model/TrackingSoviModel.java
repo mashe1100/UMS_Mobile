@@ -13,7 +13,6 @@ public class TrackingSoviModel {
     public  String productTimeStamp;
     public  String productModifiedby;
     public  String productPicturePath;
-
     public  int productNumKof;
     public  int productNumNonKof;
     public  int productNumCans;

@@ -36,23 +36,20 @@ public class JobOrderAdapater extends RecyclerView.Adapter<RecyclerView.ViewHold
     public static final String ACTION_DOWNLOAD_BUTTON_CLICKED = "action_download_button_button";
     public static final int VIEW_TYPE_DEFAULT = 1;
     public static final int VIEW_TYPE_LOADER = 2;
-
     private Fragment fragment;
     View view;
     private final List<JobOrdersModel> JobOrdersListItems = new ArrayList<>();
 
-
     public JobOrderAdapater(Fragment fragment) {
         this.fragment = fragment;
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
              view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_joborder,parent,false);
             CellJobOrderViewHolder mCellJobOrderViewHolder = new CellJobOrderViewHolder(view);
             setupClickableViews(view,mCellJobOrderViewHolder);
             return mCellJobOrderViewHolder;
-
     }
 
     @Override
@@ -61,7 +58,6 @@ public class JobOrderAdapater extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     private void setupClickableViews(final View view, final CellJobOrderViewHolder mCellJobOrderViewHolder) {
-
         mCellJobOrderViewHolder.btnDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,19 +70,17 @@ public class JobOrderAdapater extends RecyclerView.Adapter<RecyclerView.ViewHold
                     String details =  JobOrdersListItems.get(adapterPosition).getDetails();
                     String cycle =  JobOrdersListItems.get(adapterPosition).getCycle();
                     notifyItemChanged(adapterPosition, ACTION_DOWNLOAD_BUTTON_CLICKED);
-                    if (fragment instanceof TabCloudFragment) {
 
+                    if (fragment instanceof TabCloudFragment) {
                        /* if(((TabCloudFragment) fragment).doDownloadJobOrder(JobOrderId,date,title,details) == true) {
                             ((TabCloudFragment) fragment).new GetJobOrderListDetails().execute(JobOrderId);
                         }*/
                         ((TabCloudFragment) fragment).DoDownload(JobOrderId,date,title,details,cycle);
-
                     }
                 }
                 catch(Exception e){
                     Log.e(TAG,"Error : ",e);
                 }
-
             }
         });
 
@@ -103,22 +97,20 @@ public class JobOrderAdapater extends RecyclerView.Adapter<RecyclerView.ViewHold
                     String cycle =  JobOrdersListItems.get(adapterPosition).getCycle();
                     notifyItemChanged(adapterPosition, ACTION_DOWNLOAD_BUTTON_CLICKED);
                     if (fragment instanceof TabCloudFragment) {
-
                        /* if(((TabCloudFragment) fragment).doDownloadJobOrder(JobOrderId,date,title,details) == true) {
                             ((TabCloudFragment) fragment).new GetJobOrderListDetails().execute(JobOrderId);
                         }*/
                         ((TabCloudFragment) fragment).DoOtherDownload(JobOrderId,date,title,details,cycle);
-
                     }
                 }
                 catch(Exception e){
                     Log.e(TAG,"Error : ",e);
                 }
-
             }
         });
 
     }
+
     @Override
     public int getItemCount() {
         return JobOrdersListItems.size();
@@ -146,8 +138,6 @@ public class JobOrderAdapater extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     }
 
-
-
     public static class CellJobOrderViewHolder extends RecyclerView.ViewHolder {
         //@BindView(R.id.ivJobOrderCenter)
         //ImageView ivJobOrderCenter;
@@ -173,8 +163,6 @@ public class JobOrderAdapater extends RecyclerView.Adapter<RecyclerView.ViewHold
         @BindView(R.id.btnOtherDownloads)
         ImageButton btnOtherDownloads;
 
-
-
         public CellJobOrderViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
@@ -183,7 +171,6 @@ public class JobOrderAdapater extends RecyclerView.Adapter<RecyclerView.ViewHold
         public void bindView(JobOrdersModel JobOrdersItems) {
             this.JobOrdersItems = JobOrdersItems;
             int adapterPosition = getAdapterPosition();
-
             btnOtherDownloads.setVisibility(View.GONE);
             if(Liquid.ServiceType == "READ AND BILL"){
                 btnOtherDownloads.setVisibility(View.VISIBLE);
@@ -197,11 +184,4 @@ public class JobOrderAdapater extends RecyclerView.Adapter<RecyclerView.ViewHold
             return JobOrdersItems;
         }
     }
-
-
-
-
-
-
-
 }

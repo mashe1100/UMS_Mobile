@@ -56,6 +56,7 @@ public class ReadingRemarksAdapater extends RecyclerView.Adapter<RecyclerView.Vi
         this.context = context;
         this.fragment = fragment;
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_reading_remarks,parent,false);
@@ -76,7 +77,6 @@ public class ReadingRemarksAdapater extends RecyclerView.Adapter<RecyclerView.Vi
             public void onClick(View v) {
                 Intent i;
                 int adapterPosition = mCellViewHolder.getAdapterPosition();
-
 
                 try
                 {
@@ -143,23 +143,17 @@ public class ReadingRemarksAdapater extends RecyclerView.Adapter<RecyclerView.Vi
                                     i = new Intent(view.getContext(), SignatureActivity.class);
                                     view.getContext().startActivity(i);
                                     break;
-
                             }
-
                             break;
                     }
-
                     //Remove due to camera will be in first step
                     //Intent i = new Intent(view.getContext(), ReadingGalleryActivity.class);
-
                 }
                 catch(Exception e){
                     Log.e(TAG, e.toString(),e);
                 }
-
             }
         });
-
     }
 
     public void DeleteItem(int adapterPosition){
@@ -182,7 +176,6 @@ public class ReadingRemarksAdapater extends RecyclerView.Adapter<RecyclerView.Vi
                             Data.get(i).get("Details"),
                             Data.get(i).get("Date"),
                             Data.get(i).get("Filepath")
-
                     )
             ));
         }
@@ -192,8 +185,6 @@ public class ReadingRemarksAdapater extends RecyclerView.Adapter<RecyclerView.Vi
             notifyDataSetChanged();
         }
     }
-
-
 
     public static class CellViewHolder extends RecyclerView.ViewHolder {
         @BindView (R.id.card_view)
@@ -214,9 +205,9 @@ public class ReadingRemarksAdapater extends RecyclerView.Adapter<RecyclerView.Vi
         LinearLayout llDetails;
         //@BindView(R.id.btnDelete)
         // ImageButton btnDelete;
-
         ListModel Items;
         View view;
+
         public CellViewHolder(View view) {
             super(view);
             this.view = view;
@@ -242,11 +233,4 @@ public class ReadingRemarksAdapater extends RecyclerView.Adapter<RecyclerView.Vi
             return Items;
         }
     }
-
-
-
-
-
-
-
 }

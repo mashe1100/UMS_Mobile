@@ -58,6 +58,7 @@ public class JobOrderDetailsAdapater extends RecyclerView.Adapter<RecyclerView.V
     public JobOrderDetailsAdapater(Fragment fragment) {
         this.fragment = fragment;
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_joborderdetails,parent,false);
@@ -179,18 +180,14 @@ public class JobOrderDetailsAdapater extends RecyclerView.Adapter<RecyclerView.V
                 catch(Exception e){
                     Log.e(TAG, e.toString(),e);
                 }
-
             }
         });
-
-
     }
 
     public void DeleteItem(int adapterPosition){
         ListItems.remove(adapterPosition);
         notifyItemRemoved(adapterPosition);
     }
-
 
     public void NextActivity(View view,String JobType){
         Intent i;
@@ -220,16 +217,16 @@ public class JobOrderDetailsAdapater extends RecyclerView.Adapter<RecyclerView.V
                             //ILECO II Request by sir dwight, joelen, vincent
                             i = new Intent(view.getContext(), ReadingGalleryActivity.class);
                 }
-
                 view.getContext().startActivity(i);
-
                 break;
+
             case "DISCONNECTOR":
                 i = new Intent(view.getContext(), DisconnectionActivity.class);
                 view.getContext().startActivity(i);
                 break;
         }
     }
+
     @Override
     public int getItemCount() {
        // return Math.min(ListItems.size(),Liquid.RecyclerItemLimit);
@@ -241,7 +238,6 @@ public class JobOrderDetailsAdapater extends RecyclerView.Adapter<RecyclerView.V
         //if(Data.size() == 0 && ListItems.size() != 0){
         //    notifyItemRangeRemoved(0,ListItems.size());
         //}
-
         ListItems.clear();
         for(int i = 0; i < Data.size(); i++) {
             if(Data.get(i).get("Print") == null)
@@ -266,7 +262,6 @@ public class JobOrderDetailsAdapater extends RecyclerView.Adapter<RecyclerView.V
             ));
         }
 
-
         if(animated){
             notifyItemRangeInserted(0, ListItems.size());
         }else{
@@ -275,8 +270,6 @@ public class JobOrderDetailsAdapater extends RecyclerView.Adapter<RecyclerView.V
             notifyDataSetChanged();
         }
     }
-
-
 
     public static class CellViewHolder extends RecyclerView.ViewHolder {
         @BindView (R.id.card_view)
@@ -364,16 +357,8 @@ public class JobOrderDetailsAdapater extends RecyclerView.Adapter<RecyclerView.V
             tvJobOrderDetailsAging.setText(JobOrdersDetailsItems.Date);
             tsJobOrderDetailsDetails.setCurrentText(adapterPosition % 2 == 0 ? JobOrdersDetailsItems.Details : JobOrdersDetailsItems.Details);
         }
-
         public JobOrdersDetailsModel getJobOrdersDetailsItems() {
             return JobOrdersDetailsItems;
         }
     }
-
-
-
-
-
-
-
 }

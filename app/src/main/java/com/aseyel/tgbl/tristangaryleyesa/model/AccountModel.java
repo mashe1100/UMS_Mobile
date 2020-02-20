@@ -35,7 +35,6 @@ public class AccountModel {
         );
     }
 
-
     public static boolean DoUpdateAccountAutoLogin(
             String Username
     ){
@@ -137,8 +136,5 @@ public class AccountModel {
             Log.e(TAG, "Error", e);
             return false;
         }
-
-
     }
-
 }

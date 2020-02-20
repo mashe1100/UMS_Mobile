@@ -48,14 +48,13 @@ public class TrackingActivationFragment extends Fragment implements SwipeRefresh
     FloatingActionButton floatBtnGallery;
     @BindView(R.id.rvTrackingActivationList)
     RecyclerView rvList;
-
     @BindView(R.id.fabTrackingActivationAdd)
     FloatingActionButton fabTrackingActivationAdd;
-
     private SwipeRefreshLayout mSwipeRefreshLayout;
     String Category = "Merchandising Materials";
     @BindView (R.id.floatBtnComment)
     FloatingActionButton floatBtnComment;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,11 +65,13 @@ public class TrackingActivationFragment extends Fragment implements SwipeRefresh
         GetData(true,Liquid.SelectedAccountNumber,"","",Liquid.SelectedPeriod);
         return mView;
     }
+
     @Override
     public void onResume() {
         super.onResume();
         GetData(false,Liquid.SelectedAccountNumber,"","",Liquid.SelectedPeriod);
     }
+
     private void setup(View view) {
         try {
             //Initialization
@@ -153,6 +154,7 @@ public class TrackingActivationFragment extends Fragment implements SwipeRefresh
                 .setNegativeButton("No", dialogClickListener).show();
 
     }
+
     public void GetData(boolean animated,
                         String AccountNumber,
                         String Description,
@@ -199,15 +201,12 @@ public class TrackingActivationFragment extends Fragment implements SwipeRefresh
             Log.e(TAG,"Error : ",e);
             return;
         }
-
     }
 
     private String GetImagesThumbnail(String value, String value2){
-
         mImages = Liquid.getDiscPicture(Liquid.SelectedAccountNumber,Subfolder);
         if(!mImages.exists() && !mImages.mkdirs()){
             Liquid.ShowMessage(mView.getContext(),"Can't create directory to save image");
-
         }
         else{
             listFile = mImages.listFiles();
@@ -224,7 +223,6 @@ public class TrackingActivationFragment extends Fragment implements SwipeRefresh
         }
         return "";
     }
-
 
     @Override
     public void onRefresh() {

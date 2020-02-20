@@ -87,10 +87,6 @@ public class DeliveryModel {
 
     public static Cursor GetSearchMessengerial(String JobId,String TrackingNumber){
 
-
-
-
-
         return SplashActivity.mDatabaseHelper.SqliteSelectQuery(
                 "select " +
                         "m_client,"+ //0
@@ -118,11 +114,8 @@ public class DeliveryModel {
 
         );
     }
+
     public static Cursor GetMessengerial(String JobId,String TrackingNumber){
-
-
-
-
 
         return SplashActivity.mDatabaseHelper.SqliteSelectQuery(
                 "select " +

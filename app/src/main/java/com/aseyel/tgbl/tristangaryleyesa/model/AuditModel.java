@@ -13,7 +13,6 @@ import java.util.HashMap;
 /**
  * Created by Romeo on 2018-02-20.
  */
-
 public class AuditModel {
     private static final String TAG = AuditModel.class.getSimpleName();
     public static boolean doSubmitAuditTravelRide(String JobOrderId,
@@ -26,8 +25,6 @@ public class AuditModel {
                                                   String Longitude,
                                                   String JobOrderDate,
                                                   String Status
-
-
     ){
         try{
             boolean result = false;
@@ -43,7 +40,6 @@ public class AuditModel {
                     Longitude,
                     JobOrderDate,
                     Status
-
             };
             result = SplashActivity.mDatabaseHelper.SqliteInsertQuery("audit_upload",Liquid.LiquidColumns,Liquid.LiquidValues);
             return result;
@@ -69,6 +65,7 @@ public class AuditModel {
                         "FROM meter_reading_pictures  "+
                        "WHERE transfer_status = '"+status+"' ");
     }
+
     public static Cursor GetPicture(String AccountNumber) {
         String where = "";
         if(!AccountNumber.equals("")){
@@ -91,8 +88,6 @@ public class AuditModel {
                         "ORDER BY timestamp ASC ");
     }
 
-
-
     public static Cursor GetGroupPicture(String AccountNumber) {
         return SplashActivity.mDatabaseHelper.SqliteSelectQuery(
                 "SELECT " +
@@ -110,8 +105,6 @@ public class AuditModel {
                         "GROUP BY AccountNumber "+
                         "ORDER BY timestamp ASC ");
     }
-
-
 
     public static boolean doSubmitPicture( String client,
                                            String AccountNumber,
@@ -144,14 +137,12 @@ public class AuditModel {
             return false;
         }
     }
+
     public static boolean doSubmitUpdateAuditTravelRide(
                                                   String AuditNoId,
-
                                                   String Vehicle,
                                                   String Fare,
                                                   String Comment
-
-
 
     ){
         try{
@@ -180,7 +171,6 @@ public class AuditModel {
         }
     }
 
-
     public static boolean doSubmitUpdateAuditStatus(
             String AccountNumber,
             String Status
@@ -207,6 +197,7 @@ public class AuditModel {
             return false;
         }
     }
+
     public static Cursor GetAuditTravelRides(String JobOrderId, String AccountNumber, String AuditId,String search) {
         return SplashActivity.mDatabaseHelper.SqliteSelectQuery("SELECT " +
                 "JobOrderId," + //0
@@ -226,10 +217,7 @@ public class AuditModel {
                 "WHERE JobOrderId like '%" + JobOrderId + "%' AND AccountNumber like '%"+AccountNumber+"%' AND AuditId like '%"+AuditId+"%'" +
                 "AND Vehicle like '%"+search+"%' " +
                 "ORDER BY sysentrydate DESC ");
-
-
     }
-
 
     public static ArrayList<HashMap<String, String>> GetAuditDownload(String job_id, String AccountNumber){
         String Details = "";
@@ -238,7 +226,6 @@ public class AuditModel {
         Cursor result = workModel.GetAuditDownload(job_id,AccountNumber);
         try
         {
-
             if(result.getCount() == 0){
                 return null;
             }
@@ -258,10 +245,7 @@ public class AuditModel {
                 data.put("Accomplishment","");
                 final_result.add(data);
             }
-
-
           return final_result;
-
         }
         catch(Exception e){
             Log.e(TAG,"Error : ",e);

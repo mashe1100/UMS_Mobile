@@ -44,6 +44,7 @@ public class TrackingActivationAdapter extends RecyclerView.Adapter<RecyclerView
     public TrackingActivationAdapter(Fragment fragment) {
         this.fragment = fragment;
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tracking_activation,parent,false);
@@ -128,10 +129,7 @@ public class TrackingActivationAdapter extends RecyclerView.Adapter<RecyclerView
         }
     }
 
-
-
     public static class CellViewHolder extends RecyclerView.ViewHolder {
-
         @BindView(R.id.ivTrackingActivationProfile)
         ImageView ivTrackingActivationProfile;
         @BindView(R.id.tvTrackingActivationDetails)
@@ -154,10 +152,9 @@ public class TrackingActivationAdapter extends RecyclerView.Adapter<RecyclerView
         public void bindView(TrackingActivationModel Items) {
             this.Items = Items;
             int adapterPosition = getAdapterPosition();
-
-
             tsTrackingActivationDetails.setCurrentText(adapterPosition % 2 == 0 ? Items.Details : Items.Details);
             tvTrackingActivationTitle.setText(adapterPosition % 2 == 0 ? Items.Title : Items.Title);
+
             if(Items.getFilepath().equals("")){
                 ivLocalTrackingActivationCenter.setImageResource(R.drawable.img_ums);
             }else{
@@ -165,18 +162,9 @@ public class TrackingActivationAdapter extends RecyclerView.Adapter<RecyclerView
                 Bitmap bMapScaled = Bitmap.createScaledBitmap(bmp, 600, 600, true);
                 ivLocalTrackingActivationCenter.setImageBitmap(bMapScaled);
             }
-
         }
-
         public TrackingActivationModel getItems() {
             return Items;
         }
     }
-
-
-
-
-
-
-
 }

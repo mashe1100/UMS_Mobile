@@ -55,6 +55,7 @@ public class PWPersonIdentifierQRodeActivity extends AppCompatActivity {
     File mImages;
     LiquidFile mLiquidFile;
     ArrayList<Uri> mUri = new ArrayList<Uri>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,7 +107,6 @@ public class PWPersonIdentifierQRodeActivity extends AppCompatActivity {
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mFile));
                     mUri.add(Uri.fromFile(mFile));
                     startActivityForResult(intent,CAM_REQUEST);
-
                 }
                 catch (Exception e){
                    Log.e(TAG,"Error ",e);
@@ -115,15 +115,16 @@ public class PWPersonIdentifierQRodeActivity extends AppCompatActivity {
         });
         tvDetails.setText("ID:\nFullname: ");
     }
+
     public void onResume() {
         super.onResume();
+
         if( Liquid.QRCode == ""){
 
         }else{
             PostQRCode(Liquid.QRCode);
             Log.i(TAG,Liquid.QRCode);
         }
-
     }
 
     public void PostQRCode(String QRCode){
@@ -136,7 +137,6 @@ public class PWPersonIdentifierQRodeActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 
     public void doBulkPostToServerUnecrypted(
@@ -149,6 +149,7 @@ public class PWPersonIdentifierQRodeActivity extends AppCompatActivity {
             pDialog.setMessage("Please wait...");
             pDialog.setCancelable(false);
             pDialog.show();
+
             StringRequest mStringRequest   = new StringRequest (Request.Method.POST,ApiLink ,new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -192,8 +193,6 @@ public class PWPersonIdentifierQRodeActivity extends AppCompatActivity {
                         return null;
                     }
                 }
-
-
             };
 
             RequestQueue requestQueue = Volley.newRequestQueue(PWPersonIdentifierQRodeActivity.this);

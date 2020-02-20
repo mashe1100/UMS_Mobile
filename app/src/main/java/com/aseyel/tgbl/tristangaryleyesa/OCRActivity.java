@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class OCRActivity extends AppCompatActivity {
-
     SurfaceView cameraView;
     TextView textView;
     CameraSource cameraSource;
@@ -59,21 +58,19 @@ public class OCRActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocr);
-
         cameraView = (SurfaceView) findViewById(R.id.surface_view);
         textView = (TextView) findViewById(R.id.text_view);
-
         Button button = (Button)findViewById(R.id.submit);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
 
             }
         });
 
         TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
+
         if (!textRecognizer.isOperational()) {
             Toast.makeText(this, "Detector not available yet.", Toast.LENGTH_SHORT).show();
         } else {
@@ -83,6 +80,7 @@ public class OCRActivity extends AppCompatActivity {
                     .setRequestedFps(2.0f)
                     .setAutoFocusEnabled(true)
                     .build();
+
             cameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
                 @Override
                 public void surfaceCreated(SurfaceHolder surfaceHolder) {

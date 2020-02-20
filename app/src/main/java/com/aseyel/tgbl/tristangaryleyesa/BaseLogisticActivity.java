@@ -19,9 +19,6 @@ public class BaseLogisticActivity extends AppCompatActivity {
     @Nullable
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
-
-
     private MenuItem searchMenuItem;
 
     @Override
@@ -29,10 +26,12 @@ public class BaseLogisticActivity extends AppCompatActivity {
         super.setContentView(layoutResID);
         bindViews();
     }
+
     protected void bindViews() {
         ButterKnife.bind(this);
         setupToolbar();
     }
+
     public void setContentViewWithoutInject(int layoutResId) {
         super.setContentView(layoutResId);
     }
@@ -48,17 +47,11 @@ public class BaseLogisticActivity extends AppCompatActivity {
                     default:
                         toolbar.setNavigationIcon(R.drawable.ic_profile);
             }
-
         }
     }
-
-
 
     public Toolbar getToolbar() {
         return toolbar;
     }
-
-
-
 
 }

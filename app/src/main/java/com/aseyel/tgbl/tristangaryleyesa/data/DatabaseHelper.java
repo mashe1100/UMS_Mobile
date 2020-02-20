@@ -31,10 +31,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
         SQLiteDatabase db = this.getWritableDatabase();
-
         //Log.i(TAG,"Tristan "+context.getDatabasePath(DATABASE_NAME).toString());
         //onUpgrade(db,1,1);
     }
+
     public void UpdateDatabase(){
         try{
             SQLiteDatabase db = this.getWritableDatabase();
@@ -50,14 +50,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         }
                         break;
                 }
-
                 db.execSQL(LiquidReference.DeleteAdmin);
                 db.execSQL(LiquidReference.Admin);
-
-                //mashe try
                 db.execSQL(LiquidReference.UMShost);
                 db.execSQL(LiquidReference.Host);
-
           //  }
            // if(Liquid.currentDate().equals("2019-03-02") || Liquid.currentDate().equals("2019-03-03")){
                 db.execSQL(LiquidReference.AlterStatusPicture);
@@ -71,10 +67,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 db.execSQL(LiquidReference.AlterLongitudeCustomerReadingDownload);
             //}
 
-
-
-
-
         }catch(Exception e){
             Log.e(TAG,"Tristan :",e);
         }
@@ -84,7 +76,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             for(int a = 0; a < LiquidReference.MeterReadingRemarksData.length; a++) {
                 db.execSQL(LiquidReference.MeterReadingRemarksData[a]);
             }*/
-
         }catch(Exception e){
             Log.e(TAG,"Tristan :",e);
         }
@@ -108,24 +99,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
     }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         //Create Table
-
         try{
             db.execSQL(LiquidReference.UMSSettings);
             for(int a = 0; a < LiquidReference.SettingsData.length; a++){
                 db.execSQL(LiquidReference.SettingsData[a]);
             }
-            //mashe try table
             db.execSQL(LiquidReference.UMShost);
-
             db.execSQL(LiquidReference.UMSAccount);
             db.execSQL(LiquidReference.Admin);
             //Audit TABLE
             db.execSQL(LiquidReference.AuditDownload);
             db.execSQL(LiquidReference.AuditUpload);
-
             //Tracking TABLE
             db.execSQL(LiquidReference.CokeCustomerTable);
             db.execSQL(LiquidReference.JobOrderTable);
@@ -170,8 +158,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.execSQL(LiquidReference.CustomerDeliveryList);
             db.execSQL(LiquidReference.ItemType);
             db.execSQL(LiquidReference.StockInItem);
-
-
             //MeterReading
             db.execSQL(LiquidReference.MeterReadingCustomerReadingDownloads);
             db.execSQL(LiquidReference.MeterReadingMeterNotInList);
@@ -248,8 +234,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             for(int a = 0; a < LiquidReference.DisconnectionRemarksData.length; a++) {
                 db.execSQL(LiquidReference.DisconnectionRemarksData[a]);
             }
-
-
         }catch(Exception e){
             Log.e(TAG, "Error at ", e);
         }
@@ -259,6 +243,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //Drop Existing Table
         try{
+            db.execSQL(LiquidReference.DropUMShost);
             db.execSQL(LiquidReference.DropUMSSettings);
             //AUDIT TABLE
             db.execSQL(LiquidReference.DropCokeCustomerTable);
@@ -283,9 +268,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.execSQL(LiquidReference.DropAuditDownload);
             db.execSQL(LiquidReference.DropAuditUpload);
             db.execSQL(LiquidReference.DropUMSAccount);
-            //mashe try
-            db.execSQL(LiquidReference.DropUMShost);
-
             //DELIVERY TABLE
             //db.execSQL(LiquidReference.DropDeliveryRemarksList);
             db.execSQL(LiquidReference.DropDeliveryTableList);
@@ -310,7 +292,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.execSQL(LiquidReference.DropMeterReadingRemarks);
             db.execSQL(LiquidReference.DropMeterReadingRoute);
             db.execSQL(LiquidReference.DropCreateViewJobOrderDetails);
-
             //Disconnection
             db.execSQL(LiquidReference.DropCustomerDiconnectionDownloads);
             db.execSQL(LiquidReference.DropDiconnectionTable);
@@ -348,11 +329,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-
     public boolean SqliteReplaceQueryWithoutDefault(String table, String[] columns, String[] values){
         try
         {
-
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             for(int a = 0; a < columns.length; a++){
@@ -437,7 +416,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean SqliteDeleteQuery(String query){
         try
         {
-
             SQLiteDatabase db = this.getWritableDatabase();
             db.execSQL(query);
             return true;
@@ -469,7 +447,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
         }
     }
-
 
     public boolean ImportDatabase(String dbPath) throws IOException {
         //V1
@@ -506,8 +483,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             // mOutputStream.flush();
             mOutputStream.close();
             mInputStream.close();
-
-
 
             return  true;
         }catch(Exception e){
@@ -565,13 +540,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //            mOutputStream.close();
 //            mInputStream.close();
 
-
-
         }catch(Exception e){
             Log.e(TAG,"Error ",e);
             return false;
         }
-
     }
-
 }

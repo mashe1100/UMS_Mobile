@@ -63,7 +63,6 @@ public class SurveyModel {
                     metertype,
                     structure
 
-
             };
             result = SplashActivity.mDatabaseHelper.SqliteReplaceQueryWithoutDefault("meter_not_in_list",Liquid.LiquidColumns,Liquid.LiquidValues);
             return result;

@@ -2139,9 +2139,7 @@ public class LiquidBilling {
                 E1 = 0;
                 break;
         }
-
         return Liquid.RoundUp(E1);
-
     }
 
     public double GetLoadFactor(double KWH,double KW, Date dateFrom, Date dateTo){
@@ -2158,8 +2156,6 @@ public class LiquidBilling {
 
         return Liquid.RoundUp(loadFactor);
     }
-
-
 }
 
 

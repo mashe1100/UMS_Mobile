@@ -46,7 +46,6 @@ public class TrackingCDEActivity extends BaseFormActivity implements CompoundBut
     String FinalCdeCountString = "";
     String QuestionOne = "Planogram Compliant";
     String QuestionTwo = "75% Full of KOF products";
-
     @BindView(R.id.btnCamera)
     ImageButton btnCamera;
     @BindView(R.id.tsImageCounter)
@@ -55,24 +54,20 @@ public class TrackingCDEActivity extends BaseFormActivity implements CompoundBut
     TextView txtQuestion;
     @BindView(R.id.txtComment)
     EditText txtComment;
-
     ArrayList<Bitmap> mBitmap = new ArrayList<Bitmap>();
     int mBitmapCount = 0;
-
     File mFile;
     String Filename = "";
     LiquidFile mLiquidFile;
-
     ArrayList<Uri> mUri = new ArrayList<Uri>();
     static final int CAM_REQUEST = 1;
     String[] Subfolder;
     int CdeCount = 1;
-
     ArrayAdapter<CharSequence> adapter_cde_area;
-
     File[] listFile;
     File mImages;
     String TrackingCategory = "CDE";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try{
@@ -83,12 +78,11 @@ public class TrackingCDEActivity extends BaseFormActivity implements CompoundBut
             setup();
             GetData(Liquid.SelectedAccountNumber,Liquid.SelectedCode,Liquid.SelectedPeriod);
             //GetImages();
-
         }catch(Exception e){
             Log.e(TAG,"Error ",e);
         }
-
     }
+
     private void setup() {
         Subfolder = new String[1];
         Subfolder[0] = TrackingCategory;
@@ -102,6 +96,7 @@ public class TrackingCDEActivity extends BaseFormActivity implements CompoundBut
         spinner_tcde_area.setAdapter(adapter_cde_area);
         switchtcdePlanogram = (Switch) findViewById(R.id.switchtcdePlanogram);
         switchtcde75KofProduct = (Switch) findViewById(R.id.switchtcde75KofProduct);
+
         switchtcdePlanogram.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -112,6 +107,7 @@ public class TrackingCDEActivity extends BaseFormActivity implements CompoundBut
                 }
             }
         });
+
         switchtcde75KofProduct.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -181,7 +177,6 @@ public class TrackingCDEActivity extends BaseFormActivity implements CompoundBut
                            Liquid.ShowMessage(getApplicationContext(),"Save Image Success");
                            mUri.add(Uri.fromFile(mFile));
                            tsImageCounter.setCurrentText(String.valueOf(mUri.size()));
-
                        }
                    }
                }
@@ -190,10 +185,8 @@ public class TrackingCDEActivity extends BaseFormActivity implements CompoundBut
         }
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch(item.getItemId())
         {
             case android.R.id.home:
@@ -211,7 +204,6 @@ public class TrackingCDEActivity extends BaseFormActivity implements CompoundBut
                     Liquid.showDialogError(this, "Invalid", "Please take picture!");
                     return false;
                 }
-                
                 result =  TrackingModel.doSubmitCDE(
                         Liquid.SelectedAccountNumber,
                         Area,
@@ -246,7 +238,6 @@ public class TrackingCDEActivity extends BaseFormActivity implements CompoundBut
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
     public void GetData(String AccountNumber,
@@ -293,8 +284,8 @@ public class TrackingCDEActivity extends BaseFormActivity implements CompoundBut
             Log.e(TAG,"Error : ",e);
             return;
         }
-
     }
+
     private void GetImages(){
         mUri.clear();
         mImages = Liquid.getDiscPicture(Liquid.SelectedAccountNumber,Subfolder);
@@ -320,7 +311,6 @@ public class TrackingCDEActivity extends BaseFormActivity implements CompoundBut
 
         }
     }
-
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 public class MeterNotInListModel {
     private static final String TAG = ReadingModel.class.getSimpleName();
+
     public static Cursor GetMeterNotInList(String job_id)
     {
         return SplashActivity.mDatabaseHelper.SqliteSelectQuery(
@@ -37,7 +38,6 @@ public class MeterNotInListModel {
                         "from meter_not_in_list " +
                         "where job_id = '"+job_id+"' " +
                         "order by timestamp  DESC"
-
         );
     }
 
@@ -110,8 +110,8 @@ public class MeterNotInListModel {
             Log.e(TAG,"Error : ",e);
             return null;
         }
-
     }
+
     public static Cursor GetMeterNotInDetails(String id,String MeterNumber)
     {
         return SplashActivity.mDatabaseHelper.SqliteSelectQuery(
@@ -197,7 +197,6 @@ public class MeterNotInListModel {
 
     ){
         try{
-
             boolean result = false;
             Liquid.LiquidColumns = Liquid.MeterNotInListColumnsUpdate;
             Liquid.LiquidValues = new String[] {
@@ -241,6 +240,7 @@ public class MeterNotInListModel {
             return false;
         }
     }
+
     public static boolean Save(  String job_id,
                                  String client,
                                  String customer_meterno,
@@ -275,7 +275,6 @@ public class MeterNotInListModel {
 
     ){
         try{
-
             boolean result = false;
             Liquid.LiquidColumns = Liquid.MeterNotInListColumns;
             Liquid.LiquidValues = new String[] {

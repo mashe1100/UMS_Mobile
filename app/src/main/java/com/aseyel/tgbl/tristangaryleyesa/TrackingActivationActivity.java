@@ -39,7 +39,6 @@ public class TrackingActivationActivity extends BaseFormActivity {
     int NumMaterial = 1;
     ArrayAdapter<CharSequence> adapter_activation_activation;
     ArrayAdapter<CharSequence> adapter_activation_category;
-
     @BindView(R.id.btnCamera)
     ImageButton btnCamera;
     @BindView(R.id.tsImageCounter)
@@ -48,7 +47,6 @@ public class TrackingActivationActivity extends BaseFormActivity {
     ImageView image_preview;
     @BindView(R.id.txtQuestion)
     TextView txtQuestion;
-
     ArrayList<Bitmap> mBitmap = new ArrayList<Bitmap>();
     int mBitmapCount = 0;
     File mFile;
@@ -69,6 +67,7 @@ public class TrackingActivationActivity extends BaseFormActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setup();
     }
+
     private void setup() {
         Subfolder = new String[1];
         Subfolder[0] = TrackingCategory;
@@ -83,6 +82,7 @@ public class TrackingActivationActivity extends BaseFormActivity {
         adapter_activation_category.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_tactvt_activation.setAdapter(adapter_activation_activation);
         spinner_tactvt_category.setAdapter(adapter_activation_category);
+
         spinner_tactvt_activation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -111,6 +111,7 @@ public class TrackingActivationActivity extends BaseFormActivity {
                 GetData(Liquid.SelectedAccountNumber,Activation,Category,Liquid.SelectedPeriod);
                 GetImages();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -133,9 +134,7 @@ public class TrackingActivationActivity extends BaseFormActivity {
                     mFile = mLiquidFile.Directory(Liquid.SelectedAccountNumber,Filename,Subfolder);
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(mFile));
-
                     startActivityForResult(intent,CAM_REQUEST);
-
                 }
                 catch (Exception e){
                     Liquid.ShowMessage(getApplicationContext(),e.toString());
@@ -176,6 +175,7 @@ public class TrackingActivationActivity extends BaseFormActivity {
         }
         return imageURL;
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -198,19 +198,15 @@ public class TrackingActivationActivity extends BaseFormActivity {
                         Liquid.ShowMessage(getApplicationContext(),"Save Image Success");
                         mUri.add(Uri.fromFile(mFile));
                         tsImageCounter.setCurrentText(String.valueOf(mUri.size()));
-
                     }
                 }
             }
         }catch(Exception e){
             Log.e(TAG,"Error :",e);
         }
-
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-
-
         switch(item.getItemId())
         {
             case android.R.id.home:
@@ -247,12 +243,11 @@ public class TrackingActivationActivity extends BaseFormActivity {
                 }else{
                     Liquid.showDialogError(this, "Invalid", "Unsuccessfully Saved!");
                 }
-
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
     public void GetData(
@@ -279,20 +274,18 @@ public class TrackingActivationActivity extends BaseFormActivity {
             while(result.moveToNext()){
                 NumMaterial = Integer.parseInt(result.getString(3).equals("") ? "0" : result.getString(3))+1;
             }
-
         }
         catch(Exception e){
             Log.e(TAG,"Error : ",e);
             return;
         }
-
     }
 
     private void GetImages(){
         mUri.clear();
         mImages = Liquid.getDiscPicture(Liquid.SelectedAccountNumber,Subfolder);
-        if(!mImages.exists() && !mImages.mkdirs()){
 
+        if(!mImages.exists() && !mImages.mkdirs()){
             Liquid.ShowMessage(this,"Can't create directory to save image");
         }
         else{
@@ -306,10 +299,6 @@ public class TrackingActivationActivity extends BaseFormActivity {
                     mUri.add(Uri.fromFile(listFile[a]));
                 }
             }
-
-
         }
     }
-
-
 }

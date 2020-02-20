@@ -74,11 +74,8 @@ public class NewMeterNotInListActivity extends BaseFormActivity {
     private String Demand = "";
     private String ampirCapacity = "";
     private String Type = "";
-
-
     private Liquid mLiquid;
     private LiquidGPS mLiquidGPS;
-
     //Camera
     private static final int CAM_REQUEST = 1;
     private String Filename;
@@ -105,35 +102,32 @@ public class NewMeterNotInListActivity extends BaseFormActivity {
         Subfolder[0] = "";
         txtQuestion = (TextView) findViewById(R.id.txtQuestion);
         btnGallery = (FloatingActionButton) findViewById(R.id.btnGallery);
-       txtMeterNumber = (EditText) findViewById(R.id.txtMeterNumber) ;
+        txtMeterNumber = (EditText) findViewById(R.id.txtMeterNumber) ;
         txtSerialNumber = (EditText) findViewById(R.id.txtSerialNumber) ;
-       txtCustomerName = (EditText) findViewById(R.id.txtCustomerName);
-       txtAddress = (EditText) findViewById(R.id.txtAddress);
+        txtCustomerName = (EditText) findViewById(R.id.txtCustomerName);
+        txtAddress = (EditText) findViewById(R.id.txtAddress);
         txtDemand = (EditText) findViewById(R.id.txtDemand) ;
         txtampirCapacity = (EditText) findViewById(R.id.txtampirCapacity);
         txtType = (EditText) findViewById(R.id.txtType);
-       txtReading = (EditText) findViewById(R.id.txtReading);
-       txtNearMeter = (EditText) findViewById(R.id.txtNearMeter);
-       txtNearSequence = (EditText) findViewById(R.id.txtNearSequence);
-       txtComment = (EditText) findViewById(R.id.txtComment);
-
+        txtReading = (EditText) findViewById(R.id.txtReading);
+        txtNearMeter = (EditText) findViewById(R.id.txtNearMeter);
+        txtNearSequence = (EditText) findViewById(R.id.txtNearSequence);
+        txtComment = (EditText) findViewById(R.id.txtComment);
         txtQuestion = (TextView) findViewById(R.id.txtQuestion);
         txtContact = (EditText) findViewById(R.id.txtContact);
         txtEmail = (EditText) findViewById(R.id.txtEmail);
         txtMeterBrand = (EditText) findViewById(R.id.txtMeterBrand);
-
-       spinnerRemarks = (Spinner) findViewById(R.id.spinnerRemarks);
-       btnCamera = (ImageButton) findViewById(R.id.btnCamera);
-       tsImageCounter = (TextSwitcher) findViewById(R.id.tsImageCounter);
-       mLiquidFile = new LiquidFile(this);
-       ListOfRemarks = new ArrayList<String>();
-       mLiquidGPS = new LiquidGPS(this);
-       mLiquid = new Liquid();
-       GetNewMeterDetails(Liquid.SelectedId,Liquid.SelectedMeterNumber);
-       GetReadingRemarks();
-       GetImages(Liquid.SelectedId);
-       txtQuestion.setText("Please put the needed information for the meter not include on the list.");
-
+        spinnerRemarks = (Spinner) findViewById(R.id.spinnerRemarks);
+        btnCamera = (ImageButton) findViewById(R.id.btnCamera);
+        tsImageCounter = (TextSwitcher) findViewById(R.id.tsImageCounter);
+        mLiquidFile = new LiquidFile(this);
+        ListOfRemarks = new ArrayList<String>();
+        mLiquidGPS = new LiquidGPS(this);
+        mLiquid = new Liquid();
+        GetNewMeterDetails(Liquid.SelectedId,Liquid.SelectedMeterNumber);
+        GetReadingRemarks();
+        GetImages(Liquid.SelectedId);
+        txtQuestion.setText("Please put the needed information for the meter not include on the list.");
         spinnerMeterType = (Spinner) findViewById(R.id.spinnerMeterType);
         spinnerStructure = (Spinner) findViewById(R.id.spinnerStructure);
         AdapterSpinnerMeterType = ArrayAdapter.createFromResource(this,R.array.meter_type,android.R.layout.simple_spinner_item);
@@ -177,17 +171,18 @@ public class NewMeterNotInListActivity extends BaseFormActivity {
                         Liquid.showDialogError(NewMeterNotInListActivity.this,"Invalid","Please put the Meter Number first!");
                         return;
                     }
+
                     Filename = Liquid.RemoveSpecialCharacter(MeterNumber) + "_"+"audit"+"_"+ Liquid.RemoveSpecialCharacter(Liquid.ReadingDate) + "_" + Liquid.User + "_" + String.valueOf(mUri.size() + 1) + Liquid.imageFormat;
                     mFile = mLiquidFile.Directory(Liquid.SelectedId+"_audit",Liquid.RemoveSpecialCharacter(Filename), Subfolder);
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mFile));
                     startActivityForResult(intent, CAM_REQUEST);
-
                 } catch (Exception e) {
                     Liquid.ShowMessage(getApplicationContext(), e.toString());
                 }
             }
         });
+
         btnGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -212,10 +207,8 @@ public class NewMeterNotInListActivity extends BaseFormActivity {
             mEditTextData[13] = txtType;
             mLiquid.hideSoftKeyboard(mEditTextData);
         }
-
-
-
     }
+
     public void OpenGallery(){
         Liquid.SelectedCategory = "new_meter";
         Intent i = new Intent(NewMeterNotInListActivity.this, GalleryActivity.class);
@@ -223,9 +216,9 @@ public class NewMeterNotInListActivity extends BaseFormActivity {
     }
 
     public void GetNewMeterDetails(String id,String MeterNumber){
-
         Cursor result = MeterNotInListModel.GetMeterNotInDetails(id,MeterNumber);
         int total = 0;
+
         try
         {
             if(result.getCount() == 0){
@@ -248,13 +241,13 @@ public class NewMeterNotInListActivity extends BaseFormActivity {
                 Liquid.SelectedMeterNumber = txtMeterNumber.getText().toString();
                 MeterNumber = Liquid.SelectedMeterNumber;
             }
-
         }
         catch(Exception e){
             Log.e(TAG,"Error : ",e);
             return;
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -282,16 +275,13 @@ public class NewMeterNotInListActivity extends BaseFormActivity {
                         mUri.add(Uri.fromFile(mFile));
                         tsImageCounter.setCurrentText(String.valueOf(mUri.size()));
                         ImageCount = mUri.size();
-
                     }
-
                 }
             }
 
         } catch (Exception e) {
             Log.e(TAG, "Error :", e);
         }
-
     }
 
     public void GetReadingRemarks() {
@@ -304,7 +294,6 @@ public class NewMeterNotInListActivity extends BaseFormActivity {
             while (result.moveToNext()) {
                 HashMap<String, String> data = new HashMap<>();
                 ListOfRemarks.add(result.getString(0) + "-" + result.getString(1));
-
             }
 
             AdapterSpinnerRemarks = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ListOfRemarks);
@@ -315,7 +304,6 @@ public class NewMeterNotInListActivity extends BaseFormActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     RemarksValue = parent.getItemAtPosition(position).toString();
-
                 }
 
                 @Override
@@ -324,19 +312,15 @@ public class NewMeterNotInListActivity extends BaseFormActivity {
                 }
             });
         } catch (Exception e) {
-
             Log.e(TAG, "Error : ", e);
             return;
         }
     }
 
-
-
     public void Save(){
-
           boolean result = false;
-        MeterNumber  = txtMeterNumber.getText().toString();
-        SerialNumber  = txtSerialNumber.getText().toString();
+          MeterNumber  = txtMeterNumber.getText().toString();
+          SerialNumber  = txtSerialNumber.getText().toString();
           CustomerName  = txtCustomerName.getText().toString();
           Address  = txtAddress.getText().toString();
           Reading  = txtReading.getText().toString();
@@ -346,11 +330,11 @@ public class NewMeterNotInListActivity extends BaseFormActivity {
           ContactNumber  = txtContact.getText().toString();
           EmailAdd  = txtEmail.getText().toString();
           MeterBrand  = txtMeterBrand.getText().toString();
-
-        Demand = txtDemand.getText().toString();
-        ampirCapacity = txtampirCapacity.getText().toString();
-        Type = txtType.getText().toString();
+          Demand = txtDemand.getText().toString();
+          ampirCapacity = txtampirCapacity.getText().toString();
+          Type = txtType.getText().toString();
           Liquid.SelectedMeterNumber = MeterNumber;
+
             if(MeterNumber.equals("")){
                 Liquid.showDialogError(this, "Invalid", "Incomplete Information!");
                 return;
@@ -427,18 +411,14 @@ public class NewMeterNotInListActivity extends BaseFormActivity {
                         );
             }
 
-
-
-
         if (result == true) {
             Liquid.showDialogNext(this, "Valid", "Successfully Saved!");
 
         } else {
             Liquid.showDialogError(this, "Invalid", "Unsuccessfully Saved!");
         }
-
-
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         try {
@@ -482,7 +462,6 @@ public class NewMeterNotInListActivity extends BaseFormActivity {
             }
             //ImageCount = mUri.size();
             tsImageCounter.setCurrentText(String.valueOf(mUri.size()));
-
         }
     }
 }

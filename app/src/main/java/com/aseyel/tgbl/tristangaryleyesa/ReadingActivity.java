@@ -65,14 +65,12 @@ import java.util.List;
 
 
 public class ReadingActivity extends BaseFormActivity {
-
     private static final String TAG = ReadingActivity.class.getSimpleName();
     private boolean save_only = false;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private Boolean mLocationPermissionsGranted = false;
     private String Latitude = "";
     private String Longitude = "";
-    Liquid mLiquid;
     private EditText[] mEditTextData;
     public static String BillingCycle;
     public static String AccountNumber;
@@ -83,11 +81,13 @@ public class ReadingActivity extends BaseFormActivity {
     public static String ShareCap;
     public static String PoleRent = "0";
     public static String OtherBill;
-
-    ProgressDialog pDialog;
     public static String Status;
     public static String AccountType;
     public static String Reading = "";
+    public static String classification = "";
+    public static String arrears = "";
+    Liquid mLiquid;
+    ProgressDialog pDialog;
     String Remarks = "";
     String RemarksCode = "";
     String Details;
@@ -96,8 +96,6 @@ public class ReadingActivity extends BaseFormActivity {
     String Client;
     String JobId = "";
     String ServiceType = "reading";
-    public static String classification = "";
-    public static String arrears = "";
     String senior_tagging = "0";
     String eda_tagging = "0";
     String change_meter = "0";
@@ -114,7 +112,6 @@ public class ReadingActivity extends BaseFormActivity {
     int LowConsumptionAttempt = 0;
     int NegativeConsumptionAttempt = 0;
     int ZeroConsumptionAttempt = 0;
-
     TextView txtHeader;
     TextView txtDetails;
     EditText etxtReading;
@@ -122,7 +119,6 @@ public class ReadingActivity extends BaseFormActivity {
     ImageButton btnCamera;
     FloatingActionButton btnGallery;
     ArrayAdapter<String> AdapterSpinnerRemarks;
-
     //Camera
     static final int CAM_REQUEST = 1;
     String Filename;
@@ -146,19 +142,24 @@ public class ReadingActivity extends BaseFormActivity {
     String name  = "";
     public static  String route  = "";
     public static String itinerary  = "";
-    String meter_number  = "";
-    String serial  = "";
     public static String previous_reading  = "0";
     public static String present_Reading = "";
-    String previous_consumption= "";
     public static String Present_Consumption= "0";
     public static String previous_reading_date= "";
-    String present_reading_date= "";
     public static String duedate= "";
     public static String discondate= "";
-    String Reading_Date= "";
     public static String BillYear= "";
     public static String BillMonth= "";
+    public static String Average_Reading = "False";
+    public static String multiplier= "";
+    public static String rate_code= "";
+    public static String bill_number= "";
+    public static String rentalfee= "";
+    String meter_number  = "";
+    String serial  = "";
+    String previous_consumption= "";
+    String present_reading_date= "";
+    String Reading_Date= "";
     String BillDate= "";
     String month= "";
     String day= "";
@@ -181,14 +182,10 @@ public class ReadingActivity extends BaseFormActivity {
     String demand_consumption= "0";
     String reactive_consumption= "0";
     String Averange_Consumption= "0";
-    public static String Average_Reading = "False";
-    public static String multiplier= "";
     String Meter_Box= "";
     String Demand_Reset= "";
     String Test_Block= "";
-
     String remarks_abbreviation= "";
-
     String Comment= "";
     String Reader_ID= "";
     String meter_reader= "";
@@ -210,14 +207,11 @@ public class ReadingActivity extends BaseFormActivity {
     String upload_status= "Pending";
     String code= "";
     String area= "";
-    public static String rate_code= "";
     String cummulative_multiplier= "";
     String oebr_number= "";
-
     String Reading_TimeStamp= "";
     String Print_TimeStamp= "";
     String timestamp= "";
-    public static String bill_number= "";
     String GenerationSystem= "";
     String BenHost= "";
     String GRAM= "";
@@ -272,7 +266,6 @@ public class ReadingActivity extends BaseFormActivity {
     String franchise_tax= "";
     String coreloss= "";
     String surcharge= "";
-    public static String rentalfee= "";
     String delivered= "";
     String check_previous = "False";
     String ispn= "";
@@ -305,7 +298,6 @@ public class ReadingActivity extends BaseFormActivity {
         init();
     }
 
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         try{
@@ -324,9 +316,6 @@ public class ReadingActivity extends BaseFormActivity {
         catch (Exception e){
             Log.e(TAG,"Tristan Garyl Leyesa",e);
         }
-
-
-
         return super.onKeyDown(keyCode, event);
     }
 
@@ -334,7 +323,6 @@ public class ReadingActivity extends BaseFormActivity {
         mLiquid = new Liquid();
         mLiquidFile = new LiquidFile(this);
         mLiquidGPS = new LiquidGPS(this);
-
         Subfolder = new String[1];
         Subfolder[0] = "";
         txtDemand = (EditText) findViewById(R.id.txtDemand);
@@ -348,10 +336,8 @@ public class ReadingActivity extends BaseFormActivity {
         mLiquidPrintBill = new LiquidPrintBill();
         switchReverse = (Switch) findViewById(R.id.switchReverse);
         mBottomNavigationView = (AHBottomNavigation) findViewById(R.id.mBottomNavigationView);
-
         Client = Liquid.Client;
         ListOfRemarks = new ArrayList<String>();
-
         GetReadingRemarks();
         AccountNumber = Liquid.SelectedAccountNumber;
         GetReadAndBillData(Liquid.SelectedId, AccountNumber);
@@ -369,7 +355,6 @@ public class ReadingActivity extends BaseFormActivity {
                 if(switchReverse.isChecked()){
                     Liquid.ReverseInput = 1;
                 }else{
-
                     Liquid.ReverseInput = 0;
                 }
             }
@@ -379,7 +364,6 @@ public class ReadingActivity extends BaseFormActivity {
             @Override
             public void onClick(View v) {
                 try {
-
                     Filename = AccountNumber + "_"+"reading"+"_"+ Liquid.RemoveSpecialCharacter(ReadingDate) + "_" + String.valueOf(mUri.size() + 1) + Liquid.imageFormat;
                     mFile = mLiquidFile.Directory(Liquid.SelectedId,Liquid.RemoveSpecialCharacter(Filename), Subfolder);
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -399,7 +383,6 @@ public class ReadingActivity extends BaseFormActivity {
                 return false;
             }
         });
-
 
         txtDemand.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -436,7 +419,6 @@ public class ReadingActivity extends BaseFormActivity {
             }
         });
 
-
         FloatButtons();
         ShowReprint();
         BottomNavigation();
@@ -448,11 +430,7 @@ public class ReadingActivity extends BaseFormActivity {
             mEditTextData[2] = etxtComment;
             mLiquid.hideSoftKeyboard(mEditTextData);
         }
-
-
-
     }
-
 
     public void OpenGallery(){
         Liquid.SelectedCategory = "reading";
@@ -460,13 +438,13 @@ public class ReadingActivity extends BaseFormActivity {
         Intent i = new Intent(getApplicationContext(), GalleryActivity.class);
         startActivity(i);
     }
+
     public void ShowPreviosReading(){
         Liquid.showDialogInfo(ReadingActivity.this, "Details", "Previous Reading : " + previous_reading);
         check_previous = "True";
     }
 
     public void DeleteReverse(){
-
         try{
             switch ( focusEditText ){
                 case 1:
@@ -480,6 +458,7 @@ public class ReadingActivity extends BaseFormActivity {
             Log.e(TAG,"Tristan Gary Leyesa ",e);
         }
     }
+
     public void FloatButtons(){
         btnPreviousReading = (FloatingActionButton) findViewById(R.id.btnPreviousReading);
         btnReprint = (FloatingActionButton) findViewById(R.id.btnReprint);
@@ -514,6 +493,7 @@ public class ReadingActivity extends BaseFormActivity {
             }
         });
     }
+
     public void BottomNavigation(){
         btnGallery.setVisibility(View.GONE);
         btnReprint.setVisibility(View.GONE);
@@ -528,7 +508,6 @@ public class ReadingActivity extends BaseFormActivity {
         mBottomNavigationView.addItem(item2);
         mBottomNavigationView.addItem(item3);
         mBottomNavigationView.addItem(item4);
-
         mBottomNavigationView.setAccentColor(R.color.colorAccent);
         mBottomNavigationView.setInactiveColor(R.color.colorAccent);
         int size = mBottomNavigationView.getItemsCount();
@@ -561,9 +540,7 @@ public class ReadingActivity extends BaseFormActivity {
                 return true;
             }
         });
-
     }
-
 
     public void ShowReprint(){
         if (etxtReading.getText().toString().equals("")) {
@@ -571,18 +548,16 @@ public class ReadingActivity extends BaseFormActivity {
         }else{
             btnReprint.setVisibility(View.VISIBLE);
         }
-
     }
-    public String WrapAround(String PreviousReading, String Reading) {
 
+    public String WrapAround(String PreviousReading, String Reading) {
         Reading = Reading != "" ? Reading : "0";
         double dMultiplier = Double.parseDouble(multiplier);
         double dPreviousReading = Double.parseDouble(PreviousReading);
         double dReading = Double.parseDouble(Reading);
+
         if (Reading.contains(".")) {
-
             String[] ReadingSplit =  Reading.split("\\.");
-
             Reading = ReadingSplit[0];
         }
         if (PreviousReading.contains(".")) {
@@ -592,7 +567,6 @@ public class ReadingActivity extends BaseFormActivity {
         int DialLength2 = Reading.length();
         int DialLength = PreviousReading.length();
         String Consumption = "";
-
 
         if(DialLength2 == 2 || DialLength2 == 1 || DialLength2 == 3){
             switch (DialLength) {
@@ -611,29 +585,24 @@ public class ReadingActivity extends BaseFormActivity {
         }else{
             Consumption = GetKWH(multiplier, PreviousReading, Reading);
         }
-
-
         return Consumption;
-
     }
 
     public String GetKWH(String Multiplier, String PreviousReading, String Reading) {
-
         Reading = Reading.equals("") ? "0" : Reading;
         double KWH = 0;
         String Consumption = "";
-
         double mMultiplier = Double.parseDouble(Multiplier);
         double mPreviousReading = Double.parseDouble(PreviousReading);
         double mReading = Double.parseDouble(Reading);
-
         KWH = mReading - mPreviousReading;
-
         KWH = KWH * mMultiplier;
-//ALEX - KWH from rounddown to round Up // 010318
+//ALEX
+// KWH from rounddown to round Up // 010318
         Consumption = String.valueOf(Liquid.RoundUp(KWH));
         return Consumption;
     }
+
     public String AverageIleco2Validation(String Remarks) {
         String Average_Reading = "False";
         if(RemarksCode.equals("0")){
@@ -672,6 +641,7 @@ public class ReadingActivity extends BaseFormActivity {
         }
         return Average_Reading;
     }
+
     public String AverageValidation(String Remarks) {
         String Average_Reading = "False";
         if (Remarks.contains("*")) {
@@ -863,7 +833,6 @@ public class ReadingActivity extends BaseFormActivity {
                 ModifiedDate,
                 ModifiedBy
         );
-
         return result;
     }
 
@@ -1028,15 +997,14 @@ public class ReadingActivity extends BaseFormActivity {
                 ModifiedDate,
                 ModifiedBy
         );
-
         return result;
     }
 
     public boolean doPrintBill() {
         boolean result = false;
         boolean result_logs = false;
-        try {
 
+        try {
             result = mLiquidPrintBill.pairPrinter();
 
             if(result == true){
@@ -1044,19 +1012,14 @@ public class ReadingActivity extends BaseFormActivity {
                 printlongitude = String.valueOf(mLiquidGPS.getLongitude());
                 Print_TimeStamp = Liquid.currentDateTime();
                 Print_Attempt = String.valueOf(Integer.parseInt(Print_Attempt) + 1);
-
             }
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
-
     }
 
     public String ConsumptionValidation(String AvgKWH, String PreviousKWH, String KWH) {
-
         double percentage = 0.80;
         double consumption_percentage = 0;
         double high_consumption_range = 0;
@@ -1092,7 +1055,6 @@ public class ReadingActivity extends BaseFormActivity {
         if (Double.parseDouble(KWH) >= high_consumption_range) {
             return "HIGH CONSUMPTION";
         }
-
         return "";
     }
 
@@ -1122,7 +1084,6 @@ public class ReadingActivity extends BaseFormActivity {
                     Liquid.showDialogError(this,"Invalid","Zero Consumption cannot print!");
                    return;
                 default:
-
             }
 
             Computation();
@@ -1142,19 +1103,16 @@ public class ReadingActivity extends BaseFormActivity {
 
                         case DialogInterface.BUTTON_NEGATIVE:
                             break;
-
                     }
                 }
             };
+
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Do you really want to reprint bill?").setPositiveButton("Yes", dialogClickListener)
                     .setNegativeButton("No", dialogClickListener).show();
         }catch(Exception e){
             Log.e(TAG,"Tristan Gary Leyesa",e);
         }
-
-
-
     }
 
     public void QuenedForSave() {
@@ -1177,7 +1135,6 @@ public class ReadingActivity extends BaseFormActivity {
                                 ZeroConsumptionAttempt = 0;
                             } else {
                                 Liquid.showDialogError(ReadingActivity.this, "Invalid", "Unsuccessfully Saved!");
-
                             }
                             getDeviceLocation();
                             break;
@@ -1187,7 +1144,6 @@ public class ReadingActivity extends BaseFormActivity {
                            dialog.dismiss();
 
                             break;
-
                     }
                 }
             };
@@ -1212,13 +1168,10 @@ public class ReadingActivity extends BaseFormActivity {
                                 NegativeConsumptionAttempt = 0;
                             } else {
                                 Liquid.showDialogError(ReadingActivity.this, "Invalid", "Unsuccessfully Saved!");
-
                             }
                             getDeviceLocation();
                             break;
-
                         case DialogInterface.BUTTON_NEGATIVE:
-
                             result = false;
                             result_logs = false;
                             new PrintBill().execute();
@@ -1229,23 +1182,17 @@ public class ReadingActivity extends BaseFormActivity {
                             NegativeConsumptionAttempt = 0;
                             getDeviceLocation();
                             break;
-
                     }
                 }
             };
+
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Are you sure you want to Save only or Save & Print Bill?").setPositiveButton("Save", dialogClickListener)
                     .setNegativeButton("Save & Print Bill", dialogClickListener).show();
-
         }
-
     }
 
-
-
-
     public void ConsumptionFindingsNotification(String findings) {
-
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -1253,7 +1200,6 @@ public class ReadingActivity extends BaseFormActivity {
                     case DialogInterface.BUTTON_POSITIVE:
                         etxtReading.setText("");
                         break;
-
                 }
             }
         };
@@ -1389,10 +1335,8 @@ public class ReadingActivity extends BaseFormActivity {
 
         if (!RemarksCode.equals("0") || !RemarksCode.equals("28")) {
             //avg validation
-
             switch(Liquid.Client){
                     case "ileco2":
-
                         Average_Reading = AverageIleco2Validation(Remarks);
                         reading_remarks = ConsumptionValidation(Averange_Consumption, previous_consumption, Present_Consumption);
                         return true;
@@ -1401,9 +1345,7 @@ public class ReadingActivity extends BaseFormActivity {
                         Average_Reading = AverageValidation(Remarks);
                         Present_Consumption = Averange_Consumption;
             }
-
         }
-
         //Consumption Validation
         reading_remarks = ConsumptionValidation(Averange_Consumption, previous_consumption, Present_Consumption);
         return true;
@@ -1412,7 +1354,6 @@ public class ReadingActivity extends BaseFormActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         try {
-
             switch (item.getItemId()) {
                 case android.R.id.home:
                     this.finish();
@@ -1442,7 +1383,6 @@ public class ReadingActivity extends BaseFormActivity {
                             } else {
                                 QuenedForSave();
                             }
-
                             break;
                         case "NEGATIVE CONSUMPTION":
                             if (NegativeConsumptionAttempt == 0) {
@@ -1465,8 +1405,6 @@ public class ReadingActivity extends BaseFormActivity {
                         default:
                             QuenedForSave();
                     }
-
-
                     return true;
                 default:
                     return super.onOptionsItemSelected(item);
@@ -1487,7 +1425,6 @@ public class ReadingActivity extends BaseFormActivity {
             while (result.moveToNext()) {
                 HashMap<String, String> data = new HashMap<>();
                 ListOfRemarks.add(result.getString(0) + "-" + result.getString(1));
-
             }
 
             AdapterSpinnerRemarks = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ListOfRemarks);
@@ -1498,7 +1435,6 @@ public class ReadingActivity extends BaseFormActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     RemarksValue = parent.getItemAtPosition(position).toString();
-
                 }
 
                 @Override
@@ -1507,7 +1443,6 @@ public class ReadingActivity extends BaseFormActivity {
                 }
             });
         } catch (Exception e) {
-
             Log.e(TAG, "Error : ", e);
             return;
         }
@@ -1540,18 +1475,13 @@ public class ReadingActivity extends BaseFormActivity {
                         mUri.add(Uri.fromFile(mFile));
                         tsImageCounter.setCurrentText(String.valueOf(mUri.size()));
                         ImageCount = mUri.size();
-
                     }
-
                 }
             }
-
         } catch (Exception e) {
             Log.e(TAG, "Error :", e);
         }
-
     }
-
 
     public void MeterCount(String meter_count){
         switch(meter_count){
@@ -1564,9 +1494,9 @@ public class ReadingActivity extends BaseFormActivity {
                 default:
         }
     }
+
     public void GetReadAndBillData(String job_id, String AccountNumber) {
         try {
-
             Cursor result = workModel.GetReadAndBillJobOrderDetails(job_id, AccountNumber);
 
             if (result.getCount() == 0) {
@@ -1574,7 +1504,6 @@ public class ReadingActivity extends BaseFormActivity {
             }
             while (result.moveToNext()) {
                 //Customer Data
-
                 HashMap<String, String> data = new HashMap<>();
                 Status = result.getString(9);
                 AccountNumber = result.getString(30);
@@ -1605,7 +1534,6 @@ public class ReadingActivity extends BaseFormActivity {
                 Averange_Consumption = !result.getString(46).equals("") ? result.getString(46) : "0";
                 multiplier = !result.getString(40).equals("") ? result.getString(40) : "1";
                 multiplier = Liquid.FixDecimal(multiplier);
-
                 Meter_Box = result.getString(36);
                 code = result.getString(1);
                 rate_code = result.getString(7);
@@ -1623,21 +1551,17 @@ public class ReadingActivity extends BaseFormActivity {
                 OtherBill = !result.getString(83).equals("") ? result.getString(83) : "0";
                 bill_number = !result.getString(65).equals("") ? result.getString(65) : year + BillMonth + AccountNumber;
                 Liquid.rowid = result.getString(84);
-
                 //Discon and DueDate
                 duedate = result.getString(64);
 
                 if (duedate.equals("")) {
                     duedate = Liquid.getDueDate(present_reading_date);
                 }
+
                 discondate = Liquid.getDisconDate(duedate);
                 present_reading_date = Liquid.currentDate();
                 BillingCycle = year + "-" + BillMonth;
-                //Reading
-
-
             }
-
 
             Details =   "Account No.: " + AccountNumber + "\n" +
                         "Name            : " + AccountName + "\n" +
@@ -1654,7 +1578,6 @@ public class ReadingActivity extends BaseFormActivity {
             Log.e(TAG, "Error : ", e);
             return;
         }
-
     }
 
     private void getDeviceLocation(){
@@ -1664,9 +1587,7 @@ public class ReadingActivity extends BaseFormActivity {
             mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
             try{
-
                 if(mLocationPermissionsGranted){
-
                     final Task location = mFusedLocationProviderClient.getLastLocation();
 
                     location.addOnCompleteListener(new OnCompleteListener() {
@@ -1683,7 +1604,6 @@ public class ReadingActivity extends BaseFormActivity {
                                     Log.e(TAG,"Error",e);
                                 }
 
-
                             }else{
                                 Log.d(TAG, "onComplete: current location is null");
                             }
@@ -1698,19 +1618,16 @@ public class ReadingActivity extends BaseFormActivity {
         }catch(Exception e){
             Log.e(TAG,"Error ",e);
         }
-
-
         //CameraPosition LastPosition =  CameraPosition.builder().target(new LatLng(Double.parseDouble(String.valueOf(mLiquidGPS.getLatitude())),Double.parseDouble(String.valueOf(mLiquidGPS.getLongitude())))).zoom(30).bearing(0).tilt(45).build();
         //mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(LastPosition));
     }
 
-
     public class GPSPosting extends AsyncTask<Void,Void,Void> {
-
         String Client = "";
         String Details = "";
         boolean result = false;
         String return_data = "";
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -1775,10 +1692,6 @@ public class ReadingActivity extends BaseFormActivity {
                     }
                 }
                 //"user,client,type,latitude,longitude,remark,comment,accountnumber,tag_desciption,details"
-
-
-
-
                 Log.i(TAG,Message);
             }catch(Exception e){
                 Log.e(TAG,"Tristan Gary Leyesa : ",e);
@@ -1799,10 +1712,9 @@ public class ReadingActivity extends BaseFormActivity {
             }
         }
     }
+
     private void GetReadingDetails(String job_id, String AccountNumber) {
-
         try {
-
             Cursor result = ReadingModel.GetReadingDetails(job_id, AccountNumber);
 
             if (result.getCount() == 0) {
@@ -1829,7 +1741,6 @@ public class ReadingActivity extends BaseFormActivity {
                 etxtComment.setText("");
                 RemarksValue = "0-NO FIELD FINDINGS";
                 spinnerRemarks.setSelection(AdapterSpinnerRemarks.getPosition(RemarksValue));
-
                 Print_Attempt = "0";
                 Reading_Attempt  = "0";
                 Reader_ID = Liquid.User;
@@ -1842,7 +1753,6 @@ public class ReadingActivity extends BaseFormActivity {
                 r_latitude = "0.0";
                 r_longitude  = "0.0";
                 check_previous = "0";
-
                 Present_Consumption  = "";
                 etxtReading.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 etxtReading.setTextColor(getResources().getColor(R.color.colorAccent));
@@ -1891,9 +1801,7 @@ public class ReadingActivity extends BaseFormActivity {
                 Present_Consumption  = result.getString(12);
                 etxtReading.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 etxtReading.setTextColor(getResources().getColor(R.color.colorPrimary));
-
             }
-
         } catch (Exception e) {
             Log.e(TAG, "Error : ", e);
             return;
@@ -1922,9 +1830,7 @@ public class ReadingActivity extends BaseFormActivity {
                 }
             }
             //ImageCount = mUri.size();
-
             tsImageCounter.setCurrentText(String.valueOf(mUri.size()));
-
         }
     }
 
@@ -1932,6 +1838,7 @@ public class ReadingActivity extends BaseFormActivity {
         boolean result = false;
         Cursor result_data = null;
         String mAccountNumber;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -1957,15 +1864,12 @@ public class ReadingActivity extends BaseFormActivity {
                 if (result_data.getCount() == 0) {
                     return null;
                 }
-
                 while (result_data.moveToNext()) {
                     //Customer Data
                     //HashMap<String, String> data = new HashMap<>();
                     mAccountNumber = result_data.getString(1);
                     Liquid.rowid = result_data.getString(2);
-
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1982,8 +1886,10 @@ public class ReadingActivity extends BaseFormActivity {
             pDialog.dismiss();
         }
     }
+
     public class PrintBill extends AsyncTask<Void,Void,Void> {
         boolean result = false;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -2019,11 +1925,6 @@ public class ReadingActivity extends BaseFormActivity {
                 Liquid.showDialogError(ReadingActivity.this, "Invalid", "Unsuccessfully Print!");
             }
             pDialog.dismiss();
-
         }
     }
-
-
-
-
 }

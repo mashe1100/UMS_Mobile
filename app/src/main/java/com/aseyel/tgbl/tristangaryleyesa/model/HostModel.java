@@ -18,7 +18,6 @@ public class HostModel {
     private static final String TAG = HostModel.class.getSimpleName();
 
     public static Cursor GetHostID(String ID) {
-
         return SplashActivity.mDatabaseHelper.SqliteSelectQuery(
                 "SELECT id," +
                         "username," +
@@ -27,7 +26,6 @@ public class HostModel {
                         "FROM ums_host "+
                 "WHERE id = '" + ID + "' "
         );
-
     }
 
     public static boolean DoUpdateHost(String Hostid,String Hostname,String Username,String Password){
@@ -56,5 +54,4 @@ public class HostModel {
             return false;
         }
     }
-
 }

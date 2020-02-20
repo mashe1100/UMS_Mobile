@@ -21,11 +21,8 @@ public class LiquidDelivery {
             JSONObject final_data_response = new JSONObject();
             JSONArray final_response = new JSONArray();
             JSONArray all_data = new JSONArray();
-
-
             final_response = UploadDelivery(JobID,"");
             all_data = UploadAllDelivery(JobID,"");
-
 
             final_data_response.put("data",final_response);
             final_data_response.put("all_data",all_data);
@@ -47,7 +44,6 @@ public class LiquidDelivery {
         while(result.moveToNext()){
             JSONObject data = new JSONObject();
             try {
-
                 data.put("client",result.getString(0));
                 data.put("job_id",result.getString(1));
                 data.put("ngc_job_id","1");
@@ -76,9 +72,7 @@ public class LiquidDelivery {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
-
         return final_response;
     }
 
@@ -92,7 +86,6 @@ public class LiquidDelivery {
         while(result.moveToNext()){
             JSONObject data = new JSONObject();
             try {
-
                 data.put("client",result.getString(0));
                 data.put("job_id",result.getString(1));
                 data.put("ngc_job_id","1");
@@ -121,12 +114,7 @@ public class LiquidDelivery {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
-
         return final_response;
     }
-
-
-
 }

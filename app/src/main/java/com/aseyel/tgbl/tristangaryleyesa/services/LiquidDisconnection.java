@@ -18,6 +18,7 @@ import java.util.HashMap;
 
 public class LiquidDisconnection {
     public static final String TAG = LiquidDisconnection.class.getSimpleName();
+
     public static JSONObject UploadDisconnection(){
         try{
             JSONObject final_data_response = new JSONObject();
@@ -39,7 +40,6 @@ public class LiquidDisconnection {
 
     public static JSONObject UploadAccountDisconnection(String AccountNumber){
         try{
-
             JSONObject final_data_response = new JSONObject();
             JSONArray final_response = new JSONArray();
             JSONArray final_response_picture = new JSONArray();
@@ -89,6 +89,7 @@ public class LiquidDisconnection {
         }
         return final_response;
     }
+
     public static JSONArray UploadDisconnection(String JobOrderId,String AccountNumber){
         JSONArray final_response = new JSONArray();
         Cursor result = DisconnectionModel.GetDisconnected(JobOrderId,AccountNumber);
@@ -190,9 +191,7 @@ public class LiquidDisconnection {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
-
         return final_response;
     }
 }

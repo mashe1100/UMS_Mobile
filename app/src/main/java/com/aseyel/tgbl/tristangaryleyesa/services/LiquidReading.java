@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 public class LiquidReading {
     public static final String TAG = LiquidReading.class.getSimpleName();
+
     public static JSONObject UploadReading(String JobID){
         try{
             JSONObject final_data_response = new JSONObject();
@@ -62,6 +63,7 @@ public class LiquidReading {
             return null;
         }
     }
+
     public static JSONObject UploadAccountReading(String AccountNumber){
         try{
 
@@ -81,6 +83,7 @@ public class LiquidReading {
             return null;
         }
     }
+
     public static JSONArray UploadMeterNotInList(String job_id,String status){
         JSONArray final_response = new JSONArray();
         Cursor result = MeterNotInListModel.GetMeterNotInListUpload(job_id,status);
@@ -139,6 +142,7 @@ public class LiquidReading {
         }
         return final_response;
     }
+
     public static JSONArray UploadPicture(String Status){
         JSONArray final_response = new JSONArray();
         Cursor result = AuditModel.GetUploadPicture(Status);
@@ -172,6 +176,7 @@ public class LiquidReading {
         }
         return final_response;
     }
+
     public static JSONArray UploadPictureReading(String JobOrderId,String AccountNumber){
         JSONArray final_response = new JSONArray();
         Cursor result = ReadingModel.GetReadingPictureDetails(JobOrderId, AccountNumber);
@@ -353,6 +358,7 @@ public class LiquidReading {
 
         return final_response;
     }
+
     public static JSONArray UploadReading(String JobOrderId,String AccountNumber){
         JSONArray final_response = new JSONArray();
         Cursor result = ReadingModel.GetReadingDetails(JobOrderId, AccountNumber,"Pending");
@@ -531,10 +537,8 @@ public class LiquidReading {
             }
 
         }
-
         return final_response;
     }
-
 
     public static JSONArray UploadReadingLogs(String JobOrderId,String AccountNumber){
         JSONArray final_response = new JSONArray();

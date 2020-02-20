@@ -40,7 +40,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DisconnectionActivity extends BaseFormActivity {
-
     private static final String TAG = DisconnectionActivity.class.getSimpleName();
     private EditText[] mEditTextData;
     private TextView txtDetails;
@@ -63,8 +62,6 @@ public class DisconnectionActivity extends BaseFormActivity {
     private String[] Subfolder;
     private ArrayList<Uri> mUri = new ArrayList<Uri>();
     private File mImages;
-
-
     //Data
     private static String AccountNumber;
     private String DisconDate;
@@ -190,7 +187,6 @@ public class DisconnectionActivity extends BaseFormActivity {
         }catch(Exception e){
             Log.e(TAG,"Tristan Gary Leyesa ",e);
         }
-
     }
 
     @Override
@@ -207,9 +203,6 @@ public class DisconnectionActivity extends BaseFormActivity {
                 new GetNextConsumer().execute(String.valueOf(keyCode));
                 break;
         }
-
-
-
         return super.onKeyDown(keyCode, event);
     }
 
@@ -226,6 +219,7 @@ public class DisconnectionActivity extends BaseFormActivity {
             Log.e(TAG,"Tristan Gary Leyesa ",e);
         }
     }
+
     private void init(){
           AccountNumber = Liquid.SelectedAccountNumber;
           JobId = Liquid.SelectedId;
@@ -256,7 +250,6 @@ public class DisconnectionActivity extends BaseFormActivity {
             txtCollection.setVisibility(View.GONE);
             isdisconnected = "1";
             ispayed = "0";
-
 
           btnCamera.setOnClickListener(new View.OnClickListener() {
               @Override
@@ -311,10 +304,12 @@ public class DisconnectionActivity extends BaseFormActivity {
                 }
             }
         });
+
         GetDisconnectionRemarks();
         ConsumerDetails(JobId,AccountNumber);
         DisconenctedDetails(JobId,AccountNumber);
         GetImages(JobId);
+
         etxtReading.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -341,9 +336,7 @@ public class DisconnectionActivity extends BaseFormActivity {
             mEditTextData[3] = etxtComment;
             mLiquid.hideSoftKeyboard(mEditTextData);
         }
-
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -372,16 +365,12 @@ public class DisconnectionActivity extends BaseFormActivity {
                         mUri.add(Uri.fromFile(mFile));
                         tsImageCounter.setCurrentText(String.valueOf(mUri.size()));
                         ImageCount = mUri.size();
-
                     }
-
                 }
             }
-
         } catch (Exception e) {
             Log.e(TAG, "Error :", e);
         }
-
     }
 
     public void doDisconnection(){
@@ -405,11 +394,11 @@ public class DisconnectionActivity extends BaseFormActivity {
         Remarks = RemarksData[1];
         or_number = txtOR.getText().toString();
         total_amount_due = txtCollection.getText().toString();
+
         if(ImageCount == 0){
             Liquid.showDialogError(DisconnectionActivity.this, "Invalid", "Please take a picture!");
             return;
         }
-
 
         result = DisconnectionModel.doDisconnection(
                 JobId,//ok
@@ -498,13 +487,13 @@ public class DisconnectionActivity extends BaseFormActivity {
                 modifieddate, //ok
                 modifiedby); //ok
 
-
         if (result) {
             Liquid.showDialogNext(DisconnectionActivity.this, "Valid", "Successfully Saved!");
         } else {
             Liquid.showDialogError(DisconnectionActivity.this, "Invalid", "Unsuccessfully Saved!");
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         try{
@@ -545,7 +534,6 @@ public class DisconnectionActivity extends BaseFormActivity {
             }
             //ImageCount = mUri.size();
             tsImageCounter.setCurrentText(String.valueOf(mUri.size()));
-
         }
     }
 
@@ -559,7 +547,6 @@ public class DisconnectionActivity extends BaseFormActivity {
                 return;
             }
             while(result.moveToNext()){
-
                  AccountName = result.getString(10);
                  MeterNumber = result.getString(36);
                  DisconDate = result.getString(42);
@@ -594,7 +581,6 @@ public class DisconnectionActivity extends BaseFormActivity {
                  cyclemonth = result.getString(45);
                  cycleyear = result.getString(46);
 
-
                 Details = "Account Number : "+AccountNumber+"\n"+
                         "Name : "+AccountName+"\n"+
                         "Address : "+Address+"\n"+
@@ -604,26 +590,21 @@ public class DisconnectionActivity extends BaseFormActivity {
                         "Arrears : P "+Arrears+"\n"+
                         "Total Amount Due : P "+TotalAmountDue+"\n"+
                         "Discon Date : "+DisconDate;
-
             }
                 txtDetails.setText(Details);
 
-
             return;
-
         }
         catch(Exception e){
             Log.e(TAG,"Tristan Gary Leyesa says ",e);
             return ;
         }
-
     }
 
     private void DisconenctedDetails(String JobID,String AccountNumber){
         Cursor result = DisconnectionModel.GetDisconnected(JobID,AccountNumber);
         try
         {
-
             if(result.getCount() == 0){
                 FinalReading = "";
                 disconnection_attempt = "0";
@@ -640,8 +621,8 @@ public class DisconnectionActivity extends BaseFormActivity {
                 or_number = "";
                 return;
             }
-            while(result.moveToNext()){
 
+            while(result.moveToNext()){
                 FinalReading = result.getString(13);
                 disconnection_attempt = result.getString(46);
                 total_amount_due = result.getString(80);
@@ -661,8 +642,6 @@ public class DisconnectionActivity extends BaseFormActivity {
                 }
             }
 
-
-
             etxtComment.setText(comment);
             switch(status){
                 case "collection":
@@ -681,15 +660,12 @@ public class DisconnectionActivity extends BaseFormActivity {
                         switchtcdeDisconCollect.setChecked(false);
                         etxtReading.setVisibility(View.VISIBLE);
             }
-
             return;
-
         }
         catch(Exception e){
             Log.e(TAG,"Tristan Gary Leyesa says ",e);
             return ;
         }
-
     }
 
     public void GetDisconnectionRemarks(){
@@ -713,7 +689,6 @@ public class DisconnectionActivity extends BaseFormActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     RemarksValue = parent.getItemAtPosition(position).toString();
-
                 }
 
                 @Override
@@ -722,7 +697,6 @@ public class DisconnectionActivity extends BaseFormActivity {
                 }
             });
         } catch (Exception e) {
-
             Log.e(TAG, "Error : ", e);
             return;
         }
@@ -733,6 +707,7 @@ public class DisconnectionActivity extends BaseFormActivity {
         Cursor result_data = null;
         String AccountNumber = DisconnectionActivity.AccountNumber;
         ProgressDialog pDialog;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -763,9 +738,7 @@ public class DisconnectionActivity extends BaseFormActivity {
                     //HashMap<String, String> data = new HashMap<>();
                     AccountNumber = result_data.getString(1);
                     Liquid.rowid = result_data.getString(2);
-
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -775,7 +748,6 @@ public class DisconnectionActivity extends BaseFormActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-
             ConsumerDetails(Liquid.SelectedId, AccountNumber);
             DisconenctedDetails(Liquid.SelectedId, AccountNumber);
             GetImages(Liquid.SelectedId);

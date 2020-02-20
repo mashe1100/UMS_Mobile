@@ -20,6 +20,7 @@ public class TrackingCommentActivity extends BaseFormActivity {
     TextView txtNote;
     LiquidFile mLiquidFile;
     String Comment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,13 +36,14 @@ public class TrackingCommentActivity extends BaseFormActivity {
         txtComment = (EditText) findViewById(R.id.txtComment);
         txtNote.setText("Put a category comment, this can help your tracked data validate.");
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case android.R.id.home:
                 this.finish();
                 return true;
+
             case R.id.action_form_submit:
                 boolean result = false;
                 Comment = txtComment.getText().toString();
@@ -56,6 +58,7 @@ public class TrackingCommentActivity extends BaseFormActivity {
                     Liquid.showDialogError(this, "Invalid", "Unsuccessfully Saved!");
                 }
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -71,20 +74,17 @@ public class TrackingCommentActivity extends BaseFormActivity {
                 Period);
         try
         {
-
             if(result.getCount() == 0){
                 return;
             }
             while(result.moveToNext()){
                 Comment = result.getString(2);
             }
-
             txtComment.setText(Comment);
         }
         catch(Exception e){
             Log.e(TAG,"Error : ",e);
             return;
         }
-
     }
 }

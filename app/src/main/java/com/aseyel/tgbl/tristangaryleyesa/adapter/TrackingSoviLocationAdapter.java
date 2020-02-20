@@ -52,14 +52,13 @@ public class TrackingSoviLocationAdapter extends RecyclerView.Adapter<RecyclerVi
     public TrackingSoviLocationAdapter(Fragment fragment) {
         this.fragment = fragment;
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tracking_sovilocation,parent,false);
         CellViewHolder mCellViewHolder = new CellViewHolder(view);
         setupClickableViews(view,mCellViewHolder);
         return mCellViewHolder;
-
     }
 
     @Override
@@ -78,13 +77,10 @@ public class TrackingSoviLocationAdapter extends RecyclerView.Adapter<RecyclerVi
                     Liquid.SelectedDescription = ListItems.get(adapterPosition).getTitle();
                     Intent i = new Intent(view.getContext(), TrackingSoviLocationActivity.class);
                     view.getContext().startActivity(i);
-
-
                 }
                 catch(Exception e){
                     Log.e(TAG,"Error ",e);
                 }
-
             }
         });
         mCellViewHolder.btnToDo.setOnClickListener(new View.OnClickListener() {
@@ -97,12 +93,10 @@ public class TrackingSoviLocationAdapter extends RecyclerView.Adapter<RecyclerVi
                     Liquid.SelectedDescription = ListItems.get(adapterPosition).getTitle();
                     Intent i = new Intent(view.getContext(), TrackingSoviLocationActivity.class);
                     view.getContext().startActivity(i);
-
                 }
                 catch(Exception e){
                     Log.e(TAG,"Error ",e);
                 }
-
             }
         });
 
@@ -115,18 +109,13 @@ public class TrackingSoviLocationAdapter extends RecyclerView.Adapter<RecyclerVi
                     Liquid.SelectedCode = ListItems.get(adapterPosition).getId();
                     Liquid.SelectedDescription = ListItems.get(adapterPosition).getTitle();
 
-
                     ((TrackingSoviLocationFragment) fragment).DeleteData( Liquid.SelectedAccountNumber, Liquid.SelectedDescription,Liquid.SelectedPeriod);
-
                 }
                 catch(Exception e){
                     Log.e(TAG,"Error ",e);
                 }
-
             }
         });
-
-
     }
 
     @Override
@@ -155,15 +144,11 @@ public class TrackingSoviLocationAdapter extends RecyclerView.Adapter<RecyclerVi
         }
     }
 
-
-
     public static class CellViewHolder extends RecyclerView.ViewHolder {
-
         @BindView(R.id.ivTrackingSoviLocationCenter)
         ImageView ivTrackingSoviLocationCenter;
         @BindView(R.id.tsTrackingSoviLocationDetails)
         TextSwitcher tsTrackingSoviLocationDetails;
-
         @BindView(R.id.vTrackingSoviLocationSelected)
         View vTrackingSoviLocationSelected;
         @BindView(R.id.ivTrackingSoviLocationProfile)
@@ -197,18 +182,10 @@ public class TrackingSoviLocationAdapter extends RecyclerView.Adapter<RecyclerVi
             tvTrackingSoviLocationAging.setText(Items.Date);
             tsTrackingSoviLocationDetails.setCurrentText("Sovi Location of "+Items.Title);
             ivTrackingSoviLocationCenter.setImageResource(Integer.parseInt(Items.Filepath));
-          
         }
 
         public FeedModel getItems() {
             return Items;
         }
     }
-
-
-
-
-
-
-
 }

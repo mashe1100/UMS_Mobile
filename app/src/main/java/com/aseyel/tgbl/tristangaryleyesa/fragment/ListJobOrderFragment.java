@@ -58,7 +58,6 @@ import butterknife.BindView;
 
 public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
     private static final String TAG = ListJobOrderFragment.class.getSimpleName();
-
     private String[] GetColumns;
     private int job_id;
     private int CountAll = 0;
@@ -81,8 +80,8 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
     private JSONObject mpostData;
     private ProgressDialog mProgressDialog;
     private AHBottomNavigation mBottomNavigationView;
-
     private SwipeRefreshLayout mSwipeRefreshLayout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -110,14 +109,13 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
             rvList = (RecyclerView) view.findViewById(R.id.rvJobOrderDetailsList);
             floatBtnAdd = (FloatingActionButton) view.findViewById(R.id.floatBtnAdd);
             mBottomNavigationView = (AHBottomNavigation) view.findViewById(R.id.mBottomNavigationView);
-
             job_id = 0;
-
             LinearLayoutManager llm = new LinearLayoutManager(getActivity());
             //Setting up
             rvList.setHasFixedSize(true);
             rvList.setLayoutManager(llm);
             rvList.setAdapter(Adapter);
+
             rvList.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -129,6 +127,7 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                     }
                 }
             });
+
             floatBtnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -146,15 +145,10 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                             Intent i = new Intent(view.getContext(), NewJobOrderDetailsActivity.class);
                             view.getContext().startActivity(i);
                 }
-
                 }
             });
 
-
-
             //floatBtnAdd.setVisibility(View.GONE);
-
-
             switch (Liquid.ServiceType){
                 case "READ AND BILL":
                     ReadBillBottomNavigation();
@@ -166,8 +160,6 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                     DisconnectionBottomNavigation();
                     break;
             }
-
-
 
             /*mBottomNavigationView.setOnNavigationItemSelectedListener(
                     new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -205,6 +197,7 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
             Log.e(TAG,"Error : ",e);
         }
     }
+
     public void DeliveryDetails(){
         try
         {
@@ -228,16 +221,14 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
         }
     }
 
-
     public void AddDelivery(){
         Intent e;
         Liquid.TrackingNumber = "";
         Liquid.RemarksCode = "";
         Liquid.Remarks = "";
-//        Liquid.DeliveryItemTypeCode = "";
-//        Liquid.DeliveryItemTypeDescription = "";
+//      Liquid.DeliveryItemTypeCode = "";
+//      Liquid.DeliveryItemTypeDescription = "";
         Liquid.ReaderComment = "";
-
         e = new Intent(view.getContext(), DeliveryActivityV2.class);
         view.getContext().startActivity(e);
 
@@ -245,24 +236,20 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
 
             Intent intent = new Intent(view.getContext(), OCRActivity.class);
             startActivity(intent);
-
-
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         GetClientData(false,Liquid.SelectedJobType,true);
     }
+
     public void MessengerialNavigation(){
         AHBottomNavigationItem item1 = new AHBottomNavigationItem("Details", R.drawable.ic_action_all, R.color.colorAccent);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem("Add", R.drawable.ic_action_add, R.color.colorAccent);
-
-
         mBottomNavigationView.addItem(item1);
         mBottomNavigationView.addItem(item2);
-
-
         mBottomNavigationView.setAccentColor(R.color.colorAccent);
         mBottomNavigationView.setInactiveColor(R.color.colorAccent);
 
@@ -286,6 +273,7 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
             }
         });
     }
+
     public void ReadBillBottomNavigation(){
         AHBottomNavigationItem item1 = new AHBottomNavigationItem("All", R.drawable.ic_action_all, R.color.colorAccent);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem("Read", R.drawable.ic_action_accomplishment, R.color.colorAccent);
@@ -298,7 +286,6 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
         mBottomNavigationView.addItem(item3);
         mBottomNavigationView.addItem(item4);
         mBottomNavigationView.addItem(item5);
-
         mBottomNavigationView.setAccentColor(R.color.colorAccent);
         mBottomNavigationView.setInactiveColor(R.color.colorAccent);
 
@@ -344,7 +331,6 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
         mBottomNavigationView.addItem(item2);
         mBottomNavigationView.addItem(item3);
         mBottomNavigationView.addItem(item4);
-
         mBottomNavigationView.setAccentColor(R.color.colorAccent);
         mBottomNavigationView.setInactiveColor(R.color.colorAccent);
 
@@ -376,9 +362,9 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
             }
         });
     }
+
     public void DoUploadAudit(JSONObject postData) {
         try {
-
             mpostData = postData;
 
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -405,13 +391,11 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
     }
 
     public void DeleteData(final String JobOrderType, final String JobOrderId,final String AccountNumber,final int position){
-
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
-
                         boolean result = false;
                         //boolean result_details = false;
                         result = TrackingModel.DeleteJobDetails(JobOrderType,JobOrderId,AccountNumber);
@@ -425,7 +409,6 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
-
                         break;
 
                 }
@@ -437,7 +420,6 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                 .setNegativeButton("No", dialogClickListener).show();
 
     }
-
 
     public void DoUploadCoke(JSONObject postData){
         try {
@@ -471,9 +453,11 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
             case "TRACKING":
                 GetData(animated,Liquid.SelectedId,"");
                 break;
+
             case "AUDIT":
                 GetAuditDownload(animated,Liquid.SelectedId,"");
                 break;
+
             case "Messengerial":
             case "MESSENGERIAL":
                 mBottomNavigationView.setVisibility(View.VISIBLE);
@@ -483,8 +467,8 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
 //                if(getCount){
 //                    getCountItem();
 //                }
-
                 break;
+
             case "METER READER":
                 mBottomNavigationView.setVisibility(View.VISIBLE);
 //                SearchBy = "All";
@@ -500,11 +484,11 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                 if(getCount){
                     getDisconnectionCountItem();
                 }
-
                 break;
         }
 
     }
+
     public void GetAuditDownload(boolean animated,String job_id,String AccountNumber){
         try{
             Adapter.updateItems(animated, AuditModel.GetAuditDownload(job_id,AccountNumber));
@@ -514,7 +498,6 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
         }
 
     }
-
 
     public int GetDisconnectionDownload(boolean animated,String job_id,String AccountNumber){
         try{
@@ -539,11 +522,9 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
 
     }
 
-
     public int GetDisconnectioAccomplishement(String ToGet,boolean animated,String SearchBy,String job_id,String AccountNumber){
         try
         {
-
             String Details = "";
             ArrayList<HashMap<String, String>> final_result = new ArrayList<>();
             Cursor result = workModel.GetDisconnectioAccomplishement(SearchBy,job_id,AccountNumber);
@@ -557,8 +538,6 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                 return 0;
             }
 
-
-
             while(result.moveToNext()){
                 HashMap<String, String> data = new HashMap<>();
                 String AccountName = result.getString(10);
@@ -570,8 +549,6 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                 String JobOrderDate = result.getString(52);
                 String Address = result.getString(29);
                 String Remarks = result.getString(48);
-
-
                 data.put("JobOrderId", result.getString(2));
                 data.put("AccountNumber", CAccountNumber);
                 data.put("AccountName", AccountName);
@@ -605,7 +582,6 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
     public int GetMessengerial(boolean animated,String job_id,String TrackingNumber){
         try
         {
-
             String Details = "";
             ArrayList<HashMap<String, String>> final_result = new ArrayList<>();
             Cursor result = null;
@@ -632,18 +608,15 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                 data.put("Title",TrackingNumber);
                 Details ="Item Type : " +  ItemTypeCode + " - " + ItemType + "\n"+
                         "Remarks: " +  RemarksCode + " - " + Remarks + "\n";
-
                 data.put("Details", Details);
                 data.put("Date", TimeStamp);
                 data.put("Latitude", "0");
                 data.put("Longitude", "0");
                 data.put("JobOrderDate",Date);
                 data.put("Status", Status);
-
                 data.put("Accomplishment","0");
                 final_result.add(data);
             }
-
 
             Adapter.updateItems(animated,final_result);
             return result.getCount();
@@ -654,10 +627,10 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
         }
 
     }
+
     public int GetReadAndBillDataReaded(String ToGet,boolean animated,String SearchBy,String job_id,String AccountNumber){
         try
         {
-
             String Details = "";
             ArrayList<HashMap<String, String>> final_result = new ArrayList<>();
             Cursor result = null;
@@ -724,10 +697,7 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
 
     }
 
-
     public void getDisconnectionCountItem(){
-
-
         SearchBy = "Disco";
         CountRead = GetDisconnectioAccomplishement("Count",false,SearchBy,Liquid.SelectedId,"" );
         AHNotification notification = new AHNotification.Builder()
@@ -755,8 +725,6 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                 .build();
         mBottomNavigationView.setNotification(notification, 3);
 
-
-
         notification = new AHNotification.Builder()
                 .setText(String.valueOf(CountAll))
                 .setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent))
@@ -764,6 +732,7 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                 .build();
         mBottomNavigationView.setNotification(notification, 0);
     }
+
     public void getCountItem(){
         CountAll = GetReadAndBillDataReaded("Count",false,"All",Liquid.SelectedId,"" );
         AHNotification notification = new AHNotification.Builder()
@@ -812,6 +781,7 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                 .build();
         mBottomNavigationView.setNotification(notification, 0);
     }
+
     public int GetReadAndBillData(boolean animated,String job_id,String AccountNumber){
         try
         {
@@ -867,7 +837,6 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
 
     }
 
-
     public void GetByAMNReadAndBillData(boolean animated,String job_id,String Name){
         try
         {
@@ -916,8 +885,6 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                 data.put("Accomplishment",Accomplishment);
                 final_result.add(data);
             }
-
-
             Adapter.updateItems(animated,final_result);
 
         }
@@ -934,7 +901,6 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
         Cursor result = workModel.GetCokeLocalJobOrderDetails(job_id,AccountNumber);
         try
         {
-
             if(result.getCount() == 0){
                 return;
             }
@@ -967,8 +933,6 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                 data.put("Accomplishment","");
                 final_result.add(data);
             }
-
-
             Adapter.updateItems(animated,final_result);
 
         }
@@ -976,7 +940,6 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
             Log.e(TAG,"Error : ",e);
             return;
         }
-
     }
 
     @Override
@@ -987,13 +950,9 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                 break;
                 default:
                     GetReadAndBillDataReaded("",false,SearchBy,Liquid.SelectedId,"" );
-
         }
-
-
         mSwipeRefreshLayout.setRefreshing(false);
     }
-
 
     public class DataAuditPostingToServer extends AsyncTask<Void, Integer, Integer> {
         // This is the JSON body of the post
@@ -1034,7 +993,6 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                 mProgressDialog.setMax(0);
                 mProgressDialog.setMax(total);
                 //progressBar.setMax(total);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -1131,18 +1089,13 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                     default:
                         Log.i(TAG,"Unsuccessfully Uploaded");
                         Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
-
                 }
-
-
             } catch (Exception e){
                 Log.e(TAG,"Error :",e);
                 Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
             }
             mProgressDialog.dismiss();
         }
-
-
     }
 
     public class CokeFilePostingToServer extends AsyncTask<Void, Integer, Integer> {
@@ -1152,11 +1105,9 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
         JSONArray dataArray;
         JSONArray imageArray;
         JSONArray signatureArray;
-
         int toUploadCount = 0;
         int progress = 0;
         int total = 0;
-
         String data;
         String Category;
         String jsonStr;
@@ -1164,13 +1115,14 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
         String signatureData;
         String AccountNumber;
         String Period;
-
         // This is a constructor that allows you to pass in the JSON body
+
         public CokeFilePostingToServer(JSONObject postData) {
             if (postData != null) {
                 this.postData = postData;
             }
         }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -1204,7 +1156,6 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                     return 2;
                 }
                 for(int a = 0; a < dataArray.length();a++){
-
                     JSONObject dataObject = new JSONObject();
                     dataObject.put("data",dataArray.getJSONObject(a));
                     AccountNumber = String.valueOf(dataArray.getJSONObject(a).getJSONArray("store_status").getJSONObject(0).get("customer_no"));
@@ -1213,14 +1164,12 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
 
                     //progressBar.setMax(picture.getCount());
                     while(picture.moveToNext()){
-
                             Category = picture.getString(2);
                             File mImages;
                             File[] listFile;
                             String[] Subfolder = new String[1];
                             Subfolder[0] = Category;
                             int imageUploaded = 0;
-
                             mProgressDialog.setMax(0);
                             mImages = Liquid.getDiscPicture(AccountNumber, Subfolder);
                             if (!mImages.exists() && !mImages.mkdirs()) {
@@ -1248,7 +1197,6 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                                     Log.i(TAG, String.valueOf(jsonStr));
                                     response = Liquid.StringToJsonObject(jsonStr);
 
-
                                     if(response.getString("result").equals("false")){
                                         Liquid.ErrorUpload.put(dataObject);
                                     }else{
@@ -1262,7 +1210,6 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                     }
 
                     //Signature
-
                         File mImages;
                         File[] listFile;
                         mProgressDialog.setMax(0);
@@ -1297,8 +1244,6 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                                 }
                             }
                         }
-
-
                 }
 
                 if(Liquid.ErrorUpload.length() != 0){
@@ -1359,22 +1304,14 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                     default:
                         Log.i(TAG,"Unsuccessfully Uploaded");
                         Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
-
                 }
-
-
             } catch (Exception e){
                 Log.e(TAG,"Error :",e);
                 Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
             }
             mProgressDialog.dismiss();
         }
-
-
     }
-
-
-
 
     public class DataPostingToServer extends AsyncTask<Void, Integer, Integer> {
         // This is the JSON body of the post
@@ -1418,6 +1355,7 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
             }
 
         }
+
         @Override
         protected Integer doInBackground(Void... strings) {
             try {
@@ -1492,19 +1430,13 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                     default:
                         Log.i(TAG,"Unsuccessfully Uploaded");
                         Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
-
                 }
-
-
             } catch (Exception e){
                 Log.e(TAG,"Error :",e);
                 Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
             }
             mProgressDialog.dismiss();
-
         }
-
-
     }
 
     public class AuditFilePostingToServer extends AsyncTask<Void, Integer, Integer> {
@@ -1514,11 +1446,9 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
         JSONArray dataArray;
         JSONArray imageArray;
         JSONArray signatureArray;
-
         int toUploadCount = 0;
         int progress = 0;
         int total = 0;
-
         String data;
         String Category;
         String jsonStr;
@@ -1533,6 +1463,7 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                 this.postData = postData;
             }
         }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -1617,8 +1548,6 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                         }
                     }
                 }
-
-
             } catch (JSONException e) {
                 Log.e(TAG,"Error :",e);
                 //JSON Problem
@@ -1630,21 +1559,17 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                 return 0;
             }
             return 29;
-
-
         }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
             mProgressDialog.setProgress(values[0]);
-
         }
 
         @Override
         protected void onPostExecute(Integer result) {
             super.onPostExecute(result);
-
             try {
                 switch(result){
                     case 29:
@@ -1674,22 +1599,12 @@ public class ListJobOrderFragment extends Fragment implements SwipeRefreshLayout
                     default:
                         Log.i(TAG,"Unsuccessfully Uploaded");
                         Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
-
                 }
-
-
             } catch (Exception e){
                 Log.e(TAG,"Error :",e);
                 Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
             }
             mProgressDialog.dismiss();
-
         }
-
-
     }
-
-
-
-
 }

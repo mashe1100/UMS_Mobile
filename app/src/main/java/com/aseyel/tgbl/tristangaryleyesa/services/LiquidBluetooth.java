@@ -21,7 +21,6 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 public class LiquidBluetooth extends BaseActivity {
-
     private static final String TAG = LiquidBluetooth.class.getSimpleName();
     private BluetoothSocket bluetoothSocket;
     private BluetoothDevice bluetoothDevice;
@@ -34,8 +33,6 @@ public class LiquidBluetooth extends BaseActivity {
     private byte[] readBuffer;
     private int readBufferPosition;
     private volatile boolean stopWorker;
-
-
 
     //open Bluetooth Printer
     public void openBluetoothPrinter()  throws IOException {
@@ -52,8 +49,6 @@ public class LiquidBluetooth extends BaseActivity {
             e.printStackTrace();
         }
     }
-
-
 
     public void beginListenData(){
         try{
@@ -108,7 +103,6 @@ public class LiquidBluetooth extends BaseActivity {
         }
     }
 
-
     public void FindBluetoothDevice(){
         try{
 
@@ -145,7 +139,6 @@ public class LiquidBluetooth extends BaseActivity {
         }
     }
 
-
     // Printing Text to Bluetooth Printer //
     public void printData() throws IOException{
         try{
@@ -174,8 +167,4 @@ public class LiquidBluetooth extends BaseActivity {
 
         return msg;
     }
-
-
-
-
 }

@@ -37,7 +37,6 @@ public class TrackingShelfPlanogramActivity extends BaseFormActivity {
     Switch switchShelfPlanogram;
     @BindView(R.id.txtGuide)
     TextView txtGuide;
-
     TrackingGalleryAdapter Adapter;
     ArrayList<Bitmap> mBitmap = new ArrayList<Bitmap>();
     int mBitmapCount = 0;
@@ -66,18 +65,13 @@ public class TrackingShelfPlanogramActivity extends BaseFormActivity {
         }catch(Exception e){
             Log.e(TAG,"Error :",e);
         }
-
     }
 
     private void setup(){
-
-
         try {
             //Initialization
             Subfolder = new String[1];
             Subfolder[0] = Category;
-
-
             //rvList = (RecyclerView) findViewById(R.id.rvList);
             switchShelfPlanogram = (Switch) findViewById(R.id.switchShelfPlanogram);
             txtGuide = (TextView) findViewById(R.id.txtGuide);
@@ -88,7 +82,6 @@ public class TrackingShelfPlanogramActivity extends BaseFormActivity {
            // rvList.setHasFixedSize(true);
             //rvList.setLayoutManager(glm);
             //rvList.setAdapter(Adapter);
-
             txtGuide.setText("If the Shelf is planogram compliant select YES, if Not switch it to No.");
 
             switchShelfPlanogram.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
@@ -101,21 +94,18 @@ public class TrackingShelfPlanogramActivity extends BaseFormActivity {
                     }
                 }
             });
-
             mLiquidFile = new LiquidFile(this);
             btnCamera = (ImageButton) findViewById(R.id.btnCamera);
+
             btnCamera.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                 try{
-
                     Filename = Liquid.SelectedAccountNumber +"_"+"ShelfPlanogramCompliance"+"_"+Liquid.RemoveSpecialCharacter(Liquid.SelectedDescription)+"__"+String.valueOf(mUri.size()+1)+Liquid.imageFormat;
                     mFile = mLiquidFile.Directory(Liquid.SelectedAccountNumber,Filename.trim(),Subfolder);
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(mFile));
-
                     startActivityForResult(intent,CAM_REQUEST);
-
                 }
                 catch (Exception e){
                     Liquid.ShowMessage(getApplicationContext(),e.toString());
@@ -131,7 +121,6 @@ public class TrackingShelfPlanogramActivity extends BaseFormActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try{
-
             if(resultCode == RESULT_OK) {
                 if (requestCode == CAM_REQUEST) {
                     boolean result = false;
@@ -181,7 +170,6 @@ public class TrackingShelfPlanogramActivity extends BaseFormActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch(item.getItemId())
         {
             case android.R.id.home:
@@ -193,14 +181,13 @@ public class TrackingShelfPlanogramActivity extends BaseFormActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
     private void GetImages(boolean animated){
         mUri.clear();
         mImages = Liquid.getDiscPicture(Liquid.SelectedAccountNumber,Subfolder);
-        if(!mImages.exists() && !mImages.mkdirs()){
 
+        if(!mImages.exists() && !mImages.mkdirs()){
             Liquid.ShowMessage(this,"Can't create directory to save image");
         }
         else{
@@ -216,12 +203,9 @@ public class TrackingShelfPlanogramActivity extends BaseFormActivity {
                     data.put("Filaname", listFile[a].getName());
                     final_result.add(data);
                 }
-
             }
-
             tsImageCounter.setCurrentText(String.valueOf(mUri.size()));
             Adapter.updateItems(animated,final_result);
         }
     }
-
 }

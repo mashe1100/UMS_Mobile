@@ -16,13 +16,13 @@ import java.util.ArrayList;
 public class ImageViewerAdapter extends PagerAdapter {
     Context context;
     public static ArrayList<Bitmap> GalImages = new ArrayList();
-
     LayoutInflater mLayoutInflater;
 
     public ImageViewerAdapter(Context context){
         this.context=context;
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
+
     @Override
     public int getCount() {
         return GalImages.size();
@@ -36,12 +36,9 @@ public class ImageViewerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         View itemView = mLayoutInflater.inflate(R.layout.item_image_pager, container, false);
-
         PhotoView imageView = (PhotoView) itemView.findViewById(R.id.picture);
         imageView.setImageBitmap(GalImages.get(position));
-
         container.addView(itemView);
-
         return itemView;
     }
 

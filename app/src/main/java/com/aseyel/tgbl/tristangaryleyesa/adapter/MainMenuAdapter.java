@@ -47,12 +47,10 @@ public class MainMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ((CellViewHolder) viewHolder).bindView(ListItems.get(position));
     }
 
-
     @Override
     public int getItemCount() {
         return ListItems.size();
     }
-
 
     private void setupClickableViews(final View view, final CellViewHolder mCellViewHolder) {
         mCellViewHolder.ivMenu.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +63,6 @@ public class MainMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     if (fragment instanceof TabMenuFragment) {
                         MenuExecution(Description);
                     }
-
                 }
                 catch(Exception e){
                     Log.e(TAG, e.toString(),e);
@@ -82,14 +79,12 @@ public class MainMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     if (fragment instanceof TabMenuFragment) {
                         MenuExecution(Description);
                     }
-
                 }
                 catch(Exception e){
                     Log.e(TAG, e.toString(),e);
                 }
             }
         });
-
     }
 
     private void MenuExecution(String ListName){
@@ -126,6 +121,7 @@ public class MainMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 break;
         }
     }
+
     public void updateItems(boolean animated,ArrayList<HashMap<String, String>> Data) {
         ListItems.clear();
         for(int i = 0; i < Data.size(); i++) {
@@ -170,5 +166,4 @@ public class MainMenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return Items;
         }
     }
-
 }

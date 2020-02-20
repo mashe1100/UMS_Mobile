@@ -48,7 +48,6 @@ public class AuditTravelRideActivity extends BaseFormActivity {
     String Longitude;
     String JobOrderDate;
     LiquidGPS mLiquidGPS;
-
     //Camera
     @BindView(R.id.btnCamera)
     ImageButton btnCamera;
@@ -72,7 +71,6 @@ public class AuditTravelRideActivity extends BaseFormActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setup();
-
     }
 
     private void setup(){
@@ -90,15 +88,17 @@ public class AuditTravelRideActivity extends BaseFormActivity {
         btnCamera = (ImageButton) findViewById(R.id.btnCamera);
         mLiquidFile = new LiquidFile(this);
         spinner_vehicle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Vehicle = parent.getItemAtPosition(position).toString();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
+
         if(!Liquid.SelectedCode.equals("")){
             GetData(true, Liquid.SelectedId,Liquid.SelectedAccountNumber,Liquid.SelectedCode,"");
         }
@@ -117,7 +117,6 @@ public class AuditTravelRideActivity extends BaseFormActivity {
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mFile));
 
                     startActivityForResult(intent,CAM_REQUEST);
-
                 }
                 catch (Exception e){
                     Log.e(TAG,"Error : ",e);
@@ -137,11 +136,10 @@ public class AuditTravelRideActivity extends BaseFormActivity {
         GetImages();
     }
 
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         try{
             if(resultCode == RESULT_OK) {
                 if (requestCode == CAM_REQUEST) {
@@ -158,8 +156,6 @@ public class AuditTravelRideActivity extends BaseFormActivity {
                             Liquid.currentDate()
                     );
 
-
-
                     if(result == true){
                         Liquid.resizeImage(mFile.getAbsolutePath(),0.80,0.80);
                         Liquid.ShowMessage(getApplicationContext(),"Save Image Success");
@@ -168,19 +164,16 @@ public class AuditTravelRideActivity extends BaseFormActivity {
                         ImageCount = mUri.size();
                         GetImages();
                     }
-
                 }
             }
-
         }catch(Exception e){
             Log.e(TAG,"Error :",e);
         }
-
-
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
             case android.R.id.home:
                 this.finish();
@@ -212,8 +205,6 @@ public class AuditTravelRideActivity extends BaseFormActivity {
                     return false;
                 }*/
 
-
-
                 if(Liquid.SelectedCode.equals("")){
                     result = AuditModel.doSubmitAuditTravelRide(
                             JobOrderId,
@@ -233,7 +224,6 @@ public class AuditTravelRideActivity extends BaseFormActivity {
                             Vehicle,
                             Fare,
                             Comment
-
                     );
                 }
 
@@ -246,14 +236,13 @@ public class AuditTravelRideActivity extends BaseFormActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-
         }
     }
 
     public void GetData(boolean animated,String JobOrderId,String AccountNumber, String AuditId,String Search){
         ArrayList<HashMap<String, String>> final_result = new ArrayList<>();
-
         Cursor result = AuditModel.GetAuditTravelRides(JobOrderId,AccountNumber,AuditId,Search);
+
         try
         {
             if(result.getCount() == 0){
@@ -272,16 +261,16 @@ public class AuditTravelRideActivity extends BaseFormActivity {
             Log.e(TAG,"Error : ",e);
             return;
         }
-
     }
 
     private void GetImages(){
         mUri.clear();
         mImages = Liquid.getDiscPicture(Liquid.SelectedAccountNumber,Subfolder);
-        if(!mImages.exists() && !mImages.mkdirs()){
 
+        if(!mImages.exists() && !mImages.mkdirs()){
             Liquid.ShowMessage(this,"Can't create directory to save image");
         }
+
         else{
             listFile = mImages.listFiles();
             ArrayList<HashMap<String, String>> final_result = new ArrayList<>();
@@ -295,7 +284,6 @@ public class AuditTravelRideActivity extends BaseFormActivity {
             }
 
             tsImageCounter.setCurrentText(String.valueOf(mUri.size()));
-
         }
     }
 }

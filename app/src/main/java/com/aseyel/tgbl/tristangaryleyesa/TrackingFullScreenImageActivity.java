@@ -42,14 +42,11 @@ public class TrackingFullScreenImageActivity extends AppCompatActivity {
 
     private void setup(){
         Bitmap bmp = BitmapFactory.decodeFile(Liquid.SelectedImage);
-
         ImageViewerAdapter adapter = new ImageViewerAdapter(this);
         adapter.GalImages = Liquid.SelectedGallery;
-
         image_preview = (GalleryViewPager) findViewById(R.id.image_preview);
         image_preview.setAdapter(adapter);
         image_preview.setCurrentItem(Liquid.SelectedImagePosition);
-
 //        image_preview = (ImageView) findViewById(R.id.image_preview);
 //        Bitmap bMapScaled = Bitmap.createScaledBitmap(bmp, 155, 155, true);
 //        image_preview.setImageBitmap(bmp);

@@ -42,6 +42,7 @@ public class TrackingCommentFragment extends Fragment {
     @BindView(R.id.txtQuestion)
     TextView txtQuestion;
     String Comment;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class TrackingCommentFragment extends Fragment {
         }
         return mView;
     }
+
     private void setup(View view) {
         txtQuestion = (TextView) view.findViewById(R.id.txtQuestion);
         txtQuestion.setText("Please leave any comment to help your tracking and our client to improve. Thank you.");
@@ -87,7 +89,6 @@ public class TrackingCommentFragment extends Fragment {
                 }
             }
         });
-
     }
 
     public void GetData(String AccountNumber,
@@ -97,22 +98,17 @@ public class TrackingCommentFragment extends Fragment {
                 Period);
         try
         {
-
             if(result.getCount() == 0){
                 return;
             }
             while(result.moveToNext()){
                 Comment = result.getString(0);
-
             }
             txtComment.setText(Comment);
-
         }
         catch(Exception e){
             Log.e(TAG,"Error : ",e);
             return;
         }
-
     }
-
 }

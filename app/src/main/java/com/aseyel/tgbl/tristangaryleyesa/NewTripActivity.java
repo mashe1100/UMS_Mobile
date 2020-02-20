@@ -45,6 +45,7 @@ public class NewTripActivity extends BaseFormActivity {
     private Button btnSearchDriver;
     private Calendar myCalendar;
     private static final int REQUEST_CODE_SEARCH = 1;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_trip);
@@ -94,35 +95,35 @@ public class NewTripActivity extends BaseFormActivity {
                 startActivityForResult(i, REQUEST_CODE_SEARCH);
             }
         });
-
         setData();
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // Check that the result was from the autocomplete widget.
         Log.i(TAG, String.valueOf(requestCode));
+
         if (requestCode == REQUEST_CODE_SEARCH) {
                 String[] Fullname = Liquid.SearchFullname.split(",");
                 String Firstname = String.valueOf(Fullname[1].charAt(0));
                 txtDriverName.setText(Firstname + ". "+Fullname[0]);
-
         }
     }
+
     private void setData(){
         mSearchingLocation.setText(Liquid.SearchLocation);
         mGoingtoLocation.setText(Liquid.GoingToLocation);
     }
+
     private void updateLabel() {
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
         txtDate.setText(sdf.format(myCalendar.getTime()));
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch(item.getItemId())
         {
             case android.R.id.home:
@@ -152,19 +153,16 @@ public class NewTripActivity extends BaseFormActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(NewTripActivity.this);
                 builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
                         .setNegativeButton("No", dialogClickListener).show();
-
-
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
     public class DoNewTripTicket extends AsyncTask<String,Void,Void>{
-
         boolean result = false;
         String return_message = "";
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -200,9 +198,9 @@ public class NewTripActivity extends BaseFormActivity {
                 dataObject.put("latitudeto",Liquid.GoingToLocationLatitude);
                 dataObject.put("longitudeto",Liquid.GoingToLocationLongtitude);
                 String jsonStr  = sh.makeServicePostCall(mPOSTUMSAPI.API_Link,dataObject);
-
                 JSONObject response = Liquid.StringToJsonObject(jsonStr);
                 response =  new JSONObject(response.getString("TripTicket"));
+
                 if(response.getString("result").equals("false")){
                     result = false;
                     return_message = response.getString("message").toString();
@@ -210,8 +208,6 @@ public class NewTripActivity extends BaseFormActivity {
                     result = true;
                     CtrlNumber = response.getString("trip_ticket_number");
                 }
-
-
             }catch (Exception e){
                 Log.e(TAG,"Error :", e);
             }
@@ -237,7 +233,6 @@ public class NewTripActivity extends BaseFormActivity {
                                 case DialogInterface.BUTTON_NEGATIVE:
                                     Liquid.showDialogNext(NewTripActivity.this, "Valid", "Successfully Saved!");
                                     break;
-
                             }
                         }
                     };
@@ -250,7 +245,6 @@ public class NewTripActivity extends BaseFormActivity {
             }
         }
     }
-
 
     public class PrintTripTicket extends AsyncTask<Void,Void,Void> {
         boolean result = false;
@@ -284,7 +278,6 @@ public class NewTripActivity extends BaseFormActivity {
             } else {
                 Liquid.showDialogError(NewTripActivity.this, "Invalid", "Unsuccessfully Saved!");
             }
-
         }
     }
 }

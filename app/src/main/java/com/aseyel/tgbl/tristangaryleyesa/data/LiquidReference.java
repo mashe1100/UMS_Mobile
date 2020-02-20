@@ -15,11 +15,7 @@ public class LiquidReference {
     public static String AlterHouseLongitudeMeterNotInList = "ALTER TABLE  meter_not_in_list ADD COLUMN house_longitude TEXT NULL";
     public static String AlterLatitudeCustomerReadingDownload = "ALTER TABLE  customer_reading_download ADD COLUMN latitude TEXT NULL";
     public static String AlterLongitudeCustomerReadingDownload = "ALTER TABLE  customer_reading_download ADD COLUMN longitude TEXT NULL";
-
-
     //Update 10/28/2019 remarks update
-
-
     //SQLITE TABLE
     public static String DropCokeCustomerTable = "DROP TABLE IF EXISTS customer";
     public static String CokeCustomerTable = "CREATE TABLE IF NOT EXISTS  customer (INCLUDED text  NULL,EVO text  NULL,SERVICE_MODEL text  NULL,MKTSGM text  NULL,SEGM text  NULL,CU text  NULL,REGION text  NULL,SALES_LOC_CODE text  NULL,SUB_DEMAND_CODE text  NULL,WITH_SCL text  NULL,SCL text  NULL,WITH_VOLUME text  NULL,VOLUME text  NULL,LEGO text  NULL,Customer_No text  PRIMARY KEY NOT NULL,Customer_group text  NULL,Oprl_Mark_Type text  NULL,Transportzone text  NULL,DeliverPlant text  NULL,Region_Lookup text  NULL,Sales_Org text  NULL,Sales_Group text  NULL,Sales_Office text  NULL,Sales_Route text  NULL,Sales_Location text  NULL,Demand_area text  NULL,Sub_Demand_Area text  NULL,Name text  NULL,Name_2 text  NULL,City text  NULL,Postal_Codes text  NULL,Street text  NULL,House_No text  NULL,Street_4 text  NULL,Train_station text  NULL,Created_on text  NULL,Account_group text  NULL,Customer_class text  NULL,Business_Type text  NULL,Bus_Type_Ext text  NULL,Cus_Subtrd_Chn text  NULL,Suppres_Reason text  NULL,Cust_Plan_Lev text  NULL,Sales_district text  NULL,Master_Route text  NULL,Driver text  NULL,BP__Customer_Partner text  NULL,PY__Customer_Partner text  NULL,ZR__Personel_Partner text  NULL,ZW__Customer_Partner text  NULL,ZG__Personel_Partner text  NULL,Longitude text  NULL,Latitude text  NULL,Bus_Comp_Type text  NULL,DPWI text  NULL,Account text  NULL,address text  NULL,new_address text  NULL,province text  NULL,mt_region text  NULL,Address_1 text  NULL,address_2 text  NULL,Remarks text  NULL,mt_city text  NULL,period TEXT  NULL,sysentrydate TEXT NULL,modifieddate TEXT NULL,modifiedby TEXT NULL)";
@@ -63,15 +59,11 @@ public class LiquidReference {
     //public static String DeliveryRemarksList = "CREATE TABLE IF NOT EXISTS  delivery_remarks (id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT,description TEXT  NULL)";
     public static String DropDeliveryPictures = "DROP TABLE IF EXISTS messengerial_pictures";
     public static String DeliveryPictures = "CREATE TABLE IF NOT EXISTS [messengerial_pictures] (client TEXT NULL,accountnumber TEXT NULL,picture TEXT NULL,timestamp TEXT NULL,date TEXT NULL,user_id TEXT NULL,sysentrydate TEXT NULL,modifieddate TEXT NULL,modifiedby TEXT NULL)";
-
-
     //AUDIT
     public static String DropAuditDownload = "DROP TABLE IF EXISTS audit_download";
     public static String AuditDownload = "CREATE TABLE IF NOT EXISTS  [audit_download] ([JobOrderId] TEXT  NULL,[Client] TEXT NULL,[JobOrderTitle] TEXT  NULL,[JobOrderDetails] TEXT  NULL,[Route] TEXT  NULL,[Itinerary] TEXT  NULL,[AccountNumber] TEXT  NULL,[AccountName] TEXT  NULL,[Address] TEXT  NULL,[Latitude] TEXT  NULL,[Longitude] TEXT  NULL,[JobOrderDate] TEXT NULL, sysentrydate text null,modifieddate text null,modifiedby TEXT, PRIMARY KEY ([JobOrderId],[AccountNumber],[JobOrderDate]))";
     public static String DropAuditUpload = "DROP TABLE IF EXISTS audit_upload";
     public static String AuditUpload = "CREATE TABLE IF NOT EXISTS  [audit_upload] ([AuditId] INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL,[JobOrderId] TEXT  NULL,[Client] TEXT NULL,[AccountNumber] TEXT  NULL,[Vehicle] TEXT  NULL,[Fare] TEXT  NULL,[Comment] TEXT  NULL,[Latitude] TEXT  NULL,[Longitude] TEXT  NULL,[JobOrderDate] TEXT NULL,[Status] TEXT NULL, sysentrydate text null,modifieddate text null,modifiedby TEXT null)";
-
-
     //LOGIN
     public static String DropUMSSettings = "DROP TABLE IF EXISTS ums_settings";
     public static String UMSSettings = "CREATE TABLE IF NOT EXISTS  [ums_settings] (" +
@@ -81,8 +73,6 @@ public class LiquidReference {
             "[sysentrydate] TEXT  NULL," +
             "[modifieddate] TEXT  NULL," +
             "[modifiedby] TEXT  NULL )";
-
-
     //LOGIN
     public static String DropUMSAccount = "DROP TABLE IF EXISTS ums_account";
     public static String UMSAccount = "CREATE TABLE IF NOT EXISTS  [ums_account] (" +
@@ -100,10 +90,9 @@ public class LiquidReference {
             "[sysentrydate] TEXT  NULL," +
             "[modifieddate] TEXT  NULL," +
             "[modifiedby] TEXT  NULL )";
-
-    //ADMIN
-    // previous admin user
-  //   public static String Admin = "INSERT INTO ums_account ([UserId],[Username],[Password],[Status]) VALUES('001','000','c6f057b86584942e415435ffb1fa93d4','Logout')";
+//  ADMIN
+//  previous admin user
+//  public static String Admin = "INSERT INTO ums_account ([UserId],[Username],[Password],[Status]) VALUES('001','000','c6f057b86584942e415435ffb1fa93d4','Logout')";
 
     public static String DeleteAdmin = "DELETE FROM ums_account WHERE Username = '000';";
     public static String Admin = "REPLACE INTO ums_account ([UserId],[Username],[Password],[Status]) VALUES('001','ums_admin','63c1704c5e7fc429ff7a5bcad234d230','Logout')";
@@ -112,7 +101,6 @@ public class LiquidReference {
             "INSERT INTO cde_planogram_compliance(id,description) VALUES ('2','Coke RED Cooler');",
             "INSERT INTO cde_planogram_compliance(id,description) VALUES ('3','MDC Cooler Rental');"
     };
-
     //DELIVERY TABLE
     public static String DropDeliveryTableList = "DROP TABLE IF EXISTS messengerial";
     public static String DeliveryTableList = "CREATE TABLE IF NOT EXISTS  [messengerial] (" +
@@ -177,7 +165,6 @@ public class LiquidReference {
             "INSERT INTO ItemType(id,description,abbreviation) VALUES ('10','RE OUT DN','RE OUT DN');",
     };
 
-
     public static String DropCustomerDeliveryList = "DROP TABLE IF EXISTS customer_delivery_downloads";
     public static String CustomerDeliveryList = "CREATE TABLE IF NOT EXISTS  [customer_delivery_downloads] (" +
             "[tracking_number]," +
@@ -208,8 +195,6 @@ public class LiquidReference {
             "INSERT INTO location_category(id,description) VALUES ('3','Common Cold Vault');",
             "INSERT INTO location_category(id,description) VALUES ('4','Company-Owned Coolers');",
     };
-
-
     //Meter Reading
     public static String DropMeterReadingCustomerReadingDownloads = "DROP TABLE IF EXISTS customer_reading_downloads";
     public static String MeterReadingCustomerReadingDownloads =
@@ -311,7 +296,6 @@ public class LiquidReference {
                     "PRIMARY KEY ([C_Client],[C_ID],[C_AccountNumber],[CED_MeterNumber],[serial],[reading_date])" +
                     ")";
 
-
     public static String DropMeterReadingMeterNotInList = "DROP TABLE IF EXISTS meter_not_in_list";
     public static String MeterReadingMeterNotInList =
             "CREATE TABLE IF NOT EXISTS  [meter_not_in_list] (" +
@@ -342,7 +326,6 @@ public class LiquidReference {
                     "[metertype] TEXT  NULL,"+
                     "[structure] TEXT  NULL"+
                     ")";
-
 
     public static String DropMeterReadingPictures = "DROP TABLE IF EXISTS meter_reading_pictures";
     public static String MeterReadingPictures =
@@ -580,6 +563,7 @@ public class LiquidReference {
             "[ModifiedBy] TEXT  NULL,\n" +
             "PRIMARY KEY ([Client],[C_ID],[AccountNumber],[job_id],[meter_number],[Reading_Date])\n" +
             ")";
+
     public static String DropMeterReadingReadingLogs = "DROP TABLE IF EXISTS reading_logs";
     public static String MeterReadingReadingLogs = "CREATE TABLE IF NOT EXISTS  [reading_logs] (\n" +
             "[id] INTEGER  PRIMARY KEY AUTOINCREMENT NULL,\n" +
@@ -741,8 +725,6 @@ public class LiquidReference {
             "[ModifiedBy] TEXT  NULL\n" +
             ")";
 
-
-
     //Disconnection Structure
     public static String DropCustomerDiconnectionDownloads = "DROP TABLE IF EXISTS [customer_disconnection_downloads] ";
     public static String CustomerDiconnectionDownloads =
@@ -901,17 +883,11 @@ public class LiquidReference {
             "[remarks_description] TEXT  NULL\n" +
             ")";
 
-
-
-
-
-
     public static String DropMeterReadingDeliveryRemarks = "DROP TABLE IF EXISTS ref_delivery_remarks";
     public static String MeterReadingDeliveryRemarks = "CREATE TABLE IF NOT EXISTS  [ref_delivery_remarks] (\n" +
             "[remarks_id] TEXT  NULL PRIMARY KEY,\n" +
             "[remarks_description] TEXT  NULL\n" +
             ")";
-
 
     public static String DropMeterReadingImprobable = "DROP TABLE IF EXISTS ref_improbable";
     public static String MeterReadingImprobable = "CREATE TABLE IF NOT EXISTS  [ref_improbable] (\n" +
@@ -936,7 +912,6 @@ public class LiquidReference {
             "[negative_reading_description] TEXT  NULL\n" +
             ")";
 
-
     public static String DropMeterReadingRemarks = "DROP TABLE IF  EXISTS ref_remarks";
     public static String MeterReadingRemarks = "CREATE TABLE IF NOT EXISTS  [ref_remarks] (\n" +
             "[remarks_id] TEXT  PRIMARY KEY NULL,\n" +
@@ -958,7 +933,6 @@ public class LiquidReference {
             "PRIMARY KEY ([id],[client])\n" +
             ")";
 
-
     public static String IndexCustomerMeterReading = "CREATE UNIQUE INDEX [index_customer] ON [customer_reading_downloads](\n" +
             "[job_id]  ASC,\n" +
             "[C_Client]  ASC,\n" +
@@ -968,14 +942,12 @@ public class LiquidReference {
             "[reading_date]  ASC\n" +
             ")";
 
-
     public static String IndexMeterReadingPicture = "CREATE UNIQUE INDEX [index_picture] ON [meter_reading_pictures](\n" +
             "[client]  ASC,\n" +
             "[AccountNumber]  ASC,\n" +
             "[picture]  ASC,\n" +
             "[reading_date]  ASC\n" +
             ")";
-
 
     public static String IndexMeterReadingRates = "CREATE UNIQUE INDEX index_rates ON rates (R_ID, RD_ID, rate_date_from)";
 
@@ -1107,8 +1079,8 @@ public class LiquidReference {
             "INSERT INTO rates_description(RD_ID,RD_Client,R_Formula,R_Group,RD_Description,classification_id,classification) VALUES ('402','batelec2','0','0','TRATE Metering Charge','1','Residential');",
             "INSERT INTO rates_description(RD_ID,RD_Client,R_Formula,R_Group,RD_Description,classification_id,classification) VALUES ('397','batelec2','0','0','TRATE Generation Charge','1','Residential');",
             "INSERT INTO rates_description(RD_ID,RD_Client,R_Formula,R_Group,RD_Description,classification_id,classification) VALUES ('400','batelec2','0','0','TRATE Distribution Charge','1','Residential');",
-
     };
+
     public static String[] MeterReadingDeliveryRemarksData = {
             "INSERT INTO ref_delivery_remarks(remarks_id,remarks_description) VALUES (0,'No Field Findings');",
             "INSERT INTO ref_delivery_remarks(remarks_id,remarks_description) VALUES (39,'Slip Under the Door');",
@@ -1131,7 +1103,6 @@ public class LiquidReference {
             "INSERT INTO ref_delivery_remarks(remarks_id,remarks_description) VALUES (47,'Wrong Address');",
             "INSERT INTO ref_delivery_remarks(remarks_id,remarks_description) VALUES (50,'OTHERS');",
     };
-
 
     public static String[] DisconnectionRemarksData = {
             "INSERT INTO ref_disconnection_remarks(remarks_id,remarks_description) VALUES('31','WITH PAYMENT');",
@@ -1164,6 +1135,7 @@ public class LiquidReference {
             "INSERT INTO ref_disconnection_remarks(remarks_id,remarks_description) VALUES('0','NO FIELD FINDINGS');",
 
     };
+
     public static String DeleteRemarks = "DELETE FROM ref_remarks";
     public static String[] MeterReadingBaliwagWDRemarksData = {
             "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('11','NORMAL READING','AA');",
@@ -1206,6 +1178,7 @@ public class LiquidReference {
             "INSERT INTO ref_remarks(remarks_id,remarks_description,remarks_abbreviation) VALUES ('48','*WITH DUMP','WD');"
 
     };
+
     public static String[] MeterReadingMorePowerRemarksData = {
 //            "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES ('0','NO FIELD FINDINGS');",
 //            "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES ('11','*W/ WATER INSIDE');",
@@ -1299,6 +1272,7 @@ public class LiquidReference {
             "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES (110,'BROWNOUT');",
             "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES (115,'NO DISPLAY');",
     };
+
     public static String[] MeterReadingRemarksData = {
             "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES (0,'NO FIELD FINDINGS');",
             "INSERT INTO ref_remarks(remarks_id,remarks_description) VALUES (1,'*NOT USED');",
@@ -1359,6 +1333,7 @@ public class LiquidReference {
             "INSERT INTO product_category(id,description) VALUES ('6','Powdered Juice');",
             "INSERT INTO product_category(id,description) VALUES ('7','Powdered Tea');"
     };
+
     public static String[] ProductSoviListData = {
             "INSERT INTO sovi_product(id,description,product,type) VALUES ('1','Coke','Sparkling','KOF');",
             "INSERT INTO sovi_product(id,description,product,type) VALUES ('2','Coke Light','Sparkling','KOF');",
@@ -1456,9 +1431,7 @@ public class LiquidReference {
             "INSERT INTO sovi_product(id,description,product,type) VALUES ('114','Del Monte F&R Active','Sports Drink','NON-KOF');",
             "INSERT INTO sovi_product(id,description,product,type) VALUES ('115','Nature Spring Distilled Water','Packaged Water','NON-KOF');",
             "INSERT INTO sovi_product(id,description,product,type) VALUES ('116','Le Minerale','Packaged Water','NON-KOF');",
-
     };
-
 
     public static String[] ProductListData = {
             "INSERT INTO products(category,productCode,productName,articleno,cokeonematerialno,articlename,itembarcode,casebarcode,productType,size,uom,productCategory,typeDescription) VALUES ('GT','101604','COKE 1000 ML X 12',NULL,NULL,NULL,NULL,NULL,'RGB','1000 ml',NULL,'Sparkling','Multi-Serve');",
@@ -1922,11 +1895,6 @@ public class LiquidReference {
             "INSERT INTO products(category,productCode,productName,articleno,cokeonematerialno,articlename,itembarcode,casebarcode,productType,size,uom,productCategory,typeDescription) VALUES ('MT','200010915','Summit 2000ml',NULL,NULL,NULL,NULL,NULL,'PET','2000ml',NULL,'Packaged Water',NULL);",
             "INSERT INTO products(category,productCode,productName,articleno,cokeonematerialno,articlename,itembarcode,casebarcode,productType,size,uom,productCategory,typeDescription) VALUES ('MT','200010916','Absolute 5000ml',NULL,NULL,NULL,NULL,NULL,'PET','5000ml',NULL,'Packaged Water',NULL);",
             "INSERT INTO products(category,productCode,productName,articleno,cokeonematerialno,articlename,itembarcode,casebarcode,productType,size,uom,productCategory,typeDescription) VALUES ('MT','200010917','Absolute 350ml',NULL,NULL,NULL,NULL,NULL,'PET','350ml',NULL,'Packaged Water',NULL);",
-
-
-
-
-
     };
 
     public static String[] SettingsData = {
@@ -1958,7 +1926,6 @@ public class LiquidReference {
             "INSERT INTO delivery_remarks(id,description) VALUES (0,'No Field Findings');",
             "INSERT INTO delivery_remarks(id,description) VALUES (51,'Lack of Time');",
     };
-
 
     //Mariesher Zapico
     //February 8, 2020

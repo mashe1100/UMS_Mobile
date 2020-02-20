@@ -31,7 +31,6 @@ public class LiquidModel {
         }
     }
 
-
     public static ArrayList<HashMap<String, String>> GetLocalJobOrder(String job_id){
         ArrayList<HashMap<String, String>> final_result = new ArrayList<>();
         Cursor result = workModel.GetLocalJobOrder(job_id);
@@ -83,8 +82,5 @@ public class LiquidModel {
             Log.e(TAG,"Error : ",e);
             return null;
         }
-
     }
-
-
 }

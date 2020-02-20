@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 public class FCViewPager extends ViewPager {
-
     private boolean enableSwipe;
 
     public FCViewPager(Context context) {

@@ -58,13 +58,13 @@ public class ReadingSummaryActivity extends BaseFormActivity {
     }
 
     private void init(){
-
         pDialog = new ProgressDialog(this);
         txtAmountDue = (TextView) findViewById(R.id.txtAmountDue);
         txtRemarks = (TextView) findViewById(R.id.txtRemarks);
         txtStatus = (TextView) findViewById(R.id.txtStatus);
         txtConsumption = (TextView) findViewById(R.id.txtConsumption);
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
+
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,10 +77,10 @@ public class ReadingSummaryActivity extends BaseFormActivity {
 //                }else{
                     finalSave();
 //                }
-
             }
         });
         reading_remarks = Liquid.reading_remarks;
+
         if(Liquid.reading_remarks.equals("")){
             reading_remarks = "NORMAL CONSUMPTION";
         }
@@ -103,8 +103,6 @@ public class ReadingSummaryActivity extends BaseFormActivity {
                     txtStatus.setText("Status : "+ reading_remarks);
                     txtConsumption.setText(Liquid.Present_Consumption + " kWh");
         }
-
-
     }
 
     @Override
@@ -121,7 +119,6 @@ public class ReadingSummaryActivity extends BaseFormActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
     public void finalSave(){
@@ -130,7 +127,6 @@ public class ReadingSummaryActivity extends BaseFormActivity {
             Handler.postDelayed(CoodinatesChecker,500);
             getDeviceLocation();
             delay = 10000;
-
             pDialog = new ProgressDialog(ReadingSummaryActivity.this);
             pDialog.setMessage("Loading...");
             pDialog.setCancelable(false);
@@ -140,13 +136,12 @@ public class ReadingSummaryActivity extends BaseFormActivity {
         isRequestingCoordinates = true;
         Handler.postDelayed(DisplaySaveDialog,delay);
     }
-
     public static final Handler Handler = new Handler();
+
     private final Runnable DisplaySaveDialog = new Runnable() {
         public void run() {
             isRequestingCoordinates = false;
             pDialog.dismiss();
-
             Liquid.r_latitude = Latitude;
             Liquid.r_longitude = Longitude;
 
@@ -159,9 +154,9 @@ public class ReadingSummaryActivity extends BaseFormActivity {
                     QuenedForSave();
                     break;
             }
-
         }
     };
+
     private final Runnable CoodinatesChecker = new Runnable() {
         public void run() {
             if(Double.parseDouble(Latitude) != 0.0){
@@ -174,7 +169,6 @@ public class ReadingSummaryActivity extends BaseFormActivity {
     };
 
     public void QuenedForSave() {
-
       if(Liquid.save_only){
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
@@ -191,7 +185,6 @@ public class ReadingSummaryActivity extends BaseFormActivity {
                             } else {
                                 Liquid.showDialogError(ReadingSummaryActivity.this, "Invalid", "Unsuccessfully Saved!");
                             }
-
                             getDeviceLocation();
                             dialog.cancel();
                             break;
@@ -284,11 +277,9 @@ public class ReadingSummaryActivity extends BaseFormActivity {
 
             builder.show();
         }
-
     }
 
     public void SaveSurveyData(){
-
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -369,7 +360,6 @@ public class ReadingSummaryActivity extends BaseFormActivity {
         }
     }
 
-
     private void getDeviceLocation(){
         try{
             Log.d(TAG, "getDeviceLocation: getting the devices current location");
@@ -411,16 +401,14 @@ public class ReadingSummaryActivity extends BaseFormActivity {
         }catch(Exception e){
             Log.e(TAG,"Error ",e);
         }
-
-
         //CameraPosition LastPosition =  CameraPosition.builder().target(new LatLng(Double.parseDouble(String.valueOf(mLiquidGPS.getLatitude())),Double.parseDouble(String.valueOf(mLiquidGPS.getLongitude())))).zoom(30).bearing(0).tilt(45).build();
         //mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(LastPosition));
     }
 
-
     public class PrintBill extends AsyncTask<Void,Void,Void> {
         boolean result = false;
         String result2 = "";
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -476,5 +464,4 @@ public class ReadingSummaryActivity extends BaseFormActivity {
             },1000);
         }
     }
-
 }

@@ -58,8 +58,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         });*/
     }
 
-
-
     @Override
     public int getItemCount() {
         return ListItems.size();
@@ -87,13 +85,13 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public static class CellViewHolder extends RecyclerView.ViewHolder {
         TextView leftTextViewChat;
         TextView rightTextViewChat;
-
         LinearLayout mReceiverMessage;
         LinearLayout mSenderMessage;
         TranslatorModel Items;
         TextView tvCurrentDate;
         TextView tvOtherChatTime;
         TextView tvUserChatTime;
+
         public CellViewHolder(View itemView) {
             super(itemView);
              leftTextViewChat = (TextView) itemView.findViewById(R.id.leftTextViewChat);
@@ -129,10 +127,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                    rightTextViewChat.setText(Items.Mesasge);
                    tvUserChatTime.setText(Liquid.setUpCurrentDate("HH:mm:ss"));
                    break;
-
            }
         }
-
         public TranslatorModel getItems() {
             return Items;
         }

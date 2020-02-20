@@ -47,12 +47,10 @@ public class TrackingSoviAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tracking_sovi,parent,false);
             CellViewHolder mCellViewHolder = new CellViewHolder(view);
             setupClickableViews(view,mCellViewHolder);
             return mCellViewHolder;
-
     }
 
     @Override
@@ -76,7 +74,6 @@ public class TrackingSoviAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 catch(Exception e){
                     Log.e(TAG,"Error ",e);
                 }
-
             }
         });
 
@@ -95,7 +92,6 @@ public class TrackingSoviAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 catch(Exception e){
                     Log.e(TAG,"Error ",e);
                 }
-
             }
         });
 
@@ -113,13 +109,9 @@ public class TrackingSoviAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 catch(Exception e){
                     Log.e(TAG,"Error ",e);
                 }
-
             }
         });
-
     }
-
-
 
     @Override
     public int getItemCount() {
@@ -162,8 +154,6 @@ public class TrackingSoviAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-
-
     public static class CellViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.llDetails)
         LinearLayout llDetails;
@@ -190,12 +180,10 @@ public class TrackingSoviAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             this.Items = Items;
             int adapterPosition = getAdapterPosition();
             int imageURL;
-
             String Details = "";
             Details = "Type : " +Items.productType+"\n" +
                       "Category : "+Items.productCategory+"\n";
             imageURL = Liquid.LiquidImages.get("img_coke_sovi_"+Items.productCode) == null ? R.drawable.img_coke : Liquid.LiquidImages.get("img_coke_sovi_"+Items.productCode);
-
             tvTitle.setText(Items.productName);
             tsDetails.setCurrentText(Details);
             ivProfile.setImageResource(imageURL);
@@ -205,11 +193,4 @@ public class TrackingSoviAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             return Items;
         }
     }
-
-
-
-
-
-
-
 }
