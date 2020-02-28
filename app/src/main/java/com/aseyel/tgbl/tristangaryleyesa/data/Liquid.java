@@ -185,8 +185,8 @@ public class Liquid extends AppCompatActivity{
 //  Please edit remarks reference // MeterReadingRemarksData
 //  public static String Client = "ileco2"; //Please edit remarks reference // MeterReadingIleco2RemarksData
 //  public static String Client = "pelco2"; //Please edit remarks reference // MeterReadingPelco2RemarksData
-    public static String ServiceType = "READ AND BILL";
-//  public static String ImageType = "audit";[
+  public static String ServiceType = "READ AND BILL";
+//  public static String ImageType = "audit";
 //  public static String Client = "ngc_express";
 //  public static String ServiceType = "h";
 //  public static String Client = "meralco_batangas";

@@ -53,9 +53,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 db.execSQL(LiquidReference.DeleteAdmin);
                 db.execSQL(LiquidReference.Admin);
                 db.execSQL(LiquidReference.UMShost);
-                db.execSQL(LiquidReference.Host);
-          //  }
-           // if(Liquid.currentDate().equals("2019-03-02") || Liquid.currentDate().equals("2019-03-03")){
+
+                switch(Liquid.Client){
+                    case "more_power":
+                        db.execSQL(LiquidReference.HostMore);
+                    break;
+                    default:
+                        db.execSQL(LiquidReference.HostFSI);
+                }
+                //db.execSQL(LiquidReference.HostTest);
+
+            //}
+            //if(Liquid.currentDate().equals("2019-03-02") || Liquid.currentDate().equals("2019-03-03")){
                 db.execSQL(LiquidReference.AlterStatusPicture);
                 db.execSQL(LiquidReference.AlterStatusMeterNotInList);
                 db.execSQL(LiquidReference.AlterDemandMeterNotInList);

@@ -47,6 +47,7 @@ public class ReadingSummaryActivity extends BaseFormActivity {
     private ProgressDialog pDialog;
     private boolean isRequestingCoordinates = false;
     private Activity activity = this;
+    private LiquidGPS liquidGPS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,7 @@ public class ReadingSummaryActivity extends BaseFormActivity {
         txtStatus = (TextView) findViewById(R.id.txtStatus);
         txtConsumption = (TextView) findViewById(R.id.txtConsumption);
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        liquidGPS = new LiquidGPS(activity);
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +77,9 @@ public class ReadingSummaryActivity extends BaseFormActivity {
 //                    Liquid.r_longitude = Longitude;
 //                    Liquid.ShowMessage(ReadingSummaryActivity.this,"There is no coordinates detected!");
 //                }else{
-                    finalSave();
+
+
+                  finalSave();
 //                }
             }
         });
@@ -123,9 +127,16 @@ public class ReadingSummaryActivity extends BaseFormActivity {
 
     public void finalSave(){
         int delay = 0;
+        //feb 28
         if(Double.parseDouble(Latitude) == 0.0) {
             Handler.postDelayed(CoodinatesChecker,500);
-            getDeviceLocation();
+          //  getDeviceLocation();
+
+            try {
+                liquidGPS.PostRealtimeData(Liquid.r_latitude,Liquid.r_longitude);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             delay = 10000;
             pDialog = new ProgressDialog(ReadingSummaryActivity.this);
             pDialog.setMessage("Loading...");
@@ -136,14 +147,15 @@ public class ReadingSummaryActivity extends BaseFormActivity {
         isRequestingCoordinates = true;
         Handler.postDelayed(DisplaySaveDialog,delay);
     }
+
     public static final Handler Handler = new Handler();
 
     private final Runnable DisplaySaveDialog = new Runnable() {
         public void run() {
             isRequestingCoordinates = false;
             pDialog.dismiss();
-            Liquid.r_latitude = Latitude;
-            Liquid.r_longitude = Longitude;
+          //  Liquid.r_latitude = Latitude;
+          //  Liquid.r_longitude = Longitude;
 
             switch (Liquid.Client){
                 case "more_power":
@@ -185,7 +197,7 @@ public class ReadingSummaryActivity extends BaseFormActivity {
                             } else {
                                 Liquid.showDialogError(ReadingSummaryActivity.this, "Invalid", "Unsuccessfully Saved!");
                             }
-                            getDeviceLocation();
+                          //  getDeviceLocation();
                             dialog.cancel();
                             break;
 
@@ -203,7 +215,7 @@ public class ReadingSummaryActivity extends BaseFormActivity {
             };
           AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-          if(Double.parseDouble(Latitude) == 0.0)
+          if(Double.parseDouble(Liquid.r_latitude) == 0.0)
               builder.setPositiveButton("Save",dialogClickListener)
                       .setNeutralButton("Retry",dialogClickListener)
                       .setNegativeButton("Cancel",dialogClickListener)
@@ -230,15 +242,16 @@ public class ReadingSummaryActivity extends BaseFormActivity {
                             } else {
                                 Liquid.showDialogError(ReadingSummaryActivity.this, "Invalid", "Unsuccessfully Saved!");
                             }
-                            getDeviceLocation();
+                          //  getDeviceLocation();
                             dialog.cancel();
                             break;
 
                         case DialogInterface.BUTTON_NEGATIVE:
                             BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
                             //print
-                            Liquid.printlatitude = Latitude;
-                            Liquid.printlongitude = Longitude;
+                            liquidGPS.getDeviceLocation();
+                            Liquid.printlatitude = String.valueOf(liquidGPS.getLatitude());
+                            Liquid.printlongitude = String.valueOf(liquidGPS.getLongitude());
                             Liquid.Print_TimeStamp = Liquid.currentDateTime();
                             Liquid.Print_Attempt = String.valueOf(Integer.parseInt(Liquid.Print_Attempt) + 1);
                             if(!bluetoothAdapter.isEnabled()){
@@ -251,7 +264,7 @@ public class ReadingSummaryActivity extends BaseFormActivity {
                             result_logs = Liquid.SaveReadingLogs();
 
                             new PrintBill().execute();
-                            getDeviceLocation();
+                           // getDeviceLocation();
                             dialog.cancel();
                             break;
 
@@ -265,7 +278,7 @@ public class ReadingSummaryActivity extends BaseFormActivity {
             };
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-            if(Double.parseDouble(Latitude) == 0.0)
+            if(Double.parseDouble(Liquid.r_latitude) == 0.0)
                  builder.setPositiveButton("Save",dialogClickListener)
                       .setNeutralButton("Retry",dialogClickListener)
                       .setNegativeButton("Save & Print Bill", dialogClickListener)
@@ -299,7 +312,7 @@ public class ReadingSummaryActivity extends BaseFormActivity {
                             Liquid.showDialogError(ReadingSummaryActivity.this, "Invalid", "Unsuccessfully Saved!");
                         }
 
-                        getDeviceLocation();
+                      //  getDeviceLocation();
                         dialog.cancel();
                         break;
 
@@ -318,7 +331,7 @@ public class ReadingSummaryActivity extends BaseFormActivity {
         };
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        if(Double.parseDouble(Latitude) == 0.0)
+        if(Double.parseDouble(Liquid.r_latitude) == 0.0)
             builder.setPositiveButton("Save",dialogClickListener)
                     .setNeutralButton("Retry",dialogClickListener)
                     .setNegativeButton("Cancel",dialogClickListener)

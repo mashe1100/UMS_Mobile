@@ -90,6 +90,7 @@ public class SignatureActivity extends BaseFormActivity {
     }
 
     private void Save(){
+        Liquid.getDeviceLocation(SignatureActivity.this);
         boolean result = false;
         SignatureName = Liquid.TrackingNumber+"_"+Liquid.currentDateTimeForID();
         result = DeliveryModel.doSubmitDelivery(

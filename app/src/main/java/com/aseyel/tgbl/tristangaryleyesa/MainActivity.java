@@ -566,7 +566,6 @@ public class MainActivity extends BaseActivity {
                                     Location currentLocation = (Location) task.getResult();
                                     Latitude = String.valueOf(currentLocation.getLatitude());
                                     Longitude = String.valueOf(currentLocation.getLongitude());
-
                                     LiquidGPS liquidGPS = new LiquidGPS(activity);
                                     liquidGPS.PostRealtimeData(Latitude,Longitude);
                                 } catch (Exception e) {

@@ -1074,6 +1074,7 @@ public class ReadingV2Activity extends BaseActivity {
                 Liquid.Remarks = RemarksData[1];
             }
             //Reading Location
+            mLiquidGPS.getDeviceLocation();
             Liquid.r_latitude = String.valueOf(mLiquidGPS.getLatitude());
             Liquid.r_longitude = String.valueOf(mLiquidGPS.getLongitude());
 
