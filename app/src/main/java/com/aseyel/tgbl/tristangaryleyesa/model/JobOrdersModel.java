@@ -11,11 +11,7 @@ public class JobOrdersModel {
     public  String Date;
     public  String Cycle;
 
-
-
-
     public JobOrdersModel(String JobOrderId, String Title, String Details, String Date, String Cycle) {
-
         this.JobOrderId = JobOrderId;
         this.Title = Title;
         this.Details = Details;

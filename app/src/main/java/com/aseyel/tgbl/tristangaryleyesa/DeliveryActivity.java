@@ -29,8 +29,6 @@ import butterknife.BindView;
 
 public class DeliveryActivity extends BaseFormActivity {
     private static final String TAG = DeliveryActivity.class.getSimpleName();
-
-
     private TextView txtQuestion;
     private EditText txtComment;
     private EditText txtAccountNumber;
@@ -43,7 +41,6 @@ public class DeliveryActivity extends BaseFormActivity {
     private  String Remarks;
     private String Latitude;
     private String Longitude;
-
     private ArrayList<Bitmap> mBitmap = new ArrayList<Bitmap>();
     private int mBitmapCount = 0;
     private  ArrayList<Uri> mUri = new ArrayList<Uri>();
@@ -54,13 +51,10 @@ public class DeliveryActivity extends BaseFormActivity {
     private File mImages;
     private String Filename = "";
     private LiquidFile mLiquidFile;
-
     @BindView(R.id.ivSignature)
     ImageView ivSignature;
-
     private EditText[] mEditTextData;
     private Liquid mLiquid;
-
     private AHBottomNavigation mBottomNavigationView;
 
     @Override
@@ -81,9 +75,10 @@ public class DeliveryActivity extends BaseFormActivity {
         super.onResume();
         GetImages();
     }
-    View mView;
-    private void setup() {
 
+    View mView;
+
+    private void setup() {
         try{
             mLiquid = new Liquid();
             txtQuestion = (TextView) findViewById(R.id.txtQuestion);
@@ -107,8 +102,6 @@ public class DeliveryActivity extends BaseFormActivity {
                 }
             });
 
-
-
             BottomNavigation();
 
             if(Liquid.HideKeyboard == 1){
@@ -117,11 +110,9 @@ public class DeliveryActivity extends BaseFormActivity {
                 mEditTextData[1] = txtComment;
                 mLiquid.hideSoftKeyboard(mEditTextData);
             }
-
         }catch(Exception e){
             Log.i(TAG,"Error : ",e);
         }
-
     }
 
     public void BottomNavigation(){
@@ -131,8 +122,6 @@ public class DeliveryActivity extends BaseFormActivity {
         mBottomNavigationView.addItem(item1);
         mBottomNavigationView.addItem(item2);
         mBottomNavigationView.addItem(item3);
-
-
         mBottomNavigationView.setAccentColor(R.color.colorAccent);
         mBottomNavigationView.setInactiveColor(R.color.colorAccent);
         int size = mBottomNavigationView.getItemsCount();
@@ -160,12 +149,9 @@ public class DeliveryActivity extends BaseFormActivity {
                 return true;
             }
         });
-
     }
 
-
     public boolean onOptionsItemSelected(MenuItem item) {
-
         try{
         switch(item.getItemId()){
 
@@ -188,12 +174,12 @@ public class DeliveryActivity extends BaseFormActivity {
 
     public void saveDelivery(){
         boolean result = false;
-
         Liquid.SelectedAccountNumber = txtAccountNumber.getText().toString();
         SignatureName = Liquid.SelectedAccountNumber;
         Comment = txtComment.getText().toString();
         Latitude = String.valueOf(Liquid.Latitude);
         Longitude = String.valueOf(Liquid.Longitude);
+
         result = DeliveryModel.doSubmitDelivery(
                 Liquid.Client,
                 Liquid.SelectedId,
@@ -214,16 +200,13 @@ public class DeliveryActivity extends BaseFormActivity {
                 Liquid.currentDateTime(),
                 Liquid.currentDate(),
                 Liquid.User
-
         );
-
 
         if(result == true){
             Liquid.showDialogNext(this, "Valid", "Successfully Saved!");
         }else{
             Liquid.showDialogError(this, "Invalid", "Unsuccessfully Saved!");
         }
-
     }
 
     private void GetImages(){
@@ -240,7 +223,6 @@ public class DeliveryActivity extends BaseFormActivity {
         }catch(Exception e){
             Log.e(TAG,"Error ",e);
         }
-
     }
 
     @Override
@@ -258,6 +240,4 @@ public class DeliveryActivity extends BaseFormActivity {
         Liquid.ShowMessage(getApplicationContext(),"Save Image Success");
         //tsImageCounter.setCurrentText(String.valueOf(mUri.size()));
     }
-
-
 }

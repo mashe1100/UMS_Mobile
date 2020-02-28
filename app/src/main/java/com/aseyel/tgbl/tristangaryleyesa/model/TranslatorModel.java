@@ -6,8 +6,6 @@ public class TranslatorModel {
     public String TimeStamp;
     public int MessageType;
 
-
-
     public TranslatorModel(String Title, String Message, String TimeStamp, int MessageType){
         this.Title = Title;
         this.Mesasge = Message;

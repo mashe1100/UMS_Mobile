@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.aseyel.tgbl.tristangaryleyesa.R;
 
 public class AlphaNumericKeyboard extends android.support.v7.widget.AppCompatEditText {
-
     private final int mDefinedActionId;
     private long mLastEditorActionTime = 0L;
 
@@ -89,5 +88,4 @@ public class AlphaNumericKeyboard extends android.support.v7.widget.AppCompatEdi
             return super.finishComposingText();
         }
     }
-
 }

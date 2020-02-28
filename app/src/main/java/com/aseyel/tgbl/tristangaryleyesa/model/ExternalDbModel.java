@@ -27,6 +27,4 @@ public class ExternalDbModel {
                 "SELECT * FROM "+Columns+""
         );
     }
-
-
 }

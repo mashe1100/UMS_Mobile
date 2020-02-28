@@ -70,7 +70,6 @@ public class ReadingGalleryActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         try{
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_reading_gallery);
@@ -81,11 +80,9 @@ public class ReadingGalleryActivity extends BaseActivity {
         }catch(Exception e){
             Log.e(TAG,"Tristan Gary Leyesa ",e);
         }
-
     }
+
     private void init(String Folder){
-
-
         mLiquidFile = new LiquidFile(this);
         pDialog = new ProgressDialog(this);
         btnReprint = (FloatingActionButton) findViewById(R.id.btnReprint);
@@ -101,14 +98,13 @@ public class ReadingGalleryActivity extends BaseActivity {
         rvList.setLayoutManager(glm);
         rvList.setAdapter(Adapter);
         mLiquidFile = new LiquidFile(this);
-
         new GetImages().execute();
+
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     permissionCamera();
-
                     Filename = Liquid.AccountNumber + "_"+"reading"+"_"+ Liquid.RemoveSpecialCharacter(Liquid.ReadingDate) + "_" + String.valueOf(mUri.size() + 1) + Liquid.imageFormat;
 
                     if (Liquid.Client == "more_power"){
@@ -117,13 +113,11 @@ public class ReadingGalleryActivity extends BaseActivity {
                        Filename = Liquid.AccountNumber + "_"+"reading"+"_"+ Liquid.RemoveSpecialCharacter(Liquid.ReadingDate) + "_" + String.valueOf(mUri.size() + 1) + Liquid.imageFormat;
                     }
 
-
                     mFile = mLiquidFile.Directory(Liquid.SelectedId,Liquid.RemoveSpecialCharacter(Filename), Subfolder);
                     Log.i(TAG, String.valueOf(mFile));
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mFile));
                     startActivityForResult(intent, CAM_REQUEST);
-
                 } catch (Exception e) {
                     Liquid.ShowMessage(getApplicationContext(), e.toString());
                 }
@@ -136,7 +130,6 @@ public class ReadingGalleryActivity extends BaseActivity {
                     Liquid.showDialogInfo(ReadingGalleryActivity.this,"Warning","Please take a picture to prove your reading and remarks. Thank you.");
                 }else{
                     Liquid.draftBill = true;
-
                     //Intent i = new Intent(ReadingGalleryActivity.this, ReadingSummaryActivity.class);
                     Intent i = new Intent();
                     switch(Liquid.ServiceType){
@@ -147,21 +140,15 @@ public class ReadingGalleryActivity extends BaseActivity {
                                 i = new Intent(ReadingGalleryActivity.this, ReadingV2Activity.class);
                                 break;
                     }
-
                     startActivity(i);
                 }
-
             }
         });
 
         btnReprint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 Reprint();
-
-
             }
         });
 
@@ -177,6 +164,7 @@ public class ReadingGalleryActivity extends BaseActivity {
 
     public class GetImages extends AsyncTask<Void,Void,Void>{
         ArrayList<HashMap<String, String>> final_result = new ArrayList<>();
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -184,11 +172,13 @@ public class ReadingGalleryActivity extends BaseActivity {
             pDialog.show();
             tsImageCounter.setCurrentText("0");
         }
+
         @Override
         protected Void doInBackground(Void... voids) {
             final_result = GetReadingImages(Liquid.SelectedId,Subfolder);
             return null;
         }
+
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
@@ -196,14 +186,13 @@ public class ReadingGalleryActivity extends BaseActivity {
             Adapter.updateItems(animation,final_result);
             if(pDialog.isShowing())
                  pDialog.dismiss();
-
-
         }
-
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         try {
             if (resultCode == RESULT_OK) {
                 if (requestCode == CAM_REQUEST) {
@@ -256,29 +245,24 @@ public class ReadingGalleryActivity extends BaseActivity {
                         }
 
                         Log.e("Image Orientation: ",Liquid.imageOrientation +" ("+orientation+")");
-
                         Liquid.resizeImage(mFile.getAbsolutePath(), 0.80, 0.80);
                         Liquid.ShowMessage(getApplicationContext(), "Save Image Success");
                         mUri.add(Uri.fromFile(mFile));
                         //tsImageCounter.setCurrentText(String.valueOf(mUri.size()));
                         ImageCount = mUri.size();
-
                     }
 
                     animation = false;
                     new GetImages().execute();
                 }
             }
-
         } catch (Exception e) {
             Log.e(TAG, "Error :", e);
         }
-
     }
 
     public void GetReadAndBillData() {
         try {
-
             Cursor result = workModel.GetReadAndBillSelectedJobOrderDetails(Liquid.SelectedId, Liquid.AccountNumber);
 
             if (result.getCount() == 0) {
@@ -286,7 +270,6 @@ public class ReadingGalleryActivity extends BaseActivity {
             }
             while (result.moveToNext()) {
                 //Customer Data
-
                 HashMap<String, String> data = new HashMap<>();
                 Liquid.ConsumerStatus = result.getString(9);
                 Liquid.AccountNumber = result.getString(30);
@@ -320,14 +303,12 @@ public class ReadingGalleryActivity extends BaseActivity {
                 Liquid.route = result.getString(11);
                 Liquid.itinerary = result.getString(13);
                 Liquid.serial = result.getString(63);
-
                 Liquid.OldConsumption  = "0";
                 Liquid.OldReading  = result.getString(89);
                 Liquid.OldPreviousReading  = result.getString(91);
                 Liquid.OldMeterNumber  = "";
-
                 Liquid.previous_reading = !result.getString(47).equals("") ? result.getString(47) : "0";
-//                Liquid.previous_reading = Liquid.FixDecimal(Liquid.previous_reading);
+//              Liquid.previous_reading = Liquid.FixDecimal(Liquid.previous_reading);
                 Liquid.previous_consumption = !result.getString(52).equals("") ? result.getString(52) : "0";
                 Liquid.present_reading_date = Liquid.currentDate();
                 Liquid.previous_reading_date = !result.getString(53).equals("") ? result.getString(53) : Liquid.ReadingDate;
@@ -341,7 +322,6 @@ public class ReadingGalleryActivity extends BaseActivity {
                 Liquid.Averange_Consumption = !result.getString(46).equals("") ? result.getString(46) : "0";
                 Liquid.multiplier = !result.getString(40).equals("") ? result.getString(40) : "1";
                 Liquid.multiplier = Liquid.FixDecimal(Liquid.multiplier);
-
                 Liquid.Meter_Box = result.getString(36);
                 Liquid.code = result.getString(1);
                 Liquid.rate_code = result.getString(7);
@@ -370,7 +350,6 @@ public class ReadingGalleryActivity extends BaseActivity {
                         Liquid.surcharge = Liquid.interest;
                         break;
                 }
-
                 Liquid.ShareCap =  !result.getString(78).equals("") ? result.getString(78) : "0";
                 Liquid.rentalfee = !result.getString(55).equals("") ? result.getString(55) : "0";
                 Liquid.OtherBill = !result.getString(83).equals("") ? result.getString(83) : "0";
@@ -379,6 +358,7 @@ public class ReadingGalleryActivity extends BaseActivity {
                 Liquid.pn_promotitle = result.getString(92);
                 Liquid.pn_promo = !result.getString(92).equals("") ? result.getString(92) : "0";
                 Liquid.pn_promo = Liquid.pn_promo!=null ? Liquid.pn_promo : "0";
+
                 if(!Liquid.pn_promo.matches("0"))
                     try{
                         Liquid.pn_promotitle = Liquid.pn_promo.split("~")[0];
@@ -410,15 +390,11 @@ public class ReadingGalleryActivity extends BaseActivity {
                 Liquid.present_reading_date = Liquid.currentDate();
                 Liquid.BillingCycle = Liquid.year + "-" + Liquid.BillMonth;
                 //Reading
-
-
             }
-
         } catch (Exception e) {
             Log.e(TAG, "Error : ", e);
             return;
         }
-
     }
 
     private void GetReadingDetails() {
@@ -426,11 +402,9 @@ public class ReadingGalleryActivity extends BaseActivity {
             Cursor result = ReadingModel.GetReadingDetails(Liquid.SelectedId, Liquid.AccountNumber);
             if (result.getCount() != 0) {
                 btnReprint.setVisibility(View.VISIBLE);
-
                 mLiquidGPS = new LiquidGPS(this);
 
                 while (result.moveToNext()) {
-
                     HashMap<String, String> data = new HashMap<>();
                     Liquid.C_ID = result.getString(1);
                     Liquid.Reading  = result.getString(10);
@@ -449,17 +423,16 @@ public class ReadingGalleryActivity extends BaseActivity {
                     Liquid.reading9 = result.getString(36);
                     Liquid.reading10 = result.getString(27);
                     Liquid.iwpowerfactor = result.getString(38);
+
                     try {
                         Liquid.demand_consumption = String.valueOf(Double.parseDouble(Liquid.Demand )*  Double.parseDouble(Liquid.multiplier));
 
                     }catch(Exception e) {
                         Liquid.demand_consumption = "0";
                     }
-
                     Liquid.reactive_consumption = Liquid.reactive;
                     Liquid.ReaderComment = result.getString(50);
                     Liquid.RemarksValue = result.getString(47) + "-" + result.getString(49);
-
                     Liquid.Print_Attempt = result.getString(54);
                     Liquid.Reading_Attempt  = result.getString(53);
                     Liquid.Reader_ID = result.getString(51);
@@ -491,8 +464,8 @@ public class ReadingGalleryActivity extends BaseActivity {
             Liquid.save_only = false;
             Liquid.Reader_ID = Liquid.User;
             Liquid.meter_reader = Liquid.User;
-//            Liquid.Reading = etxtReading.getText().toString();
-//            Liquid.Demand = txtDemand.getText().toString();
+//          Liquid.Reading = etxtReading.getText().toString();
+//          Liquid.Demand = txtDemand.getText().toString();
             Liquid.Reading_Attempt = String.valueOf(Integer.parseInt(Liquid.Reading_Attempt) + 1);
             String LastDial = String.valueOf(Liquid.previous_reading.charAt(0));
             Liquid.Reading_TimeStamp = Liquid.currentDateTime();
@@ -504,16 +477,14 @@ public class ReadingGalleryActivity extends BaseActivity {
             Liquid.RemarksCode = "0";
             Liquid.Remarks = "NO FIELD FINDINGS";
             String[] RemarksData = Liquid.RemarksValue.split("-");
+
             if(type.matches("Reprint")) {
                 Liquid.RemarksCode = RemarksData[0];
                 Liquid.Remarks = RemarksData[1];
             }
-
             //Reading Location
             Liquid.r_latitude = String.valueOf(mLiquidGPS.getLatitude());
             Liquid.r_longitude = String.valueOf(mLiquidGPS.getLongitude());
-
-
 
             if (LastDial.equals("9")) {
                 Liquid.Present_Consumption = Liquid.WrapAround(Liquid.previous_reading, Liquid.Reading);
@@ -521,7 +492,6 @@ public class ReadingGalleryActivity extends BaseActivity {
                 Liquid.RemarksCode = "28";
             } else {
                 Liquid.Present_Consumption = Liquid.GetKWH(Liquid.multiplier, Liquid.previous_reading, Liquid.Reading);
-
             }
             Liquid.demand_consumption = Liquid.GetKWH(Liquid.multiplier, String.valueOf(0), Liquid.Demand);
 
@@ -557,16 +527,12 @@ public class ReadingGalleryActivity extends BaseActivity {
 
                         Liquid.reading_remarks = Liquid.ConsumptionValidation(Liquid.Averange_Consumption, Liquid.previous_consumption, Liquid.Present_Consumption);
                         return true;
-
 //                        Liquid.Average_Reading = Liquid.AverageValidation(Liquid.Remarks,Liquid.RemarksCode);
 //                        Liquid.Present_Consumption = Liquid.Averange_Consumption;
 //                        Liquid.reading_remarks = Liquid.ConsumptionValidation(Liquid.Averange_Consumption, Liquid.previous_consumption, Liquid.Present_Consumption);
 //                        return true;
                 }
             };
-
-
-
 
             if(!Liquid.DateChangeMeter.equals("") &&
                     Liquid.ConsumerStatus.equals("CHANGE METER") &&
@@ -585,8 +551,6 @@ public class ReadingGalleryActivity extends BaseActivity {
             switch (Liquid.Client)
             {
                 case "more_power":
-
-
                     if (Double.parseDouble(Liquid.Averange_Consumption) < Double.parseDouble(Liquid.Present_Consumption)) {
                         Liquid.reading_remarks = Liquid.MorePowerHighConsumptions(Liquid.Averange_Consumption, Liquid.Present_Consumption);
 
@@ -601,14 +565,10 @@ public class ReadingGalleryActivity extends BaseActivity {
                     break;
 
                 default:
-
                     Liquid.reading_remarks = Liquid.ConsumptionValidation(Liquid.Averange_Consumption, Liquid.previous_consumption, Liquid.Present_Consumption);
 
                     return true;
             }
-
-
-
             return true;
         }catch(Exception e){
             Log.e(TAG,"Error Reading",e);
@@ -662,8 +622,6 @@ public class ReadingGalleryActivity extends BaseActivity {
                         Liquid.save_only = true;
                         return;
                     }*/
-
-
                     break;
                 case "NEGATIVE CONSUMPTION":
                     Liquid.showDialogError(this,"Invalid","Negative Consumption cannot print!");
@@ -679,9 +637,7 @@ public class ReadingGalleryActivity extends BaseActivity {
                             return;
                     }
                 default:
-
             }
-
 
             switch (Liquid.Client){
                 case "more_power":
@@ -721,8 +677,8 @@ public class ReadingGalleryActivity extends BaseActivity {
                                 .setNegativeButton("Draft", dialogClickListener).setNeutralButton("Cancel", dialogClickListener).show();
                         break;
                     }
-                default:
 
+                default:
                     ReadingV2Activity.Computation();
                     DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                         @Override
@@ -740,7 +696,6 @@ public class ReadingGalleryActivity extends BaseActivity {
 
                                 case DialogInterface.BUTTON_NEGATIVE:
                                     break;
-
                             }
                         }
                     };
@@ -748,7 +703,6 @@ public class ReadingGalleryActivity extends BaseActivity {
                     builder.setMessage("Do you really want to reprint bill?").setPositiveButton("Yes", dialogClickListener)
                             .setNegativeButton("No", dialogClickListener).show();
             }
-
         }catch(Exception e){
             Log.e(TAG,"Tristan Gary Leyesa",e);
         }
@@ -756,6 +710,7 @@ public class ReadingGalleryActivity extends BaseActivity {
 
     public class PrintBill extends AsyncTask<Void,Void,Void> {
         boolean result = false;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -784,10 +739,10 @@ public class ReadingGalleryActivity extends BaseActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+
             if (result) {
                 result = false;
                 boolean result_logs = false;
-
                 result = Liquid.SaveReading();
                 result_logs = Liquid.SaveReadingLogs();
                 Liquid.showReadingDialogNext(ReadingGalleryActivity.this, "Valid", "Successfully Print!");
@@ -804,19 +759,21 @@ public class ReadingGalleryActivity extends BaseActivity {
         getMenuInflater().inflate(R.menu.search_menu, menu);
         searchMenuItem  = menu.findItem(R.id.action_search);
         searchView.setMenuItem(searchMenuItem);
+
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener(){
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
             }
+
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
             }
         } );
-
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId())
@@ -833,6 +790,7 @@ public class ReadingGalleryActivity extends BaseActivity {
 
     private ArrayList<HashMap<String, String>> GetReadingImages(String id,String[] Subfolder){
         String SelectedAccountNumber = "";
+
         if(Liquid.Client == "more_power"){
             //for Survey
             //SelectedAccountNumber = Liquid.serial;
@@ -842,7 +800,6 @@ public class ReadingGalleryActivity extends BaseActivity {
 
             SelectedAccountNumber = Liquid.SelectedAccountNumber;
         }
-
         ArrayList<HashMap<String, String>> final_result = new ArrayList<>();
         Log.i(TAG,"Tristan "+ Liquid.SelectedId);
         Log.i(TAG,"Tristan "+ SelectedAccountNumber);
@@ -855,7 +812,6 @@ public class ReadingGalleryActivity extends BaseActivity {
         else{
             File[] listFile = mImages.listFiles();
 
-
             for(int a = 0; a < listFile.length; a++){
                 HashMap<String, String> data = new HashMap<>();
                 String[] seperated = listFile[a].getName().split("_");
@@ -864,7 +820,6 @@ public class ReadingGalleryActivity extends BaseActivity {
                     data.put("FilePath", listFile[a].getAbsolutePath());
                     data.put("Filaname", listFile[a].getName());
                     final_result.add(data);
-
                 }
             }
         }

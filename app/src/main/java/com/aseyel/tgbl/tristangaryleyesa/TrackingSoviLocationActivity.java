@@ -47,16 +47,13 @@ public class TrackingSoviLocationActivity extends BaseFormActivity {
     private String[] Subfolder;
     private ImageView ivImage;
     private FloatingActionButton fbGallery;
-
     @BindView(R.id.btnCamera)
     ImageButton btnCamera;
     @BindView(R.id.tsImageCounter)
     TextSwitcher tsImageCounter;
     //@BindView(R.id.rvList)
     //RecyclerView rvList;
-
     int ImageCounter = 0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,18 +68,12 @@ public class TrackingSoviLocationActivity extends BaseFormActivity {
         }catch(Exception e){
             Log.e(TAG,"Error : ",e);
         }
-
-
-
     }
 
     private void setup(){
-
         //Initialization
         Subfolder = new String[1];
         Subfolder[0] = Category;
-
-
         //rvList = (RecyclerView) findViewById(R.id.rvList);
         ivImage = (ImageView) findViewById(R.id.ivImage);
         fbGallery = (FloatingActionButton) findViewById(R.id.floatBtnGallery);
@@ -95,24 +86,22 @@ public class TrackingSoviLocationActivity extends BaseFormActivity {
         //rvList.setAdapter(Adapter);
         mLiquidFile = new LiquidFile(this);
         btnCamera = (ImageButton) findViewById(R.id.btnCamera);
+
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try{
-
                     Filename = Liquid.SelectedAccountNumber +"_"+"SOVILocation"+"_"+Liquid.RemoveSpecialCharacter(Liquid.SelectedDescription)+"__"+String.valueOf(mUri.size()+1)+Liquid.imageFormat;
                     mFile = mLiquidFile.Directory(Liquid.SelectedAccountNumber,Filename.trim(),Subfolder);
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(mFile));
                     startActivityForResult(intent,CAM_REQUEST);
-
                 }
                 catch (Exception e){
                     Liquid.ShowMessage(getApplicationContext(),e.toString());
                 }
             }
         });
-
         fbGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,7 +152,6 @@ public class TrackingSoviLocationActivity extends BaseFormActivity {
             }catch(Exception e){
                 Log.e(TAG,"Error :",e);
             }
-
     }
 
     private void doSubmitSoviLocation(){
@@ -180,18 +168,15 @@ public class TrackingSoviLocationActivity extends BaseFormActivity {
             //Liquid.ShowMessage(this,"Unsuccessfully Saved");
         }
     }
-    private void GetImages(boolean animated){
 
+    private void GetImages(boolean animated){
         mUri.clear();
         mImages = Liquid.getDiscPicture(Liquid.SelectedAccountNumber,Subfolder);
 
         if(!mImages.exists() && !mImages.mkdirs()){
-
             Liquid.ShowMessage(this,"Can't create directory to save image");
-
         }
         else{
-
             listFile = mImages.listFiles();
             ArrayList<HashMap<String, String>> final_result = new ArrayList<>();
 
@@ -205,32 +190,31 @@ public class TrackingSoviLocationActivity extends BaseFormActivity {
                     final_result.add(data);
                 }
             }
-
             tsImageCounter.setCurrentText(String.valueOf(mUri.size()));
             Adapter.updateItems(animated,final_result);
-
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch(item.getItemId())
         {
             case android.R.id.home:
                 this.finish();
                 return true;
+
             case R.id.action_form_submit:
                 Liquid.showDialogNext(this, "Valid", "Successfully Saved!");
-
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
     public class GetImages extends AsyncTask<Void, Void, Void> {
         ArrayList<HashMap<String, String>> final_result_images = new ArrayList<>();
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -243,16 +227,14 @@ public class TrackingSoviLocationActivity extends BaseFormActivity {
         @Override
         protected Void doInBackground(Void... params) {
             try{
-
                 mUri.clear();
                 mImages = Liquid.getDiscPicture(Liquid.SelectedAccountNumber,Subfolder);
-                if(!mImages.exists() && !mImages.mkdirs()){
 
+                if(!mImages.exists() && !mImages.mkdirs()){
                     Liquid.ShowMessage(TrackingSoviLocationActivity.this,"Can't create directory to save image");
                 }
                 else{
                     listFile = mImages.listFiles();
-
 
                     for(int a = 0; a < listFile.length; a++){
                         HashMap<String, String> data = new HashMap<>();
@@ -263,17 +245,12 @@ public class TrackingSoviLocationActivity extends BaseFormActivity {
                             data.put("Filaname", listFile[a].getName());
                             final_result_images.add(data);
                         }
-
-
                     }
                     tsImageCounter.setCurrentText(String.valueOf(mUri.size()));
                     ImageCounter =  mUri.size();
-
                 }
-
             }catch(Exception e){
                 Log.e(TAG,"Error : ",e);
-
             }
             return null;
         }
@@ -282,11 +259,9 @@ public class TrackingSoviLocationActivity extends BaseFormActivity {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             try{
-
                 //Adapter.updateItems(false,final_result_images);
                 if (mProgressDialog.isShowing())
                     mProgressDialog.dismiss();
-
             }catch (final Exception e) {
                 Log.e(TAG,"Error : ",e);
             }

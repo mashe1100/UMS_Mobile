@@ -39,7 +39,6 @@ import java.util.Map;
  */
 
 public class HttpHandler {
-
     private static final String TAG = HttpHandler.class.getSimpleName();
     Liquid.ApiData mApiData;
     private ProgressDialog pDialog;
@@ -49,7 +48,6 @@ public class HttpHandler {
     public String makeServiceCall(String reqUrl) {
         String response = null;
         try {
-
             URL url = new URL(reqUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
@@ -69,13 +67,12 @@ public class HttpHandler {
         }
         return response;
     }
+
     public String makeServicePostCallWithTimeout(String reqUrl,JSONObject postData) {
         String response = null;
         try {
-
             URL url = new URL(reqUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
             conn.setDoInput(true);
             conn.setDoOutput(true);
             conn.setReadTimeout(10000);
@@ -89,7 +86,6 @@ public class HttpHandler {
                 writer.flush();
             }
             // read the response
-
             InputStream in = new BufferedInputStream(conn.getInputStream(),8192);
             response = convertStreamToString(in);
 
@@ -122,7 +118,6 @@ public class HttpHandler {
                 writer.flush();
             }
             // read the response
-
             InputStream in = new BufferedInputStream(conn.getInputStream(),8192);
             response = convertStreamToString(in);
 
@@ -137,11 +132,12 @@ public class HttpHandler {
         }
         return response;
     }
+
     private String convertStreamToString(InputStream is) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
-
         String line;
+
         try {
             while ((line = reader.readLine()) != null) {
                 sb.append(line).append('\n');
@@ -157,8 +153,6 @@ public class HttpHandler {
                 Log.e(TAG,"Error : ",e);
             }
         }
-
-
         return sb.toString();
     }
 
@@ -172,8 +166,6 @@ public class HttpHandler {
                     public void onResponse(String response) {
                         JSONArray final_response = Liquid.StringToJson(response);
                         Log.i(TAG,response);
-
-
                     }
                 },new Response.ErrorListener() {
                     @Override
@@ -251,8 +243,6 @@ public class HttpHandler {
                         return null;
                     }
                 }
-
-
             };
 
             RequestQueue requestQueue = Volley.newRequestQueue(context);
@@ -262,11 +252,9 @@ public class HttpHandler {
         }
     }
 
-
     public void doBulkPostToServerNoReturn(final View view,
                                    String ApiLink,
                                    final JSONObject final_data
-
     ){
         try{
             StringRequest   mStringRequest   = new StringRequest (Request.Method.POST,ApiLink ,new Response.Listener<String>() {
@@ -280,7 +268,6 @@ public class HttpHandler {
                         }else{
                             Liquid.ErrorUpload.put(final_data);
                         }
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -320,7 +307,6 @@ public class HttpHandler {
                                   ){
 
         try{
-
             StringRequest   mStringRequest   = new StringRequest (Request.Method.POST,ApiLink ,new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -356,8 +342,6 @@ public class HttpHandler {
                         return null;
                     }
                 }
-
-
             };
 
             RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());

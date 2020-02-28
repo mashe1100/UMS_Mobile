@@ -6,8 +6,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 public class GalleryViewPager extends ViewPager {
-
-
     public GalleryViewPager(Context context)
     {
         super(context);

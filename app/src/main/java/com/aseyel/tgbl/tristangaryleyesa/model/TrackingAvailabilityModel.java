@@ -14,8 +14,6 @@ public class TrackingAvailabilityModel {
     public  String productModifiedby;
     public  String productPicturePath;
 
-
-
     public TrackingAvailabilityModel(String productCode,
                                      String productName,
                                      String productPrice,

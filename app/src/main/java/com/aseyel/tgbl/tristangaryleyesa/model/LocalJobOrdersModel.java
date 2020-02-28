@@ -10,9 +10,7 @@ public class LocalJobOrdersModel {
     public  String Details;
     public  String Date;
 
-
     public LocalJobOrdersModel(String JobOrderId, String Title, String Details, String Date) {
-
         this.JobOrderId = JobOrderId;
         this.Title = Title;
         this.Details = Details;

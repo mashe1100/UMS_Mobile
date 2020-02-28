@@ -36,14 +36,11 @@ public class ReadingRemarksActivity extends BaseActivity implements SwipeRefresh
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_reading_remarks);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             init();
-
-
     }
 
     @Override
@@ -68,6 +65,7 @@ public class ReadingRemarksActivity extends BaseActivity implements SwipeRefresh
         getMenuInflater().inflate(R.menu.search_menu, menu);
         searchMenuItem  = menu.findItem(R.id.action_search);
         searchView.setMenuItem(searchMenuItem);
+
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener(){
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -75,6 +73,7 @@ public class ReadingRemarksActivity extends BaseActivity implements SwipeRefresh
 
                 return false;
             }
+
             @Override
             public boolean onQueryTextChange(String newText) {
                 getRemarks(newText);
@@ -85,6 +84,7 @@ public class ReadingRemarksActivity extends BaseActivity implements SwipeRefresh
 
         return true;
     }
+
     private void init(){
         //initialization of the needed component and objects
         Liquid.DeliveryStep = "Remarks";
@@ -99,7 +99,6 @@ public class ReadingRemarksActivity extends BaseActivity implements SwipeRefresh
         mSwipeRefreshLayout.setOnRefreshListener(this);
         getRemarks("");
         txtComment.setText(Liquid.ReaderComment);
-
     }
 
     @Override
@@ -120,6 +119,7 @@ public class ReadingRemarksActivity extends BaseActivity implements SwipeRefresh
                 break;
         }
     }
+
     public void GetDeliveryRemarks(String Remarks) {
         try {
             ArrayList<HashMap<String, String>> final_result = new ArrayList<>();
@@ -134,19 +134,16 @@ public class ReadingRemarksActivity extends BaseActivity implements SwipeRefresh
                 String Title = result.getString(1);
                 String Details = result.getString(1);
                 String Date = Liquid.currentDateTime();
-
                     data.put("Id", Id);
                     data.put("Title", Title);
                     data.put("Details", Id+"-"+Details);
                     data.put("Date", Date);
                     data.put("Filepath", "");
                     final_result.add(data);
-
-
             }
+
             Adapter.updateItems(false,final_result);
         } catch (Exception e) {
-
             Log.e(TAG, "Error : ", e);
             return;
         }
@@ -167,11 +164,12 @@ public class ReadingRemarksActivity extends BaseActivity implements SwipeRefresh
                 String Details = result.getString(1);
                 String Abbreviation = result.getString(2);
                 String Date = Liquid.currentDateTime();
+
                 if(Liquid.Reading.equals("")){
                     switch (Id){
                         case "0":
-
                             break;
+
                             default:
                                 data.put("Id", Id);
                                 data.put("Title", Title);
@@ -188,7 +186,6 @@ public class ReadingRemarksActivity extends BaseActivity implements SwipeRefresh
                     data.put("Filepath", Abbreviation);
                     final_result.add(data);
                 }
-
 //                switch (Liquid.Client){
 //                    case "baliwag_wd":
 //                        Liquid.RemarksCode = Id;
@@ -225,7 +222,6 @@ public class ReadingRemarksActivity extends BaseActivity implements SwipeRefresh
             }
             Adapter.updateItems(false,final_result);
         } catch (Exception e) {
-
             Log.e(TAG, "Error : ", e);
             return;
         }

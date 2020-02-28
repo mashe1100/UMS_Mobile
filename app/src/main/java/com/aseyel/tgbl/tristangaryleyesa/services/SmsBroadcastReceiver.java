@@ -20,16 +20,15 @@ import org.json.JSONObject;
  * A broadcast receiver who listens for incoming SMS
  */
 public class SmsBroadcastReceiver extends BroadcastReceiver {
-
     private static final String TAG = "SmsBroadcastReceiver";
     String smsSender = "";
     String smsBody = "";
     String timestamp = "";
     String id = "";
+
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(Telephony.Sms.Intents.SMS_RECEIVED_ACTION)) {
-
             for (SmsMessage smsMessage : Telephony.Sms.Intents.getMessagesFromIntent(intent)) {
                 smsBody += smsMessage.getMessageBody();
                 smsSender = smsMessage.getOriginatingAddress();
@@ -45,7 +44,6 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
             new GPSPosting().execute();
         }
     }
-
 
     public class GPSPosting extends AsyncTask<Void,Void,Void> {
 
@@ -65,10 +63,8 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
         @Override
         protected Void doInBackground(Void... voids) {
             try{
-
                 HttpHandler sh = new HttpHandler();
                 PostApi = new Liquid.POSTApiData("fmts/php/api/Realtime.php");
-
 
                     JSONObject dataObject = new JSONObject();
 

@@ -21,6 +21,7 @@ public class TrackingSignatureActivity extends BaseFormActivity {
     LinearLayout mContent;
     View mView;
     LiquidCanvas mSignature;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +43,6 @@ public class TrackingSignatureActivity extends BaseFormActivity {
                 mSignature.clear();
             }
         });
-
-
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -61,7 +60,6 @@ public class TrackingSignatureActivity extends BaseFormActivity {
                         Liquid.SelectedPeriod
                 );
 
-
                 if(result == true){
                     mSignature.save(SignatureName);
                     Liquid.showDialogNext(this, "Valid", "Successfully Saved!");
@@ -72,7 +70,5 @@ public class TrackingSignatureActivity extends BaseFormActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
-
 }

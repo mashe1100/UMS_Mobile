@@ -27,7 +27,6 @@ public class TypeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     private MenuItem searchMenuItem;
     private ReadingRemarksAdapater Adapter;
     private RecyclerView rvList;
-
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
@@ -41,8 +40,6 @@ public class TypeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         }catch(Exception e){
             Log.e(TAG,"Error :",e);
         }
-
-
     }
 
     @Override
@@ -50,26 +47,26 @@ public class TypeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         getMenuInflater().inflate(R.menu.search_menu, menu);
         searchMenuItem  = menu.findItem(R.id.action_search);
         searchView.setMenuItem(searchMenuItem);
+
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener(){
             @Override
             public boolean onQueryTextSubmit(String query) {
                 GetItemType(query);
                 return false;
             }
+
             @Override
             public boolean onQueryTextChange(String newText) {
                 GetItemType(newText);
                 return false;
             }
         } );
-
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         try {
-
             switch (item.getItemId()) {
                 case android.R.id.home:
                     this.finish();
@@ -87,7 +84,6 @@ public class TypeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     private void init(){
         Liquid.DeliveryStep = "Type";
         //initialization of the needed component and objects
-
         Adapter = new ReadingRemarksAdapater(this,fragment);
         rvList = (RecyclerView) findViewById(R.id.rvList);
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -97,10 +93,7 @@ public class TypeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeReload);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         GetItemType("");
-
-
     }
-
 
     public void GetItemType(String Query) {
         try {
@@ -109,7 +102,6 @@ public class TypeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             if (result.getCount() == 0) {
                 return;
             }
-
             while (result.moveToNext()) {
                 HashMap<String, String> data = new HashMap<>();
                 String Id = result.getString(0);
@@ -124,16 +116,14 @@ public class TypeActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                     data.put("Date", Date);
                     data.put("Filepath", "");
                     final_result.add(data);
-
-
             }
             Adapter.updateItems(false,final_result);
         } catch (Exception e) {
-
             Log.e(TAG, "Error : ", e);
             return;
         }
     }
+
     @Override
     public void onRefresh() {
         GetItemType("");

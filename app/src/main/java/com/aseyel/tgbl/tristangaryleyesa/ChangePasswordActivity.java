@@ -24,17 +24,17 @@ public class ChangePasswordActivity extends BaseFormActivity {
     private EditText txtOldPassword;
     private EditText txtNewPassword;
     private EditText txtConfirmPassword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         init();
     }
-    public boolean onOptionsItemSelected(MenuItem item) {
 
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId())
         {
             case android.R.id.home:
@@ -50,8 +50,8 @@ public class ChangePasswordActivity extends BaseFormActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
+
     private void init(){
         //initialize the textBox
         txtQuestion = (TextView) findViewById(R.id.txtQuestion);
@@ -101,7 +101,6 @@ public class ChangePasswordActivity extends BaseFormActivity {
                 Log.i(TAG,"Hash Old Password: "+ Liquid.md5(OldPassword));
                 Log.i(TAG,"Current Password: "+ CurrentPassword);
 
-
                 if(!Liquid.md5(OldPassword).equals(CurrentPassword)){
                     result.put("result",false);
                     result.put("message","Incorrect Password!");
@@ -137,10 +136,7 @@ public class ChangePasswordActivity extends BaseFormActivity {
                         result.put("result",true);
                         result.put("message","Successfully updated");
                     }
-
-
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -156,13 +152,10 @@ public class ChangePasswordActivity extends BaseFormActivity {
                     Liquid.showDialogError(ChangePasswordActivity.this,"Warning",result.get("message").toString());
                 }else{
                     Liquid.showDialogNext(ChangePasswordActivity.this,"Information",result.get("message").toString());
-
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-
         }
     }
 }

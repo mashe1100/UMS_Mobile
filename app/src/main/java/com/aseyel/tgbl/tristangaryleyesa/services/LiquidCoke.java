@@ -112,8 +112,6 @@ public class LiquidCoke {
 
     }
 
-
-
     public static JSONObject UploadCokeTrackingData(){
         try{
             JSONObject final_data_response = new JSONObject();
@@ -286,6 +284,7 @@ public class LiquidCoke {
         }
         return final_response;
     }
+
     public static JSONArray UploadComment(String AccountNumber){
         JSONArray final_response = new JSONArray();
         Cursor result = TrackingModel.GetComment(AccountNumber,
@@ -310,6 +309,7 @@ public class LiquidCoke {
         }
         return final_response;
     }
+
     public static JSONArray UploadCategoryComment(String AccountNumber){
         JSONArray final_response = new JSONArray();
         Cursor result = TrackingModel.GetCategoryComment(AccountNumber,"",
@@ -335,6 +335,7 @@ public class LiquidCoke {
         }
         return final_response;
     }
+
     public static JSONArray UploadShelfPlanogram(String AccountNumber){
         JSONArray final_response = new JSONArray();
         Cursor result = TrackingModel.GetShelfPlanogram(AccountNumber,
@@ -498,6 +499,7 @@ public class LiquidCoke {
         }
         return final_response;
     }
+
     public static JSONArray UploadActivation(String AccountNumber){
         JSONArray final_response = new JSONArray();
         Cursor result = TrackingModel.GetTrackingActivation(AccountNumber,"","",
@@ -567,6 +569,5 @@ public class LiquidCoke {
             }
         }
         return final_response;
-
     }
 }

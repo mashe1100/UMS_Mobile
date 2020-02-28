@@ -67,7 +67,6 @@ import java.util.HashMap;
 import butterknife.BindView;
 
 public class MainActivity extends BaseActivity {
-
     private static final String TAG = "MainActivity";
     private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
@@ -85,12 +84,9 @@ public class MainActivity extends BaseActivity {
     private LiquidGPS mLiquidGPS;
     private Liquid.POSTApiData mPOSTApiData;
     private Activity activity = this;
-
     @BindView(R.id.search_view)
     MaterialSearchView searchView;
-
     DisplayMetrics displaymetrics;
-
     static int exit_clicks = 0;
     static String result = "", attendance_action = "";
     static Handler handler = new Handler();
@@ -102,7 +98,6 @@ public class MainActivity extends BaseActivity {
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         //Update 11/16/2018
-
         SplashActivity.mDatabaseHelper.UpdateDatabase();
         initViews();
         initSMS();
@@ -112,6 +107,7 @@ public class MainActivity extends BaseActivity {
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_cloud);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_global_menu_direct_blue);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_menu);
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -141,8 +137,6 @@ public class MainActivity extends BaseActivity {
         });
 
     }
-
-
 
     @Override
     public void onBackPressed() {
@@ -338,14 +332,11 @@ public class MainActivity extends BaseActivity {
                                     Liquid.ErrorUpload.put(dataObject);
                                 } else {
                                     Liquid.deleteRecursive(new File(listFile[e].getAbsolutePath()));
-
-
                                 }
                             }
                         }
                     }
                 }
-
 
                 for (int a = 0; a < 1; a++) {
                     JSONObject dataObject = new JSONObject(dataArrayMeterNotInList.getString(a));
@@ -364,7 +355,6 @@ public class MainActivity extends BaseActivity {
 
                         } else {
                             listFile = mImages.listFiles();
-
 
                             for (int e = 0; e < listFile.length; e++) {
                                 JSONArray final_image_result = new JSONArray();
@@ -393,32 +383,25 @@ public class MainActivity extends BaseActivity {
                                     Liquid.ErrorUpload.put(dataObject);
                                 } else {
                                     Liquid.deleteRecursive(new File(listFile[e].getAbsolutePath()));
-
-
                                 }
                             }
                         }
                     }
                 }
-
-
             } catch (JSONException e) {
                 Log.e(TAG, "Error :", e);
                 //JSON Problem
-
             } catch (Exception e) {
                 //An error has occured
                 Log.e(TAG, "Error :", e);
 
             }
-
             return null;
         }
 
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-
             Log.i(TAG, "Successfully Upload");
         }
     }
@@ -440,12 +423,12 @@ public class MainActivity extends BaseActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
             ArrayList<HashMap<String, String>> data_read = LiquidModel.GetLocalJobOrder("");
+
             for (int a = 0; a < 1; a++) {
                 Log.i(TAG, "Start Upload....");
                 JSONObject postData = LiquidReading.UploadReading(data_read.get(a).get("id"));
@@ -475,7 +458,6 @@ public class MainActivity extends BaseActivity {
                                 if (response.getString("result").equals("false")) {
                                     Liquid.ErrorUpload.put(dataObject);
                                 } else {
-
                                     result_status = ReadingModel.UpdateUploadStatus(dataObject.getString("job_id").toString(), dataObject.getString("AccountNumber").toString());
                                 }
                             }
@@ -504,8 +486,6 @@ public class MainActivity extends BaseActivity {
                             //No Data
                             //return 2;
                         } else {
-
-
                             for (int d = 0; d < 1; d++) {
                                 mPOSTApiData = new Liquid.POSTApiData("fmts/php/api/ReadingPicture.php");
                                 JSONObject dataObject = new JSONObject(dataArrayPicture.getString(d));
@@ -526,8 +506,6 @@ public class MainActivity extends BaseActivity {
                             //No Data
                             //return 2;
                         } else {
-
-
                             for (int e = 0; e < 1; e++) {
                                 mPOSTApiData = new Liquid.POSTApiData("fmts/php/api/NewMeterNotInList.php");
                                 JSONObject dataObject = new JSONObject(dataArrayMeterNotInList.getString(e));
@@ -545,8 +523,6 @@ public class MainActivity extends BaseActivity {
                                 }
                             }
                         }
-
-
                     } catch (JSONException e) {
                         Log.e(TAG, "Error :", e);
                         //JSON Problem
@@ -596,8 +572,6 @@ public class MainActivity extends BaseActivity {
                                 } catch (Exception e) {
                                     Log.e(TAG, "Error", e);
                                 }
-
-
                             } else {
                                 Log.d(TAG, "onComplete: current location is null");
                             }
@@ -612,8 +586,6 @@ public class MainActivity extends BaseActivity {
         } catch (Exception e) {
             Log.e(TAG, "Error ", e);
         }
-
-
         //CameraPosition LastPosition =  CameraPosition.builder().target(new LatLng(Double.parseDouble(String.valueOf(mLiquidGPS.getLatitude())),Double.parseDouble(String.valueOf(mLiquidGPS.getLongitude())))).zoom(30).bearing(0).tilt(45).build();
         //mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(LastPosition));
     }
@@ -625,7 +597,6 @@ public class MainActivity extends BaseActivity {
             preferences.edit().putString(DEVICE_DEFAULT_SMS_PACKAGE_KEY, defaultSmsPackage).apply();
         }
     }
-
 
     private boolean hasNoPreviousSmsDefaultPackage(SharedPreferences preferences) {
         return !preferences.contains(DEVICE_DEFAULT_SMS_PACKAGE_KEY);
@@ -654,7 +625,6 @@ public class MainActivity extends BaseActivity {
         });
         builder.show();
     }
-
     /**
      * Runtime permission shenanigans
      */
@@ -671,10 +641,10 @@ public class MainActivity extends BaseActivity {
             return;
         }
 
-        ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS},
-                SMS_PERMISSION_CODE);
-
+        ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.READ_SMS,
+                        Manifest.permission.RECEIVE_SMS}, SMS_PERMISSION_CODE);
     }
+
     private void GetUserDetails(){
         Cursor result = AccountModel.GetLoginAccount();
         try
@@ -684,22 +654,20 @@ public class MainActivity extends BaseActivity {
             }
             while(result.moveToNext()){
                 Liquid.UserFullname = result.getString(2).toString().toUpperCase();
-
             }
         }
         catch(Exception e){
             Log.e(TAG,"Error : ",e);
             return;
         }
-
     }
+
     private void getScreenSize(){
         displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         Liquid.screenHeight = displaymetrics.heightPixels;
         Liquid.screenWidth = displaymetrics.widthPixels;
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -710,7 +678,6 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-
                 switch(SelectedTab){
                     case 0:
                         ((TabCloudFragment) Cloud).GetJobOrder(query);
@@ -724,6 +691,7 @@ public class MainActivity extends BaseActivity {
                 }
                 return false;
             }
+
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
@@ -733,10 +701,8 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initViews(){
-
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
-
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
         //Set up the ViewPager with the sections adapters
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -749,11 +715,9 @@ public class MainActivity extends BaseActivity {
     }
 
     public boolean checkLocationPermission() {
-
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -787,6 +751,7 @@ public class MainActivity extends BaseActivity {
             return true;
         }
     }
+
     private void setupViewPager(ViewPager viewPager){
         Cloud =  new TabCloudFragment();
         Local =  new TabLocalFragment();
@@ -796,7 +761,6 @@ public class MainActivity extends BaseActivity {
         adapter.addFragement(Local, "");
         adapter.addFragement(MenuSettings,  "");
         viewPager.setAdapter(adapter);
-
     }
 
     @Override
@@ -812,11 +776,4 @@ public class MainActivity extends BaseActivity {
             });
         }
     }
-
-
-
-
-
-
-
 }

@@ -33,18 +33,15 @@ public class TrackingCoolerPlanogramActivity extends BaseFormActivity {
     ArrayList<Bitmap> mBitmap = new ArrayList<Bitmap>();
     int mBitmapCount = 0;
     File mImages;
-
     String Filename = "";
     LiquidFile mLiquidFile;
     ArrayList<Uri> mUri = new ArrayList<Uri>();
     static final int CAM_REQUEST = 1;
-
     File mFile;
     File[] listFile;
     TrackingGalleryAdapter Adapter;
     @BindView(R.id.rvList)
     RecyclerView rvList;
-
     String[] Subfolder;
     String TrackingCategory = "Cooler Planogram";
 
@@ -64,7 +61,6 @@ public class TrackingCoolerPlanogramActivity extends BaseFormActivity {
         Subfolder[0] = TrackingCategory;
         rvList = (RecyclerView) findViewById(R.id.rvList);
         Adapter = new TrackingGalleryAdapter(this);
-
         int numberOfColumns = 3;
         GridLayoutManager glm = new GridLayoutManager(this,numberOfColumns);
         //Setting up
@@ -73,6 +69,7 @@ public class TrackingCoolerPlanogramActivity extends BaseFormActivity {
         rvList.setAdapter(Adapter);
         mLiquidFile = new LiquidFile(this);
         btnCamera = (ImageButton) findViewById(R.id.btnCamera);
+
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,9 +78,7 @@ public class TrackingCoolerPlanogramActivity extends BaseFormActivity {
                     mFile = mLiquidFile.Directory(Liquid.SelectedAccountNumber,Filename.trim(),Subfolder);
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(mFile));
-
                     startActivityForResult(intent,CAM_REQUEST);
-
                 }
                 catch (Exception e){
                     Liquid.ShowMessage(getApplicationContext(),e.toString());
@@ -117,7 +112,6 @@ public class TrackingCoolerPlanogramActivity extends BaseFormActivity {
                            doSubmitCoolerPlanogram();
                            //GetImages(false);
                        }
-
                    }
                }
        }catch(Exception e){
@@ -136,7 +130,6 @@ public class TrackingCoolerPlanogramActivity extends BaseFormActivity {
         );
 
         if(result == true){
-
             //Liquid.ShowMessage(this,"Successfully Saved");
         }else{
             //Liquid.ShowMessage(this,"Unsuccessfully Saved");
@@ -185,8 +178,5 @@ public class TrackingCoolerPlanogramActivity extends BaseFormActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
-
-
 }

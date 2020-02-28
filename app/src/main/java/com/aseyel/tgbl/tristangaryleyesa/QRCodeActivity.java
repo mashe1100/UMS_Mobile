@@ -26,15 +26,17 @@ public class QRCodeActivity extends AppCompatActivity {
     @BindView (R.id.rbLunch)
     RadioButton rbLunch;
     @BindView (R.id.rbTraining)
-            RadioButton rbTraining;
+    RadioButton rbTraining;
     TextView txtGuide;
     String AseyelAPI = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode);
         setup();
     }
+
     private void setup(){
         btnQrCode = (Button) findViewById(R.id.btnQrCode);
         rbTrainingKit = (RadioButton) findViewById(R.id.rbTrainingKit);
@@ -75,7 +77,6 @@ public class QRCodeActivity extends AppCompatActivity {
             PostQRCode(Liquid.QRCode);
             Log.i(TAG,Liquid.QRCode);
         }
-
     }
 
     public void PostQRCode(String QRCode){
@@ -88,6 +89,5 @@ public class QRCodeActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 }

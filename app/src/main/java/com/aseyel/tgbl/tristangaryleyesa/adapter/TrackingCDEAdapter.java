@@ -44,6 +44,7 @@ public class TrackingCDEAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public TrackingCDEAdapter(Fragment fragment) {
         this.fragment = fragment;
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -75,9 +76,9 @@ public class TrackingCDEAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 catch(Exception e){
                     Log.e(TAG,"Error ",e);
                 }
-
             }
         });
+
         mCellViewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,17 +87,12 @@ public class TrackingCDEAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     int adapterPosition = mCellViewHolder.getAdapterPosition();
                     Liquid.SelectedCode = ListItems.get(adapterPosition).getId();
                     ((TrackingCDEFragment) fragment).DeleteData(Liquid.SelectedAccountNumber,Liquid.SelectedCode,Liquid.SelectedPeriod,adapterPosition);
-
-
                 }
                 catch(Exception e){
                     Log.e(TAG,"Error ",e);
                 }
-
             }
         });
-
-
     }
 
     public void DeleteItem(int adapterPosition){
@@ -130,10 +126,7 @@ public class TrackingCDEAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
-
-
     public static class CellViewHolder extends RecyclerView.ViewHolder {
-
         @BindView(R.id.ivProfile)
         ImageView ivProfile;
         @BindView(R.id.tvTitle)
@@ -143,7 +136,7 @@ public class TrackingCDEAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         @BindView(R.id.tsDetails)
         TextSwitcher tsDetails;
         @BindView(R.id.ivCenter)
-                ImageView ivCenter;
+        ImageView ivCenter;
         @BindView(R.id.btnDelete)
         ImageButton btnDelete;
         FeedModel Items;
@@ -156,9 +149,9 @@ public class TrackingCDEAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         public void bindView(FeedModel Items) {
             this.Items = Items;
             int adapterPosition = getAdapterPosition();
-
             tsDetails.setCurrentText(adapterPosition % 2 == 0 ? Items.Details : Items.Details);
             tvTitle.setText(adapterPosition % 2 == 0 ? Items.Title : Items.Title);
+
             if(Items.getFilepath().equals("")){
                 ivCenter.setImageResource(R.drawable.img_ums);
             }else{
@@ -166,18 +159,9 @@ public class TrackingCDEAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 Bitmap bMapScaled = Bitmap.createScaledBitmap(bmp, 600, 600, true);
                 ivCenter.setImageBitmap(bMapScaled);
             }
-
         }
-
         public FeedModel getItems() {
             return Items;
         }
     }
-
-
-
-
-
-
-
 }

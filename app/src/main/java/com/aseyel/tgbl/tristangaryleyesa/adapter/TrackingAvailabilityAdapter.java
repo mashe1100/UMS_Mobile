@@ -43,6 +43,7 @@ public class TrackingAvailabilityAdapter extends RecyclerView.Adapter<RecyclerVi
     public TrackingAvailabilityAdapter(Fragment fragment) {
         this.fragment = fragment;
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         try{
@@ -54,7 +55,6 @@ public class TrackingAvailabilityAdapter extends RecyclerView.Adapter<RecyclerVi
             Log.e(TAG,"Error : ",e);
             return  null;
         }
-
     }
 
     @Override
@@ -63,7 +63,6 @@ public class TrackingAvailabilityAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
     private void setupClickableViews(final View view, final CellViewHolder mCellViewHolder) {
-
         mCellViewHolder.llDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,7 +77,6 @@ public class TrackingAvailabilityAdapter extends RecyclerView.Adapter<RecyclerVi
                 catch(Exception e){
                     Log.e(TAG,"Error ",e);
                 }
-
             }
         });
 
@@ -100,7 +98,6 @@ public class TrackingAvailabilityAdapter extends RecyclerView.Adapter<RecyclerVi
             }
         });
 
-
         mCellViewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,12 +111,8 @@ public class TrackingAvailabilityAdapter extends RecyclerView.Adapter<RecyclerVi
                 catch(Exception e){
                     Log.e(TAG,"Error ",e);
                 }
-
             }
         });
-
-
-
     }
 
 

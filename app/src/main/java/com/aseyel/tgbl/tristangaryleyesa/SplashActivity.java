@@ -20,8 +20,6 @@ public class SplashActivity extends AppCompatActivity {
     private static final String TAG = SplashActivity.class.getSimpleName();
     private final int SPLASH_DISPLAY_LENGTH = 1000;
     public static DatabaseHelper mDatabaseHelper;
-
-
     private Liquid.ApiDataField mApiData;
 
     @Override
@@ -33,11 +31,9 @@ public class SplashActivity extends AppCompatActivity {
 
     private void init(){
         Liquid.LiquidPackageName = getApplicationContext().getPackageName();
-
         mDatabaseHelper = new DatabaseHelper(this);
         setupImage();
         Host();
-
          /* New Handler to start the Menu-Activity
          * and close this Splash-Screen after some seconds.*/
         new Handler().postDelayed(new Runnable(){
@@ -45,15 +41,13 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
                Intent mainIntent = new Intent(SplashActivity.this,LoginActivity.class);
- //              Intent mainIntent = new Intent(SplashActivity.this,ReceiverActivity.class);
-                //Intent mainIntent = new Intent(SplashActivity.this,QRCodeActivity.class);
+                 //Intent mainIntent = new Intent(SplashActivity.this,ReceiverActivity.class);
+                // Intent mainIntent = new Intent(SplashActivity.this,QRCodeActivity.class);
                 SplashActivity.this.startActivity(mainIntent);
                 SplashActivity.this.finish();
             }
         }, SPLASH_DISPLAY_LENGTH);
-
     }
-
     //Mariesher on Feb 15, 2020
     //Create a function to control column to get hostname from ums_host table
     public static String GetHost(String host) {
@@ -62,14 +56,11 @@ public class SplashActivity extends AppCompatActivity {
         if(hostData.getCount() == 0){
             return null;
         }
-
         while(hostData.moveToNext()){
-
             Liquid.Username = hostData.getString(1);
             Liquid.Password = hostData.getString(2);
             host = hostData.getString(3);
         }
-
         Log.i(TAG,"mashe test host in splash: "+ host);
         return host;
     }
@@ -80,11 +71,9 @@ public class SplashActivity extends AppCompatActivity {
         }catch(Exception e){
             e.printStackTrace();
         }
-
     }
 
     private void setupImage(){
-
         /*Liquid.LiquidImages.put("img_coke_product_101604",R.drawable.img_coke_product_101604);
         Liquid.LiquidImages.put("img_coke_product_102032",R.drawable.img_coke_product_102032);
         Liquid.LiquidImages.put("img_coke_product_101650",R.drawable.img_coke_product_101650);
@@ -175,7 +164,6 @@ public class SplashActivity extends AppCompatActivity {
         Liquid.LiquidImages.put("img_coke_product_104954",R.drawable.img_coke_product_104954);
         Liquid.LiquidImages.put("img_coke_product_101621",R.drawable.img_coke_product_101621);
         Liquid.LiquidImages.put("img_coke_product_101593",R.drawable.img_coke_product_101593);
-
         Liquid.LiquidImages.put("img_coke_product_101597",R.drawable.img_coke_product_101597);
         Liquid.LiquidImages.put("img_coke_product_104238",R.drawable.img_coke_product_104238);
         Liquid.LiquidImages.put("img_coke_product_101823",R.drawable.img_coke_product_101823);
@@ -203,7 +191,6 @@ public class SplashActivity extends AppCompatActivity {
         Liquid.LiquidImages.put("img_coke_product_101622",R.drawable.img_coke_product_101622);
         Liquid.LiquidImages.put("img_coke_product_101594",R.drawable.img_coke_product_101594);
         Liquid.LiquidImages.put("img_coke_product_104892",R.drawable.img_coke_product_104892);
-
         Liquid.LiquidImages.put("img_coke_product_101598",R.drawable.img_coke_product_101598);
         Liquid.LiquidImages.put("img_coke_product_104237",R.drawable.img_coke_product_104237);
         Liquid.LiquidImages.put("img_coke_product_101824",R.drawable.img_coke_product_101824);
@@ -230,7 +217,7 @@ public class SplashActivity extends AppCompatActivity {
         Liquid.LiquidImages.put("img_coke_product_104200",R.drawable.img_coke_product_104200);
         Liquid.LiquidImages.put("img_coke_product_100151",R.drawable.img_coke_product_100151);
         Liquid.LiquidImages.put("img_coke_product_100037",R.drawable.img_coke_product_100037);
-       Liquid.LiquidImages.put("img_coke_sovi_1",R.drawable.img_coke_sovi_1);
+        Liquid.LiquidImages.put("img_coke_sovi_1",R.drawable.img_coke_sovi_1);
         Liquid.LiquidImages.put("img_coke_sovi_9",R.drawable.img_coke_sovi_9);
         Liquid.LiquidImages.put("img_coke_sovi_10",R.drawable.img_coke_sovi_10);
         Liquid.LiquidImages.put("img_coke_sovi_11",R.drawable.img_coke_sovi_11);
@@ -270,17 +257,9 @@ public class SplashActivity extends AppCompatActivity {
         Liquid.LiquidImages.put("img_coke_activation_specialdisplay",R.drawable.img_coke_activation_specialdisplay);
         Liquid.LiquidImages.put("img_coke_activation_stackpallet",R.drawable.img_coke_activation_stackpallet);
         Liquid.LiquidImages.put("img_coke_activation_wilkins6l",R.drawable.img_coke_activation_wilkins6l);
-
         Liquid.LiquidImages.put("img_coke_location_shelves",R.drawable.img_coke_location_shelves);
         Liquid.LiquidImages.put("img_coke_location_exhibits",R.drawable.img_coke_location_exhibits);
         Liquid.LiquidImages.put("img_coke_location_commoncoldvault",R.drawable.img_coke_location_companyownedcoolers);
         Liquid.LiquidImages.put("img_coke_location_companyownedcoolers",R.drawable.img_coke_location_commoncoldvault);
-
-
-
     }
-
-
-
-
 }

@@ -50,7 +50,6 @@ public class QRCodeScannerActivity extends AppCompatActivity implements ZXingSca
     }
 
     public void onRequestPermissionResult(int requestCode, String permission[], int grantResult[]) {
-
         switch (requestCode) {
             case REQUEST_CAMERA:
                 if (grantResult.length > 0) {
@@ -87,7 +86,6 @@ public class QRCodeScannerActivity extends AppCompatActivity implements ZXingSca
                 .setNegativeButton("Cancel", null)
                 .create()
                 .show();
-
     }
 
     @Override
@@ -101,7 +99,6 @@ public class QRCodeScannerActivity extends AppCompatActivity implements ZXingSca
                 }
                 scannerView.setResultHandler(this);
                 scannerView.startCamera();
-
             } else {
 
             }

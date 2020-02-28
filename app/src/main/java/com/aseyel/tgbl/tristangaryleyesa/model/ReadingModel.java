@@ -10,7 +10,6 @@ import com.aseyel.tgbl.tristangaryleyesa.data.Liquid;
 public class ReadingModel {
     private static final String TAG = ReadingModel.class.getSimpleName();
 
-
     public static Cursor get_next_customer_sequence(String job_id, String rowid)
     {
         return SplashActivity.mDatabaseHelper.SqliteSelectQuery(
@@ -51,7 +50,6 @@ public class ReadingModel {
                         "COUNT(rowid) as total_upload " + //0
                         "FROM reading "+
                         "WHERE job_id = '"+job_id+"' AND upload_status ='"+status+"'");
-
 
     }
 

@@ -46,6 +46,7 @@ public class MeterNotInListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public MeterNotInListAdapter(Context context) {
         this.context = context;
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_audit_travels,parent,false);
@@ -60,8 +61,6 @@ public class MeterNotInListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     private void setupClickableViews(final View view, final CellViewHolder mCellViewHolder) {
-
-
         mCellViewHolder.llAuditDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,10 +74,8 @@ public class MeterNotInListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 catch(Exception e){
                     Log.e(TAG, e.toString(),e);
                 }
-
             }
         });
-
 
         mCellViewHolder.btnToDo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +106,6 @@ public class MeterNotInListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 catch(Exception e){
                     Log.e(TAG, e.toString(),e);
                 }
-
             }
         });
     }
@@ -118,6 +114,7 @@ public class MeterNotInListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         ListItems.remove(adapterPosition);
         notifyItemRemoved(adapterPosition);
     }
+
     @Override
     public int getItemCount() {
         return ListItems.size();
@@ -144,8 +141,6 @@ public class MeterNotInListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-
-
     public static class CellViewHolder extends RecyclerView.ViewHolder {
         @BindView (R.id.card_view)
         CardView card_view;
@@ -165,7 +160,6 @@ public class MeterNotInListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         LinearLayout llAuditDetails;
         @BindView(R.id.btnDelete)
                 ImageButton btnDelete;
-
         ListModel Items;
 
         public CellViewHolder(View view) {
@@ -186,11 +180,4 @@ public class MeterNotInListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             return Items;
         }
     }
-
-
-
-
-
-
-
 }

@@ -46,24 +46,21 @@ public class DeliveryActivityV2 extends BaseActivity {
         searchMenuItem  = menu.findItem(R.id.action_search);
         searchView.setMenuItem(searchMenuItem);
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener(){
+
             @Override
             public boolean onQueryTextSubmit(String query) {
-
-
                 return false;
             }
+
             @Override
             public boolean onQueryTextChange(String newText) {
-
                 return false;
             }
         } );
-
         return true;
     }
 
     private void GetMessengerial(String JobId,String TrackingNumber){
-
             try {
 
                 Cursor result = DeliveryModel.GetSearchMessengerial(JobId,TrackingNumber);
@@ -78,15 +75,11 @@ public class DeliveryActivityV2 extends BaseActivity {
                             Liquid.RemarksCode = result.getString(7);
                             Liquid.Remarks = result.getString(8);
                             Liquid.ReaderComment = result.getString(9);
-
                 }
-
             } catch (Exception e) {
-
                 Log.e(TAG, "Error : ", e);
                 return;
             }
-
     }
 
     @Override
@@ -105,6 +98,7 @@ public class DeliveryActivityV2 extends BaseActivity {
             return super.onOptionsItemSelected(item);
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -122,7 +116,6 @@ public class DeliveryActivityV2 extends BaseActivity {
     }
 
     private void init(){
-
         txtTrackingNumber = (com.aseyel.tgbl.tristangaryleyesa.utils.AlphaNumericKeyboard)  findViewById(R.id.txtTrackingNumber);
         txtQuestion = (TextView)  findViewById(R.id.txtQuestion);
         btnScan = (Button)  findViewById(R.id.btnScan);
@@ -132,6 +125,7 @@ public class DeliveryActivityV2 extends BaseActivity {
                             " Type the BARCODE/QR CODE value of the ITEM. " +
                             "After the input please press the NEXT button.");
         GetMessengerial(Liquid.SelectedId,Liquid.TrackingNumber);
+
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,8 +138,6 @@ public class DeliveryActivityV2 extends BaseActivity {
                                 Liquid.TrackingNumber = "";
                                 Intent i = new Intent(getApplicationContext(), QRCodeScannerActivity.class);
                                 startActivity(i);
-
-
                             }
                         })
                         .setNegativeButton("OCR", new DialogInterface.OnClickListener() {
@@ -190,6 +182,5 @@ public class DeliveryActivityV2 extends BaseActivity {
                 }
             }
         });
-
     }
 }

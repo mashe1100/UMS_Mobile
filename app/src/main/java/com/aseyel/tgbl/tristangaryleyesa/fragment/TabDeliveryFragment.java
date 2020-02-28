@@ -38,14 +38,11 @@ import java.util.List;
 
 
 public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
-
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = TabDeliveryFragment.class.getSimpleName();
     private static final int DELIVERY_RECEIVED_FORM = 1;
     private static final int LIST_DELIVERY = 2;
-
-
     // TODO: Rename and change types of parameters
     private View mView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -60,11 +57,9 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
         // Required empty public constructor
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -98,9 +93,7 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
 
     }
 
-
     public void GetStockIn(boolean animated,String Query){
-
         try
         {
             mAdapter.updateItems(animated, GetStockIn(Query));
@@ -109,9 +102,7 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
             Log.e(TAG,"Error : ",e);
             return;
         }
-
     }
-
 
     public class DeliveryFilePostingToServer extends AsyncTask<Void, Integer, Integer> {
         // This is the JSON body of the post
@@ -120,11 +111,9 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
         JSONArray dataArray;
         JSONArray imageArray;
         JSONArray signatureArray;
-
         int toUploadCount = 0;
         int progress = 0;
         int total = 0;
-
         String data;
         String Category;
         String jsonStr;
@@ -132,13 +121,13 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
         String AccountNumber = "";
         String Period;
 
-
         // This is a constructor that allows you to pass in the JSON body
         public DeliveryFilePostingToServer(JSONObject postData) {
             if (postData != null) {
                 this.postData = postData;
             }
         }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -178,7 +167,6 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
 
                     if(!AccountNumber.equals(String.valueOf(dataObject.get("job_id")))){
                         AccountNumber = String.valueOf(dataObject.get("job_id"));
-
                         Category = "";
                         File mImages;
                         File[] listFile;
@@ -190,7 +178,6 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
                         if (!mImages.exists() && !mImages.mkdirs()) {
                             Liquid.ShowMessage(mView.getContext(), "Can't create directory to save image");
                         } else {
-
                             listFile = mImages.listFiles();
                             toUploadCount = toUploadCount + listFile.length;
                             mProgressDialog.setMax(listFile.length);
@@ -204,16 +191,12 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
                                 data.put("FileData", Liquid.imageToString(listFile[e].getAbsolutePath()));
                                 data.put("Filename", listFile[e].getName());
                                 data.put("service_type", "Messengerial");
-
-
                                 //combine all data for image
                                 final_image_result.put(data);
                                 final_image_response.put("image", final_image_result);
                                 imageData = final_image_response.getString("image");
                                 imageArray = new JSONArray(imageData);
-
                                 mPOSTApiData = new Liquid.POSTApiData("fmts/php/api/tgblUploadSignature.php");
-
                                 jsonStr = sh.makeServicePostCall(mPOSTApiData.API_Link, imageArray.getJSONObject(0));
                                 Log.i(TAG,jsonStr);
                                 response = Liquid.StringToJsonObject(jsonStr);
@@ -230,11 +213,6 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
                         }
                     }
                 }
-
-
-
-
-
             } catch (JSONException e) {
                 Log.e(TAG,"Error :",e);
                 //JSON Problem
@@ -246,21 +224,17 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
                 return 0;
             }
             return 29;
-
-
         }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
             mProgressDialog.setProgress(values[0]);
-
         }
 
         @Override
         protected void onPostExecute(Integer result) {
             super.onPostExecute(result);
-
             try {
                 switch(result){
                     case 29:
@@ -290,19 +264,13 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
                     default:
                         Log.i(TAG,"Unsuccessfully Uploaded");
                         Liquid.showDialogInfo(mView.getContext(),"Invalid","An error has occured!");
-
                 }
-
-
             } catch (Exception e){
                 Log.e(TAG,"Error :",e);
                 Liquid.showDialogInfo(mView.getContext(),"Invalid","An error has occured!");
             }
             mProgressDialog.dismiss();
-
         }
-
-
     }
 
     public class DataMessengerialToServer extends AsyncTask<Void, Integer, Integer> {
@@ -336,11 +304,8 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
                 Liquid.ErrorDataUpload = new JSONObject();
                 Liquid.ErrorUpload = new JSONArray();
                 data = postData.getString("data");
-
                 dataArray = new JSONArray(data);
-
                 total = dataArray.length();
-
                 mProgressDialog = new ProgressDialog(getContext());
                 mProgressDialog.setMessage("Processing....");
                 mProgressDialog.setTitle("Uploading Data");
@@ -349,9 +314,7 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
                 mProgressDialog.setMax(0);
                 mProgressDialog.setMax(total);
                 mProgressDialog.show();
-
                 //progressBar.setMax(total);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -360,14 +323,12 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
         @Override
         protected Integer doInBackground(Void... strings) {
             try {
-
                 HttpHandler sh = new HttpHandler();
                 int limit = 50;
                 if(dataArray.length() == 0){
                     //No Data
                     //return 2;
                 }else{
-
                     List<String> arrayList = new ArrayList<String>();
                     for(int i = 0; i < dataArray.length(); i++){
                         arrayList.add(dataArray.getString(i));
@@ -376,20 +337,19 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
                     for(int j = 0; j < arrayList.size(); j+=limit) {
                         int k = Math.min(j + limit, arrayList.size());
                         List<String> subList = arrayList.subList(j,k);
-
                         JSONArray newDataArray = new JSONArray(subList);
                         JSONObject reading = new JSONObject();
                         reading.put("sysid",Liquid.User);
                         reading.put("username",Liquid.Username);
                         reading.put("password",Liquid.Password);
                         reading.put("data",newDataArray);
-
                         mPOSTApiData = new Liquid.POSTApiData("fmts/php/api/Delivery.php");
                         //Log.i(TAG, String.valueOf(test));
                         String jsonStr = sh.makeServicePostCall(mPOSTApiData.API_Link, reading);
                         Log.i(TAG,"Tristan "+jsonStr);
                         //Log.i(TAG, "ALEX:" + jsonStr);
                         JSONObject response = Liquid.StringToJsonObject(jsonStr);
+
                         if (response.getString("result").equals("false")) {
                             Liquid.ErrorUpload.put(reading);
                         } else {
@@ -402,17 +362,12 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
                                 result_status = DeliveryModel.UpdateUploadStatus(dataObject.getString("job_id").toString(),dataObject.getString("trackingNumber").toString());
                             }
                         }
-
-
                     }
-
                 }
-
 
                 if (Liquid.ErrorUpload.length() != 0) {
                     Liquid.ErrorDataUpload.put("data", Liquid.ErrorUpload);
                 }
-
             } catch (JSONException e) {
                 Log.e(TAG,"Error :",e);
                 //JSON Problem
@@ -456,10 +411,7 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
                     default:
                         Log.i(TAG,"Unsuccessfully Uploaded");
                         Liquid.showDialogInfo(mView.getContext(),"Invalid","An error has occured!");
-
                 }
-
-
             } catch (Exception e){
                 Log.e(TAG,"Error :",e);
                 Liquid.showDialogInfo(mView.getContext(),"Invalid","An error has occured!");
@@ -499,11 +451,8 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
                 Liquid.ErrorDataUpload = new JSONObject();
                 Liquid.ErrorUpload = new JSONArray();
                 data = postData.getString("all_data");
-
                 dataArray = new JSONArray(data);
-
                 total = dataArray.length();
-
                 mProgressDialog = new ProgressDialog(getContext());
                 mProgressDialog.setMessage("Processing....");
                 mProgressDialog.setTitle("Uploading Data");
@@ -512,9 +461,7 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
                 mProgressDialog.setMax(0);
                 mProgressDialog.setMax(total);
                 mProgressDialog.show();
-
                 //progressBar.setMax(total);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -523,36 +470,32 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
         @Override
         protected Integer doInBackground(Void... strings) {
             try {
-
                 HttpHandler sh = new HttpHandler();
                 int limit = 50;
                 if(dataArray.length() == 0){
                     //No Data
                     //return 2;
                 }else{
-
                     List<String> arrayList = new ArrayList<String>();
                     for(int i = 0; i < dataArray.length(); i++){
                         arrayList.add(dataArray.getString(i));
                     }
-
                     for(int j = 0; j < arrayList.size(); j+=limit) {
                         int k = Math.min(j + limit, arrayList.size());
                         List<String> subList = arrayList.subList(j,k);
-
                         JSONArray newDataArray = new JSONArray(subList);
                         JSONObject reading = new JSONObject();
                         reading.put("sysid",Liquid.User);
                         reading.put("username",Liquid.Username);
                         reading.put("password",Liquid.Password);
                         reading.put("data",newDataArray);
-
                         mPOSTApiData = new Liquid.POSTApiData("fmts/php/api/Delivery.php");
                         //Log.i(TAG, String.valueOf(test));
                         String jsonStr = sh.makeServicePostCall(mPOSTApiData.API_Link, reading);
                         Log.i(TAG,"Tristan "+jsonStr);
                         //Log.i(TAG, "ALEX:" + jsonStr);
                         JSONObject response = Liquid.StringToJsonObject(jsonStr);
+
                         if (response.getString("result").equals("false")) {
                             Liquid.ErrorUpload.put(reading);
                         } else {
@@ -565,17 +508,12 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
                                 result_status = DeliveryModel.UpdateUploadStatus(dataObject.getString("job_id").toString(),dataObject.getString("trackingNumber").toString());
                             }
                         }
-
-
                     }
-
                 }
-
 
                 if (Liquid.ErrorUpload.length() != 0) {
                     Liquid.ErrorDataUpload.put("data", Liquid.ErrorUpload);
                 }
-
             } catch (JSONException e) {
                 Log.e(TAG,"Error :",e);
                 //JSON Problem
@@ -619,10 +557,7 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
                     default:
                         Log.i(TAG,"Unsuccessfully Uploaded");
                         Liquid.showDialogInfo(mView.getContext(),"Invalid","An error has occured!");
-
                 }
-
-
             } catch (Exception e){
                 Log.e(TAG,"Error :",e);
                 Liquid.showDialogInfo(mView.getContext(),"Invalid","An error has occured!");
@@ -630,10 +565,9 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
             mProgressDialog.dismiss();
         }
     }
+
     public void DoUploadMessengerial(final JSONObject postData){
         try {
-
-
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -661,10 +595,12 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
             e.printStackTrace();
         }
     }
+
     public void GoToList(){
         Intent i = new Intent(getContext(), JobOrderActivity.class);
         startActivityForResult(i,DELIVERY_RECEIVED_FORM);
     }
+
     public static ArrayList<HashMap<String, String>> GetStockIn(String Query){
         ArrayList<HashMap<String, String>> final_result = new ArrayList<>();
         Cursor result = DeliveryModel.GetStockIn(Query);
@@ -674,14 +610,12 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
                 return final_result;
             }
             while(result.moveToNext()){
-
                 int total_upload = 0;
                 int total_download = 0;
                 int total_pending = 0;
                 String stockInId = result.getString(result.getColumnIndex("stockInId"));
                 String stockInTitle = result.getString(result.getColumnIndex("stockInTitle"));
                 String stockInDate = result.getString(result.getColumnIndex("stockInDate"));
-
                 Cursor result_jo = DeliveryModel.GetDataDownload(stockInId);
                 Cursor result_job_upload = DeliveryModel.GetDataUploaded(result.getString(result.getColumnIndex("stockInId")),"Uploaded");
                 Cursor result_job_Pending = DeliveryModel.GetDataUploaded(result.getString(result.getColumnIndex("stockInId")),"Pending");
@@ -720,24 +654,20 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
 
                 final_result.add(data);
             }
-
             return final_result;
         }
         catch(Exception e){
             Log.e(TAG,"Error : ",e);
             return final_result;
         }
-
     }
-    private void init(View mView){
 
+    private void init(View mView){
         mProgressDialog = new ProgressDialog(getContext());
         //swipe function for reload
         mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.swipeReload);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-
         mBottomNavigationView = (AHBottomNavigation) mView.findViewById(R.id.mBottomNavigationView);
-
         BtnAddForDelivery = (FloatingActionButton) mView.findViewById(R.id.BtnAddForDelivery);
         //this is for recycler
         mAdapter = new LocalJobOrderAdapter(this);
@@ -746,6 +676,7 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
         rvList.setHasFixedSize(true);
         rvList.setLayoutManager(llm);
         rvList.setAdapter(mAdapter);
+
         rvList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -753,25 +684,16 @@ public class TabDeliveryFragment extends Fragment implements SwipeRefreshLayout.
                 if(!rvList.canScrollVertically(1)){
                     Liquid.UpdateRecyclerItemLimit = Liquid.UpdateRecyclerItemLimit + 50;
                     GetStockIn(false,"");
-
                 }
             }
         });
 
-
-
         BtnAddForDelivery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 Intent i = new Intent(getActivity(), DeliveryReceived.class);
                 startActivityForResult(i,DELIVERY_RECEIVED_FORM);
             }
         });
-
     }
-
-
-
 }

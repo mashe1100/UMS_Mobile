@@ -21,6 +21,7 @@ public class NewJobOrderDetailsActivity extends BaseFormActivity {
     String Longitude;
     String Date;
     String AccountNumber;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +30,7 @@ public class NewJobOrderDetailsActivity extends BaseFormActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setup();
     }
+
     private void setup(){
         txtJobOrderTitle = (EditText) findViewById(R.id.txtJobOrderTitle);
         txtJobOrderDescription = (EditText) findViewById(R.id.txtJobOrderDescription);
@@ -91,6 +93,5 @@ public class NewJobOrderDetailsActivity extends BaseFormActivity {
             Log.e(TAG,"Error : ",e);
             return 1;
         }
-
     }
 }

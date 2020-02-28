@@ -42,15 +42,14 @@ public class TrackingAvailabilityFragment extends Fragment  implements SwipeRefr
     FloatingActionButton floatBtnComment;
     ArrayList<HashMap<String, String>> List;
     ArrayList<HashMap<String, String>> ListDetails;
-
     TrackingAvailabilityAdapter Adapter;
     Liquid.ApiData mApiData;
     View mView;
-
     @BindView(R.id.rvTrackingAvailabilityList)
     RecyclerView rvList;
     int numberOfColumns = 3;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,8 +65,6 @@ public class TrackingAvailabilityFragment extends Fragment  implements SwipeRefr
             Log.e(TAG,"Error :",e);
             return null;
         }
-
-
     }
 
     private void setup(View view) {
@@ -100,7 +97,6 @@ public class TrackingAvailabilityFragment extends Fragment  implements SwipeRefr
         }
     }
 
-
     private void setupV2(View view) {
         try {
             //Initialization
@@ -132,10 +128,6 @@ public class TrackingAvailabilityFragment extends Fragment  implements SwipeRefr
     }
 
     public void DeleteData(final String OutletNumber, final String ProductCode, final String Period){
-
-
-
-
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -162,11 +154,6 @@ public class TrackingAvailabilityFragment extends Fragment  implements SwipeRefr
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage("Are you sure you want to DELETE?").setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
-
-
-
-
-
     }
 
     public void GetData(boolean animated,String Search){
@@ -191,13 +178,11 @@ public class TrackingAvailabilityFragment extends Fragment  implements SwipeRefr
                 final_result.add(data);
             }
             Adapter.updateItems(animated,final_result);
-
         }
         catch(Exception e){
             Log.e(TAG,"Error : ",e);
             return;
         }
-
     }
 
     @Override
@@ -205,6 +190,4 @@ public class TrackingAvailabilityFragment extends Fragment  implements SwipeRefr
         GetData(false,"Coke");
         mSwipeRefreshLayout.setRefreshing(false);
     }
-
-
 }

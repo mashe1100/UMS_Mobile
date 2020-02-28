@@ -33,33 +33,31 @@ public class UpdateHostActivity extends BaseFormActivity {
     private EditText txtUsername;
     private EditText txtPassword;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_host);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         init();
     }
     //Create a submit function for host change
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch(item.getItemId())
         {
             case android.R.id.home:
                 this.finish();
                 return true;
+
             case R.id.action_form_submit:
                 new DoChangeHost().execute(txtHostname.getText().toString(),
                                             txtUsername.getText().toString(),
                                             txtPassword.getText().toString());
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
     private void init(){
@@ -73,11 +71,9 @@ public class UpdateHostActivity extends BaseFormActivity {
         txtUsername.setText(Liquid.Username);
         txtPassword.setText(Liquid.Password);
         txtQuestion.setText("You can update the host here.");
-
     }
     //Create a function for Host change
     public class DoChangeHost extends AsyncTask<String,Void,Void> {
-
         JSONObject result = new JSONObject();
         JSONObject postData = new JSONObject();
         HttpHandler sh = new HttpHandler();
@@ -85,7 +81,6 @@ public class UpdateHostActivity extends BaseFormActivity {
         String Hostname = "";
         String Username = "";
         String Password = "";
-
 
         @Override
         protected void onPreExecute() {
@@ -126,8 +121,6 @@ public class UpdateHostActivity extends BaseFormActivity {
                         result.put("message","Successfully change host!");
                     }
                 }
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -147,11 +140,6 @@ public class UpdateHostActivity extends BaseFormActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
     }
-
-
-
-
 }

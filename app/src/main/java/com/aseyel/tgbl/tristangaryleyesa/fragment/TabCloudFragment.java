@@ -60,17 +60,14 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
     private String mtitle;
     private String mdetails;
     JSONArray final_result_customer;
-
     JobOrderAdapater mJobOrderAdapter;
     Liquid.GETUMSAPI mGETUMSAPI;
     ApiData mApiData;
     View view;
-
     @BindView(R.id.rvJobOrderList)
     RecyclerView rvJobOrderList;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,13 +77,13 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
         view = inflater.inflate(R.layout.fragment_tab_cloud, container, false);
         //Connection Setting Up
         setupJobOrder(view);
+
         try{
             new GetJobOrderList().execute("true","");
         }catch(Exception e){
             Log.e(TAG,"Error ",e);
             Liquid.showDialogError(view.getContext(),"Connection Error","Can't Connect to the Server");
         }
-
         return view;
     }
 
@@ -239,12 +236,11 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
             return;
         }
     }
+
     public boolean doDownloadJobOrder(String id,String date,String title,String details){
         try{
             boolean result = false;
             Liquid.LiquidColumns = Liquid.joborders;
-
-
             Liquid.LiquidValues = new String[]{ id, Liquid.Client, details, title,date, Liquid.currentDateTime() };
             result = SplashActivity.mDatabaseHelper.SqliteReplaceQuery("joborder",Liquid.LiquidColumns,Liquid.LiquidValues);
             return result;
@@ -252,12 +248,9 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
             Log.e(TAG, "Error", e);
             return false;
         }
-
-
     }
 
     public void doDownloadJobOrderDetails(ArrayList<HashMap<String, String>> JobOrdersDetails){
-
         try{
             boolean result = false;
             switch(Liquid.ServiceType){
@@ -335,7 +328,6 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
                 }
 
                 mApiData = new ApiData("work-route.php","workController","get_job_list","client="+ Liquid.Client + "&job_id="+JobId+"&service_type="+Liquid.ServiceType);
-
                 // Making a request to url and getting response
                 String jsonStr = sh.makeServiceCall(mApiData.API_Link);
                 Log.i(TAG,"Tristan TEST" + jsonStr);
@@ -380,7 +372,6 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
                 Log.e(TAG,"Error ",e);
                 //Liquid.showDialogError(view.getContext(),"Invalid","Can't connect to server!");
             }
-
             return null;
         }
 
@@ -408,10 +399,7 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
         }
     }
 
-
-
     public class GetReadandBillRatesDetails extends AsyncTask<String, Void, Void> {
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -424,7 +412,6 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
 
         @Override
         protected Void doInBackground(String... params) {
-
             HttpHandler sh = new HttpHandler();
             String Cycle = params[0];
             Liquid.GETBMSApiData mGETBMSApiData;
@@ -440,7 +427,6 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
                     JSONObject entries = jsonObj.optJSONObject("payload");
                     String encodedData = entries.getString("entries");
                     String decodedData = doDecode64(encodedData);
-
                             // Getting JSON Array node
                     JSONObject jsonObject = new JSONObject(decodedData);
                     JSONArray decodejsonArray = new JSONArray(jsonObject.get("Rates").toString());
@@ -464,7 +450,6 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
                 Toast.makeText(getActivity(), "No Data", Toast.LENGTH_LONG ).show();
             }
             return null;
-
         }
 
         @Override
@@ -504,7 +489,6 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
 
         @Override
         protected Void doInBackground(String... params) {
-
                 HttpHandler sh = new HttpHandler();
                 String JobOrderId = params[0];
                 mGETUMSAPI = new Liquid.GETUMSAPI("wms/php/api/DownloadUnAccomplishment.php","&client="+ Liquid.Client+"&job_id="+JobOrderId+"&service_type="+Liquid.ServiceType+"&sysid="+Liquid.User);
@@ -611,9 +595,7 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
                                     JobOrderListDetails.add(data);
                                 }*/
                                 break;
-
                         }
-
                     } catch (final JSONException e) {
                         Log.e(TAG, "Error : ", e);
                     } catch (Exception e) {
@@ -656,7 +638,6 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
 
         @Override
         protected Void doInBackground(String... params) {
-
             HttpHandler sh = new HttpHandler();
             String JobOrderId = params[0];
             mGETUMSAPI = new Liquid.GETUMSAPI("wms/php/api/MeterNotInListInvalid.php","&client="+ Liquid.Client+"&job_id="+JobOrderId+"&service_type="+Liquid.ServiceType+"&sysid="+Liquid.User);
@@ -719,9 +700,8 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
 
                                     JobOrderListDetails.add(data);
                                 }*/
-
-
                             break;
+
                         case "READ AND BILL":
                             // Getting JSON Array node
                             //------FOR JSON OBJECT
@@ -742,8 +722,8 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
                                 }
                                 JobOrderListDetails.add(data);
                             }
-
                             break;
+
                         case "DISCONNECTION":
                             // Getting JSON Array node
                             //------FOR JSON OBJECT
@@ -763,9 +743,7 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
                                     JobOrderListDetails.add(data);
                                 }*/
                             break;
-
                     }
-
                 } catch (final JSONException e) {
                     Log.e(TAG, "Error : ", e);
                 } catch (Exception e) {
@@ -796,7 +774,6 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
     }
 
     public class GetJobOrderListDetails extends AsyncTask<String, Void, Void> {
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -809,7 +786,6 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
 
         @Override
         protected Void doInBackground(String... params) {
-
             HttpHandler sh = new HttpHandler();
             String JobOrderId = params[0];
 
@@ -874,9 +850,8 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
 
                                     JobOrderListDetails.add(data);
                                 }
-
-
                                 break;
+
                             case "READ AND BILL":
                                 // Getting JSON Array node
                                 //------FOR JSON OBJECT
@@ -897,8 +872,8 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
                                     }
                                     JobOrderListDetails.add(data);
                                 }
-
                                 break;
+
                             case "DISCONNECTION":
                                 // Getting JSON Array node
                                 //------FOR JSON OBJECT
@@ -906,7 +881,6 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
                                 //------FOR JSON ARRAY
                                 decodejsonArray = new JSONArray(decodeDisconnectionjson.getString("items"));
                                 decodeDisconnectionjson.getString("items");
-
                                 // looping through All Data
                                 for (int i = 0; i < decodejsonArray.length(); i++) {
                                     JSONObject c = decodejsonArray.getJSONObject(i);
@@ -918,9 +892,7 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
                                     JobOrderListDetails.add(data);
                                 }
                                 break;
-
                         }
-
                     } catch (final JSONException e) {
                         Log.e(TAG,"Error : ",e);
                     } catch (Exception e){
@@ -930,20 +902,17 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
                     Toast.makeText(getActivity(), "No Data", Toast.LENGTH_LONG ).show();
                 }
                 return null;
-
         }
 
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             try{
-
                 //Toast.makeText(getActivity(), "Successfully Downloaded", Toast.LENGTH_SHORT).show();
-
                 doDownloadJobOrderDetails(JobOrderListDetails);
+
                 if (pDialog.isShowing())
                     pDialog.dismiss();
-
 
             }catch (final Exception e) {
                 Log.e(TAG,"Error : ",e);
@@ -955,9 +924,4 @@ public class TabCloudFragment extends Fragment  implements SwipeRefreshLayout.On
             return new String(decodeValue);
         }
     }
-
-
-
-
-
 }

@@ -16,6 +16,7 @@ public class SettingsActivity extends BaseActivity {
     private static final String TAG = SettingsActivity.class.getSimpleName();
     private Switch switchReverse;
     private Switch switchHideKeyboard;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,11 +37,12 @@ public class SettingsActivity extends BaseActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
+
     private void init(){
         switchHideKeyboard = (Switch) findViewById(R.id.switchHideKeyboard);
         switchReverse = (Switch) findViewById(R.id.switchReverse);
+
         if(Liquid.ReverseInput == 1){
             switchReverse.setChecked(true);
         }
@@ -71,7 +73,6 @@ public class SettingsActivity extends BaseActivity {
                 Liquid.GetSettings();
             }
         });
-
 
     }
 }

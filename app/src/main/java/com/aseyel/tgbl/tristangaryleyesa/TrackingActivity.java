@@ -44,6 +44,7 @@ public class TrackingActivity extends BaseActivity {
     MaterialSearchView searchView;
     private String Status = "";
     private  TabLayout tabLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +57,8 @@ public class TrackingActivity extends BaseActivity {
             setupViewPager(mViewPager);
             tabLayout = (TabLayout) findViewById(R.id.trackings_tabs);
             tabLayout.setupWithViewPager(mViewPager);
-            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     SelectedTab = tab.getPosition();
@@ -118,6 +119,7 @@ public class TrackingActivity extends BaseActivity {
         }
         return selectedTab;
     }
+
     private void initViews(){
         mDatabaseHelper = new DatabaseHelper(this);
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
@@ -172,20 +174,18 @@ public class TrackingActivity extends BaseActivity {
         } );
         return true;
     }
-    private void setupViewPager(ViewPager viewPager){
 
+    private void setupViewPager(ViewPager viewPager){
         StoreStatus =  new TrackingStoreStatusFragment();
         Availability =  new TrackingAvailabilityFragment();
         Sovi =  new TrackingSoviFragment();
         Activation =  new TrackingActivationFragment();
         CDE =  new TrackingCDEFragment();
        // CoolerPlanogram =  new TrackingCoolerPlanogramFragment();
-
         SoviLocation =  new TrackingSoviLocationFragment();
         Comment =  new TrackingCommentFragment();
         Signature =  new TrackingSignatureFragment();
         //Summary =  new TrackingSummaryFragment();
-
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
         adapter.addFragement(StoreStatus, "Store Status");
 
@@ -202,7 +202,6 @@ public class TrackingActivity extends BaseActivity {
             adapter.addFragement(Activation, "Activation");
             adapter.addFragement(CDE, "CDE");
             //adapter.addFragement(CoolerPlanogram, "Cooler Planogram");
-
             if(     Liquid.SelectedAccountName.toUpperCase().contains("RUSTANS") ||
                     Liquid.SelectedAccountName.toUpperCase().contains("SHOPWISE") ||
                     Liquid.SelectedAccountName.toUpperCase().contains("MARKETPLACE") ||
@@ -211,20 +210,14 @@ public class TrackingActivity extends BaseActivity {
                 ShelfPlanogram =  new TrackingShelfPlanogramFragment();
                 adapter.addFragement(ShelfPlanogram, "Shelf Planogram");
             }
-
-
             adapter.addFragement(Comment, "Comment");
             adapter.addFragement(Signature, "Signature");
             //adapter.addFragement(Summary, "Summary");
         }
-
-
-
         viewPager.setAdapter(adapter);
-
     }
-    public boolean onOptionsItemSelected(MenuItem item) {
 
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId())
         {
             case android.R.id.home:
@@ -234,29 +227,22 @@ public class TrackingActivity extends BaseActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
-    public void GetData(String AccountNumber,
-                        String Period){
-
-        Cursor result = TrackingModel.GetStoreStatus(AccountNumber,
-                Period);
+    public void GetData(String AccountNumber, String Period){
+        Cursor result = TrackingModel.GetStoreStatus(AccountNumber, Period);
         try
         {
-
             if(result.getCount() == 0){
                 return;
             }
             while(result.moveToNext()){
                 Status = result.getString(0);
             }
-
         }
         catch(Exception e){
             Log.e(TAG,"Error : ",e);
             return;
         }
-
     }
 }

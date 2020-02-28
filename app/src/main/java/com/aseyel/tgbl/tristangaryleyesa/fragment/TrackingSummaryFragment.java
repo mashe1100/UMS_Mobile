@@ -42,6 +42,4 @@ public class TrackingSummaryFragment extends Fragment {
     private void setup(View view) {
 
     }
-
-
 }

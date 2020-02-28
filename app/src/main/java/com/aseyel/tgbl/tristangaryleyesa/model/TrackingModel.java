@@ -34,7 +34,6 @@ public class TrackingModel {
                 "ORDER BY customer_id ASC ");
     }
 
-
     public static boolean DeleteAvailability(String OutletNumber,String ProductCode,String Period){
         try{
             boolean result = false;
@@ -45,7 +44,6 @@ public class TrackingModel {
             return false;
         }
     }
-
 
     public static boolean DeleteSOVI(String OutletNumber,String ProductCode,String Category,String Period){
         try{
@@ -989,7 +987,5 @@ public class TrackingModel {
             Log.e(TAG, "Error", e);
             return false;
         }
-
-
     }
 }

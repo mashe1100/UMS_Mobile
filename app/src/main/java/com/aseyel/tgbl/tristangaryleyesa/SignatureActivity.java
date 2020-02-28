@@ -65,8 +65,8 @@ public class SignatureActivity extends BaseFormActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
+
     private void init(){
         Liquid.getDeviceLocation(this);
         mContent = (LinearLayout) findViewById(R.id.rlSignature);
@@ -74,7 +74,6 @@ public class SignatureActivity extends BaseFormActivity {
         btnDone = (Button) findViewById(R.id.btnDone);
         mSignature = new LiquidCanvas(this, null,mContent);
         mContent.addView(mSignature);
-
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +91,6 @@ public class SignatureActivity extends BaseFormActivity {
 
     private void Save(){
         boolean result = false;
-
         SignatureName = Liquid.TrackingNumber+"_"+Liquid.currentDateTimeForID();
         result = DeliveryModel.doSubmitDelivery(
                 Liquid.Client,
@@ -114,7 +112,6 @@ public class SignatureActivity extends BaseFormActivity {
                 Liquid.currentDateTime(),
                 Liquid.currentDate(),
                 Liquid.User
-
         );
 
         if(result == true){
@@ -127,11 +124,11 @@ public class SignatureActivity extends BaseFormActivity {
     }
 
     public class GPSPosting extends AsyncTask<Void,Void,Void> {
-
         String Client = "";
         String Details = "";
         boolean result = false;
         String return_data = "";
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();

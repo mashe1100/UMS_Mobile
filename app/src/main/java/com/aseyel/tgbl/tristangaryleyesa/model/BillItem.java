@@ -2,8 +2,6 @@ package com.aseyel.tgbl.tristangaryleyesa.model;
 
 
 public class BillItem {
-
-
     public String Label;
     public String RateVar;
     public String AmountVar;
@@ -35,7 +33,6 @@ public class BillItem {
         this.Style = style;
     }
 
-
     public Object Rate()
     {
 
@@ -47,12 +44,10 @@ public class BillItem {
             {
                 return RateVar;
             }
-
     }
 
     public String Amount()
     {
             return String.valueOf(this.AmountVar.equals("") || this.AmountVar.equals(null) ? 0 : this.AmountVar);
     }
-
 }

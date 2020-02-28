@@ -12,11 +12,7 @@ public class TrackingActivationModel {
     public String Filepath;
     public String Category;
 
-
-
-
     public TrackingActivationModel(String Id, String Title, String Details, String Date,String Category, String Filepath) {
-
         this.Id = Id;
         this.Title = Title;
         this.Details = Details;

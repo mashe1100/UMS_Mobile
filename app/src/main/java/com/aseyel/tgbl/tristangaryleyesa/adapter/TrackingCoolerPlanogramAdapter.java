@@ -43,6 +43,7 @@ public class TrackingCoolerPlanogramAdapter extends RecyclerView.Adapter<Recycle
     public TrackingCoolerPlanogramAdapter(Fragment fragment) {
         this.fragment = fragment;
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -50,7 +51,6 @@ public class TrackingCoolerPlanogramAdapter extends RecyclerView.Adapter<Recycle
             CellViewHolder mCellViewHolder = new CellViewHolder(view);
             setupClickableViews(view,mCellViewHolder);
             return mCellViewHolder;
-
     }
 
     @Override
@@ -74,7 +74,6 @@ public class TrackingCoolerPlanogramAdapter extends RecyclerView.Adapter<Recycle
                 catch(Exception e){
                     Log.e(TAG,"Error ",e);
                 }
-
             }
         });
 
@@ -93,7 +92,6 @@ public class TrackingCoolerPlanogramAdapter extends RecyclerView.Adapter<Recycle
                 catch(Exception e){
                     Log.e(TAG,"Error ",e);
                 }
-
             }
         });
 
@@ -111,11 +109,8 @@ public class TrackingCoolerPlanogramAdapter extends RecyclerView.Adapter<Recycle
                 catch(Exception e){
                     Log.e(TAG,"Error ",e);
                 }
-
             }
         });
-
-
     }
 
     @Override
@@ -144,15 +139,11 @@ public class TrackingCoolerPlanogramAdapter extends RecyclerView.Adapter<Recycle
         }
     }
 
-
-
     public static class CellViewHolder extends RecyclerView.ViewHolder {
-
         @BindView(R.id.ivTrackingCoolerPlanogramCenter)
         ImageView ivTrackingCoolerPlanogramCenter;
         @BindView(R.id.tsTrackingCoolerPlanogramDetails)
         TextSwitcher tsTrackingCoolerPlanogramDetails;
-
         @BindView(R.id.vTrackingCoolerPlanogramSelected)
         View vTrackingCoolerPlanogramSelected;
         @BindView(R.id.ivTrackingCoolerPlanogramProfile)
@@ -170,8 +161,7 @@ public class TrackingCoolerPlanogramAdapter extends RecyclerView.Adapter<Recycle
         @BindView(R.id.btnToDo)
         ImageButton btnToDo;
         @BindView(R.id.btnDelete)
-                ImageButton btnDelete;
-
+        ImageButton btnDelete;
         FeedModel Items;
 
         public CellViewHolder(View view) {
@@ -193,11 +183,4 @@ public class TrackingCoolerPlanogramAdapter extends RecyclerView.Adapter<Recycle
             return Items;
         }
     }
-
-
-
-
-
-
-
 }

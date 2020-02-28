@@ -47,9 +47,9 @@ public class TrackingSoviFragment extends Fragment implements SwipeRefreshLayout
     FloatingActionButton floatBtnGallery;
     String Category = "SOVI";
     private SwipeRefreshLayout mSwipeRefreshLayout;
-
     @BindView (R.id.floatBtnComment)
     FloatingActionButton floatBtnComment;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,6 +60,7 @@ public class TrackingSoviFragment extends Fragment implements SwipeRefreshLayout
         GetData(true,"Coke");
         return mView;
     }
+
     private void setup(View view) {
         try {
             //Initialization
@@ -138,7 +139,6 @@ public class TrackingSoviFragment extends Fragment implements SwipeRefreshLayout
     }
 
     public void DeleteData(final String OutletNumber, final String ProductCode, final String Category, final String Period){
-
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -154,9 +154,7 @@ public class TrackingSoviFragment extends Fragment implements SwipeRefreshLayout
                         }
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
-
                         break;
-
                 }
             }
         };
@@ -164,19 +162,14 @@ public class TrackingSoviFragment extends Fragment implements SwipeRefreshLayout
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage("Are you sure you want to DELETE?").setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
-
     }
 
-
-
     public void GetData(boolean animated,String Search){
-
         String Details = "";
         ArrayList<HashMap<String, String>> final_result = new ArrayList<>();
         Cursor result = TrackingModel.GetSoviList(Search);
         try
         {
-
             if(result.getCount() == 0){
                 return;
             }
@@ -205,9 +198,7 @@ public class TrackingSoviFragment extends Fragment implements SwipeRefreshLayout
 
                 final_result.add(data);
             }
-
             Log.i(TAG,final_result.toString());
-
             Adapter.updateItems(animated,final_result);
 
         }
@@ -215,7 +206,6 @@ public class TrackingSoviFragment extends Fragment implements SwipeRefreshLayout
             Log.e(TAG,"Error : ",e);
             return;
         }
-
     }
 
     @Override

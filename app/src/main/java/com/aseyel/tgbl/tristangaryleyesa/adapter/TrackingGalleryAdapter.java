@@ -48,7 +48,6 @@ public class TrackingGalleryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             CellViewHolder mCellViewHolder = new CellViewHolder(view);
             setupClickableViews(view,mCellViewHolder);
             return mCellViewHolder;
-
     }
 
     @Override
@@ -75,7 +74,6 @@ public class TrackingGalleryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 catch(Exception e){
                     Log.e(TAG,"Error ",e);
                 }
-
             }
         });
     }
@@ -105,7 +103,6 @@ public class TrackingGalleryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public static class CellViewHolder extends RecyclerView.ViewHolder {
-
         @BindView(R.id.ivImage)
         ImageView ivImage;
         ImageModel Items;
@@ -119,15 +116,12 @@ public class TrackingGalleryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             this.Items = Items;
             int adapterPosition = getAdapterPosition();
             try{
-
                 Bitmap bmp = BitmapFactory.decodeFile(Items.getFilepath());
                 double height = Liquid.screenHeight  * 0.20;
                 double width = Liquid.screenWidth  * 0.10;
                 //Bitmap bMapScaled = Bitmap.createScaledBitmap(bmp,  (int)height, (int)height, true);
                 Bitmap bMapScaled = Bitmap.createScaledBitmap(bmp,  (int)height, (int)height, true);
-
                 ivImage.setImageBitmap(bMapScaled);
-
             }catch(Exception e){
                 Log.e(TAG,"Error ",e);
             }
@@ -137,11 +131,4 @@ public class TrackingGalleryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             return Items;
         }
     }
-
-
-
-
-
-
-
 }

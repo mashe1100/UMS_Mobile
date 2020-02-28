@@ -45,9 +45,9 @@ public class LiquidSearchAdapater extends RecyclerView.Adapter<RecyclerView.View
     public LiquidSearchAdapater(Context context) {
         this.context = context;
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search,parent,false);
             CellViewHolder mCellViewHolder = new CellViewHolder(view);
             setupClickableViews(view,mCellViewHolder);
@@ -84,6 +84,7 @@ public class LiquidSearchAdapater extends RecyclerView.Adapter<RecyclerView.View
         ListItems.remove(adapterPosition);
         notifyItemRemoved(adapterPosition);
     }
+
     @Override
     public int getItemCount() {
         return ListItems.size();
@@ -103,6 +104,7 @@ public class LiquidSearchAdapater extends RecyclerView.Adapter<RecyclerView.View
                         )
                 ));
             }
+
             if(animated){
                 notifyItemRangeInserted(0, ListItems.size());
             }else{
@@ -110,10 +112,7 @@ public class LiquidSearchAdapater extends RecyclerView.Adapter<RecyclerView.View
             }
     }
 
-
-
     public static class CellViewHolder extends RecyclerView.ViewHolder {
-
         @BindView(R.id.ivProfile)
         ImageView ivProfile;
         @BindView(R.id.tvTitle)
@@ -126,7 +125,6 @@ public class LiquidSearchAdapater extends RecyclerView.Adapter<RecyclerView.View
         TextView tvAging;
         @BindView(R.id.llDetails)
         LinearLayout llDetails;
-
         ListModel Items;
 
         public CellViewHolder(View view) {
@@ -147,11 +145,4 @@ public class LiquidSearchAdapater extends RecyclerView.Adapter<RecyclerView.View
             return Items;
         }
     }
-
-
-
-
-
-
-
 }

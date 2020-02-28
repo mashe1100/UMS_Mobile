@@ -44,6 +44,7 @@ public class AuditTravelActivity extends BaseActivity implements SwipeRefreshLay
     String Latitude;
     String Longitude;
     String JobOrderDate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +56,7 @@ public class AuditTravelActivity extends BaseActivity implements SwipeRefreshLay
         GetData(true, Liquid.SelectedId,Liquid.SelectedAccountNumber,"","");
         btnStart.setText(Liquid.Status);
     }
+
     private void setup(){
         floatBtnAdd = (FloatingActionButton) findViewById(R.id.floatBtnAdd);
         search_view =(MaterialSearchView) findViewById(R.id.search_view);
@@ -81,7 +83,6 @@ public class AuditTravelActivity extends BaseActivity implements SwipeRefreshLay
                     Intent i = new Intent(getApplicationContext(), AuditTravelRideActivity.class);
                     startActivity(i);
                 }
-
             }
         });
 
@@ -154,17 +155,11 @@ public class AuditTravelActivity extends BaseActivity implements SwipeRefreshLay
                     builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
                             .setNegativeButton("No", dialogClickListener).show();
                 }
-
-
-
             }
         });
-
-
     }
 
     public void DeleteData(final String JobOrderType, final String JobOrderId,final String AccountNumber,final int position){
-
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -180,11 +175,8 @@ public class AuditTravelActivity extends BaseActivity implements SwipeRefreshLay
                             Liquid.showDialogError(AuditTravelActivity.this, "Invalid", "Unsuccessfully Deleted!");
                         }
                         break;
-
                     case DialogInterface.BUTTON_NEGATIVE:
-
                         break;
-
                 }
             }
         };
@@ -192,8 +184,8 @@ public class AuditTravelActivity extends BaseActivity implements SwipeRefreshLay
         AlertDialog.Builder builder = new AlertDialog.Builder(AuditTravelActivity.this);
         builder.setMessage("Are you sure you want to DELETE?").setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
-
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
@@ -210,13 +202,14 @@ public class AuditTravelActivity extends BaseActivity implements SwipeRefreshLay
                 return false;
             }
         } );
-
         return true;
     }
+
     public void GetData(boolean animated,String JobOrderId,String AccountNumber, String AuditId,String Search){
         ArrayList<HashMap<String, String>> final_result = new ArrayList<>();
         Log.i(TAG,JobOrderId+" "+AccountNumber);
         Cursor result = AuditModel.GetAuditTravelRides(JobOrderId,AccountNumber,AuditId,Search);
+
         try
         {
             if(result.getCount() == 0){
@@ -246,15 +239,12 @@ public class AuditTravelActivity extends BaseActivity implements SwipeRefreshLay
                 }
             }
 
-
             Adapter.updateItems(animated,final_result);
-
         }
         catch(Exception e){
             Log.e(TAG,"Error : ",e);
             return;
         }
-
     }
 
     @Override
@@ -268,6 +258,7 @@ public class AuditTravelActivity extends BaseActivity implements SwipeRefreshLay
         GetData(false, Liquid.SelectedId,Liquid.SelectedAccountNumber,"","");
         mSwipeRefreshLayout.setRefreshing(false);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

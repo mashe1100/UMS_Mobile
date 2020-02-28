@@ -27,7 +27,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class ReceiverActivity extends AppCompatActivity {
-
     private static final String TAG = ReceiverActivity.class.getSimpleName();
     private static final int SMS_PERMISSION_CODE = 0;
     private static final String DEVICE_DEFAULT_SMS_PACKAGE_KEY = "com.aseyel.tgbl.tristangaryleyesa.deviceDefaultSmsPackage";
@@ -45,11 +44,12 @@ public class ReceiverActivity extends AppCompatActivity {
         //setUpViews();
         setDeviceDefaultSmsPackage(getPackageName());
         saveDeviceDefaultSmsPackage();
+
         if (!hasReadSmsPermission()) {
             showRequestPermissionsInfoAlertDialog();
         }
-
         final Handler mHandler = new Handler();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -83,9 +83,11 @@ public class ReceiverActivity extends AppCompatActivity {
             preferences.edit().putString(DEVICE_DEFAULT_SMS_PACKAGE_KEY, defaultSmsPackage).apply();
         }
     }
+
     private boolean hasNoPreviousSmsDefaultPackage(SharedPreferences preferences) {
         return !preferences.contains(DEVICE_DEFAULT_SMS_PACKAGE_KEY);
     }
+
     private void setUpViews() {
        /* findViewById(R.id.set_as_default).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,21 +136,17 @@ public class ReceiverActivity extends AppCompatActivity {
 
                 }
                 // use msgData
-
                 if(thread_length == (cursor.getCount())){
                     msgData += "}";
                 }else{
                     msgData += "},";
                 }
                 try {
-
                     Thread.sleep(0);
                     getContentResolver().delete(Uri.parse("content://sms/"+ id), null,  null);
-
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
             } while (cursor.moveToNext());
         } else {
             // empty box, no SMS
@@ -157,8 +155,6 @@ public class ReceiverActivity extends AppCompatActivity {
         Log.i(TAG,msgData);
         return msgData;
     }
-
-
     /**
      * Optional informative alert dialog to explain the user why the app needs the Read/Send SMS permission
      */
@@ -175,7 +171,6 @@ public class ReceiverActivity extends AppCompatActivity {
         });
         builder.show();
     }
-
     /**
      * Runtime permission shenanigans
      */
@@ -191,20 +186,17 @@ public class ReceiverActivity extends AppCompatActivity {
             Log.d(TAG, "shouldShowRequestPermissionRationale(), no permission requested");
             return;
         }
-
         ActivityCompat.requestPermissions(ReceiverActivity.this, new String[]{android.Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS},
                 SMS_PERMISSION_CODE);
         GetSMS();
     }
 
-
     public class GPSPosting extends AsyncTask<Void,Void,Void> {
-
-
         String Client = "";
         String Details = "";
         boolean result = false;
         String return_data = "";
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -216,10 +208,8 @@ public class ReceiverActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try{
-
                 HttpHandler sh = new HttpHandler();
                 PostApi = new Liquid.POSTApiData("fmts/php/api/Realtime.php");
-
                 JSONArray dataArray = new JSONArray(GetSMS());
 
                 if(dataArray.length() == 0){
@@ -229,7 +219,6 @@ public class ReceiverActivity extends AppCompatActivity {
                 for(int a = 0; a < dataArray.length(); a++){
                     JSONObject c = dataArray.getJSONObject(a);
                     JSONObject dataObject = new JSONObject();
-
                     dataObject.put("receiver_group",c.getString("_id"));
                     dataObject.put("senttime",Liquid.milliSecondtToDate(c.getString("date_sent")));
                     dataObject.put("contact",c.getString("address"));
@@ -245,11 +234,9 @@ public class ReceiverActivity extends AppCompatActivity {
                     JSONObject response = Liquid.StringToJsonObject(jsonStr);
                     if (response.getString("result").equals("false")) {
                         result = false;
-
                     } else {
                         result = true;
                     }
-
                 }
                 /*JSONObject dataObject = new JSONObject();
                 dataObject.put("receiver_group","1");
@@ -263,11 +250,9 @@ public class ReceiverActivity extends AppCompatActivity {
                 Log.i(TAG, String.valueOf(dataObject));
                 String jsonStr = sh.makeServicePostCall(PostApi.API_Link,dataObject);
                 return_data = jsonStr;
-
                 JSONObject response = Liquid.StringToJsonObject(jsonStr);
                 if (response.getString("result").equals("false")) {
                     result = false;
-
                 } else {
                     result = true;
                 }*/

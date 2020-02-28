@@ -296,8 +296,5 @@ public class LiquidPrintTripTicket {
             e.printStackTrace();
             return null;
         }
-
-
     }
-
 }

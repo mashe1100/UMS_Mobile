@@ -27,7 +27,6 @@ public class BaseDrawerActivity extends BaseActivity {
     DrawerLayout drawerLayout;
     @BindView(R.id.vNavigation)
     NavigationView vNavigation;
-
     @BindDimen(R.dimen.global_menu_avatar_size)
     int avatarSize;
     //@BindString(R.string.user_profile_photo)
@@ -92,6 +91,7 @@ public class BaseDrawerActivity extends BaseActivity {
             }
         }, 200);*/
     }
+
     private void GetUserDetails(){
         Cursor result = AccountModel.GetLoginAccount();
         try
@@ -108,6 +108,5 @@ public class BaseDrawerActivity extends BaseActivity {
             Log.e(TAG,"Error : ",e);
             return;
         }
-
     }
 }

@@ -42,40 +42,30 @@ public class DeliveryMainActivity extends BaseActivity {
     private static final String DEVICE_DEFAULT_SMS_PACKAGE_KEY = "com.aseyel.tgbl.tristangaryleyesa.deviceDefaultSmsPackage";
     private static final int SMS_PERMISSION_CODE = 0;
     private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-
     private ViewPager mViewPager;
     private MaterialSearchView search_view;
     private Fragment Local,MenuSettings;
     private MenuItem searchMenuItem;
-
-
     private MaterialSearchView searchView;
     private TabLayout tabLayout;
     private int SelectedTab = 0;
-
     private DisplayMetrics displaymetrics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delivery_main);
-
         init();
         initSMS();
-
     }
-
-
 
     private void init(){
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         Liquid.verifyStoragePermissions(this);
         checkLocationPermission();
-
         mViewPager = (ViewPager) findViewById(R.id.container);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
-
         setupViewPager(mViewPager);
         tabController(tabLayout);
         getScreenSize();
@@ -90,8 +80,8 @@ public class DeliveryMainActivity extends BaseActivity {
         Liquid.screenHeight = displaymetrics.heightPixels;
         Liquid.screenWidth = displaymetrics.widthPixels;
     }
-    public boolean checkLocationPermission() {
 
+    public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(DeliveryMainActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -131,19 +121,19 @@ public class DeliveryMainActivity extends BaseActivity {
     }
 
     private void setupViewPager(ViewPager viewPager){
-
         Local =  new TabDeliveryFragment();
         MenuSettings =  new TabMenuFragment();
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
         adapter.addFragement(Local, "");
         adapter.addFragement(MenuSettings,  "");
         viewPager.setAdapter(adapter);
-
     }
+
     private void tabController(TabLayout tabLayout){
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_global_menu_direct_blue);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_menu);
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -157,6 +147,7 @@ public class DeliveryMainActivity extends BaseActivity {
                         break;
                 }
             }
+
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
 
@@ -182,15 +173,18 @@ public class DeliveryMainActivity extends BaseActivity {
             preferences.edit().putString(DEVICE_DEFAULT_SMS_PACKAGE_KEY, defaultSmsPackage).apply();
         }
     }
+
     private boolean hasNoPreviousSmsDefaultPackage(SharedPreferences preferences) {
         return !preferences.contains(DEVICE_DEFAULT_SMS_PACKAGE_KEY);
     }
+
     private boolean hasReadSmsPermission() {
         return ContextCompat.checkSelfPermission(DeliveryMainActivity.this,
                 android.Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(DeliveryMainActivity.this,
                         android.Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED;
     }
+
     private void requestReadAndSendSmsPermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(DeliveryMainActivity.this, android.Manifest.permission.READ_SMS)) {
             Log.d(TAG, "shouldShowRequestPermissionRationale(), no permission requested");
@@ -201,6 +195,7 @@ public class DeliveryMainActivity extends BaseActivity {
                 SMS_PERMISSION_CODE);
 
     }
+
     private void showRequestPermissionsInfoAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.permission_alert_dialog_title);
@@ -298,12 +293,14 @@ public class DeliveryMainActivity extends BaseActivity {
             });
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
         searchView =(MaterialSearchView) findViewById(R.id.search_view);
         searchMenuItem  = menu.findItem(R.id.action_search);
         searchView.setMenuItem(searchMenuItem);
+
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener(){
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -320,6 +317,7 @@ public class DeliveryMainActivity extends BaseActivity {
                 }
                 return false;
             }
+
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
@@ -339,6 +337,4 @@ public class DeliveryMainActivity extends BaseActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
 }

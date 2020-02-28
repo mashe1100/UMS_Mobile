@@ -34,6 +34,7 @@ public class JobOrderActivity extends BaseActivity {
     public static DatabaseHelper mDatabaseHelper;
     private int SelectedTab = 0;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +73,6 @@ public class JobOrderActivity extends BaseActivity {
         }catch(Exception e){
             Liquid.ShowMessage(JobOrderActivity.this,"Please allow UMS Mobile to access the device GPS.");
         }
-
     }
 
     @Override
@@ -81,9 +81,9 @@ public class JobOrderActivity extends BaseActivity {
         searchMenuItem  = menu.findItem(R.id.action_search);
         searchView.setMenuItem(searchMenuItem);
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener(){
+
             @Override
             public boolean onQueryTextSubmit(String query) {
-
                 switch(SelectedTab){
                     case 0:
                         switch(Liquid.SelectedJobType) {
@@ -116,8 +116,8 @@ public class JobOrderActivity extends BaseActivity {
         } );
         return true;
     }
-    public boolean onOptionsItemSelected(MenuItem item) {
 
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId())
         {
             case android.R.id.home:
@@ -126,8 +126,5 @@ public class JobOrderActivity extends BaseActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
-
-
 }

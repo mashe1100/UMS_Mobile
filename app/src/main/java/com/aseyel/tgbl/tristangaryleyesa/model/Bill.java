@@ -84,10 +84,7 @@ public class Bill {
                     new BillItem("TOTAL AMOUNT DUE",                  String.valueOf(LiquidBilling.total_current_bill), ItemStyle.Total),
                     new BillItem("Previous Unpaid Balance",           String.valueOf(LiquidBilling.arrears), ItemStyle.Aftertotal),
                     new BillItem(                                           ItemStyle.Separator),
-
-
             };
-
 
     public  BillItem[] BillItemsIselco2 =
             {
@@ -226,6 +223,7 @@ public class Bill {
                     new BillItem(											ItemStyle.Separator),
 
             };
+
     public  BillItem[] BillItemsMorePower =
             {
                     new BillItem("RATE COMPONENT", 		                 "PRICE" , "AMOUNT", ItemStyle.Header),
@@ -267,9 +265,6 @@ public class Bill {
                     new BillItem("TOTAL AMOUNT DUE",                         String.valueOf(LiquidBilling.total_amount_due), ItemStyle.Total),
                     new BillItem("Current Bill Due Date",                              Liquid.dateChangeFormat(Liquid.duedate,"yyyy-MM-dd","dd-MMM-yyyy")  , ItemStyle.Aftertotal),
                     new BillItem(											ItemStyle.Separator),
-
-
-
             };
 
     public  BillItem[] BillItemsPelco2 =
@@ -338,6 +333,7 @@ public class Bill {
                     new BillItem("Total Bill Deposit",                   String.valueOf(LiquidBilling.total_moa), ItemStyle.Footer),
                     new BillItem(                                                                                          ItemStyle.Separator),
             };
+
     public  BillItem[] BillItemsBaliwagWD =
             {
                     new BillItem(                                                                                                                                                              ItemStyle.Separator),
@@ -359,7 +355,6 @@ public class Bill {
                     new BillItem("Due Date for "+Liquid.dateChangeFormat(Liquid.BillMonth,"MM","MMM") +" "+Liquid.BillYear ,      Liquid.dateChangeFormat(Liquid.duedate,"yyyy-MM-dd","MM/dd/yyyy"), ItemStyle.Aftertotal),
                     new BillItem(                                           ItemStyle.Separator),
             };
-
 
     public static int CountDetails(ItemStyle style)
     {
@@ -396,7 +391,6 @@ public class Bill {
                 }catch(Exception e){
                     amount = 0;
                 }
-
                 // An optional line is not printed if the amount is 0.00
                 if ((style == ItemStyle.OptionalDetail || style == ItemStyle.OptionalFooter ||
                         style == ItemStyle.OptionalSeparator || style == ItemStyle.Notice1 ||

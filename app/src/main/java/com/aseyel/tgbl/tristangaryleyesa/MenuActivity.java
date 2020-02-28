@@ -19,21 +19,17 @@ import com.aseyel.tgbl.tristangaryleyesa.fragment.TabMenuFragment;
 
 public class MenuActivity extends BaseActivity {
     private static final int CONTENT_VIEW_ID = 10101010;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch(item.getItemId())
         {
             case android.R.id.home:
@@ -43,6 +39,5 @@ public class MenuActivity extends BaseActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 }

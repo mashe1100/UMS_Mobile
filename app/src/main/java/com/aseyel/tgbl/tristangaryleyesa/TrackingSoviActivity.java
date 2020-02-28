@@ -90,22 +90,16 @@ public class TrackingSoviActivity extends BaseFormActivity {
     TextInputLayout iltsSSbrick;
     @BindView(R.id.iltsKOF)
     TextInputLayout iltsKOF;
-
     @BindView(R.id.btnDelete)
     FloatingActionButton btnDelete;
-
     ArrayList<Bitmap> mBitmap = new ArrayList<Bitmap>();
     int mBitmapCount = 0;
-
     String Filename = "";
     LiquidFile mLiquidFile;
-
     int GrandTotalKof = 0;
     int GrandTotalNonKof = 0;
-
     int TotalKof = 0;
     int TotalNonKof = 0;
-
     int TotalCans = 0;
     int TotalSSPet = 0;
     int TotalMSPet = 0;
@@ -116,7 +110,6 @@ public class TrackingSoviActivity extends BaseFormActivity {
     int TotalBox = 0;
     int TotalLitro = 0;
     int TotalPounch = 0;
-
     int Cans = 0;
     int SSPet = 0;
     int MSPet = 0;
@@ -139,7 +132,6 @@ public class TrackingSoviActivity extends BaseFormActivity {
     File mImages;
     int ImageCount = 0;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try{
@@ -150,11 +142,9 @@ public class TrackingSoviActivity extends BaseFormActivity {
         setup();
             //GetData(Liquid.SelectedAccountNumber,Liquid.SelectedCode,"",Liquid.SelectedPeriod);
             GetImages();
-
         }catch(Exception e){
             Log.e(TAG,"Error ",e);
         }
-
     }
 
     private void setup() {
@@ -168,6 +158,7 @@ public class TrackingSoviActivity extends BaseFormActivity {
         adapter_sovi_location.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_ts_location.setAdapter(adapter_sovi_location);
         txtQuestion.setText("How many SOVI for this product "+Liquid.SelectedCode+" and select the correct location? Please count carefully.");
+
         spinner_ts_location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -189,7 +180,6 @@ public class TrackingSoviActivity extends BaseFormActivity {
                     clearTextBox();
                     return;
                 }
-
                 GetData(Liquid.SelectedAccountNumber,Liquid.SelectedCode,Location,Liquid.SelectedDescription,Liquid.SelectedPeriod);
                 GetImages();
             }
@@ -211,7 +201,6 @@ public class TrackingSoviActivity extends BaseFormActivity {
             }
         });
 
-
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -224,29 +213,23 @@ public class TrackingSoviActivity extends BaseFormActivity {
                     mFile = mLiquidFile.Directory(Liquid.SelectedAccountNumber,Liquid.RemoveSpecialCharacter(Filename),Subfolder);
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(mFile));
-
                     startActivityForResult(intent,CAM_REQUEST);
-
                 }
                 catch (Exception e){
                     Liquid.ShowMessage(getApplicationContext(),e.toString());
                 }
             }
         });
-
         GetData(Liquid.SelectedAccountNumber,Liquid.SelectedCode,Location,Liquid.SelectedDescription,Liquid.SelectedPeriod);
         setSoviView(Liquid.SelectedType,Liquid.SelectedDescription);
     }
 
-
     public void DeleteData(final String AccountNumber,final String Sovi,final String Description,final String Location,final String Period){
-
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
-
                         boolean result = false;
                         result = TrackingModel.DeleteSOVIByLocation(AccountNumber,Sovi,Description,Location,Period);
                         if (result == true) {
@@ -258,9 +241,7 @@ public class TrackingSoviActivity extends BaseFormActivity {
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
-
                         break;
-
                 }
             }
         };
@@ -268,7 +249,6 @@ public class TrackingSoviActivity extends BaseFormActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to DELETE?").setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
-
     }
 
     private void setSoviView(String Type,String Category){
@@ -285,7 +265,6 @@ public class TrackingSoviActivity extends BaseFormActivity {
         txttaBox.setVisibility(View.GONE);
         txttaLitro.setVisibility(View.GONE);
         txttaPounch.setVisibility(View.GONE);
-
         iltsKOF.setVisibility(View.GONE);
         iltsCans.setVisibility(View.GONE);
         iltsSSPet.setVisibility(View.GONE);
@@ -297,7 +276,6 @@ public class TrackingSoviActivity extends BaseFormActivity {
         iltsBox.setVisibility(View.GONE);
         iltsLitro.setVisibility(View.GONE);
         iltsPounch.setVisibility(View.GONE);
-
 
         if(Type.equals("KOF")){
             txttaKOF.setVisibility(View.VISIBLE);
@@ -340,7 +318,6 @@ public class TrackingSoviActivity extends BaseFormActivity {
             txttaMSbrick.setVisibility(View.VISIBLE);
             txttaSSWedge.setVisibility(View.VISIBLE);
             txttaBox.setVisibility(View.VISIBLE);
-
             iltsCans.setVisibility(View.VISIBLE);
             iltsSSPet.setVisibility(View.VISIBLE);
             iltsMSPet.setVisibility(View.VISIBLE);
@@ -349,18 +326,16 @@ public class TrackingSoviActivity extends BaseFormActivity {
             iltsMSbrick.setVisibility(View.VISIBLE);
             iltsSSWedge.setVisibility(View.VISIBLE);
             iltsBox.setVisibility(View.VISIBLE);
-
         }
         //Non Kof and RTD JUICE - CANS,SS PET,MS PET,SS DOY,SS BRICK,MS BRICK,SS WEDGE,BOX
         if(Category.equals("RTD Tea") && Type.equals("NON-KOF")){
-              txttaCans.setVisibility(View.VISIBLE);
+            txttaCans.setVisibility(View.VISIBLE);
             txttaSSPet.setVisibility(View.VISIBLE);
             txttaMSPet.setVisibility(View.VISIBLE);
             txttaSSDoy.setVisibility(View.VISIBLE);
             txttaSSbrick.setVisibility(View.VISIBLE);
             txttaMSbrick.setVisibility(View.VISIBLE);
             txttaSSWedge.setVisibility(View.VISIBLE);
-
             iltsCans.setVisibility(View.VISIBLE);
             iltsSSPet.setVisibility(View.VISIBLE);
             iltsMSPet.setVisibility(View.VISIBLE);
@@ -369,13 +344,10 @@ public class TrackingSoviActivity extends BaseFormActivity {
             iltsMSbrick.setVisibility(View.VISIBLE);
             iltsSSWedge.setVisibility(View.VISIBLE);
         }
-
         //Non Kof and Powders - LITRO,POUNCH
         if(Category.equals("Powders") && Type.equals("NON-KOF")){
-
             txttaLitro.setVisibility(View.VISIBLE);
             txttaPounch.setVisibility(View.VISIBLE);
-
             iltsLitro.setVisibility(View.VISIBLE);
             iltsPounch.setVisibility(View.VISIBLE);
         }
@@ -400,8 +372,6 @@ public class TrackingSoviActivity extends BaseFormActivity {
                             Liquid.SelectedPeriod
                     );
 
-
-
                     if(result == true){
 
                         Liquid.resizeImage(mFile.getAbsolutePath(),0.80,0.80);
@@ -409,24 +379,17 @@ public class TrackingSoviActivity extends BaseFormActivity {
                         mUri.add(Uri.fromFile(mFile));
                         tsImageCounter.setCurrentText(String.valueOf(mUri.size()));
                         ImageCount = mUri.size();
-
-
                     }
-
                 }
             }
-
         }catch(Exception e){
             Log.e(TAG,"Error :",e);
         }
-
-
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         try {
-
             switch (item.getItemId()) {
                 case android.R.id.home:
                    this.finish();
@@ -434,7 +397,6 @@ public class TrackingSoviActivity extends BaseFormActivity {
 
                 case R.id.action_form_submit:
                     boolean result = false;
-
                     TotalKof = GrandTotalKof + Integer.parseInt(txttaKOF.getText().toString().equals("") ? "0" : txttaKOF.getText().toString());
                     Cans = TotalCans + Liquid.IntValidation(txttaCans.getText().toString().equals("") ? "0" : txttaCans.getText().toString());
                     SSPet = TotalSSPet + Liquid.IntValidation(txttaSSPet.getText().toString().equals("") ? "0" : txttaSSPet.getText().toString());
@@ -447,26 +409,20 @@ public class TrackingSoviActivity extends BaseFormActivity {
                     Litro = TotalLitro + Liquid.IntValidation(txttaLitro.getText().toString().equals("") ? "0" : txttaLitro.getText().toString());
                     Pounch = TotalPounch + Liquid.IntValidation(txttaPounch.getText().toString().equals("") ? "0" : txttaPounch.getText().toString());
                     Comment = txttaComment.getText().toString();
-
-
                     TotalNonKof =  Cans + SSPet + MSPet + SSDoy + SSbrick + MSbrick + SSWedge + Box + Litro + Pounch;
+
                     if (Location.equals("Select Location")) {
                         Liquid.showDialogError(this, "Invalid", "Information Incomplete!");
                         return false;
                     }
-
-
-
                     if (mUri.size() == 0) {
                         Liquid.showDialogError(this, "Invalid", "Please take picture!");
                         return false;
                     }
-
                     if(ImageCount == 0){
                         Liquid.showDialogError(this, "Invalid", "Please take picture!");
                         return false;
                     }
-
                     result = TrackingModel.doSubmitSovi(
                             Liquid.SelectedAccountNumber,
                             Liquid.SelectedCode,
@@ -495,9 +451,8 @@ public class TrackingSoviActivity extends BaseFormActivity {
                     }else{
                         Liquid.showDialogError(this, "Invalid", "Unsuccessfully Saved!");
                     }
-
-
                     return true;
+
                 default:
                     return super.onOptionsItemSelected(item);
             }
@@ -506,7 +461,6 @@ public class TrackingSoviActivity extends BaseFormActivity {
             return super.onOptionsItemSelected(item);
         }
     }
-
 
     private void clearTextBox(){
         txttaCans.setText("");
@@ -520,6 +474,7 @@ public class TrackingSoviActivity extends BaseFormActivity {
         txttaLitro.setText("");
         txttaPounch.setText("");
     }
+
     public void GetData(String AccountNumber,
                         String ItemCode,
                         String Location,
@@ -527,7 +482,6 @@ public class TrackingSoviActivity extends BaseFormActivity {
                         String Period){
         GrandTotalKof = 0;
         GrandTotalNonKof = 0;
-
         TotalCans = 0;
         TotalSSPet = 0;
         TotalMSPet = 0;
@@ -580,9 +534,6 @@ public class TrackingSoviActivity extends BaseFormActivity {
                 Comment = result.getString(13);
             }
 
-
-
-
             txttaCans.setHint("Cans ("+ String.valueOf(TotalCans)+")");
             txttaSSPet.setHint("SS Pet ("+String.valueOf(TotalSSPet)+")");
             txttaMSPet.setHint("MS Pet ("+String.valueOf(TotalMSPet)+")");
@@ -596,8 +547,6 @@ public class TrackingSoviActivity extends BaseFormActivity {
             txttaKOF.setHint("KOF ("+String.valueOf(GrandTotalKof)+")");
             txttaComment.setText(Comment);
            // spinner_ts_location.setSelection(adapter_sovi_location.getPosition(Location));
-
-
         }
         catch(Exception e){
             Log.e(TAG,"Error : ",e);
@@ -609,7 +558,6 @@ public class TrackingSoviActivity extends BaseFormActivity {
         mUri.clear();
         mImages = Liquid.getDiscPicture(Liquid.SelectedAccountNumber,Subfolder);
         if(!mImages.exists() && !mImages.mkdirs()){
-
             Liquid.ShowMessage(this,"Can't create directory to save image");
         }
         else{
@@ -624,9 +572,6 @@ public class TrackingSoviActivity extends BaseFormActivity {
                 }
             }
             //tsImageCounter.setCurrentText(String.valueOf(mUri.size()));
-
         }
     }
-
-
 }

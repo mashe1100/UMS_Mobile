@@ -32,28 +32,22 @@ public class SurveyActivity extends BaseFormActivity {
     private EditText txtContact;
     private EditText txtEmail;
     private EditText txtMeterBrand;
-
     private EditText txtAddress;
     private EditText txtampirCapacity;
     private EditText txtType;
-
     private Button btnNext;
-
     private EditText[] mEditTextData;
     private Liquid mLiquid;
-
     //private Spinner spinnerMeterType;
     //private ArrayAdapter<String> AdapterSpinnerMeterType;
     //private List<String> ListOfMeterType;
     //private Spinner spinnerStructure;
     //private ArrayAdapter<String> AdapterSpinnerStructure;
     //private List<String> ListOfStructure;
-
     Spinner spinnerMeterType;
     ArrayAdapter<CharSequence> AdapterSpinnerMeterType;
     Spinner spinnerStructure;
     ArrayAdapter<CharSequence> AdapterSpinnerStructure;
-
     private TextView txtAccountNumber;
     private TextView txtAccountName;
     private TextView txtAccountAddress;
@@ -62,7 +56,6 @@ public class SurveyActivity extends BaseFormActivity {
     private TextView txtAccountStatus;
     private TextView txtAccountType;
     private CardView CardConsumerInformation;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,10 +69,11 @@ public class SurveyActivity extends BaseFormActivity {
             Log.e(TAG,"Tristan Leyesa",e);
         }
     }
-    public void GetNewMeterDetails(String id,String MeterNumber){
 
+    public void GetNewMeterDetails(String id,String MeterNumber){
         Cursor result = MeterNotInListModel.GetMeterNotInDetails(id,MeterNumber);
         int total = 0;
+
         try
         {
             if(result.getCount() == 0){
@@ -96,29 +90,24 @@ public class SurveyActivity extends BaseFormActivity {
                 Liquid.SelectedMeterNumber = txtMeterNumber.getText().toString();
                 MeterNumber = Liquid.SelectedMeterNumber;
             }
-
         }
         catch(Exception e){
             Log.e(TAG,"Error : ",e);
             return;
         }
     }
+
     private void init(){
         mLiquid = new Liquid();
-
         txtQuestion = (TextView) findViewById(R.id.txtQuestion);
         txtContact = (EditText) findViewById(R.id.txtContact);
         txtEmail = (EditText) findViewById(R.id.txtEmail);
         txtMeterBrand = (EditText) findViewById(R.id.txtMeterBrand);
-
         txtampirCapacity = (EditText) findViewById(R.id.txtampirCapacity);
         txtType = (EditText) findViewById(R.id.txtType);
-
         txtAddress = (EditText) findViewById(R.id.txtAddress);
-
         btnNext = (Button) findViewById(R.id.btnNext);
         txtQuestion.setText("Please put the needed information.");
-
         CardConsumerInformation = (CardView) findViewById(R.id.CardConsumerInformation);
         txtAccountNumber = (TextView) findViewById(R.id.txtAccountNumber);
         txtAccountName =(TextView) findViewById(R.id.txtAccountName);
@@ -127,8 +116,6 @@ public class SurveyActivity extends BaseFormActivity {
         txtAccountSequence =(TextView) findViewById(R.id.txtAccountSequence);
         txtAccountStatus =(TextView) findViewById(R.id.txtAccountStatus);
         txtAccountType =(TextView) findViewById(R.id.txtAccountType);
-
-
         txtAccountNumber.setText("Account No. : ----");
         txtAccountName.setText("Name : ----");
         txtAccountAddress.setText("Address : ----");
@@ -136,7 +123,6 @@ public class SurveyActivity extends BaseFormActivity {
         txtAccountSequence.setText("Seq. : ----");
         txtAccountStatus.setText("Status : ----");
         txtAccountType.setText("Type : ----");
-
 
         if(Liquid.HideKeyboard == 1){
             mEditTextData = new EditText[6];
@@ -148,7 +134,6 @@ public class SurveyActivity extends BaseFormActivity {
             mEditTextData[5] = txtType;
             mLiquid.hideSoftKeyboard(mEditTextData);
         }
-
 
         spinnerMeterType = (Spinner) findViewById(R.id.spinnerMeterType);
         spinnerStructure = (Spinner) findViewById(R.id.spinnerStructure);
@@ -189,7 +174,6 @@ public class SurveyActivity extends BaseFormActivity {
                 saveValue();
             }
         });
-
         Liquid.AccountNumber = Liquid.SelectedAccountNumber;
         GetReadAndBillData(Liquid.SelectedId, Liquid.AccountNumber);
         GetNewMeterDetails(Liquid.SelectedId,Liquid.MeterNumber);
@@ -197,7 +181,6 @@ public class SurveyActivity extends BaseFormActivity {
 
     public void GetReadAndBillData(String job_id, String AccountNumber) {
         try {
-
             Cursor result = workModel.GetReadAndBillJobOrderDetails(job_id, AccountNumber);
 
             if (result.getCount() == 0) {
@@ -205,7 +188,6 @@ public class SurveyActivity extends BaseFormActivity {
             }
             while (result.moveToNext()) {
                 //Customer Data
-
                 HashMap<String, String> data = new HashMap<>();
                 Liquid.ConsumerStatus = result.getString(9);
                 Liquid.AccountNumber = result.getString(30);
@@ -236,7 +218,6 @@ public class SurveyActivity extends BaseFormActivity {
                 Liquid.Averange_Consumption = !result.getString(46).equals("") ? result.getString(46) : "0";
                 Liquid.multiplier = !result.getString(40).equals("") ? result.getString(40) : "1";
                 Liquid.multiplier = Liquid.FixDecimal(Liquid.multiplier);
-
                 Liquid.Meter_Box = result.getString(36);
                 Liquid.code = result.getString(1);
                 Liquid.rate_code = result.getString(7);
@@ -264,7 +245,6 @@ public class SurveyActivity extends BaseFormActivity {
                 Liquid.OtherBill = !result.getString(83).equals("") ? result.getString(83) : "0";
                 Liquid.bill_number = !result.getString(65).equals("") ? result.getString(65) : Liquid.year + Liquid.BillMonth + AccountNumber;
                 Liquid.rowid = result.getString(84);
-
                 //Discon and DueDate
                 Liquid.duedate = result.getString(64);
 
@@ -275,8 +255,6 @@ public class SurveyActivity extends BaseFormActivity {
                 Liquid.present_reading_date = Liquid.currentDate();
                 Liquid.BillingCycle = Liquid.year + "-" + Liquid.BillMonth;
                 //Reading
-
-
             }
 
             txtAccountNumber.setText("Account No. : "+Liquid.AccountNumber);
@@ -286,28 +264,21 @@ public class SurveyActivity extends BaseFormActivity {
             txtAccountSequence.setText("Seq. : "+Liquid.Sequence);
             txtAccountStatus.setText("Status : "+Liquid.ConsumerStatus);
             txtAccountType.setText("Type : "+Liquid.AccountType);
-
-
             //txtName.setText(Liquid.AccountName);
             txtAddress.setText(Liquid.Complete_Address);
             //txtMeter.setText(Liquid.MeterNumber);
             //txtSeq.setText(Liquid.Sequence);
-
 
             if(Liquid.ConsumerStatus.equals("DISCD") || Liquid.ConsumerStatus.equals("WOFF")){
                 CardConsumerInformation.setCardBackgroundColor(Color.RED);
             }else{
                 CardConsumerInformation.setCardBackgroundColor(getResources().getColor(R.color.colorAccent));
             }
-
-
             //MeterCount(Liquid.meter_count);
-
         } catch (Exception e) {
             Log.e(TAG, "Error : ", e);
             return;
         }
-
     }
 
     public void saveValue(){
@@ -318,10 +289,8 @@ public class SurveyActivity extends BaseFormActivity {
         Liquid.SurveyType = txtType.getText().toString();
         Liquid.SurveyAmpirCapacity = txtampirCapacity.getText().toString();
        // Liquid.UpdatedAccountName = txtName.getText().toString();
-
         //Liquid.UpdatedMeterNumber = txtMeter.getText().toString();
         //Liquid.UpdatedSequence = txtSeq.getText().toString();
-
 
         if (Liquid.MeterNumber.equals("") || Liquid.MeterNumber.replace(" ", "").equals("")){
             Liquid.showDialogError(this, "Invalid", "Meter Number is required!");
@@ -331,7 +300,6 @@ public class SurveyActivity extends BaseFormActivity {
             Intent i =  i = new Intent(SurveyActivity.this, ReadingGalleryActivity.class);
             startActivity(i);
         }
-
     }
 
     @Override
@@ -356,5 +324,4 @@ public class SurveyActivity extends BaseFormActivity {
             return super.onOptionsItemSelected(item);
         }
     }
-
 }

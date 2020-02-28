@@ -32,7 +32,6 @@ import butterknife.BindView;
  */
 
 public class TrackingCoolerPlanogramFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-
     private static final String TAG = TrackingAvailabilityFragment.class.getSimpleName();
     private String[] GetColumns;
     private int job_id;
@@ -47,6 +46,7 @@ public class TrackingCoolerPlanogramFragment extends Fragment implements SwipeRe
     private SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView (R.id.floatBtnComment)
     FloatingActionButton floatBtnComment;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,6 +60,7 @@ public class TrackingCoolerPlanogramFragment extends Fragment implements SwipeRe
         }
         return mView;
     }
+
     private void setup(View view) {
         try {
             //Initialization
@@ -91,7 +92,6 @@ public class TrackingCoolerPlanogramFragment extends Fragment implements SwipeRe
     }
 
     public void DeleteData(final String OutletNumber, final String ProductCode, final String Period){
-
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -105,10 +105,8 @@ public class TrackingCoolerPlanogramFragment extends Fragment implements SwipeRe
                         } else {
                             Liquid.showDialogError(getActivity(), "Invalid", "Unsuccessfully Deleted!");
                         }
-
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
-
                         break;
 
                 }
@@ -118,8 +116,8 @@ public class TrackingCoolerPlanogramFragment extends Fragment implements SwipeRe
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage("Are you sure you want to DELETE?").setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
-
     }
+
     public void GetData(boolean animated,String search){
         String Details = "";
         ArrayList<HashMap<String, String>> final_result = new ArrayList<>();
@@ -145,7 +143,6 @@ public class TrackingCoolerPlanogramFragment extends Fragment implements SwipeRe
             Log.e(TAG,"Error : ",e);
             return;
         }
-
     }
 
     private int GetImagesThumbnail(String value){

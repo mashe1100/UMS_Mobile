@@ -47,7 +47,6 @@ public class TrackingStoreStatusFragment extends Fragment {
     View mView;
     @BindView(R.id.rgTrackingStoreStatus)
     RadioGroup rg;
-
     @BindView(R.id.btnCamera)
     ImageButton btnCamera;
     @BindView(R.id.tsImageCounter)
@@ -58,7 +57,6 @@ public class TrackingStoreStatusFragment extends Fragment {
     String Comment;
     LiquidFile mLiquidFile;
     String Filename = "";
-
     @BindView(R.id.floatBtnAdd)
     FloatingActionButton floatBtnAdd;
     FloatingActionButton floatBtnGallery;
@@ -87,15 +85,13 @@ public class TrackingStoreStatusFragment extends Fragment {
             mView = inflater.inflate(R.layout.fragment_tab_tracking_storestatus, container, false);
             setup(mView);
             GetImages();
-
         }
         catch(Exception e){
             Log.e(TAG,"Error : ",e);
         }
         return mView;
-
-
     }
+
    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         try{
@@ -116,20 +112,17 @@ public class TrackingStoreStatusFragment extends Fragment {
                     Liquid.ShowMessage(mView.getContext(), "Save Image Success");
                     mUri.add(Uri.fromFile(mFile));
                     tsImageCounter.setCurrentText(String.valueOf(mUri.size()));
-
                 }
             }
         }catch(Exception e){
             Log.e(TAG,"Error :",e);
         }
-
     }
 
     private void setup(final View view) {
         try {
             Subfolder = new String[1];
             Subfolder[0] = Category;
-
             //Initialization
             rbOpen = (RadioButton) view.findViewById(R.id.rbOpen);
             rbClosed = (RadioButton) view.findViewById(R.id.rbClosed);
@@ -158,21 +151,16 @@ public class TrackingStoreStatusFragment extends Fragment {
                             Liquid.showDialogError(mView.getContext(),"Invalid","Please answer the questions before taking a image!");
                             return;
                         }
-
-
                         Filename = Liquid.SelectedAccountNumber +"_"+"StoreStatus"+"___"+String.valueOf(mUri.size()+1)+Liquid.imageFormat;
                         mFile = mLiquidFile.Directory(Liquid.SelectedAccountNumber,Filename.trim(),Subfolder);
                         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(mFile));
-
                         startActivityForResult(intent,CAM_REQUEST);
-
                     }
                     catch (Exception e){
                         Liquid.ShowMessage(mView.getContext(),e.toString());
                         Log.e(TAG,"Error :",e);
                     }
-
                 }
             });
 
@@ -207,7 +195,6 @@ public class TrackingStoreStatusFragment extends Fragment {
                         Liquid.showDialogError(mView.getContext(),"Invalid","Please take picture!");
                         return;
                     }
-
                     Status = Liquid.SelectedStoreStatus;
                     Latitude = String.valueOf(mLiquidGPS.getLatitude());
                     Longitude = String.valueOf(mLiquidGPS.getLongitude());
@@ -215,7 +202,6 @@ public class TrackingStoreStatusFragment extends Fragment {
                         Latitude = "0";
                         Longitude = "0";
                     }
-
                     TransferStatus = "Pending";
 
                     result =  TrackingModel.doSubmitStoreStatus(
@@ -264,7 +250,6 @@ public class TrackingStoreStatusFragment extends Fragment {
                 Period);
         try
         {
-
             if(result.getCount() == 0){
                 return;
             }
@@ -272,7 +257,6 @@ public class TrackingStoreStatusFragment extends Fragment {
                 Status = result.getString(0);
 
             }
-
             switch (Status){
                 case "Open":
                     rbOpen.setChecked(true);
@@ -286,14 +270,11 @@ public class TrackingStoreStatusFragment extends Fragment {
                 default:
                     return;
             }
-
-
         }
         catch(Exception e){
             Log.e(TAG,"Error : ",e);
             return;
         }
-
     }
 
     private void GetImages(){
@@ -311,10 +292,6 @@ public class TrackingStoreStatusFragment extends Fragment {
                 mUri.add(Uri.fromFile(listFile[a]));
                 tsImageCounter.setCurrentText(String.valueOf(mUri.size()));
             }
-
         }
     }
-
-
-
 }

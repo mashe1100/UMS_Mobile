@@ -20,11 +20,9 @@ public class BaseActivity extends AppCompatActivity {
     @Nullable
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
     @Nullable
     @BindView(R.id.search_view)
     MaterialSearchView searchView;
-
     private MenuItem searchMenuItem;
 
     @Override
@@ -32,10 +30,12 @@ public class BaseActivity extends AppCompatActivity {
         super.setContentView(layoutResID);
         bindViews();
     }
+
     protected void bindViews() {
         ButterKnife.bind(this);
         setupToolbar();
     }
+
     public void setContentViewWithoutInject(int layoutResId) {
         super.setContentView(layoutResId);
     }
@@ -50,17 +50,11 @@ public class BaseActivity extends AppCompatActivity {
                     default:
                         toolbar.setNavigationIcon(R.drawable.ic_profile);
             }
-
         }
     }
-
-
 
     public Toolbar getToolbar() {
         return toolbar;
     }
-
-
-
 
 }

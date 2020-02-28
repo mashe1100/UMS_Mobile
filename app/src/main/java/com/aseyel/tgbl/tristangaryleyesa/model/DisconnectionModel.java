@@ -130,6 +130,7 @@ public class DisconnectionModel {
 
 
     }
+
     public static ArrayList<HashMap<String, String>> GetDisconnectionSearchDownload(String job_id, String AccountNumber){
         String Details = "";
         ArrayList<HashMap<String, String>> final_result = new ArrayList<>();
@@ -182,6 +183,7 @@ public class DisconnectionModel {
             return null;
         }
     }
+
     public static ArrayList<HashMap<String, String>> GetDisconnectionDownload(String job_id, String AccountNumber){
         String Details = "";
         ArrayList<HashMap<String, String>> final_result = new ArrayList<>();
@@ -189,7 +191,6 @@ public class DisconnectionModel {
         Cursor result = workModel.GetDisconnectionDownload(job_id,AccountNumber);
         try
         {
-
             if(result.getCount() == 0){
                 return null;
             }
@@ -418,5 +419,4 @@ public class DisconnectionModel {
             return false;
         }
     }
-
 }

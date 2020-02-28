@@ -39,7 +39,6 @@ public class GPSActivity extends AppCompatActivity {
     LiquidGPS mGPS;
     Liquid.POSTApiData PostApi;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +68,6 @@ public class GPSActivity extends AppCompatActivity {
                                 }else{
                                     getDeviceLocation();
                                 }
-
                                 // Write your code here to update the UI.
                             }
                         });
@@ -80,12 +78,9 @@ public class GPSActivity extends AppCompatActivity {
                 }
             }
         }).start();
-
-
     }
 
     private void permissions(){
-
         mLocationPermissionsGranted = true;
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_PHONE_NUMBERS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -100,13 +95,13 @@ public class GPSActivity extends AppCompatActivity {
         TelephonyManager tMgr = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
         MyPhoneNumber = tMgr.getLine1Number();
     }
+
     private class GPSPosting extends AsyncTask<Void,Void,Void>{
-
-
         String Client = "";
         String Details = "";
         boolean result = false;
         String return_data = "";
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -118,7 +113,6 @@ public class GPSActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try{
-
                 HttpHandler sh = new HttpHandler();
                 PostApi = new Liquid.POSTApiData("fmts/php/api/Realtime.php");
                 JSONObject dataObject = new JSONObject();
@@ -133,8 +127,8 @@ public class GPSActivity extends AppCompatActivity {
                 Log.i(TAG, String.valueOf(dataObject));
                 String jsonStr = sh.makeServicePostCall(PostApi.API_Link,dataObject);
                 return_data = jsonStr;
-
                 JSONObject response = Liquid.StringToJsonObject(jsonStr);
+
                 if (response.getString("result").equals("false")) {
                     result = false;
 
@@ -164,15 +158,11 @@ public class GPSActivity extends AppCompatActivity {
 
     private void getDeviceLocation(){
         Log.d(TAG, "getDeviceLocation: getting the devices current location");
-
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         try{
-
             if(mLocationPermissionsGranted){
-
                 final Task location = mFusedLocationProviderClient.getLastLocation();
-
                 location.addOnCompleteListener(new OnCompleteListener() {
                     @Override
                     public void onComplete(@NonNull Task task) {
@@ -192,7 +182,6 @@ public class GPSActivity extends AppCompatActivity {
         }catch (SecurityException e){
             Log.e(TAG, "getDeviceLocation: SecurityException: " + e.getMessage() );
         }
-
         //CameraPosition LastPosition =  CameraPosition.builder().target(new LatLng(Double.parseDouble(String.valueOf(mLiquidGPS.getLatitude())),Double.parseDouble(String.valueOf(mLiquidGPS.getLongitude())))).zoom(30).bearing(0).tilt(45).build();
         //mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(LastPosition));
     }

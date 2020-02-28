@@ -36,6 +36,7 @@ public class SearchActivity extends BaseActivity  implements SwipeRefreshLayout.
     private ArrayList<HashMap<String, String>> List;
     private boolean animation = true;
     private SwipeRefreshLayout swipeReload;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,11 +60,13 @@ public class SearchActivity extends BaseActivity  implements SwipeRefreshLayout.
         animation = true;
         new GetSearch().execute();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
         searchMenuItem  = menu.findItem(R.id.action_search);
         searchView.setMenuItem(searchMenuItem);
+
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener(){
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -73,6 +76,7 @@ public class SearchActivity extends BaseActivity  implements SwipeRefreshLayout.
                 new GetSearch().execute();
                 return false;
             }
+
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
@@ -80,7 +84,6 @@ public class SearchActivity extends BaseActivity  implements SwipeRefreshLayout.
         } );
         return true;
     }
-
 
     @Override
     public void onRefresh() {
@@ -92,19 +95,18 @@ public class SearchActivity extends BaseActivity  implements SwipeRefreshLayout.
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch(item.getItemId())
         {
             case android.R.id.home:
                 this.finish();
                 return true;
-            case R.id.action_form_submit:
 
+            case R.id.action_form_submit:
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
     private String GetDriver(String Search){
@@ -121,8 +123,6 @@ public class SearchActivity extends BaseActivity  implements SwipeRefreshLayout.
     }
 
     private class GetSearch extends AsyncTask<Void,Void,Void>{
-
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -136,7 +136,7 @@ public class SearchActivity extends BaseActivity  implements SwipeRefreshLayout.
         protected Void doInBackground(Void... voids) {
             try {
             String jsonStr = GetDriver(Search);
-                Log.i(TAG, jsonStr);
+            Log.i(TAG, jsonStr);
             JSONObject response = Liquid.StringToJsonObject(jsonStr);
             response = new JSONObject(response.getString("Employees"));
             JSONArray decodejsonObj = new JSONArray(response.getString("result"));
@@ -154,14 +154,11 @@ public class SearchActivity extends BaseActivity  implements SwipeRefreshLayout.
                 data.put("Filepath", "");
                 List.add(data);
             }
-
-
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (Exception e){
                 e.printStackTrace();
             }
-
             return null;
         }
 
@@ -170,9 +167,6 @@ public class SearchActivity extends BaseActivity  implements SwipeRefreshLayout.
             super.onPostExecute(aVoid);
             mProgressDialog.dismiss();
             mLiquidSearchAdapater.updateItems(animation,List);
-
-
         }
     }
-
 }

@@ -26,6 +26,7 @@ public class NewJobOrderActivity extends BaseFormActivity {
     String JobOrderId;
     String Date;
     String LastJobOrderIdSerial;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +44,7 @@ public class NewJobOrderActivity extends BaseFormActivity {
         adapter_title.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_title.setAdapter(adapter_title);
         txtQuestion.setText("New Job Order, Just fill up the required details.");
+
         spinner_title.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -51,12 +53,9 @@ public class NewJobOrderActivity extends BaseFormActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -73,7 +72,6 @@ public class NewJobOrderActivity extends BaseFormActivity {
                 if(Title.equals("Select Title") || Title.equals("") || Details.equals("")){
                     Liquid.showDialogError(this,"Invalid","Incomplete Information!");
                 }else{
-
                     result =  workModel.doSubmitNewJobOrder(
                             JobOrderId,
                             Liquid.Client,
@@ -111,6 +109,5 @@ public class NewJobOrderActivity extends BaseFormActivity {
             Log.e(TAG,"Error : ",e);
             return 1;
         }
-
     }
 }

@@ -14,5 +14,4 @@ public class BillingModel {
                         "on a.RD_ID = b.RD_ID " +
                         "where a.R_Type = '"+RateCode+"' and a.classification = '"+Classification+"' and rate_date_from like '%"+BillingCycle+"%' ");
     }
-
 }

@@ -93,7 +93,6 @@ public class AuditTravelRideAdapater extends RecyclerView.Adapter<RecyclerView.V
             }
         });
 
-
         mCellViewHolder.btnToDo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,7 +148,6 @@ public class AuditTravelRideAdapater extends RecyclerView.Adapter<RecyclerView.V
                             Data.get(i).get("Details"),
                             Data.get(i).get("Date"),
                             Data.get(i).get("Filepath")
-
                     )
             ));
         }
@@ -159,8 +157,6 @@ public class AuditTravelRideAdapater extends RecyclerView.Adapter<RecyclerView.V
             notifyDataSetChanged();
         }
     }
-
-
 
     public static class CellViewHolder extends RecyclerView.ViewHolder {
         @BindView (R.id.card_view)
@@ -181,7 +177,6 @@ public class AuditTravelRideAdapater extends RecyclerView.Adapter<RecyclerView.V
         LinearLayout llAuditDetails;
         @BindView(R.id.btnDelete)
                 ImageButton btnDelete;
-
         ListModel Items;
 
         public CellViewHolder(View view) {
@@ -202,11 +197,4 @@ public class AuditTravelRideAdapater extends RecyclerView.Adapter<RecyclerView.V
             return Items;
         }
     }
-
-
-
-
-
-
-
 }
