@@ -1200,7 +1200,7 @@ public class Liquid extends AppCompatActivity{
 
         consumption = Math.abs((avg  - kwh));
         avg = avg == 0 ? 1 : avg;
-        consumptionpercent = Math.round(((consumption / avg) * 100)) / 100;
+        consumptionpercent = Math.round(consumption / avg) / 100;
 
             if  (avg <= 100) {
                 if (consumptionpercent >= 1) {
@@ -1241,7 +1241,7 @@ public class Liquid extends AppCompatActivity{
 
         consumption = Math.abs((avg  - kwh));
         avg = avg == 0 ? 1 : avg;
-        consumptionpercent = Math.round(((consumption / avg) * 100)) / 100;
+        consumptionpercent = Math.round(consumption / avg) / 100;
 
             if (avg <= 100) {
                 if (consumptionpercent >= 1) {
