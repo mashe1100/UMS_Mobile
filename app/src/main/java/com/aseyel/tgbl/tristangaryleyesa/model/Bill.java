@@ -1,5 +1,6 @@
 package com.aseyel.tgbl.tristangaryleyesa.model;
 
+import android.support.design.widget.TabLayout;
 import android.util.Log;
 
 import com.aseyel.tgbl.tristangaryleyesa.data.Liquid;
@@ -228,41 +229,41 @@ public class Bill {
             {
                     new BillItem("RATE COMPONENT", 		                 "PRICE" , "AMOUNT", ItemStyle.Header),
                     new BillItem("Distribution Charge",                    String.valueOf(LiquidBilling.distrib_net_charge_1), String.valueOf(LiquidBilling.total_distrib_net_charge_1), ItemStyle.Detail),
-                    new BillItem("Demand Charge",                          String.valueOf(LiquidBilling.dis_demand_charge), String.valueOf(LiquidBilling.total_dis_demand_charge),       ItemStyle.Detail),
+                    new BillItem("Demand Charge",                          Liquid.EqualZeroRate(String.valueOf(LiquidBilling.dis_demand_charge), String.valueOf(LiquidBilling.total_dis_demand_charge)), String.valueOf(LiquidBilling.total_dis_demand_charge),       ItemStyle.Detail),
                     new BillItem("Supply Charge",                          String.valueOf(LiquidBilling.sup_sys_chg), String.valueOf(LiquidBilling.total_sup_sys_chg),       ItemStyle.Detail),
                     new BillItem("Metering Charge",                        String.valueOf(LiquidBilling.met_charge_1), String.valueOf(LiquidBilling.total_met_charge_1),       ItemStyle.Detail),
-                    new BillItem("Retail Customer Charge",                 String.valueOf(LiquidBilling.ret_cust_chg_1), String.valueOf(LiquidBilling.total_ret_cust_chg_1),       ItemStyle.Detail),
-                    new BillItem("MORE Related Charges",                    String.valueOf(LiquidBilling.total_distribution_revenue),              ItemStyle.Subtotal),
+                    new BillItem("Retail Customer Charge",                 Liquid.EqualZeroRate(String.valueOf(LiquidBilling.ret_cust_chg_1), String.valueOf(LiquidBilling.total_ret_cust_chg_1)), String.valueOf(LiquidBilling.total_ret_cust_chg_1),       ItemStyle.Detail),
+                    new BillItem("MORE Related Charges",                   String.valueOf(LiquidBilling.total_distribution_revenue),              ItemStyle.Subtotal),
                     new BillItem(									                                    		    ItemStyle.Separator),
                     new BillItem("Generation Charge",                      String.valueOf(LiquidBilling.gen_sys_charge), String.valueOf(LiquidBilling.total_gen_sys_charge),        ItemStyle.Detail),
                      new BillItem("Transmission Charge",                   String.valueOf(LiquidBilling.trans_sys_chg), String.valueOf(LiquidBilling.total_trans_sys_chg),        ItemStyle.Detail),
                     new BillItem("System Loss Charge",                     String.valueOf(LiquidBilling.sys_los_chg), String.valueOf(LiquidBilling.total_sys_los_chg),        ItemStyle.Detail),
                     new BillItem("Supplier Related Charges",               String.valueOf(LiquidBilling.total_gen_trans),       ItemStyle.Subtotal),
                     new BillItem(											                                                ItemStyle.Separator),
-                    new BillItem("Lifeline Rate Subsidy",                  String.valueOf(LiquidBilling.lifeline), String.valueOf(LiquidBilling.total_lifeline),       ItemStyle.Detail),
-                    new BillItem("Senior Citizen Discount",                String.valueOf(LiquidBilling.senior), String.valueOf(LiquidBilling.total_senior),      ItemStyle.Detail),
+                    new BillItem("Lifeline Rate Subsidy",                  Liquid.LessZeroRate(String.valueOf(LiquidBilling.lifeline), String.valueOf(LiquidBilling.total_lifeline)), String.valueOf(LiquidBilling.total_lifeline),       ItemStyle.Detail),
+                    new BillItem("Senior Citizen Discount",                Liquid.LessZeroRate(String.valueOf(LiquidBilling.senior), String.valueOf(LiquidBilling.total_senior)), String.valueOf(LiquidBilling.total_senior),      ItemStyle.Detail),
                     new BillItem("Subsidies",                              String.valueOf(LiquidBilling.total_others),        ItemStyle.Subtotal),
                     new BillItem(										                        	ItemStyle.Separator),
-                    new BillItem("VAT on Generation",                     String.valueOf(LiquidBilling.gen_vat), String.valueOf(LiquidBilling.total_gen_vat),         ItemStyle.Detail),
-                    new BillItem("VAT on Transmission",                   String.valueOf(LiquidBilling.trans_vat), String.valueOf(LiquidBilling.total_trans_vat),      ItemStyle.Detail),
-                    new BillItem("VAT on Other Charges",                  String.valueOf(LiquidBilling.others_vat), String.valueOf(LiquidBilling.total_others_vat),         ItemStyle.Detail),
-                    new BillItem("Franchise Tax",                       String.valueOf(LiquidBilling.fran_tax_rec), String.valueOf(LiquidBilling.total_fran_tax_rec),       ItemStyle.Detail),
-                    new BillItem("Missionary Electrification",          String.valueOf(LiquidBilling.missionary_elec), String.valueOf(LiquidBilling.total_missionary_elec),        ItemStyle.Detail),
-                    new BillItem("Environmental Charges",                String.valueOf(LiquidBilling.environmental_charge), String.valueOf(LiquidBilling.total_environmental_chg),        ItemStyle.Detail),
-                    new BillItem("NPC Stranded Contract Cost",           String.valueOf(LiquidBilling.npc_stran_cos), String.valueOf(LiquidBilling.total_npc_stran_cos),      ItemStyle.Detail),
-                    new BillItem("FIT - Allowance",                       String.valueOf(LiquidBilling.fit_all), String.valueOf(LiquidBilling.total_fit_all),       ItemStyle.Detail),
-                    new BillItem("Taxes & Universal Charges",            String.valueOf(LiquidBilling.total_government_revenue),       ItemStyle.Subtotal),
+                    new BillItem("VAT on Generation",                      String.valueOf(LiquidBilling.gen_vat), String.valueOf(LiquidBilling.total_gen_vat),         ItemStyle.Detail),
+                    new BillItem("VAT on Transmission",                    String.valueOf(LiquidBilling.trans_vat), String.valueOf(LiquidBilling.total_trans_vat),      ItemStyle.Detail),
+                    new BillItem("VAT on Other Charges",                   String.valueOf(LiquidBilling.others_vat), String.valueOf(LiquidBilling.total_others_vat),         ItemStyle.Detail),
+                    new BillItem("Franchise Tax",                          String.valueOf(LiquidBilling.fran_tax_rec), String.valueOf(LiquidBilling.total_fran_tax_rec),       ItemStyle.Detail),
+                    new BillItem("Missionary Electrification",             String.valueOf(LiquidBilling.missionary_elec), String.valueOf(LiquidBilling.total_missionary_elec),        ItemStyle.Detail),
+                    new BillItem("Environmental Charges",                  String.valueOf(LiquidBilling.environmental_charge), String.valueOf(LiquidBilling.total_environmental_chg),        ItemStyle.Detail),
+                    new BillItem("NPC Stranded Contract Cost",             String.valueOf(LiquidBilling.npc_stran_cos), String.valueOf(LiquidBilling.total_npc_stran_cos),      ItemStyle.Detail),
+                    new BillItem("FIT - Allowance",                        String.valueOf(LiquidBilling.fit_all), String.valueOf(LiquidBilling.total_fit_all),       ItemStyle.Detail),
+                    new BillItem("Taxes & Universal Charges",              String.valueOf(LiquidBilling.total_government_revenue),       ItemStyle.Subtotal),
                     new BillItem(											    ItemStyle.Separator),
                     new BillItem("Current Amount Due",                     String.valueOf(LiquidBilling.total_current_bill),    ItemStyle.Footer),
-                    new BillItem("Overdue Amount",             	        String.valueOf(LiquidBilling.arrears), ItemStyle.Footer),
-                    new BillItem("Surcharge",             	            String.valueOf(LiquidBilling.surcharge), ItemStyle.Footer),
+                    new BillItem("Overdue Amount",             	         String.valueOf(LiquidBilling.arrears), ItemStyle.Footer),
+                    new BillItem("Surcharge",             	             String.valueOf(LiquidBilling.surcharge), ItemStyle.Footer),
                     new BillItem(											    ItemStyle.Separator),
                     new BillItem( "Pay at MORE office,BDO,PNB,Robinsons Bank,;" +
                                         "Landbank,LBC,Palawan Express & RD pawnshop;" +
                                         "to avoid disconnection. 2% surcharge will be billed;" +
                                         "for unpaid bill for every month or a fraction thereof.;" ,         "1", ItemStyle.Notice3),
                     new BillItem(											ItemStyle.Separator),
-                    new BillItem("TOTAL AMOUNT DUE",                         String.valueOf(LiquidBilling.total_amount_due), ItemStyle.Total),
+                    new BillItem("TOTAL AMOUNT DUE",                       String.valueOf(LiquidBilling.total_amount_due), ItemStyle.Total),
                     new BillItem("Current Bill Due Date",                              Liquid.dateChangeFormat(Liquid.duedate,"yyyy-MM-dd","dd-MMM-yyyy")  , ItemStyle.Aftertotal),
                     new BillItem(											ItemStyle.Separator),
             };

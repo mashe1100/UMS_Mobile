@@ -543,7 +543,18 @@ public class LiquidPrintBill {
 
         else
         {
-
+            //Feb 27, 2020 by Mariesher Zapico
+            //Create a loop that will retrun the value of rate price to --
+            while((String.valueOf(a)).equals("--")){
+                data+=PrintText("7", Padding + 6, Ypos + LinePad, label);
+                data+=PrintRight(Columns[1] + Margin - Padding - 1);
+                data+=PrintText("7", 0, Ypos + LinePad, String.valueOf(a));
+                data+=PrintRight(Columns[2] + Margin - Padding);
+                data+=PrintText("7", 0, Ypos + LinePad,  Liquid.NumberFormat(String.valueOf(b)));
+                Ypos += LineHeight;
+                data+=PrintLeft();
+                return data;
+            }
             data+=PrintText("7", Padding + 6, Ypos + LinePad, label);
             data+=PrintRight(Columns[1] + Margin - Padding - 1);
             data+=PrintText("7", 0, Ypos + LinePad, Liquid.StringRoundDown4D(Double.parseDouble(String.valueOf(a))));

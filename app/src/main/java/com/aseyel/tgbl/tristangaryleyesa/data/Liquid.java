@@ -3570,9 +3570,8 @@ public class Liquid extends AppCompatActivity{
     }
 
     public static String StringRoundDown4D(double num){
-
-        DecimalFormat df = new DecimalFormat("###.####");
-        return String.format("%.4f",num );
+            DecimalFormat df = new DecimalFormat("###.####");
+            return String.format("%.4f", num);
     }
 
     public static double RoundUp(double num){
@@ -3806,6 +3805,33 @@ public class Liquid extends AppCompatActivity{
         }
         //return false
         return SuperBill;
+    }
+    //Feb 26, 2020
+    //Mariesher Zapico
+    //Create a function in BillItemsMorePower: if amount is zero the value of rates should be --
+    public static String EqualZeroRate(String rate, String amount){
+        if (Double.parseDouble(amount) == 0){
+                rate = "--";
+        }
+        else
+        {
+            return rate;
+        }
+        Log.i(TAG,"mashe test EqualZeroRate string: "+ rate);
+        return rate;
+    }
+
+    //Create a function in BillItemsMorePower: if amount is less or zero the value of rates should be --
+    public static String LessZeroRate(String rate, String amount){
+        if (Double.parseDouble(amount) <= 0){
+            rate = "--";
+        }
+        else
+        {
+            return rate;
+        }
+        Log.i(TAG,"mashe test LessZeroRate string: "+ rate);
+        return rate;
     }
 }
 
