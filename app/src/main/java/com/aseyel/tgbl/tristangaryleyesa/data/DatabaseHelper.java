@@ -50,18 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         }
                         break;
                 }
-                db.execSQL(LiquidReference.DeleteAdmin);
-                db.execSQL(LiquidReference.Admin);
-                db.execSQL(LiquidReference.UMShost);
 
-                switch(Liquid.Client){
-                    case "more_power":
-                        db.execSQL(LiquidReference.HostMore);
-                    break;
-                    default:
-                        db.execSQL(LiquidReference.HostFSI);
-                }
-                //db.execSQL(LiquidReference.HostTest);
 
             //}
             //if(Liquid.currentDate().equals("2019-03-02") || Liquid.currentDate().equals("2019-03-03")){
@@ -117,9 +106,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             for(int a = 0; a < LiquidReference.SettingsData.length; a++){
                 db.execSQL(LiquidReference.SettingsData[a]);
             }
+
             db.execSQL(LiquidReference.UMShost);
             db.execSQL(LiquidReference.UMSAccount);
             db.execSQL(LiquidReference.Admin);
+
+
+            switch(Liquid.Client){
+                    case "more_power":
+                        db.execSQL(LiquidReference.HostMore);
+                    break;
+                    default:
+                        db.execSQL(LiquidReference.HostFSI);
+            }
+            //db.execSQL(LiquidReference.HostTest);
+
+
             //Audit TABLE
             db.execSQL(LiquidReference.AuditDownload);
             db.execSQL(LiquidReference.AuditUpload);
