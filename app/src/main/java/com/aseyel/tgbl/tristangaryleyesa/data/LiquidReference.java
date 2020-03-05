@@ -13,8 +13,9 @@ public class LiquidReference {
     public static String AlterTypeMeterNotInList = "ALTER TABLE  meter_not_in_list ADD COLUMN type TEXT NULL";
     public static String AlterHouseLatitudeMeterNotInList = "ALTER TABLE  meter_not_in_list ADD COLUMN house_latitude TEXT NULL";
     public static String AlterHouseLongitudeMeterNotInList = "ALTER TABLE  meter_not_in_list ADD COLUMN house_longitude TEXT NULL";
-    public static String AlterLatitudeCustomerReadingDownload = "ALTER TABLE  customer_reading_download ADD COLUMN latitude TEXT NULL";
-    public static String AlterLongitudeCustomerReadingDownload = "ALTER TABLE  customer_reading_download ADD COLUMN longitude TEXT NULL";
+    public static String AlterLatitudeCustomerReadingDownload = "ALTER TABLE  customer_reading_downloads ADD COLUMN latitude TEXT NULL";
+    public static String AlterLongitudeCustomerReadingDownload = "ALTER TABLE  customer_reading_downloads ADD COLUMN longitude TEXT NULL";
+    public static String AlterCMDemandCustomerReadingDownload = "ALTER TABLE  customer_reading_downloads ADD COLUMN CMDemand TEXT NULL";
     //Update 10/28/2019 remarks update
     //SQLITE TABLE
     public static String DropCokeCustomerTable = "DROP TABLE IF EXISTS customer";

@@ -55,7 +55,7 @@ public class GPSActivity extends AppCompatActivity {
             public void run() {
                 // TODO Auto-generated method stub
                 int x = 0;
-                getDeviceLocation();
+                Liquid.getDeviceLocation(GPSActivity.this);
                 while (x == 0) {
                     try {
                         Thread.sleep(15000);
@@ -66,9 +66,15 @@ public class GPSActivity extends AppCompatActivity {
                                 if(!Liquid.CheckGPS(GPSActivity.this)){
                                     Liquid.displayPromptForEnablingGPS(GPSActivity.this);
                                 }else{
-                                    getDeviceLocation();
+                                    Liquid.getDeviceLocation(GPSActivity.this);
+                                    try {
+                                        mGPS.PostRealtimeData(String.valueOf(Liquid.Latitude),String.valueOf(Liquid.Longitude));
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+
                                 }
-                                // Write your code here to update the UI.
+                                // Write your code here to update the UI
                             }
                         });
                     } catch (Exception e) {

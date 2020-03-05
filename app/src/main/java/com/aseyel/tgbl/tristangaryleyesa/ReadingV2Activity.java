@@ -121,35 +121,74 @@ public class ReadingV2Activity extends BaseActivity {
 
             //If there no reading
             if (etxtReading.getText().toString().equals("")) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ReadingV2Activity.this);
-                builder.setCancelable(true);
-                builder.setMessage("You did not input a reading, Are you sure?");
 
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Intent i = new Intent(ReadingV2Activity.this, ReadingRemarksActivity.class);
-                        Liquid.save_only = true;
-                        Liquid.Reading = "";
-                        Liquid.Present_Consumption = "0";
-                        Liquid.ReadingInputTemporaryHolder = Liquid.Reading;
-                        Liquid.PresentConsumptionTemporaryHolder = Liquid.Present_Consumption;
-                        Liquid.Reading_TimeStamp = Liquid.currentDateTime();
-                        startActivity(i);
-                        dialog.cancel();
 
-                    }
-                });
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ReadingV2Activity.this);
+                    builder.setCancelable(true);
+                    builder.setMessage("You did not input a kWh reading, Are you sure?");
 
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        etxtReading.requestFocus();
-                        dialog.cancel();
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent i = new Intent(ReadingV2Activity.this, ReadingRemarksActivity.class);
+                            Liquid.save_only = true;
+                            Liquid.Reading = "";
+                            Liquid.Present_Consumption = "0";
+                            Liquid.ReadingInputTemporaryHolder = Liquid.Reading;
+                            Liquid.PresentConsumptionTemporaryHolder = Liquid.Present_Consumption;
+                            Liquid.Reading_TimeStamp = Liquid.currentDateTime();
+                            startActivity(i);
+                            dialog.cancel();
 
-                    }
-                });
-                builder.show();
+                        }
+                    });
 
-                return;
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            etxtReading.requestFocus();
+                            dialog.cancel();
+
+                        }
+                    });
+                    builder.show();
+
+                    return;
+
+            }
+
+            if(Liquid.meter_count.equals("2")) {
+
+                if (txtDemand.getText().toString().equals("")) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ReadingV2Activity.this);
+                    builder.setCancelable(true);
+                    builder.setMessage("You did not input a kWh/Demand, Are you sure?");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            Intent i = new Intent(ReadingV2Activity.this, ReadingRemarksActivity.class);
+                            Liquid.save_only = true;
+                            Liquid.Reading = "";
+                            Liquid.Demand = "";
+                            Liquid.Present_Consumption = "0";
+                            Liquid.demand_consumption = "0";
+                            Liquid.ReadingInputTemporaryHolder = Liquid.Reading;
+                            Liquid.PresentConsumptionTemporaryHolder = Liquid.Present_Consumption;
+                            Liquid.Reading_TimeStamp = Liquid.currentDateTime();
+                            startActivity(i);
+                            dialog.cancel();
+                        }
+                    });
+
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            etxtReading.requestFocus();
+                            dialog.cancel();
+
+                        }
+                    });
+
+                    builder.show();
+                    return;
+                }
             }
 
             //Initialization of computation
@@ -425,7 +464,7 @@ public class ReadingV2Activity extends BaseActivity {
                 if(Liquid.Demand.equals("")){
                     Liquid.demand_consumption = String.valueOf(0 *  Double.parseDouble(Liquid.multiplier));
                 }else{
-                    Liquid.demand_consumption = String.valueOf(Double.parseDouble(Liquid.Demand )*  Double.parseDouble(Liquid.multiplier));
+                    Liquid.demand_consumption = String.valueOf(Double.parseDouble(Liquid.Demand) *  Double.parseDouble(Liquid.multiplier));
                 }
 
                 Liquid.reactive_consumption = Liquid.reactive;
@@ -550,6 +589,7 @@ public class ReadingV2Activity extends BaseActivity {
         Liquid.multiplier= "";
         Liquid.rate_code= "";
         Liquid.bill_number= "";
+        Liquid.AddConsKVAR = "";
         Liquid.rentalfee= "";
         Liquid.Remarks = "";
         Liquid.RemarksCode = "";
@@ -797,6 +837,7 @@ public class ReadingV2Activity extends BaseActivity {
                 Liquid.bill_number = !result.getString(65).equals("") ? result.getString(65) : Liquid.year + Liquid.BillMonth + AccountNumber;
                 Liquid.rowid = result.getString(84);
                 Liquid.pn_promo = result.getString(92);
+                Liquid.AddConsKVAR = result.getString(93);
 
                 if(!Liquid.pn_promo.matches(""))
                     try{
@@ -905,7 +946,7 @@ public class ReadingV2Activity extends BaseActivity {
                     case "more_power":
                         //Survey
                             //formDemand.setVisibility(View.VISIBLE);
-                        formDemand.setVisibility(View.GONE);
+                            formDemand.setVisibility(View.GONE);
                         break;
 
                         default:
@@ -1126,13 +1167,21 @@ public class ReadingV2Activity extends BaseActivity {
                     Liquid.ConsumerStatus.equals("CHANGE METER") &&
                     (Liquid.coreloss.equals("0") ||
                      Liquid.coreloss.equals("") ||
-                            Double.parseDouble(Liquid.coreloss) <= 0)){
-                                                        Liquid.Present_Consumption = String.valueOf(ChangeMeterKWH(
-                                                        Liquid.ConvertStringToDate(Liquid.DateChangeMeter),
-                                                        Liquid.ConvertStringToDate(Liquid.present_reading_date),
-                                                        Double.parseDouble(Liquid.Present_Consumption)));
+                     Double.parseDouble(Liquid.coreloss) <= 0)){
+                                               Liquid.Present_Consumption = String.valueOf(ChangeMeterKWH(
+                                               Liquid.ConvertStringToDate(Liquid.DateChangeMeter),
+                                               Liquid.ConvertStringToDate(Liquid.present_reading_date),
+                                               Double.parseDouble(Liquid.Present_Consumption)));
+
+                                                //demand
+                                                Liquid.demand_consumption = String.valueOf(ChangeMeterKWH(
+                                                Liquid.ConvertStringToDate(Liquid.DateChangeMeter),
+                                                Liquid.ConvertStringToDate(Liquid.present_reading_date),
+                                                Double.parseDouble(Liquid.demand_consumption)));
             }
+
             Liquid.Present_Consumption = String.valueOf(AddCons(Double.parseDouble(Liquid.coreloss),Double.parseDouble(Liquid.Present_Consumption)));
+            Liquid.demand_consumption = String.valueOf(AddCons(Double.parseDouble(Liquid.AddConsKVAR),Double.parseDouble(Liquid.demand_consumption)));
 
             switch (Liquid.Client)
             {

@@ -419,10 +419,14 @@ public class LiquidBilling {
         Cursor result = BillingModel.GetRates(RateCode, Classification, BillingCycle);
 
         if(!Liquid.meter_count.equals("1")){
-            Liquid.LoadFactor = String.valueOf(GetLoadFactor(Double.parseDouble(KWH),
-                    Double.parseDouble(Demand),
-                    Liquid.ConvertStringToDate(Liquid.present_reading_date),
-                    Liquid.ConvertStringToDate(Liquid.previous_reading_date)));
+            if(Double.parseDouble(Demand) == 0){
+
+            }else{
+                Liquid.LoadFactor = String.valueOf(GetLoadFactor(Double.parseDouble(KWH),
+                        Double.parseDouble(Demand),
+                        Liquid.ConvertStringToDate(Liquid.present_reading_date),
+                        Liquid.ConvertStringToDate(Liquid.previous_reading_date)));
+            }
         }
 
 

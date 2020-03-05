@@ -243,6 +243,7 @@ public class Liquid extends AppCompatActivity{
     public static String previous_reading  = "0";
     public static String present_Reading = "";
     public static String Present_Consumption= "0";
+    public static String AddConsKVAR= "0";
     public static String previous_reading_date= "";
     public static String duedate= "";
     public static String discondate= "";
@@ -2205,6 +2206,7 @@ public class Liquid extends AppCompatActivity{
             "over60days",
             "CMPreviousReadingKWH",
             "CareOf",
+            "CMDemand",
 
 
     };

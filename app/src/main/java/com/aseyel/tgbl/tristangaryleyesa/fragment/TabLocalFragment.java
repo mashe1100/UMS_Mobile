@@ -73,6 +73,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
     FloatingActionButton floatBtnAdd;
     private ProgressBar progressBar;
     private JSONObject mpostData;
+    private JSONObject mpostDataAll;
     private ProgressDialog mProgressDialog;
 
     @Override
@@ -249,9 +250,11 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
         }
     }
 
-    public void DoUploadReading(final JSONObject postData){
+    public void DoUploadReading(final JSONObject postData, final JSONObject postDataAll){
         try {
             mpostData = postData;
+            mpostDataAll = postDataAll;
+
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -265,7 +268,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                             break;
                              //new ReadingFileNoLoadingPostingToServer(mpostData).execute();
                         case DialogInterface.BUTTON_NEUTRAL:
-                            new DataAllReadingPostingToServer(mpostData).execute();
+                            new DataReadingPostingToServer(mpostDataAll).execute();
                             //new ReadingFileNoLoadingPostingToServer(mpostData).execute();
                             break;
                     }
@@ -2185,7 +2188,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                             mPOSTApiData = new Liquid.POSTApiData("fmts/php/api/ReadingTest.php");
                             //Log.i(TAG, String.valueOf(test));
                             String jsonStr = sh.makeServicePostCall(mPOSTApiData.API_Link, reading);
-                            Log.i(TAG,"TRISTAN:"+jsonStr);
+                            Log.i(TAG,"TRISTAN2:"+jsonStr);
                             //Log.i(TAG, "ALEX:" + jsonStr);
                             JSONObject response = Liquid.StringToJsonObject(jsonStr);
                             if (response.getString("result").equals("false")) {

@@ -667,7 +667,8 @@ public class workModel {
                         "CMPresentReadingKWH, "+//89
                         "over30days, "+//90
                         "CMPreviousReadingKWH, "+//91
-                        "CareOf " + //92
+                        "CareOf, " + //92
+                        "CMDemand " + //93
                         "FROM customer_reading_downloads "+
                         "WHERE job_id = '"+job_id+"' AND "+
                         "C_AccountNumber = '"+AccountNumber+"' " +

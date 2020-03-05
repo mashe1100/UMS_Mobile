@@ -591,6 +591,172 @@ public class ReadingModel {
                         "WHERE job_id = '"+job_id+"' AND AccountNumber like '%"+ AccountNumber+"%'");
     }
 
+
+    public static Cursor GetReadingDetailsAll(String job_id,String AccountNumber,String Status){
+        return SplashActivity.mDatabaseHelper.SqliteSelectQuery(
+                "SELECT " +
+                        "[Client] ,"+ //0
+                        "[C_ID] ,"+ //1
+                        "[AccountNumber] ,"+ //2
+                        "[job_id],"+ //3
+                        "[name],"+//4
+                        "[route],"+//5
+                        "[itinerary],"+//6
+                        "[meter_number] ,"+//7
+                        "[serial],"+//8
+                        "[previous_reading],"+//9
+                        "[present_Reading],"+//10
+                        "[previous_consumption],"+ //11
+                        "[Present_Consumption],"+ //12
+                        "[previous_reading_date],"+ //13
+                        "[present_reading_date],"+ //14
+                        "[duedate],"+ //15
+                        "[discondate],"+ //16
+                        "[Reading_Date] ,"+ //17
+                        "[BillYear],"+ //18
+                        "[BillMonth],"+ //19
+                        "[BillDate],"+ //20
+                        "[month],"+ //21
+                        "[day],"+ //22
+                        "[year],"+ //23
+                        "[Demand],"+ //24
+                        "[reactive],"+ //25
+                        "[powerfactor],"+ //26
+                        "[kw_cummulative],"+ //27
+                        "[reading1],"+ //28
+                        "[reading2],"+ //29
+                        "[reading3],"+ //30
+                        "[reading4],"+ //31
+                        "[reading5],"+ //32
+                        "[reading6],"+ //33
+                        "[reading7],"+ //34
+                        "[reading8],"+ //35
+                        "[reading9],"+ //36
+                        "[reading10],"+ //37
+                        "[iwpowerfactor],"+ //38
+                        "[demand_consumption],"+ //39
+                        "[reactive_consumption],"+ //40
+                        "[Averange_Consumption],"+ //41
+                        "[Average_Reading],"+ //42
+                        "[multiplier],"+ //43
+                        "[Meter_Box],"+ //44
+                        "[Demand_Reset],"+ //45
+                        "[Test_Block],"+ //46
+                        "[Remarks_Code],"+ //47
+                        "[remarks_abbreviation],"+ //48
+                        "[Remarks],"+ //49
+                        "[Comment],"+ //50
+                        "[Reader_ID],"+ //51
+                        "[meter_reader],"+ //52
+                        "[Reading_Attempt],"+ //53
+                        "[Print_Attempt],"+ //54
+                        "[force_reading],"+ //55
+                        "[r_latitude],"+ //56
+                        "[r_longitude],"+ //57
+                        "[printlatitude],"+ //58
+                        "[printlongitude],"+ //59
+                        "[improbable_reading],"+ //60
+                        "[negative_reading],"+ //61
+                        "[change_reading],"+ //62
+                        "[cg_vat_zero_tag],"+ //63
+                        "[reading_remarks],"+ //64
+                        "[old_key],"+ //65
+                        "[new_key],"+ //66
+                        "[transfer_data_status],"+ //67
+                        "[upload_status],"+ //68
+                        "[code],"+ //69
+                        "[area],"+ //70
+                        "[rate_code],"+ //71
+                        "[cummulative_multiplier],"+ //72
+                        "[oebr_number],"+ //73
+                        "[sequence],"+ //74
+                        "[Reading_TimeStamp],"+ //75
+                        "[Print_TimeStamp],"+ //76
+                        "[timestamp],"+ //77
+                        "[bill_number],"+ //78
+                        "[GenerationSystem],"+ //79
+                        "[BenHost],"+ //80
+                        "[GRAM],"+//81
+                        "[ICERA],"+//82
+                        "[PowerArtReduction],"+//83
+                        "[TransmissionDelivery],"+//84
+                        "[TransmissionDelivery2],"+//85
+                        "[System_Loss],"+//86
+                        "[Gen_Trans_Rev],"+//87
+                        "[DistributionNetwork],"+//88
+                        "[DistributionNetwork2],"+//89
+                        "[DistributionNetwork3],"+//90
+                        "[RetailElectricService],"+//91
+                        "[RetailElectricService2],"+//92
+                        "[Metering(cust)],"+//93
+                        "[Metering(cust)2],"+//94
+                        "[Metering(kwh)],"+//95
+                        "[loan],"+//96
+                        "[RFSC],"+//97
+                        "[Distribution_Rev],"+//98
+                        "[MissionaryElectrification],"+//99
+                        "[EnvironmentCharge],"+//100
+                        "[NPC_StrandedDebts],"+//101
+                        "[NPC_StrandedCost],"+//102
+                        "[DUsCost],"+//103
+                        "[DCDistributionCharge],"+//104
+                        "[DCDemandCharge],"+//105
+                        "[TCTransSystemCharge],"+//106
+                        "[SCSupplySysCharge],"+//107
+                        "[equal_tax],"+//108
+                        "[CrossSubsidyRemoval],"+//109
+                        "[Universal_Charges],"+//110
+                        "[Lifeline(Charge)],"+//111
+                        "[InterclassCrossSubsidy],"+//112
+                        "[SeniorCitizenSubsidy],"+//113
+                        "[ICCS_Adjustment],"+//114
+                        "[ICCrossSubsidyCharge],"+//115
+                        "[FitAllCharge],"+//116
+                        "[PPD_Adjustment],"+//117
+                        "[GenerationCostAdjustment],"+//118
+                        "[PowerCostAdjustment],"+//119
+                        "[Other_Rev],"+//120
+                        "[GenerationVat],"+//121
+                        "[TransmissionVat],"+//122
+                        "[SystemLossVat],"+//123
+                        "[DistributionVat],"+//124
+                        "[OtherVat],"+//125
+                        "[Government_Rev],"+//126
+                        "[CurrentBill],"+//127
+                        "[amountdue],"+//128
+                        "[overdue],"+//129
+                        "[franchise_tax],"+//130
+                        "[coreloss],"+//131
+                        "[surcharge],"+//132
+                        "[rentalfee],"+//133
+                        "[delivered],"+//134
+                        "[check_previous],"+//135
+                        "[ispn],"+
+                        "[SCD],"+
+                        "[pnrecvdte],"+
+                        "[pnrecvby],"+
+                        "[recvby],"+
+                        "[hash],"+
+                        "[isreset],"+
+                        "[isprntd],"+
+                        "[meter_count],"+
+                        "[delivery_id],"+
+                        "[delivery_remarks],"+
+                        "[delivery_comment],"+
+                        "[reading_signature],"+
+                        "[real_property_tax],"+
+                        "[cc_rstc_refund],"+
+                        "[cc_rstc_refund2],"+
+                        "[moa],"+
+                        "[eda],"+
+                        "[ModifiedDate],"+
+                        "[ModifiedBy] "+
+                        "FROM reading "+
+                        "WHERE job_id = '"+job_id+"' AND AccountNumber like '%"+ AccountNumber+"%'");
+        //"WHERE job_id = '"+job_id+"' AND AccountNumber like '%"+ AccountNumber+"%' ");
+        //"WHERE job_id = '"+job_id+"' AND AccountNumber like '%"+ AccountNumber+"%'");
+    }
+
     public static Cursor GetReadingDetails(String job_id,String AccountNumber,String Status){
         return SplashActivity.mDatabaseHelper.SqliteSelectQuery(
                 "SELECT " +

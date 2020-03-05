@@ -54,15 +54,66 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             //}
             //if(Liquid.currentDate().equals("2019-03-02") || Liquid.currentDate().equals("2019-03-03")){
+            try{
                 db.execSQL(LiquidReference.AlterStatusPicture);
+            }catch(Exception e){
+
+            }
+
+            try{
                 db.execSQL(LiquidReference.AlterStatusMeterNotInList);
+            }catch(Exception e){
+
+            }
+
+            try{
                 db.execSQL(LiquidReference.AlterDemandMeterNotInList);
+            }catch(Exception e){
+
+            }
+
+            try{
                 db.execSQL(LiquidReference.AlterHouseLatitudeMeterNotInList);
+            }catch(Exception e){
+
+            }
+
+            try{
                 db.execSQL(LiquidReference.AlterHouseLongitudeMeterNotInList);
+            }catch(Exception e){
+
+            }
+
+            try{
                 db.execSQL(LiquidReference.AlterAmpirCapacityMeterNotInList);
+            }catch(Exception e){
+
+            }
+
+            try{
                 db.execSQL(LiquidReference.AlterTypeMeterNotInList);
+            }catch(Exception e){
+
+            }
+
+            try{
                 db.execSQL(LiquidReference.AlterLatitudeCustomerReadingDownload);
+            }catch(Exception e){
+
+            }
+
+            try{
                 db.execSQL(LiquidReference.AlterLongitudeCustomerReadingDownload);
+            }catch(Exception e){
+
+            }
+
+            try{
+                db.execSQL(LiquidReference.AlterCMDemandCustomerReadingDownload);
+            }catch(Exception e){
+
+            }
+
             //}
 
         }catch(Exception e){
@@ -254,7 +305,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //Drop Existing Table
         try{
-            db.execSQL(LiquidReference.DropUMShost);
+            //db.execSQL(LiquidReference.DropUMShost);
             db.execSQL(LiquidReference.DropUMSSettings);
             //AUDIT TABLE
             db.execSQL(LiquidReference.DropCokeCustomerTable);

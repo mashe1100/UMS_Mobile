@@ -204,7 +204,7 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
                                 ((TabLocalFragment) fragment).DoUploadDisconnection(LiquidDisconnection.UploadDisconnection());
                                 break;
                             case "METER READER":
-                                ((TabLocalFragment) fragment).DoUploadReading(LiquidReading.UploadReading(Liquid.SelectedId));
+                                ((TabLocalFragment) fragment).DoUploadReading(LiquidReading.UploadReading(Liquid.SelectedId),LiquidReading.UploadReadingAll(Liquid.SelectedId));
                                 break;
                         }
                     }

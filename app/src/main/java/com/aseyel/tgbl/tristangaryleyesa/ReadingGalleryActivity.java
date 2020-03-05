@@ -425,7 +425,7 @@ public class ReadingGalleryActivity extends BaseActivity {
                     Liquid.iwpowerfactor = result.getString(38);
 
                     try {
-                        Liquid.demand_consumption = String.valueOf(Double.parseDouble(Liquid.Demand )*  Double.parseDouble(Liquid.multiplier));
+                        Liquid.demand_consumption = String.valueOf(Double.parseDouble(Liquid.Demand ) *  Double.parseDouble(Liquid.multiplier));
 
                     }catch(Exception e) {
                         Liquid.demand_consumption = "0";
