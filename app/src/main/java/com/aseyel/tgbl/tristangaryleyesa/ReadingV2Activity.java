@@ -837,7 +837,7 @@ public class ReadingV2Activity extends BaseActivity {
                 Liquid.bill_number = !result.getString(65).equals("") ? result.getString(65) : Liquid.year + Liquid.BillMonth + AccountNumber;
                 Liquid.rowid = result.getString(84);
                 Liquid.pn_promo = result.getString(92);
-                Liquid.AddConsKVAR = result.getString(93);
+                Liquid.AddConsKVAR = !result.getString(93).equals("") ? result.getString(93) : "0";
 
                 if(!Liquid.pn_promo.matches(""))
                     try{

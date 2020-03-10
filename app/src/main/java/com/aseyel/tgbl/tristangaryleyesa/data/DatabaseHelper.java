@@ -165,10 +165,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             switch(Liquid.Client){
                     case "more_power":
-                        db.execSQL(LiquidReference.HostMore);
+                        try{
+                            db.execSQL(LiquidReference.HostMore);
+                        }catch(Exception e){
+
+                        }
+
                     break;
                     default:
-                        db.execSQL(LiquidReference.HostFSI);
+                        try{
+                            db.execSQL(LiquidReference.HostFSI);
+                        }catch(Exception e){
+
+                        }
+
             }
             //db.execSQL(LiquidReference.HostTest);
 
