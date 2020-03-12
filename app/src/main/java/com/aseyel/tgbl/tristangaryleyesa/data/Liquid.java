@@ -2943,12 +2943,20 @@ public class Liquid extends AppCompatActivity{
 
     public static String imageToString(String mFile){
         Bitmap mBitmap = BitmapFactory.decodeFile(mFile);
+        Bitmap bMapScaled;
+        String encodedImage;
         //Bitmap bMapScaled = Bitmap.createScaledBitmap(mBitmap, 720, 1280, true);
-        Bitmap bMapScaled = Bitmap.createScaledBitmap(mBitmap, mBitmap.getWidth(), mBitmap.getHeight(), true);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bMapScaled.compress(Bitmap.CompressFormat.JPEG, 80, baos);
-        byte[] byteArrayImage = baos.toByteArray();
-        String encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
+        try{
+             bMapScaled = Bitmap.createScaledBitmap(mBitmap, mBitmap.getWidth(), mBitmap.getHeight(), true);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bMapScaled.compress(Bitmap.CompressFormat.JPEG, 80, baos);
+            byte[] byteArrayImage = baos.toByteArray();
+            encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
+        }catch(Exception e){
+            encodedImage = "";
+        }
+
+
         return encodedImage;
     }
 

@@ -1391,6 +1391,7 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 JSONObject data = new JSONObject();
 
                                 data.put("Client", Liquid.Client);
+
                                 data.put("FileData", Liquid.imageToString(listFile[e].getAbsolutePath()));
                                 data.put("Filename", listFile[e].getName());
 
