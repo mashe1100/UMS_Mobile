@@ -128,10 +128,12 @@ public class ReadingSummaryActivity extends BaseFormActivity {
     public void finalSave(){
         int delay = 0;
         //feb 28
-        if(Double.parseDouble(Latitude) == 0.0) {
+        if(Double.parseDouble(Liquid.r_latitude) == 0.0) {
             Handler.postDelayed(CoodinatesChecker,500);
           //  getDeviceLocation();
-
+            liquidGPS.getDeviceLocation();
+            Liquid.r_latitude = String.valueOf(mLiquidGPS.getLatitude());
+            Liquid.r_longitude = String.valueOf(mLiquidGPS.getLongitude());
             try {
                 liquidGPS.PostRealtimeData(Liquid.r_latitude,Liquid.r_longitude);
             } catch (Exception e) {
@@ -171,7 +173,8 @@ public class ReadingSummaryActivity extends BaseFormActivity {
 
     private final Runnable CoodinatesChecker = new Runnable() {
         public void run() {
-            if(Double.parseDouble(Latitude) != 0.0){
+
+            if(Double.parseDouble(Liquid.r_latitude) != 0.0){
                 Handler.removeCallbacks(DisplaySaveDialog);
                 Handler.post(DisplaySaveDialog);
             }else

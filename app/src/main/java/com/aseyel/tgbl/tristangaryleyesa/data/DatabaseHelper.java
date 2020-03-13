@@ -160,12 +160,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             db.execSQL(LiquidReference.UMShost);
             db.execSQL(LiquidReference.UMSAccount);
-            db.execSQL(LiquidReference.Admin);
+
 
 
             switch(Liquid.Client){
                     case "more_power":
                         try{
+                            db.execSQL(LiquidReference.MoreAdmin);
                             db.execSQL(LiquidReference.HostMore);
                         }catch(Exception e){
 
@@ -174,6 +175,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     break;
                     default:
                         try{
+                            db.execSQL(LiquidReference.Admin);
                             db.execSQL(LiquidReference.HostFSI);
                         }catch(Exception e){
 
@@ -316,6 +318,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //Drop Existing Table
         try{
             //db.execSQL(LiquidReference.DropUMShost);
+            switch(Liquid.Client){
+                case "more_power":
+
+                    break;
+                default:
+                    try{
+                        db.execSQL(LiquidReference.DropUMShost);
+                    }catch(Exception e){
+
+                    }
+
+            }
             db.execSQL(LiquidReference.DropUMSSettings);
             //AUDIT TABLE
             db.execSQL(LiquidReference.DropCokeCustomerTable);
