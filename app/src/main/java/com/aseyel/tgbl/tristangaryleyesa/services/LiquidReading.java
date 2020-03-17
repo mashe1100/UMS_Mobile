@@ -56,8 +56,8 @@ public class LiquidReading {
 
             final_response = UploadReadingAll(JobID,"");
             final_response_log = UploadReadingLogs(JobID,"");
-            final_response_picture = UploadPicture("");
-            final_response_meter_not_in_list = UploadMeterNotInList(JobID,"");
+            final_response_picture = UploadPicture("Pending");
+            final_response_meter_not_in_list = UploadMeterNotInList(JobID,"Pending");
             final_reponse_for_picture = UploadPictureReading(JobID,"");
 
 

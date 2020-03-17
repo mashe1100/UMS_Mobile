@@ -132,8 +132,8 @@ public class ReadingSummaryActivity extends BaseFormActivity {
             Handler.postDelayed(CoodinatesChecker,500);
           //  getDeviceLocation();
             liquidGPS.getDeviceLocation();
-            Liquid.r_latitude = String.valueOf(mLiquidGPS.getLatitude());
-            Liquid.r_longitude = String.valueOf(mLiquidGPS.getLongitude());
+            Liquid.r_latitude = String.valueOf(liquidGPS.getLatitude());
+            Liquid.r_longitude = String.valueOf(liquidGPS.getLongitude());
             try {
                 liquidGPS.PostRealtimeData(Liquid.r_latitude,Liquid.r_longitude);
             } catch (Exception e) {
