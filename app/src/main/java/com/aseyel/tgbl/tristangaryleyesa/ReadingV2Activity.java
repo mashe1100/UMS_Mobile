@@ -1173,12 +1173,23 @@ public class ReadingV2Activity extends BaseActivity {
                                                Liquid.ConvertStringToDate(Liquid.present_reading_date),
                                                Double.parseDouble(Liquid.Present_Consumption)));
 
-                                                //demand
-                                                Liquid.demand_consumption = String.valueOf(ChangeMeterKWH(
-                                                Liquid.ConvertStringToDate(Liquid.DateChangeMeter),
-                                                Liquid.ConvertStringToDate(Liquid.present_reading_date),
-                                                Double.parseDouble(Liquid.demand_consumption)));
+
             }
+
+            if(!Liquid.DateChangeMeter.equals("") &&
+                    Liquid.ConsumerStatus.equals("CHANGE METER") &&
+                    (Liquid.AddConsKVAR.equals("0") ||
+                            Liquid.AddConsKVAR.equals("") ||
+                            Double.parseDouble(Liquid.AddConsKVAR) <= 0)){
+                //demand
+                Liquid.demand_consumption = String.valueOf(ChangeMeterKWH(
+                        Liquid.ConvertStringToDate(Liquid.DateChangeMeter),
+                        Liquid.ConvertStringToDate(Liquid.present_reading_date),
+                        Double.parseDouble(Liquid.demand_consumption)));
+            }
+
+
+
 
             Liquid.Present_Consumption = String.valueOf(AddCons(Double.parseDouble(Liquid.coreloss),Double.parseDouble(Liquid.Present_Consumption)));
             Liquid.demand_consumption = String.valueOf(AddCons(Double.parseDouble(Liquid.AddConsKVAR),Double.parseDouble(Liquid.demand_consumption)));
@@ -1218,6 +1229,11 @@ public class ReadingV2Activity extends BaseActivity {
         }
         daysKWH = Math.round(KWH / days);
         avgKWH = daysKWH * 30;
+
+        if(KWH > avgKWH){
+            avgKWH = KWH;
+        }
+
         return avgKWH;
     }
 

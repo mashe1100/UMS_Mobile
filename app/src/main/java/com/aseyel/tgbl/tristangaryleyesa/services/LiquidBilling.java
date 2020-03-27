@@ -431,6 +431,7 @@ public class LiquidBilling {
 
 
         if (result.getCount() == 0) {
+            Liquid.save_only = true;
             return;
         }
         while (result.moveToNext()) {

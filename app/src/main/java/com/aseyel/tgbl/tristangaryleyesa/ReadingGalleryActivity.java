@@ -335,6 +335,7 @@ public class ReadingGalleryActivity extends BaseActivity {
                 Liquid.DateChangeMeter = result.getString(88);
                 Liquid.change_meter = !result.getString(58).equals("") ? result.getString(58) : "0";
                 Liquid.interest = !result.getString(62).equals("") ? result.getString(62) : "0";
+                Liquid.AddConsKVAR = !result.getString(93).equals("") ? result.getString(93) : "0";
 
                 switch (Liquid.Client){
                     case "ileco2":
@@ -455,7 +456,6 @@ public class ReadingGalleryActivity extends BaseActivity {
     }
 
     public boolean initializationForComputation(String type){
-        //Declaration
         try{
             if(!Liquid.CheckGPS(this)){
                 Liquid.showDialogInfo(this,"Invalid","Please enable GPS!");
@@ -464,8 +464,8 @@ public class ReadingGalleryActivity extends BaseActivity {
             Liquid.save_only = false;
             Liquid.Reader_ID = Liquid.User;
             Liquid.meter_reader = Liquid.User;
-//          Liquid.Reading = etxtReading.getText().toString();
-//          Liquid.Demand = txtDemand.getText().toString();
+            //Liquid.Reading = etxtReading.getText().toString();
+            //Liquid.Demand = txtDemand.getText().toString();
             Liquid.Reading_Attempt = String.valueOf(Integer.parseInt(Liquid.Reading_Attempt) + 1);
             String LastDial = String.valueOf(Liquid.previous_reading.charAt(0));
             Liquid.Reading_TimeStamp = Liquid.currentDateTime();
@@ -483,6 +483,7 @@ public class ReadingGalleryActivity extends BaseActivity {
                 Liquid.Remarks = RemarksData[1];
             }
             //Reading Location
+            mLiquidGPS.getDeviceLocation();
             Liquid.r_latitude = String.valueOf(mLiquidGPS.getLatitude());
             Liquid.r_longitude = String.valueOf(mLiquidGPS.getLongitude());
 
@@ -504,10 +505,12 @@ public class ReadingGalleryActivity extends BaseActivity {
                         Liquid.Average_Reading = Liquid.AverageIleco2Validation(Liquid.Remarks,Liquid.RemarksCode);
                         Liquid.reading_remarks = Liquid.ConsumptionValidation(Liquid.Averange_Consumption, Liquid.previous_consumption, Liquid.Present_Consumption);
                         return true;
+
                     case "pelco2":
                         Liquid.Average_Reading = Liquid.AverageIleco2Validation(Liquid.Remarks,Liquid.RemarksCode);
                         Liquid.reading_remarks = Liquid.ConsumptionValidation(Liquid.Averange_Consumption, Liquid.previous_consumption, Liquid.Present_Consumption);
                         return true;
+
                     case "baliwag_wd":
                         for (int x=0; x<Liquid.BaliwagAverageRemarksAbbreviation.length; x++){
                             if(Liquid.RemarksAbbreviation.matches(Liquid.BaliwagAverageRemarksAbbreviation[x])){
@@ -515,7 +518,6 @@ public class ReadingGalleryActivity extends BaseActivity {
                                 Liquid.Present_Consumption = Liquid.Averange_Consumption;
                             }
                         }
-
                         break;
 
                     case "more_power":
@@ -524,13 +526,8 @@ public class ReadingGalleryActivity extends BaseActivity {
                     default:
                         Liquid.Average_Reading = Liquid.AverageValidation(Liquid.Remarks,Liquid.RemarksCode);
                         Liquid.Present_Consumption = Liquid.Averange_Consumption;
-
                         Liquid.reading_remarks = Liquid.ConsumptionValidation(Liquid.Averange_Consumption, Liquid.previous_consumption, Liquid.Present_Consumption);
                         return true;
-//                        Liquid.Average_Reading = Liquid.AverageValidation(Liquid.Remarks,Liquid.RemarksCode);
-//                        Liquid.Present_Consumption = Liquid.Averange_Consumption;
-//                        Liquid.reading_remarks = Liquid.ConsumptionValidation(Liquid.Averange_Consumption, Liquid.previous_consumption, Liquid.Present_Consumption);
-//                        return true;
                 }
             };
 
@@ -539,37 +536,51 @@ public class ReadingGalleryActivity extends BaseActivity {
                     (Liquid.coreloss.equals("0") ||
                             Liquid.coreloss.equals("") ||
                             Double.parseDouble(Liquid.coreloss) <= 0)){
-
                 Liquid.Present_Consumption = String.valueOf(ChangeMeterKWH(
                         Liquid.ConvertStringToDate(Liquid.DateChangeMeter),
                         Liquid.ConvertStringToDate(Liquid.present_reading_date),
                         Double.parseDouble(Liquid.Present_Consumption)));
+
+
             }
 
+            if(!Liquid.DateChangeMeter.equals("") &&
+                    Liquid.ConsumerStatus.equals("CHANGE METER") &&
+                    (Liquid.AddConsKVAR.equals("0") ||
+                            Liquid.AddConsKVAR.equals("") ||
+                            Double.parseDouble(Liquid.AddConsKVAR) <= 0)){
+                //demand
+                Liquid.demand_consumption = String.valueOf(ChangeMeterKWH(
+                        Liquid.ConvertStringToDate(Liquid.DateChangeMeter),
+                        Liquid.ConvertStringToDate(Liquid.present_reading_date),
+                        Double.parseDouble(Liquid.demand_consumption)));
+            }
+
+
+
+
             Liquid.Present_Consumption = String.valueOf(AddCons(Double.parseDouble(Liquid.coreloss),Double.parseDouble(Liquid.Present_Consumption)));
+            Liquid.demand_consumption = String.valueOf(AddCons(Double.parseDouble(Liquid.AddConsKVAR),Double.parseDouble(Liquid.demand_consumption)));
 
             switch (Liquid.Client)
             {
                 case "more_power":
                     if (Double.parseDouble(Liquid.Averange_Consumption) < Double.parseDouble(Liquid.Present_Consumption)) {
                         Liquid.reading_remarks = Liquid.MorePowerHighConsumptions(Liquid.Averange_Consumption, Liquid.Present_Consumption);
-
                         return true;
 
                     } else if (Double.parseDouble(Liquid.Averange_Consumption) > Double.parseDouble(Liquid.Present_Consumption)) {
-
                         Liquid.reading_remarks = Liquid.MorePowerLowConsumptions(Liquid.Averange_Consumption, Liquid.Present_Consumption);
                         return true;
                     }
-
                     break;
 
                 default:
                     Liquid.reading_remarks = Liquid.ConsumptionValidation(Liquid.Averange_Consumption, Liquid.previous_consumption, Liquid.Present_Consumption);
-
                     return true;
             }
             return true;
+
         }catch(Exception e){
             Log.e(TAG,"Error Reading",e);
             return false;
@@ -588,6 +599,10 @@ public class ReadingGalleryActivity extends BaseActivity {
         daysKWH = Math.round(KWH / days);
 
         avgKWH = daysKWH * 30;
+
+        if(KWH > avgKWH){
+            avgKWH = KWH;
+        }
 
         return avgKWH;
     }
@@ -643,12 +658,54 @@ public class ReadingGalleryActivity extends BaseActivity {
                 case "more_power":
                     if(Liquid.reading_remarks.matches("HIGH CONSUMPTION")){
                         ReadingV2Activity.Computation();
+                        if(Liquid.save_only == false) {
+                            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    switch (which) {
+                                        case DialogInterface.BUTTON_POSITIVE:
+                                            Liquid.draftBill = false;
+                                            boolean result_logs = false;
+                                            Liquid. ModifiedDate = Liquid.currentDateTime();
+                                            Liquid.timestamp = Liquid.currentDateTime();
+                                            Liquid.ModifiedBy = Liquid.User;
+                                            ReadingModel.UpdatePrintAttempt(Liquid.SelectedId,Liquid.AccountNumber,Liquid.Print_Attempt);
+                                            new PrintBill().execute();
+                                            result_logs = Liquid.SaveReadingLogs();
+                                            break;
+                                        case DialogInterface.BUTTON_NEGATIVE:
+                                            Liquid.draftBill = true;
+                                            Liquid. ModifiedDate = Liquid.currentDateTime();
+                                            Liquid.timestamp = Liquid.currentDateTime();
+                                            Liquid.ModifiedBy = Liquid.User;
+                                            ReadingModel.UpdatePrintAttempt(Liquid.SelectedId,Liquid.AccountNumber,Liquid.Print_Attempt);
+                                            new PrintBill().execute();
+                                            result_logs = Liquid.SaveReadingLogs();
+                                            break;
+                                        case DialogInterface.BUTTON_NEUTRAL:
+                                            break;
+
+                                    }
+                                }
+                            };
+                            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                            builder.setMessage("Which bill do you want to reprint?").setPositiveButton("Official", dialogClickListener)
+                                    .setNegativeButton("Draft", dialogClickListener).setNeutralButton("Cancel", dialogClickListener).show();
+                        }else{
+                            Liquid.ShowMessage(this,"It's not allow to print if there is no rates!");
+                        }
+
+                        break;
+                    }
+
+                default:
+                    ReadingV2Activity.Computation();
+                    if(Liquid.save_only == false){
                         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 switch (which) {
                                     case DialogInterface.BUTTON_POSITIVE:
-                                        Liquid.draftBill = false;
                                         boolean result_logs = false;
                                         Liquid. ModifiedDate = Liquid.currentDateTime();
                                         Liquid.timestamp = Liquid.currentDateTime();
@@ -657,51 +714,19 @@ public class ReadingGalleryActivity extends BaseActivity {
                                         new PrintBill().execute();
                                         result_logs = Liquid.SaveReadingLogs();
                                         break;
-                                    case DialogInterface.BUTTON_NEGATIVE:
-                                        Liquid.draftBill = true;
-                                        Liquid. ModifiedDate = Liquid.currentDateTime();
-                                        Liquid.timestamp = Liquid.currentDateTime();
-                                        Liquid.ModifiedBy = Liquid.User;
-                                        ReadingModel.UpdatePrintAttempt(Liquid.SelectedId,Liquid.AccountNumber,Liquid.Print_Attempt);
-                                        new PrintBill().execute();
-                                        result_logs = Liquid.SaveReadingLogs();
-                                        break;
-                                    case DialogInterface.BUTTON_NEUTRAL:
-                                        break;
 
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        break;
                                 }
                             }
                         };
                         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                        builder.setMessage("Which bill do you want to reprint?").setPositiveButton("Official", dialogClickListener)
-                                .setNegativeButton("Draft", dialogClickListener).setNeutralButton("Cancel", dialogClickListener).show();
-                        break;
+                        builder.setMessage("Do you really want to reprint bill?").setPositiveButton("Yes", dialogClickListener)
+                                .setNegativeButton("No", dialogClickListener).show();
+                    }else{
+                        Liquid.ShowMessage(this,"It's not allow to print if there is no rates!");
                     }
 
-                default:
-                    ReadingV2Activity.Computation();
-                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which) {
-                                case DialogInterface.BUTTON_POSITIVE:
-                                    boolean result_logs = false;
-                                    Liquid. ModifiedDate = Liquid.currentDateTime();
-                                    Liquid.timestamp = Liquid.currentDateTime();
-                                    Liquid.ModifiedBy = Liquid.User;
-                                    ReadingModel.UpdatePrintAttempt(Liquid.SelectedId,Liquid.AccountNumber,Liquid.Print_Attempt);
-                                    new PrintBill().execute();
-                                    result_logs = Liquid.SaveReadingLogs();
-                                    break;
-
-                                case DialogInterface.BUTTON_NEGATIVE:
-                                    break;
-                            }
-                        }
-                    };
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage("Do you really want to reprint bill?").setPositiveButton("Yes", dialogClickListener)
-                            .setNegativeButton("No", dialogClickListener).show();
             }
         }catch(Exception e){
             Log.e(TAG,"Tristan Gary Leyesa",e);

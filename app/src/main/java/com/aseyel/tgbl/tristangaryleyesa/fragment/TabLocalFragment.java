@@ -255,29 +255,62 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
             mpostData = postData;
             mpostDataAll = postDataAll;
 
+//            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    switch (which){
+//                        case DialogInterface.BUTTON_POSITIVE:
+//                            //new ReadingFilePostingToServer(mpostData).execute();
+//                            new DataReadingPostingToServer(mpostData).execute();
+//                            //new DataReadingNoLoadingPostingToServer(mpostData).execute();
+//                            break;
+//                        case DialogInterface.BUTTON_NEGATIVE:
+//
+//                            new ReadingFilePostingToServer(mpostData).execute();
+//                            //new DataReadingPostingToServer(mpostDataAll).execute();
+//
+//                            break;
+//
+//                        case DialogInterface.BUTTON_NEUTRAL:
+//                            new DataReadingPostingToServer(mpostDataAll).execute();
+//                            //new ReadingFileNoLoadingPostingToServer(mpostData).execute();
+//                            break;
+//                    }
+//                }
+//            };
+//
+//            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//            builder.setMessage("Please select what you want to upload.").setPositiveButton("Pending", dialogClickListener)
+//                    .setNegativeButton("File", dialogClickListener).setNeutralButton("All Data",dialogClickListener).show();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which){
                         case DialogInterface.BUTTON_POSITIVE:
-                            new DataReadingPostingToServer(mpostData).execute();
-                            //new DataReadingNoLoadingPostingToServer(mpostData).execute();
+
+                            new ReadingFilePostingToServer(mpostData).execute();
+                            //new DataReadingPostingToServer(mpostData).execute();
+
                             break;
                         case DialogInterface.BUTTON_NEGATIVE:
-                            new ReadingFilePostingToServer(mpostData).execute();
+
+                            new ReadingFilePostingToServer(mpostDataAll).execute();
+
                             break;
-                             //new ReadingFileNoLoadingPostingToServer(mpostData).execute();
-                        case DialogInterface.BUTTON_NEUTRAL:
-                            new DataReadingPostingToServer(mpostDataAll).execute();
-                            //new ReadingFileNoLoadingPostingToServer(mpostData).execute();
-                            break;
+
+
                     }
                 }
             };
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setMessage("Please select what you want to upload.").setPositiveButton("Pending Data", dialogClickListener)
-                    .setNegativeButton("File", dialogClickListener).setNeutralButton("All Data", dialogClickListener).show();
+            builder.setMessage("Please select what you want to upload.").setPositiveButton("File & Pending", dialogClickListener)
+                    .setNegativeButton("File & All Data", dialogClickListener).show();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1506,41 +1539,43 @@ public class TabLocalFragment extends Fragment implements SwipeRefreshLayout.OnR
         protected void onPostExecute(Integer result) {
             super.onPostExecute(result);
 
-            try {
-                switch(result){
-                    case 29:
-                        Liquid.showDialogInfo(view.getContext(),"Valid","Successfully Uploaded!");
-                        Log.i(TAG,"Successfully Uploaded");
-                        break;
-                    case 0:
-                        Log.i(TAG,"Unsuccessfully Uploaded");
-                        Liquid.showDialogInfo(view.getContext(),"Invalid","Please check your Internet Connection!");
-                        break;
-                    case 1:
-                        Log.i(TAG,"Unsuccessfully Uploaded");
-                        Liquid.showDialogInfo(view.getContext(),"Invalid","Unsuccessfully Uploaded / Some data is not uploaded!");
-                        break;
-                    case 2:
-                        Liquid.showDialogInfo(view.getContext(),"Valid","There is no data to be upload!");
-
-                        break;
-                    case 3:
-                        Log.i(TAG,"Unsuccessfully Uploaded");
-                        Liquid.showDialogInfo(view.getContext(),"Invalid","There is no available picture to upload!");
-                        break;
-                    case 4:
-                        Log.i(TAG,"Unsuccessfully Uploaded");
-                        Liquid.showDialogInfo(view.getContext(),"Invalid","There is no available signature to upload!");
-                        break;
-                    default:
-                        Log.i(TAG,"Unsuccessfully Uploaded");
-                        Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
-                }
-            } catch (Exception e){
-                Log.e(TAG,"Error :",e);
-                Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
-            }
+//            try {
+//                switch(result){
+//                    case 29:
+//                        Liquid.showDialogInfo(view.getContext(),"Valid","Successfully Uploaded!");
+//                        Log.i(TAG,"Successfully Uploaded");
+//                        break;
+//                    case 0:
+//                        Log.i(TAG,"Unsuccessfully Uploaded");
+//                        Liquid.showDialogInfo(view.getContext(),"Invalid","Please check your Internet Connection!");
+//                        break;
+//                    case 1:
+//                        Log.i(TAG,"Unsuccessfully Uploaded");
+//                        Liquid.showDialogInfo(view.getContext(),"Invalid","Unsuccessfully Uploaded / Some data is not uploaded!");
+//                        break;
+//                    case 2:
+//                        Liquid.showDialogInfo(view.getContext(),"Valid","There is no data to be upload!");
+//
+//                        break;
+//                    case 3:
+//                        Log.i(TAG,"Unsuccessfully Uploaded");
+//                        Liquid.showDialogInfo(view.getContext(),"Invalid","There is no available picture to upload!");
+//                        break;
+//                    case 4:
+//                        Log.i(TAG,"Unsuccessfully Uploaded");
+//                        Liquid.showDialogInfo(view.getContext(),"Invalid","There is no available signature to upload!");
+//                        break;
+//                    default:
+//                        Log.i(TAG,"Unsuccessfully Uploaded");
+//                        Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
+//                }
+//            } catch (Exception e){
+//                Log.e(TAG,"Error :",e);
+//                Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
+//            }
+//            mProgressDialog.dismiss();
             mProgressDialog.dismiss();
+            new DataReadingPostingToServer(this.postData).execute();
         }
     }
 

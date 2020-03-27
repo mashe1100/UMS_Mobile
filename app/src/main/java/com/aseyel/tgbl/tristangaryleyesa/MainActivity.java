@@ -63,6 +63,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -90,6 +91,7 @@ public class MainActivity extends BaseActivity {
     static int exit_clicks = 0;
     static String result = "", attendance_action = "";
     static Handler handler = new Handler();
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -568,6 +570,9 @@ public class MainActivity extends BaseActivity {
                                     Longitude = String.valueOf(currentLocation.getLongitude());
                                     LiquidGPS liquidGPS = new LiquidGPS(activity);
                                     liquidGPS.PostRealtimeData(Latitude,Longitude);
+
+                                    //autoupload realtime
+                                    new ReadingFilePostingToServer(LiquidReading.UploadReading(Liquid.SelectedId)).execute();
                                 } catch (Exception e) {
                                     Log.e(TAG, "Error", e);
                                 }
@@ -773,6 +778,496 @@ public class MainActivity extends BaseActivity {
                     MainActivity.this.startActivity(i);
                 }
             });
+        }
+    }
+
+
+
+    //auto upload picture
+
+    public class ReadingFilePostingToServer extends AsyncTask<Void, Integer, Integer> {
+        // This is the JSON body of the post
+        JSONObject postData;
+        JSONObject response;
+        JSONArray dataArray;
+        JSONArray dataLogsArray;
+        JSONArray dataArrayPicture;
+        JSONArray dataArrayMeterNotInList;
+        JSONArray imageArray;
+        JSONArray signatureArray;
+        int toUploadCount = 0;
+        int progress = 0;
+        int total = 0;
+        String data;
+        String Category;
+        String jsonStr;
+        String imageData;
+        String signatureData;
+        String AccountNumber = "";
+        String Period;
+        String dataMeterNotInList;
+        String dataLogs;
+        String dataPicture;
+
+        // This is a constructor that allows you to pass in the JSON body
+        public ReadingFilePostingToServer(JSONObject postData) {
+            if (postData != null) {
+                this.postData = postData;
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //UploadImage
+            //showUploadProgressBar(true);
+            try {
+                Liquid.ErrorFileUpload = new JSONObject();
+                Liquid.ErrorUpload = new JSONArray();
+                dataLogs = postData.getString("logs");
+                dataMeterNotInList = postData.getString("meter_not_in_list");
+                dataLogsArray = new JSONArray(dataLogs);
+                dataArrayMeterNotInList = new JSONArray(dataMeterNotInList);
+                total = dataLogsArray.length();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected Integer doInBackground(Void... strings) {
+            try {
+                HttpHandler sh = new HttpHandler();
+                Liquid.POSTAuditApiData mPOSTAuditApiData;
+                //Making a request to url and getting response
+
+                //if(dataArray.length() == 0){
+                //return 2;
+                //}
+                for(int a = 0; a < dataLogsArray.length();a++){
+                    JSONObject dataObject = new JSONObject(dataLogsArray.getString(a));
+                    if(!AccountNumber.equals(String.valueOf(dataObject.get("job_id")))){
+                        AccountNumber = String.valueOf(dataObject.get("job_id"));
+                        Category = "";
+                        File mImages;
+                        File[] listFile;
+                        String[] Subfolder = new String[1];
+                        Subfolder[0] = Category;
+                        int imageUploaded = 0;
+
+                        mImages = Liquid.getDiscPicture(AccountNumber,Subfolder);
+                        if (!mImages.exists() && !mImages.mkdirs()) {
+                            Liquid.ShowMessage(MainActivity.this, "Can't create directory to save image");
+                        } else {
+                            listFile = mImages.listFiles();
+                            toUploadCount = toUploadCount + listFile.length;
+
+                            for (int e = 0; e < listFile.length; e++) {
+                                JSONArray final_image_result = new JSONArray();
+                                JSONObject final_image_response = new JSONObject();
+                                JSONObject data = new JSONObject();
+
+                                data.put("Client", Liquid.Client);
+
+                                data.put("FileData", Liquid.imageToString(listFile[e].getAbsolutePath()));
+                                data.put("Filename", listFile[e].getName());
+
+                                if(Liquid.Client == "more_power"){
+                                    //data.put("service_type", "Audit");
+                                    data.put("service_type", "MeterReading");
+                                }
+                                else{
+                                    data.put("service_type", "MeterReading");
+                                }
+                                data.put("date", String.valueOf(dataObject.get("BillMonth"))+String.valueOf(dataObject.get("BillYear")));
+
+                                //combine all data for image
+                                final_image_result.put(data);
+                                final_image_response.put("image", final_image_result);
+                                imageData = final_image_response.getString("image");
+                                imageArray = new JSONArray(imageData);
+
+                                mPOSTApiData = new Liquid.POSTApiData("fmts/php/api/tgblUploadImage.php");
+
+                                jsonStr = sh.makeServicePostCall(mPOSTApiData.API_Link, imageArray.getJSONObject(0));
+                                Log.i(TAG,jsonStr);
+                                response = Liquid.StringToJsonObject(jsonStr);
+
+                                if(response.getString("result").equals("false")){
+                                    Liquid.ErrorUpload.put(dataObject);
+                                }else{
+                                    Liquid.deleteRecursive(new File(listFile[e].getAbsolutePath()));
+                                    imageUploaded = imageUploaded+1;
+                                    progress = progress+1;
+                                    publishProgress(imageUploaded);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                for(int a = 0; a < dataArrayMeterNotInList.length();a++){
+                    JSONObject dataObject = new JSONObject(dataArrayMeterNotInList.getString(a));
+
+                    if(!AccountNumber.equals(String.valueOf(dataObject.get("job_id")))){
+                        AccountNumber = String.valueOf(dataObject.get("job_id"));
+                        Category = "";
+                        File mImages;
+                        File[] listFile;
+                        String[] Subfolder = new String[1];
+                        Subfolder[0] = Category;
+                        int imageUploaded = 0;
+
+                        mImages = Liquid.getDiscPicture(AccountNumber+"_audit",Subfolder);
+                        if (!mImages.exists() && !mImages.mkdirs()) {
+                            Liquid.ShowMessage(MainActivity.this, "Can't create directory to save image");
+                        } else {
+                            listFile = mImages.listFiles();
+                            toUploadCount = toUploadCount + listFile.length;
+
+                            for (int e = 0; e < listFile.length; e++) {
+                                JSONArray final_image_result = new JSONArray();
+                                JSONObject final_image_response = new JSONObject();
+                                JSONObject data = new JSONObject();
+
+                                data.put("Client", Liquid.Client);
+                                data.put("FileData", Liquid.imageToString(listFile[e].getAbsolutePath()));
+                                data.put("Filename", listFile[e].getName());
+                                data.put("service_type", "Audit");
+                                data.put("date", Liquid.dateChangeFormat(Liquid.currentDate(),"yyyy-MM-dd","MMyyyy"));
+
+                                //combine all data for image
+                                final_image_result.put(data);
+                                final_image_response.put("image", final_image_result);
+                                imageData = final_image_response.getString("image");
+                                imageArray = new JSONArray(imageData);
+
+                                mPOSTApiData = new Liquid.POSTApiData("fmts/php/api/tgblUploadImage.php");
+
+                                jsonStr = sh.makeServicePostCall(mPOSTApiData.API_Link, imageArray.getJSONObject(0));
+                                Log.i(TAG,jsonStr);
+                                response = Liquid.StringToJsonObject(jsonStr);
+
+                                if(response.getString("result").equals("false")){
+                                    Liquid.ErrorUpload.put(dataObject);
+                                }else{
+                                    Liquid.deleteRecursive(new File(listFile[e].getAbsolutePath()));
+                                    imageUploaded = imageUploaded+1;
+                                    progress = progress+1;
+                                    publishProgress(imageUploaded);
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (JSONException e) {
+                Log.e(TAG,"Error :",e);
+                //JSON Problem
+                return 1;
+            }
+            catch (Exception e){
+                //An error has occured
+                Log.e(TAG,"Error :",e);
+                return 0;
+            }
+            return 29;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            super.onPostExecute(result);
+
+//            try {
+//                switch(result){
+//                    case 29:
+//                        Liquid.showDialogInfo(view.getContext(),"Valid","Successfully Uploaded!");
+//                        Log.i(TAG,"Successfully Uploaded");
+//                        break;
+//                    case 0:
+//                        Log.i(TAG,"Unsuccessfully Uploaded");
+//                        Liquid.showDialogInfo(view.getContext(),"Invalid","Please check your Internet Connection!");
+//                        break;
+//                    case 1:
+//                        Log.i(TAG,"Unsuccessfully Uploaded");
+//                        Liquid.showDialogInfo(view.getContext(),"Invalid","Unsuccessfully Uploaded / Some data is not uploaded!");
+//                        break;
+//                    case 2:
+//                        Liquid.showDialogInfo(view.getContext(),"Valid","There is no data to be upload!");
+//
+//                        break;
+//                    case 3:
+//                        Log.i(TAG,"Unsuccessfully Uploaded");
+//                        Liquid.showDialogInfo(view.getContext(),"Invalid","There is no available picture to upload!");
+//                        break;
+//                    case 4:
+//                        Log.i(TAG,"Unsuccessfully Uploaded");
+//                        Liquid.showDialogInfo(view.getContext(),"Invalid","There is no available signature to upload!");
+//                        break;
+//                    default:
+//                        Log.i(TAG,"Unsuccessfully Uploaded");
+//                        Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
+//                }
+//            } catch (Exception e){
+//                Log.e(TAG,"Error :",e);
+//                Liquid.showDialogInfo(view.getContext(),"Invalid","An error has occured!");
+//            }
+//            mProgressDialog.dismiss();
+
+            new DataReadingPostingToServer(this.postData).execute();
+        }
+    }
+
+    public class DataReadingPostingToServer extends AsyncTask<Void, Integer, Integer> {
+        // This is the JSON body of the post
+        JSONObject postData;
+        String data;
+        String dataPicture;
+        String dataLogs;
+        String dataMeterNotInList;
+        JSONArray dataArray;
+        JSONArray dataArrayPicture;
+        JSONArray dataArrayLogs;
+        JSONArray dataArrayMeterNotInList;
+        boolean result_status = false;
+        int progress = 0;
+        int total = 0;
+
+        // This is a constructor that allows you to pass in the JSON body
+        public DataReadingPostingToServer(JSONObject postData) {
+            if (postData != null) {
+                this.postData = postData;
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //UploadImage
+            //showUploadProgressBar(true);
+            try {
+                Liquid.ErrorDataUpload = new JSONObject();
+                Liquid.ErrorUpload = new JSONArray();
+                data = postData.getString("data");
+                dataPicture = postData.getString("picture");
+                dataLogs = postData.getString("logs");
+                dataMeterNotInList = postData.getString("meter_not_in_list");
+                dataArray = new JSONArray(data);
+                dataArrayPicture = new JSONArray(dataPicture);
+                dataArrayLogs = new JSONArray(dataLogs);
+                dataArrayMeterNotInList =  new JSONArray(dataMeterNotInList);
+                total = dataArray.length();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected Integer doInBackground(Void... strings) {
+            try {
+                HttpHandler sh = new HttpHandler();
+                int limit = 50;
+                if(dataArray.length() == 0){
+                    //No Data
+                    //return 2;
+                }else{
+
+                    List<String> arrayList = new ArrayList<String>();
+                    for(int i = 0; i < dataArray.length(); i++){
+                        arrayList.add(dataArray.getString(i));
+                    }
+                    for(int j = 0; j < arrayList.size(); j+=limit) {
+                        int k = Math.min(j + limit, arrayList.size());
+                        List<String> subList = arrayList.subList(j,k);
+                        JSONArray newDataArray = new JSONArray(subList);
+                        JSONObject reading = new JSONObject();
+                        reading.put("sysid",Liquid.User);
+                        reading.put("username",Liquid.Username);
+                        reading.put("password",Liquid.Password);
+                        reading.put("data",newDataArray);
+                        mPOSTApiData = new Liquid.POSTApiData("fmts/php/api/ReadingTest.php");
+                        //Log.i(TAG, String.valueOf(test));
+                        String jsonStr = sh.makeServicePostCall(mPOSTApiData.API_Link, reading);
+                        Log.i(TAG,"TRISTAN2:"+jsonStr);
+                        //Log.i(TAG, "ALEX:" + jsonStr);
+                        JSONObject response = Liquid.StringToJsonObject(jsonStr);
+                        if (response.getString("result").equals("false")) {
+                            Liquid.ErrorUpload.put(reading);
+                        } else {
+                            progress = progress + limit;
+                            publishProgress(progress);
+                            JSONArray newReadingArray = reading.getJSONArray("data");
+                            for(int i=0; i < newReadingArray.length(); i++){
+                                JSONObject dataObject = new JSONObject(newReadingArray.getString(i));
+                                result_status = ReadingModel.UpdateUploadStatus(dataObject.getString("job_id").toString(),dataObject.getString("AccountNumber").toString());
+                            }
+                        }
+                    }
+                }
+                if(dataArrayLogs.length() == 0){
+                    //No Data
+                    //return 2;
+                }else {
+
+                    progress = 0;
+
+                    List<String> arrayListLogs = new ArrayList<String>();
+                    for(int i = 0; i < dataArrayLogs.length(); i++){
+                        arrayListLogs.add(dataArrayLogs.getString(i));
+                    }
+                    for(int j = 0; j < arrayListLogs.size(); j+=limit) {
+                        int k = Math.min(j + limit, arrayListLogs.size());
+                        List<String> subList = arrayListLogs.subList(j,k);
+                        JSONArray newDataArrayLogs = new JSONArray(subList);
+                        JSONObject readlogs = new JSONObject();
+                        readlogs.put("sysid",Liquid.User);
+                        readlogs.put("username",Liquid.Username);
+                        readlogs.put("password",Liquid.Password);
+                        readlogs.put("data",newDataArrayLogs);
+
+                        mPOSTApiData = new Liquid.POSTApiData("fmts/php/api/ReadingLogsTest.php");
+                        //Log.i(TAG, String.valueOf(testlogs));
+                        String jsonStr = sh.makeServicePostCall(mPOSTApiData.API_Link, readlogs);
+                        //Log.i(TAG, "ALEX:" + jsonStr);
+                        Log.i(TAG, "Tristan:" + jsonStr);
+                        JSONObject response = Liquid.StringToJsonObject(jsonStr);
+                        if (response.getString("result").equals("false")) {
+                            Liquid.ErrorUpload.put(readlogs);
+                        } else {
+                            progress = progress + limit;
+                            publishProgress(progress);
+                            JSONArray newReadLogsArray = readlogs.getJSONArray("data");
+                            for(int i=0; i < newReadLogsArray.length(); i++){
+                                JSONObject dataObject = new JSONObject(newReadLogsArray.getString(i));
+                                result_status = ReadingModel.UpdateUploadStatusLogs(dataObject.getString("row_id").toString());
+                            }
+                        }
+                    }
+                }
+
+                if(dataArrayPicture.length() == 0){
+                    //No Data
+                    //return 2;
+                }else {
+
+                    progress = 0;
+
+                    List<String> arrayListPics = new ArrayList<String>();
+                    for(int i = 0; i < dataArrayPicture.length(); i++){
+                        arrayListPics.add(dataArrayPicture.getString(i));
+                    }
+                    for(int j = 0; j < arrayListPics.size(); j+=limit) {
+                        int k = Math.min(j + limit, arrayListPics.size());
+                        List<String> subList = arrayListPics.subList(j,k);
+
+                        JSONArray newDataArrayPics = new JSONArray(subList);
+                        JSONObject meterpics = new JSONObject();
+                        meterpics.put("sysid",Liquid.User);
+                        meterpics.put("username",Liquid.Username);
+                        meterpics.put("password",Liquid.Password);
+                        meterpics.put("data",newDataArrayPics);
+
+                        mPOSTApiData = new Liquid.POSTApiData("fmts/php/api/ReadingPictureTest.php");
+                        //Log.i(TAG, String.valueOf(testpics));
+                        String jsonStr = sh.makeServicePostCall(mPOSTApiData.API_Link, meterpics);
+                        Log.i(TAG,"TristanTrista"+ jsonStr);
+                        //Log.i(TAG, "ALEX:" + jsonStr);
+                        JSONObject response = Liquid.StringToJsonObject(jsonStr);
+
+                        if (response.getString("result").equals("false")) {
+                            Liquid.ErrorUpload.put(meterpics);
+
+                        } else {
+                            progress = progress + limit;
+                            publishProgress(progress);
+                            JSONArray newMeterPicsArray = meterpics.getJSONArray("data");
+                            for(int i=0; i < newMeterPicsArray.length(); i++){
+                                JSONObject dataObject = new JSONObject(newMeterPicsArray.getString(i));
+                                result_status = ReadingModel.UpdateUploadStatusPicture(dataObject.getString("row_id").toString());
+                            }
+                        }
+                    }
+                }
+
+                if(dataArrayMeterNotInList.length() == 0){
+                    //No Data
+                    //return 2;
+                }else {
+
+                    progress = 0;
+
+                    List<String> arrayListMNL = new ArrayList<String>();
+                    for(int i = 0; i < dataArrayMeterNotInList.length(); i++){
+                        arrayListMNL.add(dataArrayMeterNotInList.getString(i));
+                    }
+                    for(int j = 0; j < arrayListMNL.size(); j+=limit) {
+                        int k = Math.min(j + limit, arrayListMNL.size());
+                        List<String> subList = arrayListMNL.subList(j,k);
+
+                        JSONArray newDataArrayMNL = new JSONArray(subList);
+                        JSONObject notinlist = new JSONObject();
+                        notinlist.put("sysid",Liquid.User);
+                        notinlist.put("username",Liquid.Username);
+                        notinlist.put("password",Liquid.Password);
+                        notinlist.put("data",newDataArrayMNL);
+
+                        mPOSTApiData = new Liquid.POSTApiData("fmts/php/api/NewMeterNotInListTest.php");
+                        //Log.i(TAG, String.valueOf(testmnl));
+                        String jsonStr = sh.makeServicePostCall(mPOSTApiData.API_Link, notinlist);
+                        //Log.i(TAG, "TRISTAN:" + jsonStr);
+                        //Log.i(TAG, "ALEX:" + jsonStr);
+                        JSONObject response = Liquid.StringToJsonObject(jsonStr);
+                        //JSONObject response2 = new JSONObject(response.getString("Data"));
+
+                        if (response.getString("result").equals("false")) {
+                            Liquid.ErrorUpload.put(notinlist);
+                        } else {
+                            progress = progress + limit;
+                            publishProgress(progress);
+                            JSONArray newNotInListArray = notinlist.getJSONArray("data");
+                            for(int i=0; i < newNotInListArray.length(); i++){
+                                JSONObject dataObject = new JSONObject(newNotInListArray.getString(i));
+                                result_status = ReadingModel.UpdateUploadStatusMeterNotInList(dataObject.getString("row_id").toString());
+                            }
+                        }
+                    }
+                }
+
+                if (Liquid.ErrorUpload.length() != 0) {
+                    Liquid.ErrorDataUpload.put("data", Liquid.ErrorUpload);
+                }
+
+            } catch (JSONException e) {
+                Log.e(TAG,"Error :",e);
+                //JSON Problem
+                return 1;
+            }
+            catch (Exception e){
+                //An error has occured
+                Log.e(TAG,"Error :",e);
+                return 0;
+            }
+            return 29;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            //progressBar.setProgress(values[0]);
+
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            super.onPostExecute(result);
+
         }
     }
 }

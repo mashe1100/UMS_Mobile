@@ -1,6 +1,7 @@
 package com.aseyel.tgbl.tristangaryleyesa.adapter;
 
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -64,6 +65,7 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
     private Fragment fragment;
     private final List<LocalJobOrdersModel> LocalJobOrdersListItems = new ArrayList<>();
     private  ArrayList<HashMap<String, String>> JobOrderDetails = new ArrayList<>();
+    private ProgressDialog mProgressDialog;
 
     public LocalJobOrderAdapter(Fragment fragment) {
         this.fragment = fragment;
@@ -186,6 +188,11 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
                     Liquid.ErrorUpload = new JSONArray();
 
                     if (fragment instanceof TabLocalFragment || fragment instanceof TabDeliveryFragment) {
+                        mProgressDialog = new ProgressDialog(view.getContext());
+                        mProgressDialog.setMessage("Processing....");
+                        mProgressDialog.setTitle("Getting the data...");
+                        mProgressDialog.setCancelable(false);
+                        mProgressDialog.show();
                         //((TabLocalFragment) fragment).showUploadProgressBar(true);
                         switch(Liquid.SelectedJobType){
                             case "AUDIT":
@@ -205,6 +212,7 @@ public class LocalJobOrderAdapter extends RecyclerView.Adapter<RecyclerView.View
                                 break;
                             case "METER READER":
                                 ((TabLocalFragment) fragment).DoUploadReading(LiquidReading.UploadReading(Liquid.SelectedId),LiquidReading.UploadReadingAll(Liquid.SelectedId));
+                                mProgressDialog.dismiss();
                                 break;
                         }
                     }
