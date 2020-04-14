@@ -37,8 +37,11 @@ import com.aseyel.tgbl.tristangaryleyesa.services.LiquidPrintBill;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -321,6 +324,8 @@ public class ReadingGalleryActivity extends BaseActivity {
                 Liquid.day = ReadingDateSplit[1];
                 Liquid.Averange_Consumption = !result.getString(46).equals("") ? result.getString(46) : "0";
                 Liquid.multiplier = !result.getString(40).equals("") ? result.getString(40) : "1";
+
+                Liquid.multiplier =  Liquid.multiplier.replace(",", "");
                 Liquid.multiplier = Liquid.FixDecimal(Liquid.multiplier);
                 Liquid.Meter_Box = result.getString(36);
                 Liquid.code = result.getString(1);
@@ -538,6 +543,7 @@ public class ReadingGalleryActivity extends BaseActivity {
                             Double.parseDouble(Liquid.coreloss) <= 0)){
                 Liquid.Present_Consumption = String.valueOf(ChangeMeterKWH(
                         Liquid.ConvertStringToDate(Liquid.DateChangeMeter),
+                        Liquid.previous_reading_date,
                         Liquid.ConvertStringToDate(Liquid.present_reading_date),
                         Double.parseDouble(Liquid.Present_Consumption)));
 
@@ -552,6 +558,7 @@ public class ReadingGalleryActivity extends BaseActivity {
                 //demand
                 Liquid.demand_consumption = String.valueOf(ChangeMeterKWH(
                         Liquid.ConvertStringToDate(Liquid.DateChangeMeter),
+                        Liquid.previous_reading_date,
                         Liquid.ConvertStringToDate(Liquid.present_reading_date),
                         Double.parseDouble(Liquid.demand_consumption)));
             }
@@ -587,22 +594,44 @@ public class ReadingGalleryActivity extends BaseActivity {
         }
     }
 
-    public double ChangeMeterKWH(Date DateChangeMeter, Date PresentReadingDate, double KWH){
+    public double ChangeMeterKWH(Date DateChangeMeter,String previousReadingDate,Date PresentReadingDate, double KWH){
         double daysKWH = 0;
         double avgKWH = 0;
-        long days = Liquid.diffDate(PresentReadingDate,DateChangeMeter);
+        Date today30;
+
+        if(previousReadingDate.equals("")){
+            Calendar cal = new GregorianCalendar();
+            cal.setTime(PresentReadingDate);
+            cal.add(Calendar.DAY_OF_MONTH, -30);
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+            today30 = Liquid.ConvertStringToDate(format1.format(cal.getTime()));
+
+        }else{
+            today30 = Liquid.ConvertStringToDate(previousReadingDate);
+        }
+
+
+        long days = Math.abs(Liquid.diffDate(PresentReadingDate,DateChangeMeter));
+        long days_nokwh = Math.abs(Liquid.diffDate(DateChangeMeter,today30));
 
         if(days == 0){
             days = 1;
+            return KWH;
         }
+
+        if(days_nokwh == 0){
+            days_nokwh = 1;
+        }
+
 
         daysKWH = Math.round(KWH / days);
+        avgKWH = (daysKWH * days_nokwh) + KWH;
 
-        avgKWH = daysKWH * 30;
+//        avgKWH = daysKWH * 30;
 
-        if(KWH > avgKWH){
-            avgKWH = KWH;
-        }
+//        if(KWH > avgKWH){
+//            avgKWH = KWH;
+//        }
 
         return avgKWH;
     }

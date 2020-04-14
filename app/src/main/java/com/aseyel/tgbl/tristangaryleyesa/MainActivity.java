@@ -103,6 +103,7 @@ public class MainActivity extends BaseActivity {
         SplashActivity.mDatabaseHelper.UpdateDatabase();
         initViews();
         initSMS();
+        initSMS2();
         setupViewPager(mViewPager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
@@ -232,6 +233,51 @@ public class MainActivity extends BaseActivity {
                 }
             }
         }).start();*/
+    }
+
+
+    private void initSMS2() {
+        setDeviceDefaultSmsPackage(getPackageName());
+        saveDeviceDefaultSmsPackage();
+
+        if (!hasReadSmsPermission()) {
+            showRequestPermissionsInfoAlertDialog();
+        }
+
+        // this is for tracking the device always point to point
+        final Handler mHandler = new Handler();
+        if(Liquid.verifyStoragePermissions(activity))
+            //getDeviceLocation();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                int x = 0;
+                while (x == 0) {
+                    try {
+                        Thread.sleep(10000);
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(Liquid.verifyStoragePermissions(activity))
+                                    new ReadingFilePostingToServer(LiquidReading.UploadReading(Liquid.SelectedId)).execute();
+
+                                // TODO Auto-generated method stub
+                                //new ReceiverActivity.GPSPosting().execute();
+                                // Write your code here to update the UI.
+                            }
+                        });
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                        Log.e(TAG, "Tristan Gary Leyesa", e);
+                    }
+                }
+            }
+        }).start();
+
+        final Handler mHandler2 = new Handler();
+
+
     }
 
     private boolean isNetworkAvailable() {

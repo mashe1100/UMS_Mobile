@@ -1201,7 +1201,8 @@ public class Liquid extends AppCompatActivity{
 
         consumption = Math.abs((avg  - kwh));
         avg = avg == 0 ? 1 : avg;
-        consumptionpercent = Math.round(consumption / avg) / 100;
+        consumptionpercent = Double.parseDouble(Liquid.FixDecimal(String.valueOf(consumption / avg))) ;
+
 
             if  (avg <= 100) {
                 if (consumptionpercent >= 1) {
@@ -1242,7 +1243,9 @@ public class Liquid extends AppCompatActivity{
 
         consumption = Math.abs((avg  - kwh));
         avg = avg == 0 ? 1 : avg;
-        consumptionpercent = Math.round(consumption / avg) / 100;
+        consumptionpercent = Double.parseDouble(Liquid.FixDecimal(String.valueOf(consumption / avg))) ;
+
+        Log.i(TAG,"Tristan TEST HIGH "+consumptionpercent);
 
             if (avg <= 100) {
                 if (consumptionpercent >= 1) {
