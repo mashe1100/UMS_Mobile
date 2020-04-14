@@ -260,7 +260,9 @@ public class MainActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 if(Liquid.verifyStoragePermissions(activity))
-                                    new ReadingFilePostingToServer(LiquidReading.UploadReading(Liquid.SelectedId)).execute();
+                                    if(SettingsActivity.AutoUpload == true){
+                                        new ReadingFilePostingToServer(LiquidReading.UploadReading(Liquid.SelectedId)).execute();
+                                    }
 
                                 // TODO Auto-generated method stub
                                 //new ReceiverActivity.GPSPosting().execute();
@@ -618,7 +620,13 @@ public class MainActivity extends BaseActivity {
                                     liquidGPS.PostRealtimeData(Latitude,Longitude);
 
                                     //autoupload realtime
-                                    new ReadingFilePostingToServer(LiquidReading.UploadReading(Liquid.SelectedId)).execute();
+                                    if(SettingsActivity.AutoUpload == true){
+                                        new ReadingFilePostingToServer(LiquidReading.UploadReading(Liquid.SelectedId)).execute();
+                                        Log.i(TAG,"mashe test On Real Time Auto Upload");
+                                    }
+                                    else{
+                                        Log.i(TAG,"mashe test Off Real Time Auto Upload");
+                                    }
                                 } catch (Exception e) {
                                     Log.e(TAG, "Error", e);
                                 }
@@ -1066,7 +1074,7 @@ public class MainActivity extends BaseActivity {
 //            }
 //            mProgressDialog.dismiss();
 
-            new DataReadingPostingToServer(this.postData).execute();
+                new DataReadingPostingToServer(this.postData).execute();
         }
     }
 
